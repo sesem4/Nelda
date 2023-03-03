@@ -16,4 +16,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <modules>
+        <module>Collision</module>
+        <module>Common</module>
+        <module>Core</module>
+        <module>Enemy</module>
+        <module>HealthPotion</module>
+        <module>Map</module>
+        <module>Player</module>
+        <module>Sword</module>
+    </modules>
+
 </project>
