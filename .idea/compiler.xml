@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Player" />
+        <module name="CommonMap" />
+        <module name="CommonEnemy" />
+        <module name="Sword" />
+        <module name="CommonWeapon" />
+        <module name="HealthPotion" />
+        <module name="Enemy" />
+        <module name="Collision" />
+        <module name="CommonItem" />
+        <module name="Map" />
+        <module name="Core" />
+        <module name="Common" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Collision" target="18" />
+      <module name="Common" target="18" />
+      <module name="CommonEnemy" target="18" />
+      <module name="CommonItem" target="18" />
+      <module name="CommonMap" target="18" />
+      <module name="CommonWeapon" target="18" />
+      <module name="Core" target="18" />
+      <module name="Enemy" target="18" />
+      <module name="HealthPotion" target="18" />
+      <module name="Map" target="18" />
+      <module name="Player" target="18" />
+      <module name="Sword" target="18" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
