@@ -1,2 +1,0 @@
-# HealthPotion
-Health Potion Component
