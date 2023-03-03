@@ -1,2 +1,0 @@
-# Player
-Player Component
