@@ -9,7 +9,7 @@
         <artifactId>Nelda</artifactId>
         <version>0.0.0</version>
     </parent>
-    <artifactId>Hearth</artifactId>
+    <artifactId>Heart</artifactId>
 
     <properties>
         <maven.compiler.source>18</maven.compiler.source>
