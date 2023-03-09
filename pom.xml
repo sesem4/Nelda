@@ -21,7 +21,7 @@
         <module>Common</module>
         <module>Core</module>
         <module>Enemy</module>
-        <module>HealthPotion</module>
+        <module>Hearth</module>
         <module>Map</module>
         <module>Player</module>
         <module>Sword</module>
