@@ -1,80 +1,81 @@
-# SPI Contracts
+# Plugin
 
-## Plugin
+## SPI
 
-### SPI
+### GamePluginSPI
 
-GamePluginSPI
+## Description
+```
+Start and stop the plugins
+```
 
-### Description
-
-Create 
-
-### Operation
-
+## Operation
+```
+plugin()
+```
+## Parameters
+```
 *Unknown*
-
-### Parameters
-
+```
+## Preconditions
+```
 *Unknown*
-
-### Preconditions
-
+```
+## Postconditions
+```
 *Unknown*
+```
+# Processing service
 
-### Postconditions
-
-*Unknown*
-
-## Processing service
-
-### SPI
+## SPI
 
 IEntityProcessingServiceSPI
 
-### Description
-
+## Description
+```
 Updates the game loop for the specific entity.
-
-### Operation
-
+```
+## Operation
+```
 process(gameData, world)
-
-### Parameters
-
+```
+## Parameters
+```
 * gameData - The game data object.
 * world - The world object.
-
-### Preconditions
-
+```
+## Preconditions
+```
 A game frame has passed since last process call. A world and game has been created and started, as well as a entity has been created.
-
-### Postconditions
-
+```
+## Postconditions
+```
 The entity has been updated, with a new frame drawn.
+```
+# Post Processing service
 
-## Post Processing service
-
-### SPI
+## SPI
 
 GamePluginSPI
 
-### Description
-
-### Operation
-
+## Description
+```
 *Unknown*
+```
 
-### Parameters
-
+## Operation
+```
 *Unknown*
-
-### Preconditions
-
+```
+## Parameters
+```
 *Unknown*
-
-### Postconditions
-
+```
+## Preconditions
+```
 *Unknown*
-
-## 
+```
+## Postconditions
+```
+*Unknown*
+```
