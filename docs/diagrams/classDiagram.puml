@@ -1,27 +1,40 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
+abstract class Entity
+abstract class GameState
+interface IGameProcessingService
+interface IGamePlugingService
+interface IPostProcessingService
+class Core
+class Game
+class Enenmy
+class Sword
+class Map
+class Heart
+class Collision
+class Player
+class Main
+class LifePart
+class Entity{
+# Vector2 position
+# Vector2 size
+# Texture texture
++ {abstract} Texture loadImage()
++ {abstract} void render(SpriteBatch)
++ {abstract} void update()
 
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
-
-class ArrayList {
-Object[] elementData
-size()
+}
+interface IGamePlugingService{
+ {abstract} + void start()
+ {abstract} + void stop()
 }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
-}
+Entity <|-- Player
+Entity <|-- Enemy
+Entity <|-- Sword
+
+
+
 
 @enduml
