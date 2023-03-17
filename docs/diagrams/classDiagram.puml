@@ -1,24 +1,57 @@
 @startuml Class diagram
+/' allowmixing '/
 'https://plantuml.com/class-diagram
-
+/' skinparam component{
+    BackgroundColor Green
+} '/
 abstract class Entity
 abstract class GameState
-interface IProcessingService
-interface IPlugingService
+interface ProcessingServiceSPI
+interface PluginServiceSPI
 interface IPostProcessingService
 interface IEVentService
 interface IEnemySpawner
-class Core
+component test{
+    package GameSystem{
+        class GameData{
+            - data
+        }
+
+    }
+
+}
 class Game
-class Enemy
-class EnemySpawner
-class Weapon
-class Item
-class Map
-class DetectCollison
-class Player
-class Main
-class LifePart
+component Enemy{
+
+}
+component EnemySpawner{
+
+}
+component Weapon{
+
+}
+component Item{
+
+}
+component Map{
+
+}
+component Collision{
+    
+}
+component Player{
+
+}
+/' class PlayerProcessor '/
+/' class PlayerPlugin '/
+component Common{
+
+}
+component Core{
+
+}
+
+/' class LifePart '/
 class Entity{
 # Vector2 position
 # Vector2 size
@@ -28,6 +61,7 @@ class Entity{
 + {abstract} void update()
 
 }
+ProcessingServiceSPI <.. Player
 interface IGamePlugingService{
  {abstract} + void start()
  {abstract} + void stop()
@@ -41,3 +75,12 @@ Entity <|-- Sword
 
 
 @enduml
+
+/' @startuml
+component [$C1]
+component [$C2] $C2
+component [$C2] as dollarC2
+remove $C1
+remove $C2
+remove dollarC2
+@enduml '/
