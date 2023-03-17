@@ -1,18 +1,21 @@
-@startuml
+@startuml Class diagram
 'https://plantuml.com/class-diagram
 
 abstract class Entity
 abstract class GameState
-interface IGameProcessingService
-interface IGamePlugingService
+interface IProcessingService
+interface IPlugingService
 interface IPostProcessingService
+interface IEVentService
+interface IEnemySpawner
 class Core
 class Game
-class Enenmy
-class Sword
+class Enemy
+class EnemySpawner
+class Weapon
+class Item
 class Map
-class Heart
-class Collision
+class DetectCollison
 class Player
 class Main
 class LifePart
