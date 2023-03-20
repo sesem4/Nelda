@@ -1,20 +1,24 @@
 @startuml
 skinparam style strictuml
 title Move  player
+Actor Player
 activate Core
 Core -> Core
 
-
-Core -> Player: process()
-activate Player
-Player -> KeyboardControl: getInput()
-activate KeyboardControl
-KeyboardControl -> Common: getPosition()
+Core -> Common: process()
 activate Common
-
-
-
-
-
+Common -> Common: getPlayerPosition()
+Activate Player
+Player -> KeyboardControl: move()
+deactivate Player
+activate KeyboardControl
+Common -> KeyboardControl: getInput()
+activate KeyboardControl
+KeyboardControl -> Common:
+deactivate KeyboardControl
+deactivate KeyboardControl
+Common -> Common: setPlayerPosition()
+Common -> Core: update()
+deactivate Common
 
 @enduml
