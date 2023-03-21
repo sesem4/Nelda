@@ -7,17 +7,17 @@ Core -> Core
 
 Core -> Common: process()
 activate Common
-Common -> Common: getPlayerPosition()
+Common -> Common: getPosition(Entity player)
 Activate Player
-Player -> KeyboardControl: move()
+Player -> KeyboardControl: move(Input input)
 deactivate Player
 activate KeyboardControl
-Common -> KeyboardControl: getInput()
+Common -> KeyboardControl: getInput(Entity player)
 activate KeyboardControl
 KeyboardControl -> Common:
 deactivate KeyboardControl
 deactivate KeyboardControl
-Common -> Common: setPlayerPosition()
+Common -> Common: setPlayerPosition(Entity player))
 Common -> Core: update()
 deactivate Common
 
