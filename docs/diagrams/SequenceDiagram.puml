@@ -25,8 +25,9 @@ deactivate Common
 
 @startuml
 skinparam style strictuml
-title Move  player
+title Weapon collision
 Actor Player
+
 activate Core
 Core -> Core
 
@@ -39,9 +40,17 @@ Player -> Common: attack()
 deactivate Player
 Common -> Collision: checkCollision()
 activate Collision
+deactivate Enemy
 Collision -> Common: getCollision()
 deactivate Collision
 Common -> Heart: update()
+activate Heart
+Heart -> Heart: getHeart()
+Heart -> Common: setHeart()
+deactivate Heart
+Common -> Core: update()
+
+
 
 
 @enduml
