@@ -22,3 +22,26 @@ Common -> Core: update()
 deactivate Common
 
 @enduml
+
+@startuml
+skinparam style strictuml
+title Move  player
+Actor Player
+activate Core
+Core -> Core
+
+Core -> Common: process()
+activate Common
+Common -> Common: getPlayerPosition()
+Common -> Common: getEnemyPosition()
+activate Player
+Player -> Common: attack()
+deactivate Player
+Common -> Collision: checkCollision()
+activate Collision
+Collision -> Common: getCollision()
+deactivate Collision
+Common -> Heart: update()
+
+
+@enduml
