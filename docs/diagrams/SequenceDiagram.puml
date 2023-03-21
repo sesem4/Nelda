@@ -26,31 +26,35 @@ deactivate Common
 @startuml
 skinparam style strictuml
 title Weapon collision
-Actor Player
+    Actor Player
 
-activate Core
-Core -> Core
+    activate Core
+    Core -> Core
 
-Core -> Common: process()
-activate Common
-Common -> Common: getPlayerPosition()
-Common -> Common: getEnemyPosition()
-activate Player
-Player -> Common: attack()
-deactivate Player
-Common -> Collision: checkCollision()
-activate Collision
-deactivate Enemy
-Collision -> Common: getCollision()
-deactivate Collision
-Common -> Heart: update()
-activate Heart
-Heart -> Heart: getHeart()
-Heart -> Common: setHeart()
-deactivate Heart
-Common -> Core: update()
+    Core -> Common: process()
+group
+    activate Common
+    Common -> Common: getPosition(Entity, enemy)
+    Common -> Common: getPosition(Entity, weapon)
+    activate Player
+    Player -> Common: attack(Entity sword)
+    deactivate Player
+    Common -> Collision: checkCollision(Entity, weapon, Entity, enemy)
+    activate Collision
+    Collision -> Collision: Collision(weapon, enemy)
+    Collision -> Common:
+    deactivate Collision
+    Common -> Heart: update(Entity, enemy)
+    activate Heart
+    Heart -> Heart: updateHeart(enemy)
+    Heart -> Common:
+    deactivate Heart
 
-
+    Common -> Core: update()
+alt if enemy is dead
+    Common -> Common: despawn(enemy)
+    Common -> Core: update()
+end
 
 
 @enduml
