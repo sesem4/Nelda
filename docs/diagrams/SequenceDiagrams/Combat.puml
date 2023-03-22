@@ -1,0 +1,31 @@
+@startuml Combat
+skinparam style strictuml
+title Combat (UC02)
+
+activate GameInput
+activate Core
+
+Core -> Player: process(world)
+activate Player
+Player -> WeaponPart: process(world, entity)
+activate WeaponPart
+WeaponPart -> GameInput: getKeys()
+GameInput -> WeaponPart: keys
+alt Attack was pressed
+	WeaponPart -> PositionPart:	getPosition(entity)
+	activate PositionPart
+	PositionPart -> WeaponPart: position
+	deactivate PositionPart
+
+	WeaponPart -> World: spawn(attack, position)
+	activate World
+	World -> WeaponPart
+	deactivate World
+end
+WeaponPart -> Player
+deactivate WeaponPart
+Player -> Core
+deactivate Player
+
+
+@enduml
