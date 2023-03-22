@@ -1,5 +1,5 @@
 @startuml Heart Pickup
-title Heart Pickup
+title Heart Pickup (UC03)
 skinparam style strictuml
 
 participant Core
