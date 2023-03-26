@@ -1,0 +1,46 @@
+@startuml Event After Process
+skinparam style strictuml
+title Event - Region change (emittet during processing)
+
+activate Core
+
+Core -> Player: process(world)
+
+activate Player
+note right of Player
+	Player moves, so that region changes
+end note
+Player -> Event: emitEvent(event)
+activate Event
+note right of Event
+	Event is emittet to all components
+end note
+
+Event -> Player: processEvent(event)
+activate Player
+note left of Player
+	Player processes the event
+end note
+Player -> Event: void
+deactivate Player
+
+Event -> Map: processEvent(event)
+activate Map
+note right of Map
+	Map processes the event
+end note
+Map -> Event: void
+deactivate Map
+
+Event -> Player: void
+deactivate Event
+
+Player -> Core: void
+deactivate Player
+
+Core -> World: process(world)
+activate World
+World -> Core: void
+deactivate World
+
+@enduml
