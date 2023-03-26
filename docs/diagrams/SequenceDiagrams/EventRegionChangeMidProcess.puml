@@ -1,4 +1,4 @@
-@startuml Event After Process
+@startuml Event Mid Process
 skinparam style strictuml
 title Event - Region change (emittet during processing)
 
