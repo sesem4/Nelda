@@ -9,10 +9,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import dk.sdu.sesem4.map.MapPlugin;
 import dk.sdu.sesem4.map.MapProcessingService;
 
 import java.util.ArrayList;
@@ -133,20 +131,12 @@ public class Game extends ApplicationAdapter implements InputProcessor {
             sprite.setFlip(false, false);
         }
         if (up) {
-            if (counter < 30){
-                sprite.setFlip(false, false);
-            } else {
-                sprite.setFlip(true, false);
-            }
+            sprite.setFlip(counter >= 30, false);
             sprite.translateY(1);
             sprite.setTexture(textures.get(1));
         }
         if (down) {
-            if (counter < 30){
-                sprite.setFlip(true, false);
-            } else {
-                sprite.setFlip(false, false);
-            }
+            sprite.setFlip(counter < 30, false);
             sprite.translateY(-1);
             sprite.setTexture(textures.get(0));
 
