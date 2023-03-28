@@ -1,6 +1,6 @@
 @startuml Event Mid Process
 skinparam style strictuml
-title Event - Region change (emittet during processing)
+title Event - Region change (emitted during processing)
 
 activate Core
 
@@ -24,13 +24,13 @@ end note
 Player -> Event: void
 deactivate Player
 
-Event -> Map: processEvent(event)
-activate Map
-note right of Map
-	Map processes the event
+Event -> World: processEvent(event)
+activate World
+note right of World
+	World processes the event
 end note
-Map -> Event: void
-deactivate Map
+World -> Event: void
+deactivate World
 
 Event -> Player: void
 deactivate Event

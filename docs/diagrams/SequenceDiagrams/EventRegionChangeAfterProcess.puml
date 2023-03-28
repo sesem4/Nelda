@@ -1,6 +1,6 @@
 @startuml Event After Process
 skinparam style strictuml
-title Event - Region change (emittet after processing)
+title Event - Region change (emitted after processing)
 
 activate Core
 
