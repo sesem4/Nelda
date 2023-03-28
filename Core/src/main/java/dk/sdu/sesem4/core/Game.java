@@ -29,7 +29,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
     SpriteBatch sb;
     Sprite sprite;
 
-    int currentMapIndex = 118;
+    int currentMapIndex = 119;
 
     boolean up, down, left, right = false;
 
