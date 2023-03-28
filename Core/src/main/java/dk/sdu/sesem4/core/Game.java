@@ -69,14 +69,9 @@ public class Game extends ApplicationAdapter implements InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
-        System.out.println(currentMapIndex);
 
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
-
-//		System.out.println(h);
-//		System.out.println("The view" + camera.viewportHeight);
-//		System.out.println("The fucker is here" + sprite.getY());
 
         sb.begin();
         sprite.setSize(32, 32);
@@ -142,7 +137,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
         }
         sb.end();
-//		System.out.println(sprite.getX() + " " + sprite.getY());
+
     }
 
     @Override
