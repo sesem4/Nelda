@@ -18,7 +18,7 @@ public class MapProcessingService {
         int worldWidth = 16;
         int worldHeight = 8;
         world = new TiledMap[worldWidth * worldHeight];
-        String[] columns = new String[]{"A", "B", "C", "D", "E", "F", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+        String[] columns = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
         for (int x = 0; x < worldWidth; x++) {
             for (int y = 0; y < worldHeight; y++) {
                 try {
