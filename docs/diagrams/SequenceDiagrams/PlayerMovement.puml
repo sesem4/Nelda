@@ -1,0 +1,39 @@
+@startuml Player Movement
+skinparam style strictuml
+title Player Movement (UC01)
+Actor User
+activate GameInput
+activate Core
+
+User -> GameInput: keys
+Core -> Player: process(world)
+activate Player
+Player -> MovementPart: process(world, entity)
+activate MovementPart
+User -> GameInput: keys
+note left
+	User can input keys
+	out of sync with
+	our processing loop
+end note
+alt PositionPart exists
+	User -> GameInput: keys
+	MovementPart -> PositionPart: getPosition(entity)
+	activate PositionPart
+	PositionPart -> MovementPart: player position
+	deactivate PositionPart
+	User -> GameInput: keys
+	MovementPart -> GameInput: getKeys()
+	GameInput -> MovementPart: pressed keys
+	User -> GameInput: keys
+	MovementPart -> PositionPart: setPosition(entity, position)
+	activate PositionPart
+	PositionPart -> MovementPart
+	deactivate PositionPart
+end
+MovementPart -> Player
+deactivate MovementPart
+Player -> Core
+deactivate Player
+User -> GameInput: keys
+@enduml

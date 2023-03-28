@@ -1,0 +1,207 @@
+@startuml Class diagram
+/' allowmixing '/
+'https://plantuml.com/class-diagram
+/' skinparam component{
+    BackgroundColor Green
+} '/
+abstract class GameState
+interface CombatSPI{
+    + {abstract} spawnWeapon(gameData:GameData, world:World, weapon:Entity ); void
+
+}
+interface ControlSPI{
+    + {abstract} move(gameData:GameData , world:World , entity:Entity ): float[]
+
+}
+interface EnemySpawnerSPI{
+    + {abstract} spawnEnemy(gameData:GameData , world:World , x:float ,  y:float):void
+
+}
+interface EventServiceSPI{
+    + {abstract} eventHandler(gameData:GameData , world:World , event:Event ): void
+
+}
+interface PickupSPI{
+     pickup(gameData:GameData , world:World , item:Entity): Item
+
+}
+interface PluginServiceSPI{
+    +  start(gameData:GameData , world:World ): void
+    +  stop(gameData:GameData, world:World ): void
+}
+
+interface PostProcessingServiceSPI{
+    + {abstract} postProcess(gamedata:GameData,world:World,priority:Priorirty): void
+}
+interface ProcessingServiceSPI{
+    + {abstract} process(gameData:GameData , world:World , priority:Priority): void
+}
+interface RegionSPI{
+    + {abstract} loadRegion(gameData:GameData , world:World , map:Map): Region
+
+}
+component Enemy {
+    package src\main\java\dk\sdu\sesem4\enemy{
+        class Enemy{
+
+     }
+        class EnemyProcessing implements ProcessingServiceSPI{
+            + process(gameData:GameData , world:World , priority:Priority):void
+            + updateShape(entity:Entity): void
+    }
+
+        class EnemyPlugin implements PluginServiceSPI{
+            
+                + start(gameData:GameData , world:World ): void
+                + stop(gameData:GameData , world:World ): void
+                + createEnmey(gameData:GameData): void
+    }
+    }
+}
+component Player{
+    package src\main\java\dk\sdu\sesem4\player{
+        class Player  {
+        
+        
+        }
+        class PlayerProcessing implements ProcessingServiceSPI{
+            + process(gameData:GameData , world:World , priority:Priority):void
+            + updateShape(entity:Entity): void
+        }
+        class PlayerPlugin implements PluginServiceSPI{
+            + start(gameData:GameData , world:World ): void
+            + stop(gameData:GameData , world:World ): void
+            + createPlayer(gameData:GameData): void
+        }
+
+    }
+    
+
+}
+component Weapon{
+
+}
+component Item{
+
+}
+
+
+
+component Common{
+    package src\main\java\dk\sdu\sesem4\common{
+        class Health{
+            - heart: int
+            - dead: boolean
+            - isHit: boolean
+            + getHeart(): int
+            + setHeart(): void
+            + isDead(): boolean
+            + setIsDead(): void
+            + isHit(): boolean
+            + setIsHit(): void
+        }
+        abstract class Entity{
+            # texture: Texture
+            # radius: float
+           
+            + {abstract} loadImage(texturue: Texture): Texture
+            + {abstract} getRadius(): float
+            + {abstract} setRadius(): void
+            + {abstract} addEntity(entity:EntityPart): void
+            + {bstract} removeEntity(entity:EntityPart): void
+        }
+        interface EntityPart{
+            + {abstract} postProcess(gamedata:GameData,world:World): void
+        }
+        class PositionPart implements EntityPart{
+            - radians: float
+            - position: Vector2
+            - size: Vector2 
+            + getRadians(): float
+            + setRadians(): void
+            + getPosition(): Vector2
+            + setPosition(): void
+            + getSize(): Vector2
+            + setSize(): void
+             
+        }
+        class World{
+             + addEntity(entity:EntityPart): void
+             +  removeEntity(entity:EntityPart): void
+             + getEntities(entityTypes: class<E> entityTypes): < E extends Entity > List<Entity>  
+        }
+    }
+}
+        component Map{
+            package  src\main\java\dk\sdu\sesem4\map{
+
+
+            }
+        }
+        component Region{
+            package src\main\java\dk\sdu\sesem4\region{
+
+            }
+        }
+        component EnemySpawner{
+            package src\main\java\dk\sdu\sesem4\common{
+
+            }
+        }
+
+
+    
+
+
+component Collision{
+    package src\main\java\dk\sdu\sesem4\collision{
+        class CollisionDetector implements PostProcessingServiceSPI{
+
+            + }postProcess(gamedata:GameData,world:World,priority:Priorirty): void
+            + isCollided(entity1: Entity, entity2: Entity):boolean
+
+        }
+    }
+    
+
+
+/' class PlayerProcessor '/
+/' class PlayerPlugin '/
+
+component Core{
+    class Game
+    class Main
+
+}
+
+/' class LifePart '/
+/' class Entity{
+
++ {abstract} Texture loadImage()
++ {abstract} void render(SpriteBatch)
++ {abstract} void update()
+
+} '/
+/' ProcessingServiceSPI <.. Player
+ '/interface IGamePlugingService{
+ {abstract} + void start()
+ {abstract} + void stop()
+}
+
+/' Entity <|-- Player
+Entity <|-- Enemy
+Entity <|-- Sword '/
+
+
+
+
+@enduml
+
+/' @startuml
+component [$C1]
+component [$C2] $C2
+component [$C2] as dollarC2
+remove $C1
+remove $C2
+remove dollarC2
+@enduml '/

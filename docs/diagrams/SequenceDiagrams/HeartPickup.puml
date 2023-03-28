@@ -1,0 +1,42 @@
+@startuml Heart Pickup
+title Heart Pickup (UC03)
+skinparam style strictuml
+
+participant Core
+participant Player
+participant HealthPart
+participant CollisionSystem
+
+activate Core
+
+Core -> Player: process()
+activate Player
+note right of Player: Player moves into a heart
+Player -> Core
+deactivate Player
+Core -> CollisionSystem: postProcess()
+activate CollisionSystem
+
+group if [Player collides with Heart]
+	CollisionSystem -> CollisionSystem: doCollision(player, heart)
+	CollisionSystem -> HealthPart: heal(player, 1)
+	activate HealthPart
+	note left of HealthPart
+	Player's health
+	increases by 1
+	end note
+	HealthPart -> CollisionSystem
+	deactivate HealthPart
+
+	CollisionSystem -> HealthPart: kill(heart)
+	activate HealthPart
+	note left of HealthPart
+	Heart is destroyed
+	end note
+	HealthPart -> CollisionSystem
+	deactivate HealthPart
+end
+CollisionSystem -> Core
+deactivate CollisionSystem
+
+@enduml

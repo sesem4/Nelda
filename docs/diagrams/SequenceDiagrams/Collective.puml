@@ -1,0 +1,90 @@
+@startuml Frame Sequence Diagram
+skinparam style strictuml
+title Frame Sequence Diagram
+
+participant Core
+
+participant Player
+participant Enemy
+
+participant MovementPart
+participant PositionPart
+participant WeaponPart
+
+participant HealthPart
+
+
+activate Core
+
+group Processing
+	Core -> Player: process(world)
+	activate Player
+
+	Player -> MovementPart: process(world, entity)
+	activate MovementPart
+	MovementPart -> Player
+	deactivate MovementPart
+
+	Player -> PositionPart: process(world, entity)
+	activate PositionPart
+	PositionPart -> Player
+	deactivate PositionPart
+
+	Player -> WeaponPart: process(world, entity)
+	activate WeaponPart
+	WeaponPart -> Player
+	deactivate WeaponPart
+
+	Player -> HealthPart: process(world, entity)
+	activate HealthPart
+	HealthPart -> Player
+	deactivate HealthPart
+
+	Player -> Core
+	deactivate Player
+
+	Core -> Enemy: process(world)
+	activate Enemy
+
+	Enemy -> MovementPart: process(world, entity)
+	activate MovementPart
+	MovementPart -> Enemy
+	deactivate MovementPart
+
+	Enemy -> PositionPart: process(world, entity)
+	activate PositionPart
+	PositionPart -> Enemy
+	deactivate PositionPart
+
+	Enemy -> WeaponPart: process(world, entity)
+	activate WeaponPart
+	WeaponPart -> Enemy
+	deactivate WeaponPart
+
+	Enemy -> HealthPart: process(world, entity)
+	activate HealthPart
+	HealthPart -> Enemy
+	deactivate HealthPart
+
+	Enemy -> Core
+	deactivate Enemy
+end
+
+group PostProcessing
+	Core -> CollisionSystem: postProcess(world)
+	activate CollisionSystem
+
+	loop for each entity
+		CollisionSystem -> PositionPart: getPosition(entity)
+		activate PositionPart
+		PositionPart -> CollisionSystem
+		deactivate PositionPart
+	end
+
+	loop for each pair of entities
+		CollisionSystem -> CollisionSystem: doCollision(entity1, entity2)
+	end
+	CollisionSystem -> Core
+	deactivate CollisionSystem
+end
+@enduml
