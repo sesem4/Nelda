@@ -7,12 +7,132 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "A1.tmx": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 130.5,
+                "y": 301
+            }
+        },
+        "A2.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 2010,
+                "y": 560
+            }
+        },
+        "A3.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 255.33333333333326,
+                "y": 100
+            }
+        },
+        "A4.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 79.33333333333326,
+                "y": 364
+            }
+        },
+        "A5.tmx": {
+            "scale": 3.265625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 127.54066985645932,
+                "y": 87.88516746411482
+            }
+        },
+        "A6.tmx": {
+            "scale": 3.265625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 128.15311004784687,
+                "y": 88.03827751196171
+            }
+        },
+        "A7.tmx": {
+            "scale": 3.265625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 128.15311004784687,
+                "y": 88.03827751196171
+            }
+        },
+        "A8.tmx": {
+            "scale": 3.265625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 128.15311004784687,
+                "y": 88.03827751196171
+            }
+        },
+        "B1.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 379.5,
+                "y": 325
+            }
+        },
+        "B2.tmx": {
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 88.25,
+                "y": 61
+            }
+        },
+        "C1.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 677,
+                "y": 500
+            }
+        },
+        "C:/.komponent-baseret/Nelda/Map/src/main/Tileset0.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "C:/.komponent-baseret/Nelda/Map/src/main/Tileset1.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "D2.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 551,
+                "y": 570
+            }
+        },
+        "E1.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 163,
+                "y": 498
+            }
+        },
         "F8.tmx": {
             "scale": 4.2007812499999995,
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 128.07141528733496,
                 "y": 88.07885437976569
+            }
+        },
+        "G2.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 186,
+                "y": 72
             }
         },
         "G7.tmx": {
@@ -39,6 +159,14 @@
                 "y": 81.5157894736842
             }
         },
+        "I2.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 216.66666666666663,
+                "y": 1166.6666666666665
+            }
+        },
         "I7.tmx": {
             "scale": 4.2007812499999995,
             "selectedLayer": 0,
@@ -48,35 +176,107 @@
             }
         },
         "I8.tmx": {
-            "scale": 4.2007812499999995,
+            "scale": 0.75,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 128.07141528733496,
-                "y": 88.07885437976569
+                "x": 419.33333333333326,
+                "y": -1104
+            }
+        },
+        "J1.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -298,
+                "y": 732
+            }
+        },
+        "J2.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -302,
+                "y": 552
             }
         },
         "J8.tmx": {
-            "scale": 4.2007812499999995,
+            "scale": 0.25,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 128.07141528733496,
-                "y": 88.07885437976569
+                "x": -306,
+                "y": -508
+            }
+        },
+        "K1.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -36.66666666666674,
+                "y": 198.66666666666669
+            }
+        },
+        "K2.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 288.66666666666674,
+                "y": 361.33333333333337
             }
         },
         "K8.tmx": {
-            "scale": 4.2007812499999995,
+            "scale": 0.33,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 128.07141528733496,
-                "y": 88.07885437976569
+                "x": 307.5757575757575,
+                "y": -300
+            }
+        },
+        "L1.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 33.99999999999994,
+                "y": 538.6666666666665
+            }
+        },
+        "L2.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 156.060606060606,
+                "y": 603.0303030303031
             }
         },
         "L8.tmx": {
-            "scale": 4.2007812499999995,
+            "scale": 0.33,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 128.07141528733496,
-                "y": 88.07885437976569
+                "x": -204.5454545454545,
+                "y": -645.4545454545453
+            }
+        },
+        "M1.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 13.999999999999943,
+                "y": 458.6666666666666
+            }
+        },
+        "M2.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 204.5,
+                "y": 66
+            }
+        },
+        "M8.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 138.5,
+                "y": -75
             }
         },
         "Maps/A1.tmx": {
@@ -428,13 +628,131 @@
         },
         "Maps/Tileset2.tsx": {
             "scaleInDock": 1
+        },
+        "N1.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 192.5,
+                "y": 185
+            }
+        },
+        "N2.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 235.33333333333326,
+                "y": 137.33333333333337
+            }
+        },
+        "N8.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 95,
+                "y": -630
+            }
+        },
+        "O1.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -68.66666666666674,
+                "y": 478.6666666666666
+            }
+        },
+        "O2.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 238.5,
+                "y": 115
+            }
+        },
+        "O4.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -37,
+                "y": 104
+            }
+        },
+        "O8.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 95.33333333333326,
+                "y": -420
+            }
+        },
+        "P1.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -600,
+                "y": 200
+            }
+        },
+        "P2.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -7.5,
+                "y": 70
+            }
+        },
+        "P4.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 161.33333333333337,
+                "y": -20
+            }
+        },
+        "P5.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 44,
+                "y": 104
+            }
+        },
+        "P6.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 254,
+                "y": 42
+            }
+        },
+        "P7.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -54,
+                "y": 282
+            }
+        },
+        "SpriteSheet.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Tileset0.tsx": {
+            "scaleInDock": 1
+        },
+        "Tileset1.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Tileset2.tsx": {
+            "scaleInDock": 1
         }
     },
-    "last.externalTilesetPath": "C:/Users/jlm19/OneDrive/Skrivebord/Nelda",
-    "last.imagePath": "C:/Users/jlm19/OneDrive/Skrivebord/Nelda",
-    "last.worldFilePath": "C:/Users/jlm19/OneDrive/Skrivebord/Nelda",
+    "last.externalTilesetPath": "C:/.komponent-baseret/Nelda/Map/src/main/resources",
+    "last.imagePath": "C:/.komponent-baseret/Nelda/Map/src/main/resources",
+    "last.worldFilePath": "C:/.komponent-baseret/Nelda/Map/src/main/resources",
     "loadedWorlds": [
-        "C:/Users/jlm19/OneDrive/Skrivebord/Nelda/World.world"
+        "C:/.komponent-baseret/Nelda/Map/src/main/resources/World.world"
     ],
     "map.height": 11,
     "map.lastUsedFormat": "tmx",
@@ -445,19 +763,20 @@
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
+        "A3.tmx",
+        "A2.tmx",
+        "A1.tmx",
+        "B1.tmx",
+        "A5.tmx",
+        "B2.tmx",
+        "A8.tmx",
+        "A7.tmx",
+        "A6.tmx",
+        "A4.tmx",
         "Maps/E7.tmx",
-        "Maps/A2.tmx",
-        "Maps/A3.tmx",
-        "Maps/A4.tmx",
-        "Maps/A5.tmx",
-        "Maps/A6.tmx",
-        "Maps/A7.tmx",
-        "Maps/A8.tmx",
-        "Maps/B3.tmx",
-        "Maps/B4.tmx",
-        "Maps/B5.tmx",
-        "Maps/B6.tmx"
+        "Maps/A2.tmx"
     ],
+    "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
         "height": 16,
