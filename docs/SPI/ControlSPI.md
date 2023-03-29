@@ -1,8 +1,3 @@
-# ControlSPI
-
-## Description
-
-Move around on the map.
 
 <table>
 <tbody>
