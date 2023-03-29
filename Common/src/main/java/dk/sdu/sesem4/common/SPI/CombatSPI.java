@@ -1,7 +1,7 @@
 package dk.sdu.sesem4.common.SPI;
 
-import dk.sdu.sesem4.common.data.Entity;
-import dk.sdu.sesem4.common.data.GameData;
+import dk.sdu.sesem4.common.data.entity.Entity;
+import dk.sdu.sesem4.common.data.gamedata.GameData;
 
 public interface CombatSPI {
     /**

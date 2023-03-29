@@ -1,7 +1,7 @@
 package dk.sdu.sesem4.common.SPI;
 
-import dk.sdu.sesem4.common.data.GameData;
-import dk.sdu.sesem4.common.data.Priority;
+import dk.sdu.sesem4.common.data.gamedata.GameData;
+import dk.sdu.sesem4.common.data.process.Priority;
 
 public interface PostProcessingServiceSPI {
     /**

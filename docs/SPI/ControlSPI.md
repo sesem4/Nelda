@@ -10,7 +10,7 @@
     <td>
 
 ```java
-float[] move(GameData gameData, Entity entity)
+Vector2 move(GameData gameData, Entity entity)
 ```
 </td>
 </tr>
