@@ -9,7 +9,7 @@
     <td>
 
 ```java
-void postProcess(GameData gameData, World world, Priority priority)
+void process(GameData gameData, Priority priority)
 ```
 </td>
 </tr>
@@ -22,8 +22,6 @@ void postProcess(GameData gameData, World world, Priority priority)
 <td>
 
 `GameData gameData` - The game data
-
-`World world` - The world of the game
 
 `Priority priority` - The priority, which is to be run for the current process round
 </td>

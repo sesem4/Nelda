@@ -9,8 +9,8 @@
     <td>
 
 ```java
-void start(GameData gameData, World world)
-void stop(GameData gameData, World world)
+void start(GameData gameData)
+void stop(GameData gameData)
 ```
 </td>
 </tr>
@@ -24,7 +24,6 @@ void stop(GameData gameData, World world)
 
 `GameData gameData` - The game data
 
-`World world` - The world of the game
 </td>
 </tr>
 <tr>

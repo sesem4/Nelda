@@ -10,7 +10,7 @@
 
 
 ```java
-Region loadRegion(GameData gameData, World world, Map map)
+Region loadRegion(GameData gameData, Map map)
 ```
 </td>
 </tr>
@@ -23,8 +23,6 @@ Region loadRegion(GameData gameData, World world, Map map)
 <td>
 
 `GameData gameData` - The game data
-
-`World world` - The world of the game
 
 `Map map` - The current map that is being loaded
 </td>

@@ -10,7 +10,7 @@
     <td>
 
 ```java
-float[] move(GameData gameData, World world, Entity entity)
+float[] move(GameData gameData, Entity entity)
 ```
 </td>
 </tr>
@@ -23,8 +23,6 @@ float[] move(GameData gameData, World world, Entity entity)
 <td>
 
 `GameData gameData` - The game data
-
-`World world` - The world of the game
 
 `Entity entity` - The entity to move on the map</td>
 </tr>

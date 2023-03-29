@@ -9,7 +9,7 @@
     <td>
 
 ```java
-Item pickup(GameData gameData, World world, Entity item)
+Item pickup(GameData gameData, Entity item)
 ```
 </td>
 </tr>
@@ -22,8 +22,6 @@ Item pickup(GameData gameData, World world, Entity item)
 <td>
 
 `GameData gameData` - The game data
-
-`World world` - The world of the game
 
 `Entity item` - Item to pickup
 </td>
