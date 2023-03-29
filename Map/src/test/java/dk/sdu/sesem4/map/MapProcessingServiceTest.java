@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class MapProcessingServiceTest {
 
     @Test
-    TiledMap[] loadWorld() {
+    void loadWorld() {
         TiledMap[] world;
         TmxMapLoader tmxMapLoader = new TmxMapLoader();
         int worldWidth = 1;
@@ -29,7 +29,7 @@ class MapProcessingServiceTest {
             }
         }
         assert world[0] != null;
-        return world;
+
 
     }
 }
