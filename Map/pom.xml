@@ -19,21 +19,34 @@
     </properties>
 
     <dependencies>
+        <!-- gdx-backend-headless used to get the libGDX backend running without rendering it to the screen -->
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
-            <artifactId>gdx-backend-lwjgl3</artifactId>
+            <artifactId>gdx-backend-headless</artifactId>
             <version>${libGDX.version}</version>
         </dependency>
+
+        <!-- gdx-platform used to get necessary DLLs -->
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-platform</artifactId>
+            <version>${libGDX.version}</version>
+            <classifier>natives-desktop</classifier>
+        </dependency>
+
+        <!-- Mockito used for mocking GL -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.2.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JUnit used as testing framework -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
