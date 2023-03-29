@@ -6,7 +6,7 @@ import dk.sdu.sesem4.common.data.events.Event;
 public interface EventServiceSPI
 {
     /**
-     * Spawn enemy into the map
+     * Handles the event.
      * <br><br>
      * Pre-condition: A event has to be triggered.<br>
      * post-condition: The event has been handled.
