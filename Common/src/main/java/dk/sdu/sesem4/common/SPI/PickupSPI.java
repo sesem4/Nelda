@@ -15,7 +15,7 @@ public interface PickupSPI {
      * @param gameData The game data
      * @param item Item to pickup
      *
-     * @return The item that is to be piked up
+     * @return The item that is to be picked up
      */
     Item pickup(GameData gameData, Entity item);
 }
