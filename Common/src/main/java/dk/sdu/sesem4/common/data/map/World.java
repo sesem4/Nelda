@@ -1,4 +1,4 @@
 package dk.sdu.sesem4.common.data.map;
 
-public class Map {
+public class World {
 }
