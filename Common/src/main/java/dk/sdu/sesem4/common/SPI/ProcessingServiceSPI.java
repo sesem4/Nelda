@@ -13,5 +13,5 @@ public interface ProcessingServiceSPI {
      * @param gameData The game data
      * @param priority The priority, which is to be run for the current process round
      */
-    void postProcess(GameData gameData, Priority priority);
+    void process(GameData gameData, Priority priority);
 }
