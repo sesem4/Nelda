@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
  */
 class MapProcessingServiceTest {
 
-
     @Test
     TiledMap[] loadWorld() {
         TiledMap[] world;
