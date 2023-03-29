@@ -7,7 +7,7 @@ import dk.sdu.sesem4.common.data.entity.Item;
 public interface PickupSPI {
     /**
      /**
-     * Spawn enemy into the map
+     * Pickup element from the world
      * <br><br>
      * Pre-condition: Item and player have collided.<br>
      * post-condition: Item has been picked up by player.
