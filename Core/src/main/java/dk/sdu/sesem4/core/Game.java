@@ -43,7 +43,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
         //Load the map into a array of maps save in the core module.
         MapProcessingService mapProcessingService = new MapProcessingService();
-        world = mapProcessingService.loadWorld();
+        world = mapProcessingService.loadWorld("overworld", 16, 8);
 
 
         sb = new SpriteBatch();

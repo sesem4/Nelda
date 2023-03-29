@@ -8,7 +8,7 @@ public class MapPlugin {
     MapProcessingService mapProcessingService;
     public void createNewWorld() {
         mapProcessingService = new MapProcessingService();
-        mapProcessingService.loadWorld();
+        mapProcessingService.loadWorld("overworld", 16, 8);
     }
 
 }

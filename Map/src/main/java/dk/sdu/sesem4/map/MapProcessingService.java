@@ -14,15 +14,13 @@ public class MapProcessingService {
     TmxMapLoader tmxMapLoader = new TmxMapLoader();
     //World size
 
-    public TiledMap[] loadWorld() {
-        int worldWidth = 16;
-        int worldHeight = 8;
+    public TiledMap[] loadWorld(String worldName, int worldWidth, int worldHeight) {
         world = new TiledMap[worldWidth * worldHeight];
         String[] columns = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
         for (int x = 0; x < worldWidth; x++) {
             for (int y = 0; y < worldHeight; y++) {
                 try {
-                    String fileName = columns[x] + (y + 1) + ".tmx";
+                    String fileName = worldName + "/" + columns[x] + (y + 1) + ".tmx";
                     TiledMap map = tmxMapLoader.load(fileName);
                     world[x + y * worldWidth] = map;
                 } catch (Exception e) {
