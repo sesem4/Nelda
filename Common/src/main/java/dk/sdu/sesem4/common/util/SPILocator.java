@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 
+/**
+ * SPI locator class, to help locate and retrieve SPI implementations
+ */
 public class SPILocator {
     /**
      * List of currently cached services
@@ -30,7 +33,7 @@ public class SPILocator {
         ServiceLoader<T> loader;
         try {
             loader = services.get(service);
-        } catch (ClassCastException|NullPointerException exception) {
+        } catch (ClassCastException | NullPointerException exception) {
             // If error due occur, print the stack trace for debugging but continue
             exception.printStackTrace();
             loader = null;
@@ -58,7 +61,8 @@ public class SPILocator {
             serviceError.printStackTrace();
         }
 
-        // Print found count, if any new instances has been found in the locating process
+        // Print found count, if any new instances has been found in the locating
+        // process
         if (printStatement) {
             System.out.println("Found " + instances.size() + " implementations for interface: " + service.getName());
         }
