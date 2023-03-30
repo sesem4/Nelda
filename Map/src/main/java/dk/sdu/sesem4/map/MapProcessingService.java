@@ -2,11 +2,15 @@ package dk.sdu.sesem4.map;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
+import dk.sdu.sesem4.common.data.gamedata.GameData;
+import dk.sdu.sesem4.common.data.process.Priority;
+
 /**
  * MapProcessingService loads the world from the .tmx files into an array of TiledMaps.
  * It is called from the MapPlugin class when the game is started.
  */
-public class MapProcessingService {
+public class MapProcessingService implements PostProcessingServiceSPI {
 
     //Array of TiledMaps
     TiledMap[] world;
@@ -29,5 +33,10 @@ public class MapProcessingService {
             }
         }
         return world;
+    }
+
+    @Override
+    public void postProcess(GameData gameData, Priority priority) {
+
     }
 }
