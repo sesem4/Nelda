@@ -2,6 +2,7 @@ package dk.sdu.sesem4.common.SPI;
 
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
+import dk.sdu.sesem4.common.data.weapon.AttackType;
 
 public interface CombatSPI {
     /**
@@ -12,6 +13,7 @@ public interface CombatSPI {
      *
      * @param gameData The game data
      * @param entity The entity that spawns the weapon
+     * @param attackType The attack the player wants to spawn
      */
-    void spawnWeapon(GameData gameData, Entity entity);
+    void spawnWeapon(GameData gameData, Entity entity, AttackType attackType);
 }

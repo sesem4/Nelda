@@ -6,5 +6,6 @@ module Common {
     exports dk.sdu.sesem4.common.data.map;
     exports dk.sdu.sesem4.common.data.math;
     exports dk.sdu.sesem4.common.data.process;
+    exports dk.sdu.sesem4.common.data.weapon;
     exports dk.sdu.sesem4.common.util;
 }

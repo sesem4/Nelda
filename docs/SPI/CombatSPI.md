@@ -9,7 +9,7 @@
     <td>
 
 ```java
-void spawnWeapon(GameData gameData, Entity weapon) 
+void spawnAttack(GameData gameData, Entity combatee, AttackType attackType) 
 ```
 </td>
 </tr>
@@ -24,6 +24,8 @@ void spawnWeapon(GameData gameData, Entity weapon)
 `GameData gameData` - The game data
 
 `Entity weapon` - The entity that spawns the weapon
+
+`AttackType attackType` - The attackType the player wants to spawn
 
 </td>
 </tr>
