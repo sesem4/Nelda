@@ -51,17 +51,6 @@
         </dependency>
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
-            <artifactId>gdx-backend-headless</artifactId>
-            <version>1.11.0</version>
-            <scope>test</scope>
-        </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.badlogicgames.gdx</groupId>-->
-<!--            <artifactId>gdx-backend-lwjgl</artifactId>-->
-<!--            <version>${libGDX.version}</version>-->
-<!--        </dependency>-->
-        <dependency>
-            <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx-box2d</artifactId>
             <version>${libGDX.version}</version>
         </dependency>
@@ -71,16 +60,6 @@
             <classifier>natives-desktop</classifier>
             <version>${libGDX.version}</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>dk.sdu.sesem4</groupId>
-            <artifactId>Common</artifactId>
-            <version>0.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>dk.sdu.sesem4</groupId>
-            <artifactId>Map</artifactId>
-            <version>0.0.0</version>
         </dependency>
     </dependencies>
 
