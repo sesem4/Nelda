@@ -10,6 +10,8 @@
         <version>0.0.0</version>
     </parent>
     <artifactId>Sword</artifactId>
+    <packaging>jar</packaging>
+    <name>Sword</name>
 
     <properties>
         <maven.compiler.source>18</maven.compiler.source>
