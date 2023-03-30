@@ -6,16 +6,14 @@ import dk.sdu.sesem4.common.data.entity.Item;
 
 public interface PickupSPI {
     /**
-     /**
-     * Pickup element from the world
-     * <br><br>
+     * Communicate that a item has been picked up
+     * <br>
+     * <br>
      * Pre-condition: Item and player have collided.<br>
      * post-condition: Item has been picked up by player.
      *
      * @param gameData The game data
-     * @param item Item to pickup
-     *
-     * @return The item that is to be picked up
+     * @param item     Item to pickup
      */
-    Item pickup(GameData gameData, Entity item);
+    void pickup(GameData gameData, Entity item);
 }

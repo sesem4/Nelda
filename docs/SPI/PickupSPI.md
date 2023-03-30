@@ -9,13 +9,13 @@
     <td>
 
 ```java
-Item pickup(GameData gameData, Entity item)
+void pickup(GameData gameData, Entity item)
 ```
 </td>
 </tr>
 <tr>
 <td><Strong>Description</strong></td>
-<td>Player can pickup items</td>
+<td>Interface, to communicate that a item has been picked up</td>
 </tr>
 <tr>
 <td><Strong>Parameters</strong></td>
