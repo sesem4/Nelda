@@ -1,4 +1,5 @@
 module Common {
+    requires gdx;
     exports dk.sdu.sesem4.common.SPI;
     exports dk.sdu.sesem4.common.data.entity;
     exports dk.sdu.sesem4.common.data.events;

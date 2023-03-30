@@ -3,6 +3,7 @@ package dk.sdu.sesem4.map;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
+import dk.sdu.sesem4.common.SPI.ProcessingServiceSPI;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.process.Priority;
 
@@ -11,7 +12,7 @@ import dk.sdu.sesem4.common.data.process.Priority;
  * It is called from the MapPlugin class when the game is started.
  */
 
-public class MapProcessingService implements PostProcessingServiceSPI {
+public class MapProcessingService implements ProcessingServiceSPI {
 
     //Array of TiledMaps
     TiledMap[] world;
@@ -37,7 +38,9 @@ public class MapProcessingService implements PostProcessingServiceSPI {
     }
 
     @Override
-    public void postProcess(GameData gameData, Priority priority) {
-
+    public void process(GameData gameData, Priority priority) {
+        // get events from gameData
+        // if there is a MapTransition event, we should change the current map index to reflect that.
+        // then we set the new map in gameData
     }
 }

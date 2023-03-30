@@ -15,7 +15,25 @@
     <properties>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
+        <libGDX.version>1.11.0</libGDX.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <!-- gdx-platform used to get necessary DLLs -->
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-platform</artifactId>
+            <version>${libGDX.version}</version>
+            <classifier>natives-desktop</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-backend-lwjgl3</artifactId>
+            <version>${libGDX.version}</version>
+        </dependency>
+
+    </dependencies>
+
 
 </project>
