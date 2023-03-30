@@ -9,7 +9,7 @@
     <td>
 
 ```java
-void eventHandler(GameData gameData, World world, Event event)
+void eventHandler(GameData gameData, Event event)
 ```
 </td>
 </tr>
@@ -22,8 +22,6 @@ void eventHandler(GameData gameData, World world, Event event)
 <td>
 
 `GameData gameData` - The game data
-
-`World world` - The world of the game
 
 `Event event` - The triggered event
 </td>

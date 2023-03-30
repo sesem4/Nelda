@@ -10,6 +10,7 @@
         <version>0.0.0</version>
     </parent>
     <artifactId>Common</artifactId>
+    <name>Common</name>
 
     <properties>
         <maven.compiler.source>18</maven.compiler.source>

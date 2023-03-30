@@ -9,7 +9,7 @@
     <td>
 
 ```java
-void spawnEnemy(GameData gameData, World world, float x, float y)
+void spawnEnemy(GameData gameData, float x, float y)
 ```
 </td>
 </tr>
@@ -22,8 +22,6 @@ void spawnEnemy(GameData gameData, World world, float x, float y)
 <td>
 
 `GameData gameData` - The game data
-
-`World world` - The world of the game
 
 `Float x` - The x coordinate the enemy should spawn at
 

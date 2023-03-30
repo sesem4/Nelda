@@ -17,7 +17,7 @@ alt Attack was pressed
 	PositionPart -> WeaponPart: position
 	deactivate PositionPart
 
-	WeaponPart -> World: spawn(attack, position)
+	WeaponPart -> World: spawn(attackType, position)
 	activate World
 	World -> WeaponPart
 	deactivate World

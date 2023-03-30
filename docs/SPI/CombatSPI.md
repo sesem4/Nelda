@@ -9,7 +9,7 @@
     <td>
 
 ```java
-void spawnWeapon(GameData gameData, World world, Entity weapon) 
+void spawnAttack(GameData gameData, Entity combatant, AttackType attackType) 
 ```
 </td>
 </tr>
@@ -23,9 +23,11 @@ void spawnWeapon(GameData gameData, World world, Entity weapon)
 
 `GameData gameData` - The game data
 
-`World world` - The world of the game
+`Entity combatant` - The entity that spawns the weapon
 
-`Entity weapon` - The entity that spawns the weapon</td>
+`AttackType attackType` - The attackType the player wants to spawn
+
+</td>
 </tr>
 <tr>
 <td><Strong>PreConditions</strong></td>
