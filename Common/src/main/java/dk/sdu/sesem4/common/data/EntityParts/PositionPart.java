@@ -21,11 +21,7 @@ public class PositionPart implements EntityPart{
         this.position = position;
     }
 
-
     @Override
     public void process(GameData gameData, Entity entity) {
-//        if(gameData.getkey((Inpu))){
-//            direction = Direction.UP;
-//        }
     }
 }

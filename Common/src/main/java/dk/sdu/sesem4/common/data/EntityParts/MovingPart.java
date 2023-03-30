@@ -26,7 +26,9 @@ public class MovingPart implements EntityPart{
     @Override
     public void process(GameData gameData, Entity entity) {
         PositionPart positionPart = entity.getPart(PositionPart.class);
-        
+        float x = positionPart.getPosition().getX();
+        float y = positionPart.getPosition().getY();
+
 
     }
 }
