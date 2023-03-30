@@ -6,7 +6,7 @@ import dk.sdu.sesem4.common.data.entity.Item;
 
 public interface PickupSPI {
     /**
-     * Communicate that a item has been picked up
+     * Communicate that an item has been picked up
      * <br>
      * <br>
      * Pre-condition: Item and player have collided.<br>
