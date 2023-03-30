@@ -1,4 +1,4 @@
-@startuml Enemy collides with Player through direct application
+@startuml Enemy collides with Player through direct application (used)
 skinparam style strictuml
 title Collision between enemy and player through direct application
 
