@@ -55,6 +55,11 @@
             <version>${libGDX.version}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>dk.sdu.sesem4</groupId>
+            <artifactId>Common</artifactId>
+            <version>0.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>

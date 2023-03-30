@@ -1,0 +1,87 @@
+@startuml Enemy collides with Player through events
+skinparam style strictuml
+title Collision between enemy and player through events
+
+activate Core
+
+Note right of Core : Post processing loop
+
+Core -> Collision : postProcess(GameData)
+activate Collision
+
+Note right of Collision
+    Player and enemy are detected to be collided
+end Note
+
+Collision -> Event : emitEvent(CollisionEvent)
+activate Event
+Note right of Event : CollisionEvent is stored
+Event -> Collision : void
+deactivate Event
+
+Collision -> Core : void
+deactivate Collision
+
+Note right of Core : Event loop
+
+Core -> Player : handleEvent(GameData, Event)
+activate Player
+
+Note right of Player
+    Player is notified of collision,
+    and checks if it is one of the parties
+end Note
+
+Note right of Player
+    Player is one of the parties,
+    and is notified of collision
+end Note
+
+Player -> Enemy : getEntityType()
+activate Enemy
+Enemy -> Player : EntityType()
+deactivate Enemy
+
+Note right of Player
+    Player checks if the entity is an enemy,
+    if so, apply collision logic, 
+    due to local knowledge of that an enemy should affect the player
+end Note
+
+Player -> Player : applyCollisionParts()
+activate Player
+
+Player -> Enemy : getCollisionParts()
+activate Enemy
+
+Enemy -> CollisionPart : getCollisionPart()
+activate CollisionPart
+CollisionPart -> Enemy : CollisionParts
+deactivate CollisionPart
+
+Enemy -> Player : CollisionParts
+deactivate Enemy
+
+Note right of Player
+    A damage collision part exists on Enemy
+end Note
+Player -> Player : applyCollisionDamage(CollisionDamage)
+activate Player
+
+Player -> CollisionDamage : getDamage()
+activate CollisionDamage
+CollisionDamage -> Player : damage
+deactivate CollisionDamage
+
+Note right of Player
+    Player is damaged with the damage amount
+end Note
+
+Player -> Player : void
+deactivate Player
+
+Player -> Player : void
+deactivate Player
+
+Player -> Core : void
+deactivate Player
