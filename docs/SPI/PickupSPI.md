@@ -15,7 +15,7 @@ void pickup(GameData gameData, Entity item)
 </tr>
 <tr>
 <td><Strong>Description</strong></td>
-<td>Interface, to communicate that a item has been picked up</td>
+<td>Interface, to communicate that an item has been picked up</td>
 </tr>
 <tr>
 <td><Strong>Parameters</strong></td>
