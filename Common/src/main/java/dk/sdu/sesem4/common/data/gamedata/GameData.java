@@ -2,6 +2,8 @@ package dk.sdu.sesem4.common.data.gamedata;
 
 /**
  * Data for the game
+ *
+ * @author The0Mikkel
  */
 public class GameData {
     /**
