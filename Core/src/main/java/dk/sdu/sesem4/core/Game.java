@@ -11,13 +11,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import dk.sdu.sesem4.map.MapProcessingService;
+
+import dk.sdu.sesem4.common.data.gamedata.GameData;
+import dk.sdu.sesem4.map.MapPlugin;
 
 import java.util.ArrayList;
 
 public class Game extends ApplicationAdapter implements InputProcessor {
 
-
+    GameData gameData;
+    MapPlugin mapPlugin = new MapPlugin();
     OrthographicCamera camera;
     TiledMap[] world;
     ArrayList<Texture> textures;
@@ -42,9 +45,8 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 
         //Load the map into a array of maps save in the core module.
-        MapProcessingService mapProcessingService = new MapProcessingService();
-        world = mapProcessingService.loadWorld("overworld", 16, 8);
-
+        MapPlugin mapPlugin = new MapPlugin();
+        mapPlugin.start(gameData);
 
         sb = new SpriteBatch();
         sprite = new Sprite(textures.get(0));
