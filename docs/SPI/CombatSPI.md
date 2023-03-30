@@ -23,7 +23,7 @@ void spawnAttack(GameData gameData, Entity combatee, AttackType attackType)
 
 `GameData gameData` - The game data
 
-`Entity weapon` - The entity that spawns the weapon
+`Entity combatee` - The entity that spawns the weapon
 
 `AttackType attackType` - The attackType the player wants to spawn
 
