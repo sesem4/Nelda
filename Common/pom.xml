@@ -20,20 +20,50 @@
     </properties>
 
     <dependencies>
-        <!-- gdx-platform used to get necessary DLLs -->
         <dependency>
-            <groupId>com.badlogicgames.gdx</groupId>
-            <artifactId>gdx-platform</artifactId>
-            <version>${libGDX.version}</version>
-            <classifier>natives-desktop</classifier>
+            <groupId>dk.sdu.sesem4</groupId>
+            <artifactId>shadedlibgdx</artifactId>
+            <version>${shadedlibgdx.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.badlogicgames.gdx</groupId>
-            <artifactId>gdx-backend-lwjgl3</artifactId>
-            <version>${libGDX.version}</version>
-        </dependency>
-
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeArtifactIds>shadedlibgdx</includeArtifactIds>
+                            <outputDirectory>../mods</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>dk.sdu.sesem4</groupId>
+                                    <artifactId>shadedlibgdx</artifactId>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>../libs</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

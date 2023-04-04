@@ -1,5 +1,7 @@
 module Common {
-    requires gdx;
+    requires java.desktop;
+    requires ShadedLibGDX;
+
     exports dk.sdu.sesem4.common.SPI;
     exports dk.sdu.sesem4.common.data.entity;
     exports dk.sdu.sesem4.common.data.events;

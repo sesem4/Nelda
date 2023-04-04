@@ -1,6 +1,6 @@
 module Map {
-    requires gdx;
     requires Common;
-    exports dk.sdu.sesem4.map;
+    requires ShadedLibGDX;
 
+    exports dk.sdu.sesem4.map;
 }
