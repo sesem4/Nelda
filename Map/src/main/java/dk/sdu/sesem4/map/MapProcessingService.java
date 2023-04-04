@@ -26,7 +26,7 @@ public class MapProcessingService implements ProcessingServiceSPI {
             for (int y = 0; y < worldHeight; y++) {
                 try {
                     String fileName = worldName + "/" + columns[x] + (y + 1) + ".tmx";
-                    TiledMap map = tmxMapLoader.load(fileName);
+                    TiledMap map = tmxMapLoader.load("Map/src/main/resources/" + fileName);
                     world[x + y * worldWidth] = map;
                 } catch (Exception e) {
                     world[x + y * worldWidth] = null;

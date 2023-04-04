@@ -40,7 +40,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
         textures = new ArrayList<>();
         for (int i = 1; i <= 4; i++) {
-            textures.add(new Texture(Gdx.files.internal("Zelda" + i + ".png")));
+            textures.add(new Texture(Gdx.files.local("Core/src/main/resources/Zelda" + i + ".png")));
         }
 
         //Load the map into a array of maps save in the core module.
@@ -50,12 +50,16 @@ public class Game extends ApplicationAdapter implements InputProcessor {
         sb = new SpriteBatch();
         sprite = new Sprite(textures.get(0));
 
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(world[currentMapIndex]);
+        if (gameData.getGameWorld().getMap() == null) {
+            System.out.println("FUUUCK");
+        }
+
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(gameData.getGameWorld().getMap());
 
         Gdx.input.setInputProcessor(this);
 
-        w = world[currentMapIndex].getProperties().get("width", Integer.class) * world[currentMapIndex].getProperties().get("tilewidth", Integer.class);
-        h = world[currentMapIndex].getProperties().get("height", Integer.class) * world[currentMapIndex].getProperties().get("tileheight", Integer.class);
+        w = 16 * 16;
+        h = 11 * 16;
         camera = new OrthographicCamera();
 
         camera.setToOrtho(false,w,h);
