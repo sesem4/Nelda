@@ -23,5 +23,7 @@ public class PositionPart implements EntityPart{
 
     @Override
     public void process(GameData gameData, Entity entity) {
+        float dt = gameData.getDeltaTime();
+
     }
 }
