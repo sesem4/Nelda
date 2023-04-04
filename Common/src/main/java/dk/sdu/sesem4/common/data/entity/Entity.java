@@ -5,21 +5,24 @@ import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.gamedata.GameEntities;
 import dk.sdu.sesem4.common.util.Direction;
 
+import java.util.HashMap;
+
 
 /**
  * @author Muhammed and Anne Lærke
  */
 public abstract class Entity {
+    private final HashMap<Class,EntityPart> entityParts = new HashMap<>();
     private Direction direction;
     private static final int width = 16;
     private static final int height = 16;
 
 //   private Texture texture;
-    
+
 //
 //    public Texture getTexture() {
 //        return texture;
-//    } 
+//    }
 //
 //    public void setTexture(Texture texture) {
 //        this.texture = texture;
@@ -30,28 +33,34 @@ public abstract class Entity {
      * @param gameData
      * @param gameEntities
      */
-    public abstract void process(GameData gameData, GameEntities gameEntities);
+    public void process(GameData gameData, GameEntities gameEntities){
+
+    }
 
     /**
-     * Add a new EntityPart to the entity and returns either true or false, based on if the entityPart is added.
+     * Add a new EntityPart to the entity.
      * @param part
-     * @return True or False
      */
-    public abstract boolean addEntityPart(EntityPart part);
+    public void addEntityPart(EntityPart part){
+        entityParts.put(part.getClass(),part);
+    }
 
     /**
-     * Remove an EntityPart from the entity and returns either true or false, based on if the entityPart is removed
-     * @param part
-     * @return True or False
+     * Remove an EntityPart from the entity.
+     * @param partClass
      */
-    public abstract boolean removeEntityPart(EntityPart part);
+    public  void removeEntityPart(Class partClass){
+        entityParts.remove(partClass);
+    }
 
     /**
      * Get a specific part based on the given ClassPart in the parameter
-     * @param part
+     * @param partClass
      * @return Class
      */
-    public abstract  <E extends EntityPart>E getPrt(Class part);
+    public   <E extends EntityPart>E getPrt(Class partClass){
+        return (E)entityParts.get(partClass);
+    }
 
 
     public Direction getDirection() {
