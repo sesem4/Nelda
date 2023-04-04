@@ -13,3 +13,5 @@ buildNumber.properties
 .idea
 .vscode
 *.iml
+libs/*
+mods/*
