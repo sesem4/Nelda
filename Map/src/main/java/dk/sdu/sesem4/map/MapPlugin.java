@@ -2,6 +2,7 @@ package dk.sdu.sesem4.map;
 
 import dk.sdu.sesem4.common.SPI.PluginServiceSPI;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
+import dk.sdu.sesem4.common.data.gamedata.GameWorld;
 
 public class MapPlugin implements PluginServiceSPI {
     /**
@@ -20,8 +21,8 @@ public class MapPlugin implements PluginServiceSPI {
 
     @Override
     public void start(GameData gameData) {
-        mapProcessingService = new MapProcessingService();
-        mapProcessingService.loadWorld("world", 10, 10);
+        map = createNewMap();
+        gameData.setGameWorld(new GameWorld(map.world[119]));
     }
 
     @Override

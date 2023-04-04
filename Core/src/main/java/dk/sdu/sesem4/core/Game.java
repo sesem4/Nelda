@@ -9,9 +9,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.*;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.map.MapPlugin;
 
@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class Game extends ApplicationAdapter implements InputProcessor {
 
     GameData gameData;
-    MapPlugin mapPlugin = new MapPlugin();
     OrthographicCamera camera;
     TiledMap[] world;
     ArrayList<Texture> textures;
@@ -37,12 +36,12 @@ public class Game extends ApplicationAdapter implements InputProcessor {
     float w, h;
     @Override
     public void create () {
+        gameData = new GameData();
 
         textures = new ArrayList<>();
         for (int i = 1; i <= 4; i++) {
             textures.add(new Texture(Gdx.files.internal("Zelda" + i + ".png")));
         }
-
 
         //Load the map into a array of maps save in the core module.
         MapPlugin mapPlugin = new MapPlugin();
@@ -62,10 +61,8 @@ public class Game extends ApplicationAdapter implements InputProcessor {
         camera.setToOrtho(false,w,h);
     }
 
-
-
     @Override
-    public void render () {
+    public void render() {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -82,7 +79,6 @@ public class Game extends ApplicationAdapter implements InputProcessor {
         if (sprite.getY()+ sprite.getHeight() < 0){
             currentMapIndex += 16;
             tiledMapRenderer = new OrthogonalTiledMapRenderer(world[currentMapIndex]);
-
 
             sprite.setY(Gdx.graphics.getHeight() - sprite.getHeight());
         }
@@ -136,51 +132,39 @@ public class Game extends ApplicationAdapter implements InputProcessor {
             sprite.setFlip(counter < 30, false);
             sprite.translateY(-1);
             sprite.setTexture(textures.get(0));
-
         }
         sb.end();
-
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        if(keycode == Input.Keys.LEFT){
-
+        if(keycode == Input.Keys.LEFT) {
             left = true;
-
         }
-        if(keycode == Input.Keys.RIGHT){
-
+        if(keycode == Input.Keys.RIGHT) {
             right = true;
-
         }
-        if(keycode == Input.Keys.UP){
-
+        if(keycode == Input.Keys.UP) {
             up = true;
-
         }
-        if(keycode == Input.Keys.DOWN){
-
+        if(keycode == Input.Keys.DOWN) {
             down = true;
-
-
         }
         return false;
     }
 
-
-
     @Override
     public boolean keyUp(int keycode) {
-        if (keycode == Input.Keys.LEFT){
-            left = false;}
-        if (keycode == Input.Keys.RIGHT){
+        if (keycode == Input.Keys.LEFT) {
+            left = false;
+        }
+        if (keycode == Input.Keys.RIGHT) {
             right = false;
         }
-        if (keycode == Input.Keys.UP){
+        if (keycode == Input.Keys.UP) {
             up = false;
         }
-        if (keycode == Input.Keys.DOWN){
+        if (keycode == Input.Keys.DOWN) {
             down = false;
         }
         return false;

@@ -18,17 +18,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>gdx-nightlies</id>-->
-<!--            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>-->
-<!--        </repository>-->
-<!--    </repositories>-->
+
     <repositories>
         <repository>
             <id>libgdx-releases</id>
             <url>https://repo1.maven.org/maven2/</url>
         </repository>
+<!--        <repository>-->
+<!--            <id>gdx-nightlies</id>-->
+<!--            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>-->
+<!--        </repository>-->
     </repositories>
 
     <dependencies>
@@ -61,12 +60,19 @@
             <version>${libGDX.version}</version>
             <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>dk.sdu.sesem4</groupId>
+            <artifactId>Common</artifactId>
+            <version>0.0.0</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>dk.sdu.sesem4</groupId>
             <artifactId>Map</artifactId>
             <version>0.0.0</version>
+            <scope>compile</scope>
         </dependency>
+
     </dependencies>
 
 </project>
