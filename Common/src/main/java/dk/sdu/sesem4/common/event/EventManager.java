@@ -1,4 +1,4 @@
-package dk.sdu.sesem4.common.data.events;
+package dk.sdu.sesem4.common.event;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -13,7 +13,7 @@ public class EventManager {
     /**
      * Map of all event and set of listeners
      */
-    private Map<EventType, Set<EventListener>> listeners;
+    protected Map<EventType, Set<EventListener>> listeners;
 
     private void EventManger() {
         this.listeners = new HashMap<EventType, Set<EventListener>>();
@@ -24,7 +24,7 @@ public class EventManager {
      *
      * @return EventManager
      */
-    public EventManager getInstance() {
+    public static EventManager getInstance() {
         if (EventManager.instance == null) {
             EventManager.instance = new EventManager();
         }
