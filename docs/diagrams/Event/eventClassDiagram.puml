@@ -29,13 +29,13 @@ package "Common" {
 }
 
 package "notifier" {
-    class SpecificNotifier {
+    abstract SpecificNotifier {
         + void process()
     }
 }
 
 package "listener" {
-    class SpecificListener implements EventListener {
+    abstract SpecificListener implements EventListener {
         + void processNotification(EventType type, Event data)
     }
 }
