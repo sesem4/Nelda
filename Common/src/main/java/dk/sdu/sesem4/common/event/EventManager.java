@@ -15,8 +15,8 @@ public class EventManager {
      */
     protected Map<EventType, Set<EventListener>> listeners;
 
-    private void EventManger() {
-        this.listeners = new HashMap<EventType, Set<EventListener>>();
+    private EventManager() {
+        this.listeners = new HashMap<>();
     }
 
     /**
@@ -41,7 +41,7 @@ public class EventManager {
     public void subscribe(EventType type, EventListener listener) {
         // If the type does not exist in the listernes map, add a new set
         if (!this.listeners.containsKey(type)) {
-            this.listeners.put(type, new LinkedHashSet<EventListener>());
+            this.listeners.put(type, new LinkedHashSet<>());
         }
 
         // Get the listener set from the type supplied
