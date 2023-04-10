@@ -28,7 +28,7 @@ Listener2 -> EventManager : subscribe(EventType, EventListener)
 activate EventManager
 EventManager -> Listener2 : void
 deactivate EventManager
-Note right of Listener2: Listener2 subscribes to event type 1
+Note right of Listener2: Listener2 unsubscribes to event type 1
 Listener2 -> EventManager : unsubscribe(EventType, EventListener)
 activate EventManager
 EventManager -> Listener2 : void
