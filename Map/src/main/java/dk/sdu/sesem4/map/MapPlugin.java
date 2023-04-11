@@ -12,17 +12,12 @@ public class MapPlugin implements PluginServiceSPI {
 	Map map;
 	MapProcessingService mapProcessingService;
 
-	public Map createNewMap() {
-		map = new Map();
-		mapProcessingService = new MapProcessingService();
-		map.world = mapProcessingService.loadWorld("overworld", 16, 8);
-		return map;
-	}
-
 	@Override
 	public void start(GameData gameData) {
-		map = createNewMap();
-		gameData.setGameWorld(new GameWorld(map.world[119]));
+		map = new Map();
+		mapProcessingService = new MapProcessingService();
+		mapProcessingService.loadWorld("overworld", 16, 8);
+		gameData.setGameWorld(new GameWorld(mapProcessingService.getCurrentMap()));
 	}
 
 	@Override

@@ -17,7 +17,6 @@ import dk.sdu.sesem4.map.MapPlugin;
 import java.util.ArrayList;
 
 public class Game extends ApplicationAdapter implements InputProcessor {
-
 	GameData gameData;
 	OrthographicCamera camera;
 	ArrayList<Texture> textures;
@@ -28,33 +27,36 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	Sprite sprite;
 
 	boolean up, down, left, right = false;
+	float moveSpeed = 1.3f;
 
 	float w, h;
+	MapPlugin mapPlugin = new MapPlugin();
 
 	@Override
 	public void create() {
 		gameData = new GameData();
 
 		textures = new ArrayList<>();
-		for (int i = 1; i <= 4; i++) {
+		for (int i = 1; i <= 5; i++) {
 			textures.add(new Texture(Gdx.files.local("Core/src/main/resources/Zelda" + i + ".png")));
 		}
 
-		//Load the map into a array of maps save in the core module.
-		MapPlugin mapPlugin = new MapPlugin();
+		w = 16 * 16;
+		h = 11 * 16;
+
 		mapPlugin.start(gameData);
 
 		sb = new SpriteBatch();
-		sprite = new Sprite(textures.get(0));
+		sprite = new Sprite(textures.get(2));
+		sprite.setSize(16, 16);
+		sprite.setPosition(w/2-sprite.getWidth()/2, h/2-sprite.getHeight()/2);
 
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(gameData.getGameWorld().getMap());
 
 		Gdx.input.setInputProcessor(this);
 
-		w = 16 * 16;
-		h = 11 * 16;
 		camera = new OrthographicCamera();
-
+		camera.update();
 		camera.setToOrtho(false, w, h);
 	}
 
@@ -66,67 +68,63 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 		camera.update();
 
+		tiledMapRenderer = new OrthogonalTiledMapRenderer(gameData.getGameWorld().getMap());
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
 
+		//
+		sb.setProjectionMatrix(camera.combined);
 		sb.begin();
-		sprite.setSize(32, 32);
-		sb.draw(sprite, sprite.getX(), sprite.getY(), Gdx.graphics.getWidth() / 16, Gdx.graphics.getHeight() / 11);
+		sprite.draw(sb);
 
-		if (sprite.getY() + sprite.getHeight() < 0) {
-			tiledMapRenderer = new OrthogonalTiledMapRenderer(gameData.getGameWorld().getMap());
-
-			sprite.setY(Gdx.graphics.getHeight() - sprite.getHeight());
+		float bottomEdge = 0;
+		float topEdge = h;
+		float leftEdge = 0;
+		float rightEdge = w;
+		if (sprite.getY() + sprite.getHeight()/2 < bottomEdge) {
+			changeMap(16);
+			sprite.setY(topEdge - sprite.getHeight()/2);
 		}
-		if (sprite.getY() + sprite.getHeight() > Gdx.graphics.getHeight()) {
-			tiledMapRenderer = new OrthogonalTiledMapRenderer(gameData.getGameWorld().getMap());
-
-			sprite.setY(0);
+		if (sprite.getY() + sprite.getHeight()/2 > topEdge) {
+			changeMap(-16);
+			sprite.setY(bottomEdge - sprite.getHeight()/2);
 		}
-		if (sprite.getX() + sprite.getWidth() < 0) {
-			tiledMapRenderer = new OrthogonalTiledMapRenderer(gameData.getGameWorld().getMap());
-
-			sprite.setX(Gdx.graphics.getWidth() - sprite.getWidth());
+		if (sprite.getX() + sprite.getWidth()/2 < leftEdge) {
+			changeMap(-1);
+			sprite.setX(rightEdge - sprite.getWidth()/2);
 		}
-		if (sprite.getX() + sprite.getWidth() > Gdx.graphics.getWidth()) {
-			tiledMapRenderer = new OrthogonalTiledMapRenderer(gameData.getGameWorld().getMap());
-
-			sprite.setX(0);
+		if (sprite.getX() + sprite.getWidth()/2 > rightEdge) {
+			changeMap(1);
+			sprite.setX(leftEdge - sprite.getWidth()/2);
 		}
 
-		counter++;
-		if (counter >= 60) {
-			counter = 0;
-		}
+		counter = (counter + 1) % 16;
+
 		if (left) {
-			if (counter < 30) {
-				sprite.setTexture(textures.get(2));
-			} else {
-				sprite.setTexture(textures.get(3));
-			}
 			sprite.setFlip(true, false);
-			sprite.setX(sprite.getX() - 1);
+			sprite.setTexture(textures.get(counter < 8 ? 3 : 4));
+			sprite.translateX(-moveSpeed);
 		}
 		if (right) {
-			if (counter < 30) {
-				sprite.setTexture(textures.get(2));
-			} else {
-				sprite.setTexture(textures.get(3));
-			}
-			sprite.translateX(1);
 			sprite.setFlip(false, false);
+			sprite.setTexture(textures.get(counter < 8 ? 3 : 4));
+			sprite.translateX(moveSpeed);
 		}
 		if (up) {
-			sprite.setFlip(counter >= 30, false);
-			sprite.translateY(1);
-			sprite.setTexture(textures.get(1));
+			sprite.setFlip(counter < 8, false);
+			sprite.setTexture(textures.get(2));
+			sprite.translateY(moveSpeed);
 		}
 		if (down) {
-			sprite.setFlip(counter < 30, false);
-			sprite.translateY(-1);
-			sprite.setTexture(textures.get(0));
+			sprite.setFlip(false, false);
+			sprite.setTexture(textures.get(counter < 8 ? 0 : 1));
+			sprite.translateY(-moveSpeed);
 		}
 		sb.end();
+	}
+
+	private void changeMap(int deltaIndex) {
+//		this.mapPlugin.changeMap(gameData, deltaIndex);
 	}
 
 	@Override
@@ -195,5 +193,4 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	public boolean scrolled(float amountX, float amountY) {
 		return false;
 	}
-
 }

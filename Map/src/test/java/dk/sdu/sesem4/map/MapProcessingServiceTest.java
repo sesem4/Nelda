@@ -3,10 +3,10 @@ package dk.sdu.sesem4.map;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -14,13 +14,51 @@ import org.junit.runner.RunWith;
  * This test makes sure that a map is loaded into the array and returns the array of maps.
  */
 @RunWith(GdxTestRunner.class)
-public class MapProcessingServiceTest {
-	@Test
+public class MapProcessingServiceTest extends MapProcessingService {
+	int worldWidth = 16;
+	int worldHeight = 8;
+
+	@Before
 	public void loadWorld() {
-		// load map
-		String fileName = "overworld/A1.tmx";
-		TmxMapLoader tmxMapLoader = new TmxMapLoader();
-		TiledMap map = tmxMapLoader.load(fileName);
+		world = super.loadWorld("overworld", worldWidth, worldHeight);
+	}
+
+	/**
+	 * For some reason, when testing, resource file can use the direct path starting from the "resources" folder,
+	 * while, when running the game, we must use "Map/src/main/resources" prefix.
+	 * This is the best solution we could think of.
+	 * @return the path to the "resources" directory. in this case, an empty string.
+	 */
+	@Override
+	protected String getResourcesDirectory() {
+		return "";
+	}
+
+	/**
+	 * ensure all the correct files exist
+	 */
+	@Test
+	public void testCorrectFilesExist() {
+
+	}
+
+	/**
+	 * Ensure the files are loaded by MapProcessingService
+	 */
+	@Test
+	public void testLoadWorldLoadsFiles() {
+		assertEquals(world.length, worldWidth*worldHeight);
+		for (TiledMap tiledMap : world) {
+			assertNotNull(tiledMap);
+		}
+	}
+
+	/**
+	 * ensure the file contents are correct
+	 */
+	@Test
+	public void testCorrectFileContents() {
+		TiledMap map = world[0];
 
 		// get the id of the tile at (0, 0)
 		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
@@ -35,4 +73,15 @@ public class MapProcessingServiceTest {
 		assertEquals(id2, 34);
 		assertEquals(id3, 3);
 	}
+
+	/**
+	 * ensure the maps are loaded into the correct indices
+	 */
+	@Test
+	public void testCorrectWorldIndices() {
+
+	}
+
+	// TODO: ensure that the map is changed when a mapTransition event is emitted
+	// TODO: ensure that the map is changed correctly
 }

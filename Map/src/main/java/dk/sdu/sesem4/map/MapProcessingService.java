@@ -17,16 +17,25 @@ public class MapProcessingService implements ProcessingServiceSPI {
 	TiledMap[] world;
 	//Tiled map loader
 	TmxMapLoader tmxMapLoader = new TmxMapLoader();
-	//World size
+	int currentMapIndex = 119;
+
+	/**
+	 * This method just returns the current "resources" folder.
+	 * It is needed, so we can do tests with a custom "resources" folder.
+	 * @return the resources directory to get resource files from
+	 */
+	protected String getResourcesDirectory() {
+		return "Map/src/main/resources/";
+	}
 
 	public TiledMap[] loadWorld(String worldName, int worldWidth, int worldHeight) {
 		world = new TiledMap[worldWidth * worldHeight];
 		String[] columns = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 		for (int x = 0; x < worldWidth; x++) {
 			for (int y = 0; y < worldHeight; y++) {
+				String fileName = getResourcesDirectory() + worldName + "/" + columns[x] + (y + 1) + ".tmx";
 				try {
-					String fileName = worldName + "/" + columns[x] + (y + 1) + ".tmx";
-					TiledMap map = tmxMapLoader.load("Map/src/main/resources/" + fileName);
+					TiledMap map = tmxMapLoader.load(fileName);
 					world[x + y * worldWidth] = map;
 				} catch (Exception e) {
 					world[x + y * worldWidth] = null;
@@ -34,6 +43,10 @@ public class MapProcessingService implements ProcessingServiceSPI {
 			}
 		}
 		return world;
+	}
+
+	public TiledMap getCurrentMap() {
+		return world[currentMapIndex];
 	}
 
 	@Override
