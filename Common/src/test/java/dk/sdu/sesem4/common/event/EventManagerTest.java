@@ -161,6 +161,7 @@ public class EventManagerTest {
         // Test that key still exists, but now with two listeners
         assertTrue(manager.listeners.containsKey(testEventType));
         assertEquals(listeners, manager.listeners.get(testEventType));
+        assertFalse(manager.listeners.get(testEventType).contains(testEventListener));
         assertEquals(1, listeners.size());
     }
 
@@ -215,6 +216,7 @@ public class EventManagerTest {
         // Test that key still exists, but now with two listeners
         assertTrue(manager.listeners.containsKey(testEventType));
         assertEquals(listeners, manager.listeners.get(testEventType));
+        assertFalse(manager.listeners.get(testEventType).contains(testEventListener));
         assertEquals(1, listeners.size());
     }
 
