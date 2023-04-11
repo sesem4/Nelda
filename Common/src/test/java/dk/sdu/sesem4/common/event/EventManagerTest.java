@@ -165,6 +165,60 @@ public class EventManagerTest {
     }
 
     @Test
+    public void testMultipleUnsubscribe() {
+        EventManager manager = EventManager.getInstance();
+
+        // Create event elements
+        EventType testEventType = new TestEventType();
+        EventListener testEventListener = new TestListener();
+
+        // Subscribe test listener to test event
+        manager.subscribe(testEventType, testEventListener);
+
+        // Test that the event was added to the manager test
+        assertTrue(manager.listeners.containsKey(testEventType));
+
+        // Unsubscribe the test listener
+        manager.unsubscribe(testEventType, testEventListener);
+        manager.unsubscribe(testEventType, testEventListener);
+
+        // Test the key does no longer exist in manager listener
+        assertFalse(manager.listeners.containsKey(testEventType));
+    }
+
+    @Test
+    public void testMultipleUnsubscribeWithMultipleSubscribed() {
+        EventManager manager = EventManager.getInstance();
+
+        // Create event elements
+        EventType testEventType = new TestEventType();
+        EventListener testEventListener = new TestListener();
+        EventListener testEventListener2 = new TestListener();
+
+        // Subscribe test listener to test event
+        manager.subscribe(testEventType, testEventListener);
+        manager.subscribe(testEventType, testEventListener2);
+
+        // Test that the event was added to the manager test
+        assertTrue(manager.listeners.containsKey(testEventType));
+
+        // Get listener list
+        Set<EventListener> listeners = manager.listeners.get(testEventType);
+
+        // Check that two subscribed elements
+        assertEquals(2, listeners.size());
+
+        // Unsubscribe the test listener
+        manager.unsubscribe(testEventType, testEventListener);
+        manager.unsubscribe(testEventType, testEventListener);
+
+        // Test that key still exists, but now with two listeners
+        assertTrue(manager.listeners.containsKey(testEventType));
+        assertEquals(listeners, manager.listeners.get(testEventType));
+        assertEquals(1, listeners.size());
+    }
+
+    @Test
     public void testNotification() {
         EventManager manager = EventManager.getInstance();
 
@@ -245,5 +299,34 @@ public class EventManagerTest {
         // Check that the listener has processed
         assertEquals(1, testEventListener.getProcessCount());
         assertEquals(2, testEventListener2.getProcessCount());
+    }
+
+    @Test
+    public void testMultipleSubscribeSameTypeSameListener() {
+        EventManager manager = EventManager.getInstance();
+
+        // Create event elements
+        Event testEvent = new TestEvent();
+        EventType testEventType = new TestEventType();
+        TestListener testEventListener = new TestListener();
+
+        // Subscribe test listener to test event
+        manager.subscribe(testEventType, testEventListener);
+        manager.subscribe(testEventType, testEventListener); // This should not add the listener to the subscribed list again
+
+        // Ensure, that the listener has not yet processed anything
+        assertEquals(0, testEventListener.getProcessCount());
+
+        // send notification to subscribed event listener
+        manager.notify(testEventType, testEvent);
+
+        // Check that the listener has processed
+        assertEquals(1, testEventListener.getProcessCount());
+
+        // Send second notification
+        manager.notify(testEventType, testEvent);
+
+        // Check that the listener has processed
+        assertEquals(2, testEventListener.getProcessCount());
     }
 }
