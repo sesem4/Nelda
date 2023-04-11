@@ -1,0 +1,74 @@
+@startuml Event system
+skinparam style strictuml
+title Event system (Sequence diagram)
+
+participant Core
+participant Listener1
+participant Listener2
+participant Listener3
+participant Notifier
+participant EventManager
+
+activate Core
+
+Core -> Listener1 : process()
+activate Listener1
+Note right of Listener1: Listener1 subscribes to event type 1
+Listener1 -> EventManager : subscribe(EventType, EventListener)
+activate EventManager
+EventManager -> Listener1 : void
+deactivate EventManager
+Listener1 -> Core : void
+deactivate Listener1
+
+Core -> Listener2 : process()
+activate Listener2
+Note right of Listener2: Listener2 subscribes to event type 1
+Listener2 -> EventManager : subscribe(EventType, EventListener)
+activate EventManager
+EventManager -> Listener2 : void
+deactivate EventManager
+Note right of Listener2
+Listener2 unsubscribes to event type 1.
+This may happen in a different processing loop.
+end Note
+Listener2 -> EventManager : unsubscribe(EventType, EventListener)
+activate EventManager
+EventManager -> Listener2 : void
+deactivate EventManager
+Listener2 -> Core : void
+deactivate Listener2
+
+Core -> Listener3 : process()
+activate Listener3
+Note right of Listener3: Listener2 subscribes to event type 1
+Listener3 -> EventManager : subscribe(EventType, EventListener)
+activate EventManager
+EventManager -> Listener3 : void
+deactivate EventManager
+Listener3 -> Core : void
+deactivate Listener3
+
+
+Core -> Notifier : process()
+activate Notifier
+Note right of Notifier: Notifier notifies event type 1
+Notifier -> EventManager : notify(EventType, Event)
+activate EventManager
+
+Note right of EventManager: EventManager notifies all listeners
+
+EventManager -> Listener1 : processNotification(EventType, Event)
+activate Listener1
+Listener1 -> EventManager : void
+deactivate Listener1
+
+EventManager -> Listener3 : processNotification(EventType, Event)
+activate Listener3
+Listener3 -> EventManager : void
+deactivate Listener3
+
+EventManager -> Notifier : void
+deactivate EventManager
+Notifier -> Core : void
+deactivate Notifier
