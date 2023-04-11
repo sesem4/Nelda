@@ -15,4 +15,7 @@ jobs:
           java-version: '18'
           distribution: 'adopt'
       - name: Build test with maven
-        run: mvn --batch-mode --update-snapshots clean compile
+        env:
+          SECRET_USER_NAME: ${{ secrets.SECRET_USER_NAME }}
+          SECRET_USER_TOKEN: ${{ secrets.SECRET_USER_TOKEN }}
+        run: mvn --batch-mode --update-snapshots clean compile -s settings.xml -f ./pom.xml
