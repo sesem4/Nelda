@@ -70,7 +70,7 @@ public class EventManager {
         listeners.remove(listener);
 
         // if the listeners list is empty, remove it completely from the listeners map
-        if (listeners.size() == 0) {
+        if (listeners.isEmpty()) {
             this.listeners.remove(type);
         }
     }
