@@ -19,3 +19,8 @@ jobs:
           SECRET_USER_NAME: ${{ secrets.SECRET_USER_NAME }}
           SECRET_USER_TOKEN: ${{ secrets.SECRET_USER_TOKEN }}
         run: mvn --batch-mode --update-snapshots clean compile -s settings.xml -f ./pom.xml
+      - name: Verify with maven
+        run: mvn --batch-mode --update-snapshots verify -Dtestfx.robot=glass -Dglass.platform=Monocle -Dmonocle.platform=Headless -Dprism.order=sw -s settings.xml -f ./pom.xml
+      - name: Publish Test Report
+        if: ${{ always() }}
+        uses: scacap/action-surefire-report@v1
