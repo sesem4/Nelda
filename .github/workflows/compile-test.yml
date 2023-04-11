@@ -24,7 +24,7 @@ jobs:
         run: mvn --batch-mode -DskipTests package -s settings.xml -f ./pom.xml
 
       - name: Test
-        run: mvn --batch-mode -Dmaven.test.failure.ignore=true -Daggregate=true test -s settings.xml -f ./pom.xml
+        run: mvn --batch-mode -Dmaven.test.failure.ignore=true -Daggregate=true test -s settings.xml -f ./pom.xml && ls -la
 
       # - name: Verify with maven
       #   run: mvn --batch-mode --update-snapshots verify -Dtestfx.robot=glass -Dglass.platform=Monocle -Dmonocle.platform=Headless -Dprism.order=sw -s settings.xml -f ./pom.xml
