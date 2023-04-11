@@ -14,7 +14,7 @@ jobs:
         with:
           java-version: '18'
           distribution: 'adopt'
-      - name: Build test with maven
+      - name: Compile with maven
         env:
           SECRET_USER_NAME: ${{ secrets.SECRET_USER_NAME }}
           SECRET_USER_TOKEN: ${{ secrets.SECRET_USER_TOKEN }}
