@@ -1,7 +1,7 @@
 package dk.sdu.sesem4.common.SPI;
 
 import dk.sdu.sesem4.common.data.gamedata.GameData;
-import dk.sdu.sesem4.common.data.events.Event;
+import dk.sdu.sesem4.common.event.Event;
 
 public interface EventServiceSPI {
 	/**
