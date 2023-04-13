@@ -5,10 +5,8 @@ import dk.sdu.sesem4.common.data.gamedata.GameData;
 
 public class LifePart implements EntityPart {
     private int life;
-    private boolean dead;
     public LifePart(int life){
         this.life = life;
-
     }
 
     public int getLife() {
@@ -19,19 +17,24 @@ public class LifePart implements EntityPart {
         this.life = life;
     }
 
-    public boolean isDead() {
-        return dead;
+    public boolean isAlive() {
+        return getLife() > 0;
     }
 
-    public void setDead(boolean dead) {
-        this.dead = dead;
+    public boolean isDead() {
+        return !this.isAlive();
+    }
+
+    public void kill() {
+        this.setLife(0);
+    }
+
+    public void doDamage(int damage) {
+        this.setLife(this.getLife() - damage);
     }
 
     @Override
     public void process(GameData gameData, Entity entity) {
-        if(life == 0){
-            dead = true;
-        }
 
     }
 }
