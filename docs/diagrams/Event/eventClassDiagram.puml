@@ -1,0 +1,41 @@
+@startuml Event system
+skinparam style strictuml
+title Event system (Class diagram)
+
+package "Common" {
+    class EventManager {
+        - Map<EventType, EventListener> listeners
+        + void subscribe(EventType type, EventListener listener)
+        + void unsubscribe(EventType type, EventListener listener)
+        + void notify(EventType type, Event data)
+    }
+    interface EventListener {
+        + void processNotification(EventType type, Event data)
+    }
+
+    interface Event {
+    }
+    package "Events" {
+        class SpecificEvent implements Event {
+        }
+    }
+
+    interface EventType {
+    }
+    package "EventTypes" {
+        class SpecificEventType implements EventType {
+        }
+    }
+}
+
+package "notifier" {
+    abstract SpecificNotifier {
+        + void process()
+    }
+}
+
+package "listener" {
+    abstract SpecificListener implements EventListener {
+        + void processNotification(EventType type, Event data)
+    }
+}
