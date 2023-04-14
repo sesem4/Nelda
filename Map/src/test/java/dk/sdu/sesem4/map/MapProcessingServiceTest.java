@@ -15,7 +15,9 @@ import org.junit.runner.RunWith;
  */
 @RunWith(GdxTestRunner.class)
 public class MapProcessingServiceTest extends MapProcessingService {
+	// How many maps the world is wide
 	int worldWidth = 16;
+	// How many maps the world is high
 	int worldHeight = 8;
 
 	public MapProcessingServiceTest() {
