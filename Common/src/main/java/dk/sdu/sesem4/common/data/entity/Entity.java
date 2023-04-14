@@ -7,6 +7,7 @@ import dk.sdu.sesem4.common.data.CollisionParts.KnockbackPart;
 import dk.sdu.sesem4.common.data.EntityParts.*;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.gamedata.GameEntities;
+import dk.sdu.sesem4.common.util.Direction;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -87,21 +88,46 @@ public abstract class Entity {
     }
 
     public void collided(Entity other) {
-        // if should collide with the entity:
-        LifePart lp = this.getEntityPart(LifePart.class);
-        DamagePart dp = other.getCollisionPart(DamagePart.class);
-        lp.doDamage(dp.getDamage());
+        // only do this if we should collide with the entity:
+        doDamage(other);
+        doKnockback(other);
+    }
 
-        PositionPart thisPp = this.getEntityPart(PositionPart.class);
-        PositionPart otherPp = other.getEntityPart(PositionPart.class);
-        MovingPart mp = this.getEntityPart(MovingPart.class);
-        KnockbackPart kp = other.getCollisionPart(KnockbackPart.class);
-        Knockback knockback;
+    /**
+     * Do damage according to other's DamagePart
+     * @param other the Entity we're colliding with
+     */
+    private void doDamage(Entity other) {
+        //TODO: add null-checks
+        LifePart ourLifePart = this.getEntityPart(LifePart.class);
+        DamagePart othersDamagePart = other.getCollisionPart(DamagePart.class);
+        ourLifePart.doDamage(othersDamagePart.getDamage());
+    }
+
+    /**
+     * Do knockback according to other's knockbackPart and maybe the positionParts
+     * @param other the Entity we're colliding with
+     */
+    private void doKnockback(Entity other) {
+        //TODO: add null-checks
+        KnockbackPart othersKnockbackPart = other.getCollisionPart(KnockbackPart.class);
+        PositionPart othersPositionPart = other.getEntityPart(PositionPart.class);
+
+        Direction knockbackDirection;
+        // if other is a projectile, we should be knocked back with its direction
         if (other.getEntityType() == EntityType.PlayerProjectile || other.getEntityType() == EntityType.EnemyProjectile) {
-            knockback = new Knockback(otherPp.getDirection(), kp.getDuration(), kp.getSpeed());
+            knockbackDirection = othersPositionPart.getDirection();
         } else {
-            knockback = new Knockback(otherPp.getDirectionTo(thisPp.getPosition()), kp.getDuration(), kp.getSpeed());
+            // else, we should be knocked back directly away from other
+            PositionPart ourPositionPart = this.getEntityPart(PositionPart.class);
+            knockbackDirection = othersPositionPart.getDirectionTo(ourPositionPart.getPosition());
         }
-        mp.setKnockback(knockback);
+
+        // we create knockback data according to the generated direction and the knockbackPart
+        Knockback knockback = new Knockback(knockbackDirection, othersKnockbackPart.getDuration(), othersKnockbackPart.getSpeed());
+
+        // set the knockback
+        MovingPart ourMovingPart = this.getEntityPart(MovingPart.class);
+        ourMovingPart.setKnockback(knockback);
     }
 }

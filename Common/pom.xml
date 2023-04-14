@@ -29,11 +29,7 @@
             <version>1.11.0</version>
             <classifier>natives-desktop</classifier>
         </dependency>
-            
 
-    </dependencies>
-
-    <dependencies>
         <dependency>
             <groupId>dk.sdu.sesem4</groupId>
             <artifactId>shadedlibgdx</artifactId>

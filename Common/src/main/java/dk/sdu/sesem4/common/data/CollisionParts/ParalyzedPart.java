@@ -22,11 +22,11 @@ public class ParalyzedPart implements CollisionPart {
     public void process(GameData gameData, Entity entity) {
         if (paralyzed) {
             int defaultSpeed = speed;
-            MovingPart movingPart = entity.getPrt(MovingPart.class); movingPart.setSpeed(0);
+            MovingPart movingPart = entity.getEntityPart(MovingPart.class); movingPart.setMoveSpeed(0);
 
             paralyzedTimer++;
             if (paralyzedTimer == paralyzedDuration) {
-                movingPart.setSpeed(defaultSpeed);
+                movingPart.setMoveSpeed(defaultSpeed);
                 paralyzedTimer = 0;
                 paralyzed = false;
             }

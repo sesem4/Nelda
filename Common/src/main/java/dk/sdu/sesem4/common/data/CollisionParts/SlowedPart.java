@@ -22,11 +22,12 @@ public class SlowedPart implements CollisionPart {
     public void process(GameData gameData, Entity entity) {
         if (slowed) {
             int defaultSpeed = speed;
-            MovingPart movingPart = entity.getPrt(MovingPart.class); movingPart.setSpeed(0);
+            MovingPart movingPart = entity.getEntityPart(MovingPart.class);
+            movingPart.setMoveSpeed(movingPart.getMoveSpeed() / 2);
 
             slowedTimer++;
             if (slowedTimer == slowedDuration) {
-                movingPart.setSpeed(defaultSpeed);
+                movingPart.setMoveSpeed(defaultSpeed);
                 slowedTimer = 0;
                 slowed = false;
             }

@@ -55,11 +55,19 @@ public class MovingPart implements EntityPart {
 
         float x = positionPart.getPosition().getX();
         float y = positionPart.getPosition().getY();
-        switch (direction){
-            case UP -> y += getMoveSpeed();
-            case DOWN -> y -= getMoveSpeed();
-            case LEFT -> x += getMoveSpeed();
-            case RIGHT -> x -= getMoveSpeed();
+        switch (direction) {
+            case UP:
+                y += getMoveSpeed();
+                break;
+            case DOWN:
+                y -= getMoveSpeed();
+                break;
+            case LEFT:
+                x += getMoveSpeed();
+                break;
+            case RIGHT:
+                x -= getMoveSpeed();
+                break;
         }
         positionPart.getPosition().setX(x);
         positionPart.getPosition().setY(y);
