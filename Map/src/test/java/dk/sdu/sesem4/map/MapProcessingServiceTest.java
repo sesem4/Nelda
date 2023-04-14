@@ -18,9 +18,17 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	int worldWidth = 16;
 	int worldHeight = 8;
 
+	public MapProcessingServiceTest() {
+		super(new Map());
+	}
+
+	/**
+	 * Before each test all the maps will be loaded into the world.
+	 */
 	@Before
 	public void loadWorld() {
-		world = super.loadWorld("overworld", worldWidth, worldHeight);
+		// world is inherited from MapProcessingService
+		super.loadWorld("overworld", worldWidth, worldHeight);
 	}
 
 	/**
@@ -47,8 +55,8 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	 */
 	@Test
 	public void testLoadWorldLoadsFiles() {
-		assertEquals(world.length, worldWidth*worldHeight);
-		for (TiledMap tiledMap : world) {
+		assertEquals(map.world.length, worldWidth*worldHeight);
+		for (TiledMap tiledMap : map.world) {
 			assertNotNull(tiledMap);
 		}
 	}
@@ -58,10 +66,10 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	 */
 	@Test
 	public void testCorrectFileContents() {
-		TiledMap map = world[0];
+		TiledMap m = map.world[0];
 
 		// get the id of the tile at (0, 0)
-		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
+		TiledMapTileLayer layer = (TiledMapTileLayer) m.getLayers().get(0);
 		TiledMapTileLayer.Cell cell = layer.getCell(0, 0);
 		TiledMapTile tile = cell.getTile();
 		int id = tile.getId();

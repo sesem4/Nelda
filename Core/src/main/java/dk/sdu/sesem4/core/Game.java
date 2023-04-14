@@ -9,9 +9,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
+import dk.sdu.sesem4.common.data.process.Priority;
+import dk.sdu.sesem4.common.event.Direction;
+import dk.sdu.sesem4.common.event.EventManager;
+import dk.sdu.sesem4.common.event.MapTransitionEvent;
+import dk.sdu.sesem4.common.event.MapTransitionEventType;
 import dk.sdu.sesem4.map.MapPlugin;
 
 import java.util.ArrayList;
@@ -21,6 +27,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	OrthographicCamera camera;
 	ArrayList<Texture> textures;
 	TiledMapRenderer tiledMapRenderer;
+	EventManager eventManager;
 	int counter;
 
 	SpriteBatch sb;
@@ -35,6 +42,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public void create() {
 		gameData = new GameData();
+		eventManager = EventManager.getInstance();
 
 		textures = new ArrayList<>();
 		for (int i = 1; i <= 5; i++) {
@@ -51,7 +59,8 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		sprite.setSize(16, 16);
 		sprite.setPosition(w/2-sprite.getWidth()/2, h/2-sprite.getHeight()/2);
 
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(gameData.getGameWorld().getMap());
+		TiledMap map = Utils.loadMap(gameData.getGameWorld().getMap());
+		tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
 		Gdx.input.setInputProcessor(this);
 
@@ -62,17 +71,18 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public void render() {
+		mapPlugin.process(gameData, new Priority());
+
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		camera.update();
-
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(gameData.getGameWorld().getMap());
+		TiledMap map = Utils.loadMap(gameData.getGameWorld().getMap());
+		tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
 
-		//
 		sb.setProjectionMatrix(camera.combined);
 		sb.begin();
 		sprite.draw(sb);
@@ -82,19 +92,19 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		float leftEdge = 0;
 		float rightEdge = w;
 		if (sprite.getY() + sprite.getHeight()/2 < bottomEdge) {
-			changeMap(16);
+			changeMap(Direction.Down);
 			sprite.setY(topEdge - sprite.getHeight()/2);
 		}
 		if (sprite.getY() + sprite.getHeight()/2 > topEdge) {
-			changeMap(-16);
+			changeMap(Direction.Up);
 			sprite.setY(bottomEdge - sprite.getHeight()/2);
 		}
 		if (sprite.getX() + sprite.getWidth()/2 < leftEdge) {
-			changeMap(-1);
+			changeMap(Direction.Left);
 			sprite.setX(rightEdge - sprite.getWidth()/2);
 		}
 		if (sprite.getX() + sprite.getWidth()/2 > rightEdge) {
-			changeMap(1);
+			changeMap(Direction.Right);
 			sprite.setX(leftEdge - sprite.getWidth()/2);
 		}
 
@@ -123,7 +133,9 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		sb.end();
 	}
 
-	private void changeMap(int deltaIndex) {
+	private void changeMap(Direction direction) {
+		System.out.println("Change map");
+		eventManager.notify(MapTransitionEventType.class, new MapTransitionEvent(direction));
 //		this.mapPlugin.changeMap(gameData, deltaIndex);
 	}
 

@@ -6,18 +6,22 @@ import dk.sdu.sesem4.common.SPI.ProcessingServiceSPI;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.process.Priority;
 
+import java.nio.file.*;
+
 /**
  * MapProcessingService loads the world from the .tmx files into an array of TiledMaps.
  * It is called from the MapPlugin class when the game is started.
  */
 
 public class MapProcessingService implements ProcessingServiceSPI {
+	Map map;
 
-	//Array of TiledMaps
-	TiledMap[] world;
+	public MapProcessingService(Map map) {
+		this.map = map;
+	}
+
 	//Tiled map loader
 	TmxMapLoader tmxMapLoader = new TmxMapLoader();
-	int currentMapIndex = 119;
 
 	/**
 	 * This method just returns the current "resources" folder.
@@ -28,29 +32,39 @@ public class MapProcessingService implements ProcessingServiceSPI {
 		return "Map/src/main/resources/";
 	}
 
-	public TiledMap[] loadWorld(String worldName, int worldWidth, int worldHeight) {
-		world = new TiledMap[worldWidth * worldHeight];
-		String[] columns = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+	public void loadWorld(String worldName, int worldWidth, int worldHeight) {
+		map.world = new TiledMap[worldWidth * worldHeight];
+
 		for (int x = 0; x < worldWidth; x++) {
 			for (int y = 0; y < worldHeight; y++) {
-				String fileName = getResourcesDirectory() + worldName + "/" + columns[x] + (y + 1) + ".tmx";
+				String fileName = getFileNameForMap(worldName, x, y);
+//				URL url = this.getClass().getClassLoader().getResource(worldName + "/" + columns[x] + (y + 1) + ".tmx");
+//				String fileName = url.getPath();
 				try {
-					TiledMap map = tmxMapLoader.load(fileName);
-					world[x + y * worldWidth] = map;
+					TiledMap loadedMap = tmxMapLoader.load(fileName);
+					map.world[x + y * worldWidth] = loadedMap;
+//					System.out.println("Successfully loaded " + fileName);
 				} catch (Exception e) {
-					world[x + y * worldWidth] = null;
+					map.world[x + y * worldWidth] = null;
+//					System.out.println("ERROR while loading " + fileName);
 				}
 			}
 		}
-		return world;
 	}
 
-	public TiledMap getCurrentMap() {
-		return world[currentMapIndex];
+	private String getFileNameForMap(String worldName, int x, int y) {
+		String[] columns = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+		return getResourcesDirectory() + worldName + "/" + columns[x] + (y + 1) + ".tmx";
+	}
+
+	public Path getCurrentMap() {
+		String relativeFileName = getFileNameForMap(map.currentWorldName, map.currentMapIndex % 16, map.currentMapIndex / 16);
+		return Paths.get(relativeFileName);
 	}
 
 	@Override
 	public void process(GameData gameData, Priority priority) {
+		gameData.getGameWorld().setMap(getCurrentMap());
 		// get events from gameData
 		// if there is a MapTransition event, we should change the current map index to reflect that.
 		// then we set the new map in gameData
