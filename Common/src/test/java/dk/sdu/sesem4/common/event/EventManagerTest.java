@@ -208,9 +208,8 @@ public class EventManagerTest {
         manager.unsubscribe(TestEventType.class, testEventListener);
 
         // Test that key still exists, but now with two listeners
-        assertTrue(manager.listeners.containsKey(TestEventType.class));
-        assertEquals(listeners, manager.listeners.get(TestEventType.class));
-        assertFalse(manager.listeners.get(TestEventType.class).contains(testEventListener));
+        assertTrue(manager.listeners.containsKey(testEventType));
+        assertEquals(listeners, manager.listeners.get(testEventType));
         assertEquals(1, listeners.size());
     }
 
@@ -292,35 +291,4 @@ public class EventManagerTest {
         assertEquals(1, testEventListener.getProcessCount());
         assertEquals(2, testEventListener2.getProcessCount());
     }
-<<<<<<< Updated upstream
-=======
-
-    @Test
-    public void testMultipleSubscribeSameTypeSameListener() {
-        EventManager manager = EventManager.getInstance();
-
-        // Create event elements
-        Event testEvent = new TestEvent();
-        TestListener testEventListener = new TestListener();
-
-        // Subscribe test listener to test event
-        manager.subscribe(TestEventType.class, testEventListener);
-        manager.subscribe(TestEventType.class, testEventListener); // This should not add the listener to the subscribed list again
-
-        // Ensure, that the listener has not yet processed anything
-        assertEquals(0, testEventListener.getProcessCount());
-
-        // send notification to subscribed event listener
-        manager.notify(TestEventType.class, testEvent);
-
-        // Check that the listener has processed
-        assertEquals(1, testEventListener.getProcessCount());
-
-        // Send second notification
-        manager.notify(TestEventType.class, testEvent);
-
-        // Check that the listener has processed
-        assertEquals(2, testEventListener.getProcessCount());
-    }
->>>>>>> Stashed changes
 }

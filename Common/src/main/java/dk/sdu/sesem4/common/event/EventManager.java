@@ -11,7 +11,7 @@ public class EventManager {
      */
     protected static EventManager instance;
     /**
-     * Map of all event and set of listeners
+     * Map of all events and set of listeners
      */
     protected Map<Class<? extends EventType>, Set<EventListener>> listeners;
 
@@ -47,7 +47,7 @@ public class EventManager {
         // Get the listener set from the type supplied
         Set<EventListener> listeners = this.listeners.get(type);
 
-        // Add the new listeener to the set
+        // Add the new listener to the set
         listeners.add(listener);
     }
 
@@ -70,7 +70,7 @@ public class EventManager {
         listeners.remove(listener);
 
         // if the listeners list is empty, remove it completely from the listeners map
-        if (listeners.size() == 0) {
+        if (listeners.isEmpty()) {
             this.listeners.remove(type);
         }
     }
