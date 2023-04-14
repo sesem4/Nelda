@@ -208,8 +208,8 @@ public class EventManagerTest {
         manager.unsubscribe(TestEventType.class, testEventListener);
 
         // Test that key still exists, but now with two listeners
-        assertTrue(manager.listeners.containsKey(testEventType));
-        assertEquals(listeners, manager.listeners.get(testEventType));
+        assertTrue(manager.listeners.containsKey(TestEventType.class));
+        assertEquals(listeners, manager.listeners.get(TestEventType.class));
         assertEquals(1, listeners.size());
     }
 
