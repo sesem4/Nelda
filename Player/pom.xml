@@ -10,6 +10,8 @@
         <version>0.0.0</version>
     </parent>
     <artifactId>Player</artifactId>
+    <packaging>jar</packaging>
+    <name>Player</name>
     
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
