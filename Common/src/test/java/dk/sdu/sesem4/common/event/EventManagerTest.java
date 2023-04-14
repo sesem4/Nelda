@@ -290,5 +290,7 @@ public class EventManagerTest {
         // Check that the listener has processed
         assertEquals(1, testEventListener.getProcessCount());
         assertEquals(2, testEventListener2.getProcessCount());
+
+        assertFalse(true);
     }
 }
