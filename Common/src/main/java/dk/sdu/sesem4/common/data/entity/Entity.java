@@ -14,6 +14,7 @@ import java.util.HashMap;
 public abstract class Entity {
     private final HashMap<Class,EntityPart> entityParts = new HashMap<>();
     private Direction direction;
+
     private static final int width = 16;
     private static final int height = 16;
 

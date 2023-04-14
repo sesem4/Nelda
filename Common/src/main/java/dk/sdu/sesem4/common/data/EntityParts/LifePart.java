@@ -6,9 +6,9 @@ import dk.sdu.sesem4.common.data.gamedata.GameData;
 public class LifePart implements EntityPart {
     private int life;
     private boolean dead;
+
     public LifePart(int life){
         this.life = life;
-
     }
 
     public int getLife() {
@@ -32,6 +32,5 @@ public class LifePart implements EntityPart {
         if(life == 0){
             dead = true;
         }
-
     }
 }
