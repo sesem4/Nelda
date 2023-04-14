@@ -5,7 +5,7 @@ import dk.sdu.sesem4.common.data.gamedata.GameData;
 
 public class LifePart implements EntityPart {
     private int life;
-    public LifePart(int life){
+    public LifePart(int life) {
         this.life = life;
     }
 

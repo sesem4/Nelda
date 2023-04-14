@@ -5,8 +5,6 @@ import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.util.Direction;
 
-import static java.lang.Math.abs;
-
 public class PositionPart implements EntityPart{
     private Vector2 position;
     private Direction direction;
@@ -33,23 +31,6 @@ public class PositionPart implements EntityPart{
 
     public void setDirection(Direction direction) {
         this.direction = direction;
-    }
-
-    public Direction getDirectionTo(Vector2 position) {
-        Vector2 deltaPosition = this.getPosition().minus(position);
-        if (abs(deltaPosition.getX()) > abs(deltaPosition.getY())) {
-            if (deltaPosition.getX() > 0) {
-                return Direction.RIGHT;
-            } else {
-                return Direction.LEFT;
-            }
-        } else {
-            if (deltaPosition.getY() > 0) {
-                return Direction.UP;
-            } else {
-                return Direction.DOWN;
-            }
-        }
     }
 
     @Override

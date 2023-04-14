@@ -26,7 +26,7 @@ public class PoisonPart implements CollisionPart {
         return poisoned;
     }
 
-    @Override
+//    @Override
     public void process(GameData gameData, Entity entity) {
         if (poisoned) {
             LifePart lifePart = entity.getEntityPart(LifePart.class);

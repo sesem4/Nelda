@@ -2,6 +2,8 @@ package dk.sdu.sesem4.common.data.math;
 
 import dk.sdu.sesem4.common.util.Direction;
 
+import java.lang.Math;
+
 /**
  * 2 point vector (X and Y)
  */
@@ -28,10 +30,18 @@ public class Vector2 {
         x = 0;
         y = 0;
         switch (direction) {
-            case UP -> y = 1;
-            case DOWN -> y = -1;
-            case LEFT -> x = -1;
-            case RIGHT -> x = 1;
+            case UP:
+                y = 1;
+                break;
+            case DOWN:
+                y = -1;
+                break;
+            case LEFT:
+                x = -1;
+                break;
+            case RIGHT:
+                x = 1;
+                break;
         }
     }
 
@@ -61,5 +71,29 @@ public class Vector2 {
 
     public Vector2 minus(Vector2 other) {
         return new Vector2(this.x-other.x, this.y-other.y);
+    }
+
+    public Direction toDirection() {
+        // get the longest part of the vector.
+        float xLength = Math.abs(this.getX());
+        float yLength = Math.abs(this.getY());
+        if (xLength > yLength) {
+            if (this.getX() > 0) {
+                return Direction.RIGHT;
+            } else {
+                return Direction.LEFT;
+            }
+        } else {
+            if (this.getY() > 0) {
+                return Direction.UP;
+            } else {
+                return Direction.DOWN;
+            }
+        }
+    }
+
+    public Direction getDirectionTo(Vector2 other) {
+        Vector2 deltaPosition = this.minus(other);
+        return deltaPosition.toDirection();
     }
 }

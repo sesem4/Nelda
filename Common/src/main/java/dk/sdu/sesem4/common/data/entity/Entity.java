@@ -120,7 +120,7 @@ public abstract class Entity {
         } else {
             // else, we should be knocked back directly away from other
             PositionPart ourPositionPart = this.getEntityPart(PositionPart.class);
-            knockbackDirection = othersPositionPart.getDirectionTo(ourPositionPart.getPosition());
+            knockbackDirection = othersPositionPart.getPosition().getDirectionTo(ourPositionPart.getPosition());
         }
 
         // we create knockback data according to the generated direction and the knockbackPart

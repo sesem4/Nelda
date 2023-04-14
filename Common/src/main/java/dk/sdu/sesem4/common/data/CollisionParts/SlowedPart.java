@@ -18,7 +18,7 @@ public class SlowedPart implements CollisionPart {
         this.speed = speed;
     }
 
-    @Override
+//    @Override
     public void process(GameData gameData, Entity entity) {
         if (slowed) {
             int defaultSpeed = speed;

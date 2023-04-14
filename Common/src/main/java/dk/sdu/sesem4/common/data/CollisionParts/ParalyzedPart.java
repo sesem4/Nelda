@@ -18,7 +18,7 @@ public class ParalyzedPart implements CollisionPart {
         this.speed = speed;
     }
 
-    @Override
+//    @Override
     public void process(GameData gameData, Entity entity) {
         if (paralyzed) {
             int defaultSpeed = speed;
