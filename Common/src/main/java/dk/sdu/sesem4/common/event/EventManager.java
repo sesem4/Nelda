@@ -5,6 +5,14 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Event manger, that handles subscribe, unsubscribe and notification between event types, notifiers and listeners.
+ *
+ * Author: MGertz & The0mikkel
+ * <br><br>
+ * Sequence Diagram can be found in the docs folder.<br>
+ * For further information on how to use, such as example, see tests
+ */
 public class EventManager {
     /**
      * EventManger instance
