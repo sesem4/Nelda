@@ -35,4 +35,17 @@ public class Knockback {
 	public boolean hasRunOut() {
 		return getDuration() <= 0;
 	}
+
+
+	@Override
+	public boolean equals(Object other) {
+		if (other == null) return false;
+		if (other == this) return true;
+		if (!(other instanceof Knockback)) return false;
+		Knockback otherKnockback = (Knockback)other;
+
+		return otherKnockback.direction == this.direction &&
+				otherKnockback.duration == this.duration &&
+				otherKnockback.speed == this.speed;
+	}
 }
