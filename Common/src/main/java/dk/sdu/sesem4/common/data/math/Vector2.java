@@ -72,11 +72,11 @@ public class Vector2 {
 
     /**
      * Times x and y with a scalar
-     * @param a scalar
+     * @param scalar scalar
      * @return new vector
      */
-    public Vector2 times(float a) {
-        return new Vector2(x*a, y*a);
+    public Vector2 times(float scalar) {
+        return new Vector2(x*scalar, y*scalar);
     }
 
     /**
@@ -128,5 +128,16 @@ public class Vector2 {
     public Direction getDirectionTo(Vector2 other) {
         Vector2 deltaPosition = this.minus(other);
         return deltaPosition.toDirection();
+    }
+
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof Vector2)) return false;
+        Vector2 otherVector = (Vector2)other;
+
+        return this.x == otherVector.x && this.y == otherVector.y;
     }
 }

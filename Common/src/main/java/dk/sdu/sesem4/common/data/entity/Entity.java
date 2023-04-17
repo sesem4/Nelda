@@ -39,6 +39,10 @@ public abstract class Entity {
 //        this.texture = texture;
 //    }
 
+    public Entity(EntityType entityType) {
+        this.entityType = entityType;
+    }
+
     /**
      * Process the entity.
      * @param gameData The GameData object.
@@ -122,7 +126,6 @@ public abstract class Entity {
      * @param other
      */
     public void collided(Entity other) {
-        // only do this if we should collide with the entity:
         doDamage(other);
         doKnockback(other);
     }
@@ -135,6 +138,10 @@ public abstract class Entity {
         //TODO: add null-checks
         LifePart ourLifePart = this.getEntityPart(LifePart.class);
         DamagePart othersDamagePart = other.getCollisionPart(DamagePart.class);
+
+        if (ourLifePart == null) return;
+        if (othersDamagePart == null) return;
+
         ourLifePart.doDamage(othersDamagePart.getDamage());
     }
 
@@ -146,14 +153,22 @@ public abstract class Entity {
         //TODO: add null-checks
         KnockbackPart othersKnockbackPart = other.getCollisionPart(KnockbackPart.class);
         PositionPart othersPositionPart = other.getEntityPart(PositionPart.class);
+        MovingPart ourMovingPart = this.getEntityPart(MovingPart.class);
+
+        if (othersKnockbackPart == null) return;
+        if (othersPositionPart == null) return;
+        if (ourMovingPart == null) return;
+
+        EntityType otherEntityType = other.getEntityType();
 
         Direction knockbackDirection;
         // if other is a projectile, we should be knocked back with its direction
-        if (other.getEntityType() == EntityType.PlayerProjectile || other.getEntityType() == EntityType.EnemyProjectile) {
+        if (otherEntityType == EntityType.PlayerProjectile || otherEntityType == EntityType.EnemyProjectile) {
             knockbackDirection = othersPositionPart.getDirection();
         } else {
             // else, we should be knocked back directly away from other
             PositionPart ourPositionPart = this.getEntityPart(PositionPart.class);
+            if (ourPositionPart == null) return;
             knockbackDirection = othersPositionPart.getPosition().getDirectionTo(ourPositionPart.getPosition());
         }
 
@@ -161,7 +176,6 @@ public abstract class Entity {
         Knockback knockback = new Knockback(knockbackDirection, othersKnockbackPart.getDuration(), othersKnockbackPart.getSpeed());
 
         // set the knockback
-        MovingPart ourMovingPart = this.getEntityPart(MovingPart.class);
         ourMovingPart.setKnockback(knockback);
     }
 }

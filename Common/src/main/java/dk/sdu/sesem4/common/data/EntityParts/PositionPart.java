@@ -18,9 +18,11 @@ public class PositionPart implements EntityPart{
     /**
      * The constructor for the PositionPart class.
      * @param position The position of the entity.
+     * @param direction The direction of the vector
      */
-    public PositionPart(Vector2 position){
+    public PositionPart(Vector2 position, Direction direction){
         this.position = position;
+        this.direction = direction;
     }
 
     /**

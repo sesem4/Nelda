@@ -48,6 +48,10 @@ public class MovingPart implements EntityPart {
         this.knockback = knockback;
     }
 
+    public Knockback getKnockback() {
+        return this.knockback;
+    }
+
     /**
      * Check if the entity is knocked back.
      * @return True if the entity is knocked back, false otherwise.
