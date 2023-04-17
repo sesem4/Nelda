@@ -7,33 +7,60 @@ import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.util.Direction;
 
 /**
- *
- * @author @AnneLærke & Muhammed
+ * A class that represents the MovingPart.
+ * @author @AnneLærke & Muhammed & Jakob
  */
 public class MovingPart implements EntityPart {
+
     private Knockback knockback;
+    // The speed that the entity should move.
     private int moveSpeed;
 
+    /**
+     * The constructor for the MovingPart class.
+     * @param moveSpeed The speed that the entity should move.
+     */
     public MovingPart(int moveSpeed){
         this.moveSpeed = moveSpeed;
     }
 
+    /**
+     * Get the speed that the entity should move.
+     * @return The speed that the entity should move.
+     */
     public int getMoveSpeed() {
         return moveSpeed;
     }
 
+    /**
+     * Set the speed that the entity should move.
+     * @param moveSpeed The speed that the entity should move.
+     */
     public void setMoveSpeed(int moveSpeed) {
         this.moveSpeed = moveSpeed;
     }
 
+    /**
+     * Set the knockback of the entity.
+     * @param knockback The knockback of the entity.
+     */
     public void setKnockback(Knockback knockback) {
         this.knockback = knockback;
     }
 
+    /**
+     * Check if the entity is knocked back.
+     * @return True if the entity is knocked back, false otherwise.
+     */
     public boolean isKnockedBack() {
         return knockback != null;
     }
 
+    /**
+     * A method that processes the MovingPart.
+     * @param gameData The GameData object.
+     * @param entity The Entity object.
+     */
     @Override
     public void process(GameData gameData, Entity entity) {
         PositionPart positionPart = entity.getEntityPart(PositionPart.class);
