@@ -9,8 +9,9 @@ public class PositionPart implements EntityPart{
     private Vector2 position;
     private Direction direction;
 
-    public PositionPart(Vector2 position){
+    public PositionPart(Vector2 position, Direction direction){
         this.position = position;
+        this.direction = direction;
     }
 
     public Vector2 getPosition() {
