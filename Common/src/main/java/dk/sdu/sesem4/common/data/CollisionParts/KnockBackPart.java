@@ -1,6 +1,6 @@
 package dk.sdu.sesem4.common.data.CollisionParts;
 
-public class KnockbackPart {
+public class KnockbackPart implements CollisionPart {
 	int duration;
 	float speed;
 
