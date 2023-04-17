@@ -30,6 +30,10 @@ public class MovingPart implements EntityPart {
         this.knockback = knockback;
     }
 
+    public Knockback getKnockback() {
+        return this.knockback;
+    }
+
     public boolean isKnockedBack() {
         return knockback != null;
     }
