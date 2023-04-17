@@ -1,11 +1,10 @@
-package dk.sdu.sesem4.common.data.entity.EntityParts;
+package dk.sdu.sesem4.common.data.EntityParts;
 
-import dk.sdu.sesem4.common.data.EntityParts.LifePart;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestLifePart {
+public class LifePartTest {
 	LifePart lifePart;
 	@Before
 	public void createLifePart() {
