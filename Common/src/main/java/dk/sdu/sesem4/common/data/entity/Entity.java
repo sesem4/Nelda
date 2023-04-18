@@ -28,17 +28,6 @@ public abstract class Entity {
     // The type of the entity.
     private EntityType entityType;
 
-//   private Texture texture;
-
-
-//    public Texture getTexture() {
-//        return texture;
-//    }
-
-//    public void setTexture(Texture texture) {
-//        this.texture = texture;
-//    }
-
     public Entity(EntityType entityType) {
         this.entityType = entityType;
     }
