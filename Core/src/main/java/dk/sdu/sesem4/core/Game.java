@@ -14,7 +14,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.process.Priority;
-import dk.sdu.sesem4.common.event.Direction;
+import dk.sdu.sesem4.common.util.Direction;
 import dk.sdu.sesem4.common.event.EventManager;
 import dk.sdu.sesem4.common.event.MapTransitionEvent;
 import dk.sdu.sesem4.common.event.MapTransitionEventType;
@@ -92,19 +92,19 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		float leftEdge = 0;
 		float rightEdge = w;
 		if (sprite.getY() + sprite.getHeight()/2 < bottomEdge) {
-			changeMap(Direction.Down);
+			changeMap(Direction.DOWN);
 			sprite.setY(topEdge - sprite.getHeight()/2);
 		}
 		if (sprite.getY() + sprite.getHeight()/2 > topEdge) {
-			changeMap(Direction.Up);
+			changeMap(Direction.UP);
 			sprite.setY(bottomEdge - sprite.getHeight()/2);
 		}
 		if (sprite.getX() + sprite.getWidth()/2 < leftEdge) {
-			changeMap(Direction.Left);
+			changeMap(Direction.LEFT);
 			sprite.setX(rightEdge - sprite.getWidth()/2);
 		}
 		if (sprite.getX() + sprite.getWidth()/2 > rightEdge) {
-			changeMap(Direction.Right);
+			changeMap(Direction.RIGHT);
 			sprite.setX(leftEdge - sprite.getWidth()/2);
 		}
 

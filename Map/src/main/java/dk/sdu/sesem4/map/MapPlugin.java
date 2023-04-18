@@ -6,6 +6,7 @@ import dk.sdu.sesem4.common.data.gamedata.GameWorld;
 import dk.sdu.sesem4.common.data.process.Priority;
 import dk.sdu.sesem4.common.event.*;
 
+
 public class MapPlugin implements PluginServiceSPI {
 	/**
 	 * The MapPlugin class is the entry point for the map module.
@@ -23,16 +24,16 @@ public class MapPlugin implements PluginServiceSPI {
 		EventManager.getInstance().subscribe(MapTransitionEventType.class, (eventType, data) -> {
 			System.out.println("Got notified!");
 			switch (((MapTransitionEvent)data).getDirection()) {
-				case Up:
+				case UP:
 					map.currentMapIndex -= 16;
 					break;
-				case Down:
+				case DOWN:
 					map.currentMapIndex += 16;
 					break;
-				case Left:
+				case LEFT:
 					map.currentMapIndex -= 1;
 					break;
-				case Right:
+				case RIGHT:
 					map.currentMapIndex += 1;
 					break;
 			}
