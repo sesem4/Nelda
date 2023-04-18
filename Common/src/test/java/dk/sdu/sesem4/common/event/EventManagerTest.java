@@ -2,6 +2,7 @@ package dk.sdu.sesem4.common.event;
 
 import dk.sdu.sesem4.common.event.classes.TestEvent;
 import dk.sdu.sesem4.common.event.classes.TestEventType;
+import dk.sdu.sesem4.common.event.classes.TestEventType2;
 import dk.sdu.sesem4.common.event.classes.TestListener;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,17 +49,16 @@ public class EventManagerTest {
         EventManager manager = EventManager.getInstance();
 
         // Create event elements
-        EventType testEventType = new TestEventType();
         EventListener testEventListener = new TestListener();
 
         // Subscribe test listener to test event
-        manager.subscribe(testEventType, testEventListener);
+        manager.subscribe(TestEventType.class, testEventListener);
 
         // Test that the event was added to the manager test
-        assertTrue(manager.listeners.containsKey(testEventType));
+        assertTrue(manager.listeners.containsKey(TestEventType.class));
 
         // Get listener list
-        Set<EventListener> listeners = manager.listeners.get(testEventType);
+        Set<EventListener> listeners = manager.listeners.get(TestEventType.class);
 
         // Check list, and that it contains the correct listener
         assertEquals(1, listeners.size());
@@ -70,18 +70,17 @@ public class EventManagerTest {
         EventManager manager = EventManager.getInstance();
 
         // Create event elements
-        EventType testEventType = new TestEventType();
         EventListener testEventListener = new TestListener();
 
         // Subscribe test listener to test event
-        manager.subscribe(testEventType, testEventListener);
-        manager.subscribe(testEventType, testEventListener);
+        manager.subscribe(TestEventType.class, testEventListener);
+        manager.subscribe(TestEventType.class, testEventListener);
 
         // Test that the event was added to the manager test
-        assertTrue(manager.listeners.containsKey(testEventType));
+        assertTrue(manager.listeners.containsKey(TestEventType.class));
 
         // Get listener list
-        Set<EventListener> listeners = manager.listeners.get(testEventType);
+        Set<EventListener> listeners = manager.listeners.get(TestEventType.class);
 
         // Check list, and that it contains the correct listener
         assertEquals(1, listeners.size());
@@ -92,19 +91,18 @@ public class EventManagerTest {
         EventManager manager = EventManager.getInstance();
 
         // Create event elements
-        EventType testEventType = new TestEventType();
         EventListener testEventListener = new TestListener();
         EventListener testEventListener2 = new TestListener();
 
         // Subscribe test listener to test event
-        manager.subscribe(testEventType, testEventListener);
-        manager.subscribe(testEventType, testEventListener2);
+        manager.subscribe(TestEventType.class, testEventListener);
+        manager.subscribe(TestEventType.class, testEventListener2);
 
         // Test that the event was added to the manager test
-        assertTrue(manager.listeners.containsKey(testEventType));
+        assertTrue(manager.listeners.containsKey(TestEventType.class));
 
         // Get listener list
-        Set<EventListener> listeners = manager.listeners.get(testEventType);
+        Set<EventListener> listeners = manager.listeners.get(TestEventType.class);
 
         // Check list, and that it contains the correct listeners
         assertEquals(2, listeners.size());
@@ -117,20 +115,19 @@ public class EventManagerTest {
         EventManager manager = EventManager.getInstance();
 
         // Create event elements
-        EventType testEventType = new TestEventType();
         EventListener testEventListener = new TestListener();
 
         // Subscribe test listener to test event
-        manager.subscribe(testEventType, testEventListener);
+        manager.subscribe(TestEventType.class, testEventListener);
 
         // Test that the event was added to the manager test
-        assertTrue(manager.listeners.containsKey(testEventType));
+        assertTrue(manager.listeners.containsKey(TestEventType.class));
 
         // Unsubscribe the test listener
-        manager.unsubscribe(testEventType, testEventListener);
+        manager.unsubscribe(TestEventType.class, testEventListener);
 
         // Test the key does no longer exist in manager listener
-        assertFalse(manager.listeners.containsKey(testEventType));
+        assertFalse(manager.listeners.containsKey(TestEventType.class));
     }
 
     @Test
@@ -138,30 +135,29 @@ public class EventManagerTest {
         EventManager manager = EventManager.getInstance();
 
         // Create event elements
-        EventType testEventType = new TestEventType();
         EventListener testEventListener = new TestListener();
         EventListener testEventListener2 = new TestListener();
 
         // Subscribe test listener to test event
-        manager.subscribe(testEventType, testEventListener);
-        manager.subscribe(testEventType, testEventListener2);
+        manager.subscribe(TestEventType.class, testEventListener);
+        manager.subscribe(TestEventType.class, testEventListener2);
 
         // Test that the event was added to the manager test
-        assertTrue(manager.listeners.containsKey(testEventType));
+        assertTrue(manager.listeners.containsKey(TestEventType.class));
 
         // Get listener list
-        Set<EventListener> listeners = manager.listeners.get(testEventType);
+        Set<EventListener> listeners = manager.listeners.get(TestEventType.class);
 
         // Check that two subscribed elements
         assertEquals(2, listeners.size());
 
         // Unsubscribe the test listener
-        manager.unsubscribe(testEventType, testEventListener);
+        manager.unsubscribe(TestEventType.class, testEventListener);
 
         // Test that key still exists, but now with two listeners
-        assertTrue(manager.listeners.containsKey(testEventType));
-        assertEquals(listeners, manager.listeners.get(testEventType));
-        assertFalse(manager.listeners.get(testEventType).contains(testEventListener));
+        assertTrue(manager.listeners.containsKey(TestEventType.class));
+        assertEquals(listeners, manager.listeners.get(TestEventType.class));
+        assertFalse(manager.listeners.get(TestEventType.class).contains(testEventListener));
         assertEquals(1, listeners.size());
     }
 
@@ -170,21 +166,20 @@ public class EventManagerTest {
         EventManager manager = EventManager.getInstance();
 
         // Create event elements
-        EventType testEventType = new TestEventType();
         EventListener testEventListener = new TestListener();
 
         // Subscribe test listener to test event
-        manager.subscribe(testEventType, testEventListener);
+        manager.subscribe(TestEventType.class, testEventListener);
 
         // Test that the event was added to the manager test
-        assertTrue(manager.listeners.containsKey(testEventType));
+        assertTrue(manager.listeners.containsKey(TestEventType.class));
 
         // Unsubscribe the test listener
-        manager.unsubscribe(testEventType, testEventListener);
-        manager.unsubscribe(testEventType, testEventListener);
+        manager.unsubscribe(TestEventType.class, testEventListener);
+        manager.unsubscribe(TestEventType.class, testEventListener);
 
         // Test the key does no longer exist in manager listener
-        assertFalse(manager.listeners.containsKey(testEventType));
+        assertFalse(manager.listeners.containsKey(TestEventType.class));
     }
 
     @Test
@@ -192,31 +187,29 @@ public class EventManagerTest {
         EventManager manager = EventManager.getInstance();
 
         // Create event elements
-        EventType testEventType = new TestEventType();
         EventListener testEventListener = new TestListener();
         EventListener testEventListener2 = new TestListener();
 
         // Subscribe test listener to test event
-        manager.subscribe(testEventType, testEventListener);
-        manager.subscribe(testEventType, testEventListener2);
+        manager.subscribe(TestEventType.class, testEventListener);
+        manager.subscribe(TestEventType.class, testEventListener2);
 
         // Test that the event was added to the manager test
-        assertTrue(manager.listeners.containsKey(testEventType));
+        assertTrue(manager.listeners.containsKey(TestEventType.class));
 
         // Get listener list
-        Set<EventListener> listeners = manager.listeners.get(testEventType);
+        Set<EventListener> listeners = manager.listeners.get(TestEventType.class);
 
         // Check that two subscribed elements
         assertEquals(2, listeners.size());
 
         // Unsubscribe the test listener
-        manager.unsubscribe(testEventType, testEventListener);
-        manager.unsubscribe(testEventType, testEventListener);
+        manager.unsubscribe(TestEventType.class, testEventListener);
+        manager.unsubscribe(TestEventType.class, testEventListener);
 
         // Test that key still exists, but now with two listeners
-        assertTrue(manager.listeners.containsKey(testEventType));
-        assertEquals(listeners, manager.listeners.get(testEventType));
-        assertFalse(manager.listeners.get(testEventType).contains(testEventListener));
+        assertTrue(manager.listeners.containsKey(TestEventType.class));
+        assertEquals(listeners, manager.listeners.get(TestEventType.class));
         assertEquals(1, listeners.size());
     }
 
@@ -226,17 +219,16 @@ public class EventManagerTest {
 
         // Create event elements
         Event testEvent = new TestEvent();
-        EventType testEventType = new TestEventType();
         TestListener testEventListener = new TestListener();
 
         // Subscribe test listener to test event
-        manager.subscribe(testEventType, testEventListener);
+        manager.subscribe(TestEventType.class, testEventListener);
 
         // Ensure, that the listener has not yet processed anything
         assertEquals(0, testEventListener.getProcessCount());
 
         // send notification to subscribed event listener
-        manager.notify(testEventType, testEvent);
+        manager.notify(TestEventType.class, testEvent);
 
         // Check that the listener has processed
         assertEquals(1, testEventListener.getProcessCount());
@@ -248,20 +240,19 @@ public class EventManagerTest {
 
         // Create event elements
         Event testEvent = new TestEvent();
-        EventType testEventType = new TestEventType();
         TestListener testEventListener = new TestListener();
         TestListener testEventListener2 = new TestListener();
 
         // Subscribe test listener to test event
-        manager.subscribe(testEventType, testEventListener);
-        manager.subscribe(testEventType, testEventListener2);
+        manager.subscribe(TestEventType.class, testEventListener);
+        manager.subscribe(TestEventType.class, testEventListener2);
 
         // Ensure, that the listener has not yet processed anything
         assertEquals(0, testEventListener.getProcessCount());
         assertEquals(0, testEventListener2.getProcessCount());
 
         // send notification to subscribed event listener
-        manager.notify(testEventType, testEvent);
+        manager.notify(TestEventType.class, testEvent);
 
         // Check that the listener has processed
         assertEquals(1, testEventListener.getProcessCount());
@@ -274,61 +265,30 @@ public class EventManagerTest {
 
         // Create event elements
         Event testEvent = new TestEvent();
-        EventType testEventType = new TestEventType();
-        EventType testEventType2 = new TestEventType();
         TestListener testEventListener = new TestListener();
         TestListener testEventListener2 = new TestListener();
 
         // Subscribe test listener to test event
-        manager.subscribe(testEventType, testEventListener);
-        manager.subscribe(testEventType, testEventListener2);
-        manager.subscribe(testEventType2, testEventListener2);
+        manager.subscribe(TestEventType.class, testEventListener);
+        manager.subscribe(TestEventType.class, testEventListener2);
+        manager.subscribe(TestEventType2.class, testEventListener2);
 
         // Ensure, that the listener has not yet processed anything
         assertEquals(0, testEventListener.getProcessCount());
         assertEquals(0, testEventListener2.getProcessCount());
 
         // send notification to subscribed event listener
-        manager.notify(testEventType, testEvent);
+        manager.notify(TestEventType.class, testEvent);
 
         // Check that the listener has processed
         assertEquals(1, testEventListener.getProcessCount());
         assertEquals(1, testEventListener2.getProcessCount());
 
         // Send second notification
-        manager.notify(testEventType2, testEvent);
+        manager.notify(TestEventType2.class, testEvent);
 
         // Check that the listener has processed
         assertEquals(1, testEventListener.getProcessCount());
         assertEquals(2, testEventListener2.getProcessCount());
-    }
-
-    @Test
-    public void testMultipleSubscribeSameTypeSameListener() {
-        EventManager manager = EventManager.getInstance();
-
-        // Create event elements
-        Event testEvent = new TestEvent();
-        EventType testEventType = new TestEventType();
-        TestListener testEventListener = new TestListener();
-
-        // Subscribe test listener to test event
-        manager.subscribe(testEventType, testEventListener);
-        manager.subscribe(testEventType, testEventListener); // This should not add the listener to the subscribed list again
-
-        // Ensure, that the listener has not yet processed anything
-        assertEquals(0, testEventListener.getProcessCount());
-
-        // send notification to subscribed event listener
-        manager.notify(testEventType, testEvent);
-
-        // Check that the listener has processed
-        assertEquals(1, testEventListener.getProcessCount());
-
-        // Send second notification
-        manager.notify(testEventType, testEvent);
-
-        // Check that the listener has processed
-        assertEquals(2, testEventListener.getProcessCount());
     }
 }
