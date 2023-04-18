@@ -29,7 +29,7 @@ public class LifePart implements EntityPart {
       * @return The number of life that the entity has.
       */
      public int getLife() {
-          return life;
+          return this.life;
      }
 
      /**
@@ -47,7 +47,7 @@ public class LifePart implements EntityPart {
       * @return True if the entity has more than 0 life, false otherwise.
       */
      public boolean isAlive() {
-          return getLife() > 0;
+          return this.getLife() > 0;
      }
 
      /**

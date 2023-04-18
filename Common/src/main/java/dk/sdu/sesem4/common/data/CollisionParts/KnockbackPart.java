@@ -20,7 +20,7 @@ public class KnockbackPart implements CollisionPart {
 	 * @return duration
 	 */
 	public int getDuration() {
-		return duration;
+		return this.duration;
 	}
 
 	/**
@@ -28,6 +28,6 @@ public class KnockbackPart implements CollisionPart {
 	 * @return speed
 	 */
 	public float getSpeed() {
-		return speed;
+		return this.speed;
 	}
 }

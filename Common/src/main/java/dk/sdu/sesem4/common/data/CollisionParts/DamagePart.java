@@ -17,6 +17,6 @@ public class DamagePart implements CollisionPart {
      * @return damage
      */
     public int getDamage() {
-        return damage;
+        return this.damage;
     }
 }

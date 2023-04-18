@@ -3,8 +3,10 @@ package dk.sdu.sesem4.common.data.entity;
  * Item class that represents an item in the game.
  */
 public class Item {
+
     // The name of a specific item.
     private String name;
+
     // The description of a specific item.
     private String description;
 
@@ -23,14 +25,14 @@ public class Item {
      * @return The name of the item.
      */
     public String getName() {
-        return name;
+        return this.name;
     }
     /**
      * Get the description of the item.
      * @return The description of the item.
      */
     public String getDescription() {
-        return description;
+        return this.description;
     }
     /**
      * Set the name of the item.
@@ -53,6 +55,6 @@ public class Item {
      */
     @Override
     public String toString() {
-        return "Item{" + "name=" + name + ", description=" + description + '}';
+        return "Item{" + "name=" + this.name + ", description=" + this.description + '}';
     }
 }

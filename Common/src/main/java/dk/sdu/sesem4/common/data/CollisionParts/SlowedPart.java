@@ -20,16 +20,16 @@ public class SlowedPart implements CollisionPart {
 
 //    @Override
     public void process(GameData gameData, Entity entity) {
-        if (slowed) {
-            int defaultSpeed = speed;
+        if (this.slowed) {
+            int defaultSpeed = this.speed;
             MovingPart movingPart = entity.getEntityPart(MovingPart.class);
             movingPart.setMoveSpeed(movingPart.getMoveSpeed() / 2);
 
-            slowedTimer++;
-            if (slowedTimer == slowedDuration) {
+            this.slowedTimer++;
+            if (this.slowedTimer == this.slowedDuration) {
                 movingPart.setMoveSpeed(defaultSpeed);
-                slowedTimer = 0;
-                slowed = false;
+                this.slowedTimer = 0;
+                this.slowed = false;
             }
         }
     }

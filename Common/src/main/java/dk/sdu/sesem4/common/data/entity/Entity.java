@@ -14,18 +14,21 @@ import java.util.Map;
 
 /**
  * The Entity class for all entities in the game.
- * 
+ *
  * @author Muhammed and Anne Lærke
  */
-
 public abstract class Entity {
+
      // A Map to store all the EntityParts with their Class as key.
      private final Map<Class, EntityPart> entityParts = new HashMap<>();
+
      // A Map to store all the CollisionParts with their Class as key.
      private final Map<Class, CollisionPart> collisionParts = new HashMap<>();
+
      // Width and height of the entity.
      private static final int width = 16;
      private static final int height = 16;
+
      // The type of the entity.
      private EntityType entityType;
 
@@ -35,7 +38,7 @@ public abstract class Entity {
 
      /**
       * Process the entity.
-      * 
+      *
       * @param gameData     The GameData object.
       * @param gameEntities The GameEntities object.
       */
@@ -44,74 +47,74 @@ public abstract class Entity {
 
      /**
       * Add a new EntityPart to the entity.
-      * 
+      *
       * @param part the type of EntityPart to be added
       */
      public void addEntityPart(EntityPart part) {
-          entityParts.put(part.getClass(), part);
+          this.entityParts.put(part.getClass(), part);
      }
 
      /**
       * Remove an EntityPart from the entity.
-      * 
+      *
       * @param partClass the EntityPart to be removed
       */
      public void removeEntityPart(Class partClass) {
-          entityParts.remove(partClass);
+          this.entityParts.remove(partClass);
      }
 
      /**
       * Get a specific EntityPart from the given part class.
-      * 
+      *
       * @param partClass The class of the EntityPart object to be returned.
       * @param <E>       The type of the EntityPart object to be returned.
       * @return The EntityPart object.
       */
      public <E extends EntityPart> E getEntityPart(Class partClass) {
-          return (E) entityParts.get(partClass);
+          return (E) this.entityParts.get(partClass);
      }
 
      /**
       * Add a CollisionPart to the Entity.
-      * 
+      *
       * @param part the type of CollisionPart to be added
       */
      public void addCollisionPart(CollisionPart part) {
-          collisionParts.put(part.getClass(), part);
+          this.collisionParts.put(part.getClass(), part);
      }
 
      /**
       * Remove a CollisionPart from the Entity.
-      * 
+      *
       * @param partClass the CollisionPart to be removed
       */
      public void removeCollisionPart(Class partClass) {
-          collisionParts.remove(partClass);
+          this.collisionParts.remove(partClass);
      }
 
      /**
       * Get a specific CollisionPart based on the given ClassPart.
-      * 
+      *
       * @param partClass The class of the CollisionPart object to be returned.
       * @param <E>       The type of the CollisionPart object to be returned.
       * @return The CollisionPart object.
       */
      public <E extends CollisionPart> E getCollisionPart(Class partClass) {
-          return (E) collisionParts.get(partClass);
+          return (E) this.collisionParts.get(partClass);
      }
 
      /**
       * Returns the type of the entity.
-      * 
+      *
       * @return The type of the entity.
       */
      public EntityType getEntityType() {
-          return entityType;
+          return this.entityType;
      }
 
      /**
       * Sets the type of the entity.
-      * 
+      *
       * @param entityType The type of the entity.
       */
      public void setEntityType(EntityType entityType) {
@@ -120,7 +123,7 @@ public abstract class Entity {
 
      /**
       * Emit to entity that it has collided with another entity.
-      * 
+      *
       * @param other The other Entity which this entity has collided with.
       */
      public void collided(Entity other) {
@@ -130,7 +133,7 @@ public abstract class Entity {
 
      /**
       * Do damage according to other's DamagePart
-      * 
+      *
       * @param other the Entity we're colliding with
       */
      private void doDamage(Entity other) {
@@ -151,7 +154,7 @@ public abstract class Entity {
      /**
       * Do knock-back according to other's knockbackPart and Entity type, and type of
       * collision
-      * 
+      *
       * @param other the Entity we are colliding with
       */
      private void doKnockback(Entity other) {
@@ -191,8 +194,7 @@ public abstract class Entity {
 
           // Create Knockback data according to the generated direction and the
           // KnockbackPart
-          Knockback knockback = new Knockback(knockbackDirection, othersKnockbackPart.getDuration(),
-                    othersKnockbackPart.getSpeed());
+          Knockback knockback = new Knockback(knockbackDirection, othersKnockbackPart.getDuration(), othersKnockbackPart.getSpeed());
 
           // Set the Knockback
           ourMovingPart.setKnockback(knockback);

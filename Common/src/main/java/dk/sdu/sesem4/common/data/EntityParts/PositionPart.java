@@ -11,8 +11,10 @@ import dk.sdu.sesem4.common.util.Direction;
  * @author @AnneLærke & Muhammed & Jakob
  */
 public class PositionPart implements EntityPart {
+
      // The position of the entity.
      private Vector2 position;
+
      // The direction of the entity.
      private Direction direction;
 
@@ -33,7 +35,7 @@ public class PositionPart implements EntityPart {
       * @return The position of the entity.
       */
      public Vector2 getPosition() {
-          return position;
+          return this.position;
      }
 
      /**
@@ -62,7 +64,7 @@ public class PositionPart implements EntityPart {
       * @return The direction of the entity.
       */
      public Direction getDirection() {
-          return direction;
+          return this.direction;
      }
 
      /**

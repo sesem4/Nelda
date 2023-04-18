@@ -15,7 +15,7 @@ public class MapTransitionEvent extends Event {
 	 * @return direction of the MapTransitionEvent
 	 */
 	public Direction getDirection() {
-		return direction;
+		return this.direction;
 	}
 
 	/**

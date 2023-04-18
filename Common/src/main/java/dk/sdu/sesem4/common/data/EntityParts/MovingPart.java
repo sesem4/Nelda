@@ -14,6 +14,7 @@ import dk.sdu.sesem4.common.util.Direction;
 public class MovingPart implements EntityPart {
 
     private Knockback knockback;
+
     // The speed that the entity should move.
     private int moveSpeed;
 
@@ -32,7 +33,7 @@ public class MovingPart implements EntityPart {
      * @return The speed that the entity should move.
      */
     public int getMoveSpeed() {
-        return moveSpeed;
+        return this.moveSpeed;
     }
 
     /**
@@ -69,7 +70,7 @@ public class MovingPart implements EntityPart {
      * @return True if the entity is knocked back, false otherwise.
      */
     public boolean isKnockedBack() {
-        return knockback != null;
+        return this.knockback != null;
     }
 
     /**
@@ -86,14 +87,14 @@ public class MovingPart implements EntityPart {
         // Check if the Entity is knocked back
         if (this.isKnockedBack()) {
             // If so, check whether the Knockback duration as run out
-            if (knockback.hasRunOut()) {
-                knockback = null;
+            if (this.knockback.hasRunOut()) {
+                this.knockback = null;
             } else {
                 // Otherwise, move in the direction set in the Knockback, with the
                 // knockback.speed and decrement the knockback duration
-                Vector2 deltaPosition = new Vector2(knockback.getDirection()).times(knockback.getSpeed());
+                Vector2 deltaPosition = new Vector2(this.knockback.getDirection()).times(this.knockback.getSpeed());
                 positionPart.move(deltaPosition);
-                knockback.decrementDuration();
+                this.knockback.decrementDuration();
                 return;
             }
         }
@@ -108,16 +109,16 @@ public class MovingPart implements EntityPart {
         float y = positionPart.getPosition().getY();
         switch (direction) {
             case UP:
-                y += getMoveSpeed();
+                y += this.getMoveSpeed();
                 break;
             case DOWN:
-                y -= getMoveSpeed();
+                y -= this.getMoveSpeed();
                 break;
             case LEFT:
-                x += getMoveSpeed();
+                x += this.getMoveSpeed();
                 break;
             case RIGHT:
-                x -= getMoveSpeed();
+                x -= this.getMoveSpeed();
                 break;
         }
         positionPart.getPosition().setX(x);

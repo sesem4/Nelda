@@ -39,14 +39,14 @@ public class Knockback {
 	 * @return duration
 	 */
 	public int getDuration() {
-		return duration;
+		return this.duration;
 	}
 
 	/**
 	 * Decrements the duration of the Knockback by 1
 	 */
 	public void decrementDuration() {
-		setDuration(getDuration() - 1);
+		this.setDuration(this.getDuration() - 1);
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class Knockback {
 	 * @return speed
 	 */
 	public float getSpeed() {
-		return speed;
+		return this.speed;
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class Knockback {
 	 * @return Boolean
 	 */
 	public boolean hasRunOut() {
-		return getDuration() <= 0;
+		return this.getDuration() <= 0;
 	}
 
 	/**

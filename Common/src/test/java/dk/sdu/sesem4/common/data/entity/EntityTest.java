@@ -35,33 +35,33 @@ public class EntityTest {
 	 */
 	@Before
 	public void setupEntity() {
-		entity = new TestEntity(EntityType.Player);
-		lifePart = new LifePart(3);
-		positionPart = new PositionPart(new Vector2(0, 0), Direction.UP);
-		movingPart = new MovingPart(5);
-		damagePart = new DamagePart(1);
-		knockbackPart = new KnockbackPart(30, 10);
+		this.entity = new TestEntity(EntityType.Player);
+		this.lifePart = new LifePart(3);
+		this.positionPart = new PositionPart(new Vector2(0, 0), Direction.UP);
+		this.movingPart = new MovingPart(5);
+		this.damagePart = new DamagePart(1);
+		this.knockbackPart = new KnockbackPart(30, 10);
 
-		entity.addEntityPart(lifePart);
-		entity.addEntityPart(positionPart);
-		entity.addEntityPart(movingPart);
-		entity.addCollisionPart(damagePart);
-		entity.addCollisionPart(knockbackPart);
+		entity.addEntityPart(this.lifePart);
+		entity.addEntityPart(this.positionPart);
+		entity.addEntityPart(this.movingPart);
+		entity.addCollisionPart(this.damagePart);
+		entity.addCollisionPart(this.knockbackPart);
 	}
 
 	private void setupOtherEntity(EntityType entityType) {
-		otherEntity = new TestEntity(entityType);
-		otherLifePart = new LifePart(3);
-		otherPositionPart = new PositionPart(new Vector2(0, 0), Direction.UP);
-		otherMovingPart = new MovingPart(5);
-		otherDamagePart = new DamagePart(1);
-		otherKnockbackPart = new KnockbackPart(30, 10);
+		this.otherEntity = new TestEntity(entityType);
+		this.otherLifePart = new LifePart(3);
+		this.otherPositionPart = new PositionPart(new Vector2(0, 0), Direction.UP);
+		this.otherMovingPart = new MovingPart(5);
+		this.otherDamagePart = new DamagePart(1);
+		this.otherKnockbackPart = new KnockbackPart(30, 10);
 
-		otherEntity.addEntityPart(otherLifePart);
-		otherEntity.addEntityPart(otherPositionPart);
-		otherEntity.addEntityPart(otherMovingPart);
-		otherEntity.addCollisionPart(otherDamagePart);
-		otherEntity.addCollisionPart(otherKnockbackPart);
+		this.otherEntity.addEntityPart(this.otherLifePart);
+		this.otherEntity.addEntityPart(this.otherPositionPart);
+		this.otherEntity.addEntityPart(this.otherMovingPart);
+		this.otherEntity.addCollisionPart(this.otherDamagePart);
+		this.otherEntity.addCollisionPart(this.otherKnockbackPart);
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class EntityTest {
 	@Test
 	public void testGetEntityPart() {
 		LifePart lifePartFromEntity = entity.getEntityPart(LifePart.class);
-		assertEquals(lifePart, lifePartFromEntity);
+		assertEquals(this.lifePart, lifePartFromEntity);
 	}
 
 	/**
@@ -113,12 +113,12 @@ public class EntityTest {
 		TestEntity otherEntity = new TestEntity(EntityType.Enemy);
 		DamagePart otherDamagePart = new DamagePart(1);
 		otherEntity.addCollisionPart(otherDamagePart);
-		lifePart = entity.getEntityPart(LifePart.class);
+		this.lifePart = entity.getEntityPart(LifePart.class);
 
-		int startingLife = lifePart.getLife();
+		int startingLife = this.lifePart.getLife();
 		entity.collided(otherEntity);
 		otherEntity.collided(entity);
-		int lifeAfterCollision = lifePart.getLife();
+		int lifeAfterCollision = this.lifePart.getLife();
 
 		assertEquals(startingLife - otherDamagePart.getDamage(), lifeAfterCollision);
 	}
@@ -129,10 +129,10 @@ public class EntityTest {
 	@Test
 	public void testCollidedDoesKnockback() {
 		setupOtherEntity(EntityType.Enemy);
-		entity.collided(otherEntity);
-		otherEntity.collided(entity);
+		this.entity.collided(this.otherEntity);
+		this.otherEntity.collided(this.entity);
 
-		MovingPart movingPart = entity.getEntityPart(MovingPart.class);
+		MovingPart movingPart = this.entity.getEntityPart(MovingPart.class);
 
 		assertTrue(movingPart.isKnockedBack());
 	}
@@ -144,16 +144,16 @@ public class EntityTest {
 	@Test
 	public void testCollidedDoesKnockbackWithCorrectDirectionWithTypeEnemy() {
 		setupOtherEntity(EntityType.Enemy);
-		entity.collided(otherEntity);
-		otherEntity.collided(entity);
+		this.entity.collided(this.otherEntity);
+		this.otherEntity.collided(this.entity);
 
 		Knockback expectedKnockback = new Knockback(
-				otherPositionPart.getPosition().getDirectionTo(positionPart.getPosition()),
+				this.otherPositionPart.getPosition().getDirectionTo(positionPart.getPosition()),
 				30,
 				10
 		);
 
-		assertEquals(expectedKnockback, movingPart.getKnockback());
+		assertEquals(expectedKnockback, this.movingPart.getKnockback());
 	}
 
 	/**
@@ -163,15 +163,15 @@ public class EntityTest {
 	@Test
 	public void testCollidedDoesKnockbackWithCorrectDirectionWithTypeEnemyProjectile() {
 		setupOtherEntity(EntityType.EnemyProjectile);
-		entity.collided(otherEntity);
-		otherEntity.collided(entity);
+		this.entity.collided(this.otherEntity);
+		this.otherEntity.collided(this.entity);
 
 		Knockback expectedKnockback = new Knockback(
-				otherPositionPart.getDirection(),
+				this.otherPositionPart.getDirection(),
 				30,
 				10
 		);
 
-		assertEquals(expectedKnockback, movingPart.getKnockback());
+		assertEquals(expectedKnockback, this.movingPart.getKnockback());
 	}
 }

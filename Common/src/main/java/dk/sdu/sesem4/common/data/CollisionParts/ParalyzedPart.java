@@ -21,14 +21,15 @@ public class ParalyzedPart implements CollisionPart {
 //    @Override
     public void process(GameData gameData, Entity entity) {
         if (paralyzed) {
-            int defaultSpeed = speed;
-            MovingPart movingPart = entity.getEntityPart(MovingPart.class); movingPart.setMoveSpeed(0);
+            int defaultSpeed = this.speed;
+            MovingPart movingPart = entity.getEntityPart(MovingPart.class);
+            movingPart.setMoveSpeed(0);
 
             paralyzedTimer++;
-            if (paralyzedTimer == paralyzedDuration) {
+            if (this.paralyzedTimer == this.paralyzedDuration) {
                 movingPart.setMoveSpeed(defaultSpeed);
-                paralyzedTimer = 0;
-                paralyzed = false;
+                this.paralyzedTimer = 0;
+                this.paralyzed = false;
             }
         }
     }

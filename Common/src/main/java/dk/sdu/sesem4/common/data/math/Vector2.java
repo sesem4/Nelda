@@ -8,10 +8,12 @@ import java.lang.Math;
  * 2 point vector (X and Y)
  */
 public class Vector2 {
+
     /**
      * Vector point one in the 2D vector
      */
     float x;
+
     /**
      * Vector point two in the 2D vector
      */
@@ -36,26 +38,26 @@ public class Vector2 {
      * Creates a new vector with the given direction
      */
     public Vector2(Direction direction) {
-        x = 0;
-        y = 0;
+        this.x = 0;
+        this.y = 0;
         switch (direction) {
             case UP:
-                y = 1;
+                this.y = 1;
                 break;
             case DOWN:
-                y = -1;
+                this.y = -1;
                 break;
             case LEFT:
-                x = -1;
+                this.x = -1;
                 break;
             case RIGHT:
-                x = 1;
+                this.x = 1;
                 break;
         }
     }
 
     public float getX() {
-        return x;
+        return this.x;
     }
 
     public void setX(float x) {
@@ -63,7 +65,7 @@ public class Vector2 {
     }
 
     public float getY() {
-        return y;
+        return this.y;
     }
 
     public void setY(float y) {
@@ -76,7 +78,7 @@ public class Vector2 {
      * @return new vector
      */
     public Vector2 times(float scalar) {
-        return new Vector2(x*scalar, y*scalar);
+        return new Vector2(this.x*scalar, this.y*scalar);
     }
 
     /**

@@ -23,21 +23,21 @@ public class PoisonPart implements CollisionPart {
     }
 
     public boolean isPoisoned() {
-        return poisoned;
+        return this.poisoned;
     }
 
 //    @Override
     public void process(GameData gameData, Entity entity) {
-        if (poisoned) {
+        if (this.poisoned) {
             LifePart lifePart = entity.getEntityPart(LifePart.class);
             int life = lifePart.getLife();
 
-            lifePart.setLife(life - ticDamage);
+            lifePart.setLife(life - this.ticDamage);
 
-            poisonCounter++;
-            if (poisonCounter == poisonDuration) {
-                poisonCounter = 0;
-                poisoned = false;
+            this.poisonCounter++;
+            if (this.poisonCounter == this.poisonDuration) {
+                this.poisonCounter = 0;
+                this.poisoned = false;
             }
         }
     }

@@ -11,14 +11,17 @@ import java.util.stream.Collectors;
 * @author Muhammed and Anne Lærke
  */
 public class GameEntities {
+
     // The list of entities.
     private List<Entity> entities;
+
     /**
      * The constructor for the GameEntities class, where the list of entities is initialized.
      */
     public GameEntities() {
-        entities = new LinkedList<>();
+        this.entities = new LinkedList<>();
     }
+
     /**
      * Add an entity to the list of entities.
      * @param entity The entity to be added.
