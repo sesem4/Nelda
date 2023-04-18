@@ -3,14 +3,15 @@ package dk.sdu.sesem4.common.data.CollisionParts;
 import dk.sdu.sesem4.common.util.Direction;
 
 public class Knockback {
+	private Direction direction;
+	private int duration;
+	private float speed;
 	public Knockback(Direction direction, int duration, float speed) {
 		this.direction = direction;
 		this.duration = duration;
 		this.speed = speed;
 	}
-	Direction direction;
-	int duration;
-	float speed;
+
 
 	public void setDuration(int duration) {
 		this.duration = duration;
