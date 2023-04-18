@@ -12,19 +12,26 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * A Test Class for the GameEntities class.
+ */
 public class GameEntitiesTest {
     private GameEntities gameEntities;
 
+    // Sets up the GameEntities object to be used in the tests.
     @Before
     public void setUp() {
         gameEntities = new GameEntities();
     }
+
+    // Tests the addEntity method.
     @Test
     public void testAddEntity() {
         Entity entity = new TestEntity(EntityType.Player);
         gameEntities.addEntity(entity);
         assertEquals(1, gameEntities.getEntities(Entity.class).size());
     }
+    // Tests the removeEntity method.
     @Test
     public void testRemoveEntity() {
         Entity entity = new TestEntity(EntityType.Player);
@@ -32,6 +39,7 @@ public class GameEntitiesTest {
         gameEntities.removeEntity(entity);
         assertEquals(0, gameEntities.getEntities(Entity.class).size());
     }
+    // Tests the getEntities method.
     @Test
     public void testGetEntitiesByType() {
         Entity entity = new TestEntity(EntityType.Player);
@@ -44,6 +52,7 @@ public class GameEntitiesTest {
         assertEquals(3, entities.size());
         assertEquals(entities, gameEntities.getEntities(Entity.class));
     }
+    // Tests if we can get a specific entity from the GameEntities object.
     @Test
     public void testGetASpecificEntity(){
         Entity entity = new TestEntity(EntityType.Player);

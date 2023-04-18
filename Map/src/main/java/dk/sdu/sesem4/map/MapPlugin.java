@@ -6,11 +6,11 @@ import dk.sdu.sesem4.common.data.gamedata.GameWorld;
 import dk.sdu.sesem4.common.data.process.Priority;
 import dk.sdu.sesem4.common.event.*;
 
-
+/**
+ * The MapPlugin class is the entry point for the map module.
+ */
 public class MapPlugin implements PluginServiceSPI {
-	/**
-	 * The MapPlugin class is the entry point for the map module.
-	 */
+
 
 	Map map;
 	MapProcessingService mapProcessingService;

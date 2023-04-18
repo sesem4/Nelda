@@ -2,10 +2,14 @@ package dk.sdu.sesem4.common.data.math;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+/**
+ * A class that tests the Vector2 class.
+ */
 public class Vector2Test {
     private Vector2 a;
     private  Vector2 b;
 
+    // Tests if two vectors can be added and if the result is correct.
     @Test
     public void testAdd() {
         a = new Vector2(2, 3);
@@ -17,6 +21,7 @@ public class Vector2Test {
         assertEquals(expected, actual);
     }
 
+    // Tests if two vectors can be subtracted and if the result is correct.
     @Test
     public void testAddWorksForNegatives() {
         a = new Vector2(2, -3);

@@ -22,23 +22,29 @@ import dk.sdu.sesem4.map.MapPlugin;
 
 import java.util.ArrayList;
 
+/**
+ * The Game class, where all process is handled and the game is rendered.
+ */
 public class Game extends ApplicationAdapter implements InputProcessor {
-	GameData gameData;
-	OrthographicCamera camera;
-	ArrayList<Texture> textures;
-	TiledMapRenderer tiledMapRenderer;
-	EventManager eventManager;
-	int counter;
+	private GameData gameData;
+	private OrthographicCamera camera;
+	private ArrayList<Texture> textures;
+	private TiledMapRenderer tiledMapRenderer;
+	private EventManager eventManager;
+	private int counter;
 
-	SpriteBatch sb;
-	Sprite sprite;
+	private SpriteBatch sb;
+	private Sprite sprite;
 
-	boolean up, down, left, right = false;
-	float moveSpeed = 1.3f;
+	private boolean up, down, left, right = false;
+	private float moveSpeed = 1.3f;
 
-	float w, h;
-	MapPlugin mapPlugin = new MapPlugin();
+	private float w, h;
+	private MapPlugin mapPlugin = new MapPlugin();
 
+	/**
+	 * This method is responsible for setting up the game, where the different plugins are started and the gameData is created, as well as the eventManager.
+	 */
 	@Override
 	public void create() {
 		gameData = new GameData();
@@ -69,6 +75,9 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		camera.setToOrtho(false, w, h);
 	}
 
+	/**
+	 * This method is responsible for rendering the game, where the map is rendered and the different entities are drawn.
+	 */
 	@Override
 	public void render() {
 		mapPlugin.process(gameData, new Priority());
@@ -133,12 +142,21 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		sb.end();
 	}
 
+	/**
+	 * This method is responsible for changing the map, where the eventManager is notified.
+	 * @param direction
+	 */
 	private void changeMap(Direction direction) {
 		System.out.println("Change map");
 		eventManager.notify(MapTransitionEventType.class, new MapTransitionEvent(direction));
 //		this.mapPlugin.changeMap(gameData, deltaIndex);
 	}
 
+	/**
+	 * Checks if a key is pressed, and if so, sets the boolean to true.
+	 * @param keycode The key that is pressed.
+	 * @return Returns true if the key is pressed. Return false otherwise.
+	 */
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == Input.Keys.LEFT) {
@@ -156,6 +174,11 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		return false;
 	}
 
+	/**
+	 * Checks if a key is released, and if so, sets the boolean to false.
+	 * @param keycode The key that is released.
+	 * @return true if the key is released.
+	 */
 	@Override
 	public boolean keyUp(int keycode) {
 		if (keycode == Input.Keys.LEFT) {
@@ -173,6 +196,11 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		return false;
 	}
 
+	/**
+	 * Check if a specific key is typed.
+	 * @param character the key that is typed.
+	 * @return true if the key is typed.
+	 */
 	@Override
 	public boolean keyTyped(char character) {
 		return false;

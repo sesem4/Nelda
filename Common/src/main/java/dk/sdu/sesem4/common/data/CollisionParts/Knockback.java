@@ -2,6 +2,9 @@ package dk.sdu.sesem4.common.data.CollisionParts;
 
 import dk.sdu.sesem4.common.util.Direction;
 
+/**
+ * A class that represents the Knockback.
+ */
 public class Knockback {
 
 	private Direction direction;
