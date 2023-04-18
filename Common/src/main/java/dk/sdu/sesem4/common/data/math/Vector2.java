@@ -131,6 +131,11 @@ public class Vector2 {
     }
 
 
+    /**
+     * Ceheck if two vectors are equal
+     * @param other the other vector
+     * @return true if the vectors are equal
+     */
     @Override
     public boolean equals(Object other) {
         if (other == null) return false;
