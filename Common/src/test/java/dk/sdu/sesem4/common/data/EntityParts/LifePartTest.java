@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class LifePartTest {
-	LifePart lifePart;
+	private LifePart lifePart;
 	@Before
 	public void createLifePart() {
 		this.lifePart = new LifePart(3);

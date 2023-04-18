@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class GameEntitiesTest {
-   GameEntities gameEntities;
+    private GameEntities gameEntities;
 
     @Before
     public void setUp() {

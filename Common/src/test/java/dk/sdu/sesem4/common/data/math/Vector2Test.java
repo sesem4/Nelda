@@ -3,8 +3,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class Vector2Test {
-    Vector2 a;
-    Vector2 b;
+    private Vector2 a;
+    private  Vector2 b;
 
     @Test
     public void testAdd() {
