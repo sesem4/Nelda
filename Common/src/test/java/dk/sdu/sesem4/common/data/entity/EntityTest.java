@@ -16,19 +16,19 @@ import org.junit.Test;
 
 public class EntityTest {
 
-	TestEntity entity;
-	LifePart lifePart;
-	DamagePart damagePart;
-	PositionPart positionPart;
-	MovingPart movingPart;
-	KnockbackPart knockbackPart;
+	private TestEntity entity;
+	private LifePart lifePart;
+	private DamagePart damagePart;
+	private PositionPart positionPart;
+	private MovingPart movingPart;
+	private KnockbackPart knockbackPart;
 
-	TestEntity otherEntity;
-	LifePart otherLifePart;
-	DamagePart otherDamagePart;
-	PositionPart otherPositionPart;
-	MovingPart otherMovingPart;
-	KnockbackPart otherKnockbackPart;
+	private TestEntity otherEntity;
+	private LifePart otherLifePart;
+	private DamagePart otherDamagePart;
+	private PositionPart otherPositionPart;
+	private MovingPart otherMovingPart;
+	private KnockbackPart otherKnockbackPart;
 
 	/**
 	 * Set up our TestingEntity with a LifePart and a DamagePart

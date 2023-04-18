@@ -17,15 +17,24 @@ public class Vector2 {
      */
     float y;
 
+    /**
+     * Creates a new vector with the given x and y values
+     */
     public Vector2() {
         this(0, 0);
     }
 
+/**
+     * Creates a new vector with the given x and y values
+     */
     public Vector2(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
+    /**
+     * Creates a new vector with the given direction
+     */
     public Vector2(Direction direction) {
         x = 0;
         y = 0;
@@ -61,18 +70,37 @@ public class Vector2 {
         this.y = y;
     }
 
+    /**
+     * Times x and y with a scalar
+     * @param scalar scalar
+     * @return new vector
+     */
     public Vector2 times(float scalar) {
         return new Vector2(x*scalar, y*scalar);
     }
 
+    /**
+     * Plus x and y of this vector with x and y of other vector
+     * @param other the other vector
+     * @return new vector
+     */
     public Vector2 plus(Vector2 other) {
         return new Vector2(this.x+other.x, this.y+other.y);
     }
 
+    /**
+     * Minus x and y of this vector with x and y of other vector
+     * @param other the other vector
+     * @return new vector
+     */
     public Vector2 minus(Vector2 other) {
         return new Vector2(this.x-other.x, this.y-other.y);
     }
 
+    /**
+     * Change the direction of the vector to the opposite direction
+     * @return the direction of the vector
+     */
     public Direction toDirection() {
         // get the longest part of the vector.
         float xLength = Math.abs(this.getX());
@@ -92,12 +120,22 @@ public class Vector2 {
         }
     }
 
+/**
+     * Get the direction to another vector
+     * @param other the other vector
+     * @return the direction to the other vector
+     */
     public Direction getDirectionTo(Vector2 other) {
         Vector2 deltaPosition = this.minus(other);
         return deltaPosition.toDirection();
     }
 
 
+    /**
+     * Ceheck if two vectors are equal
+     * @param other the other vector
+     * @return true if the vectors are equal
+     */
     @Override
     public boolean equals(Object other) {
         if (other == null) return false;

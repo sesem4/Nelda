@@ -7,33 +7,38 @@ import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.util.Direction;
 
 /**
- * @author @AnneLærke & Muhammed
+ * Moving part, that handles and represents moving in the game
+ * 
+ * @author @AnneLærke & Muhammed & Jakob
  */
-
 public class MovingPart implements EntityPart {
 
     private Knockback knockback;
+    // The speed that the entity should move.
     private int moveSpeed;
 
     /**
-     * Constructs a MovingPart
+     * The constructor for the MovingPart class.
+     * 
      * @param moveSpeed the speed which the Entity should move with
      */
-    public MovingPart(int moveSpeed){
+    public MovingPart(int moveSpeed) {
         this.moveSpeed = moveSpeed;
     }
 
     /**
-     * Gets the moving speed of Entity
-     * @return moveSpeed
+     * Get the speed that the entity should move.
+     * 
+     * @return The speed that the entity should move.
      */
     public int getMoveSpeed() {
         return moveSpeed;
     }
 
     /**
-     * Sets the moving speed of Entity
-     * @param moveSpeed the speed which the Entity should move with
+     * Set the speed that the entity should move.
+     * 
+     * @param moveSpeed The speed of which the entity should move.
      */
     public void setMoveSpeed(int moveSpeed) {
         this.moveSpeed = moveSpeed;
@@ -41,7 +46,9 @@ public class MovingPart implements EntityPart {
 
     /**
      * Sets the Knockback of the Entity
-     * @param knockback the Knockback which should be applied to the Entity's MovingPart
+     * 
+     * @param knockback the Knockback which should be applied to the Entity's
+     *                  MovingPart
      */
     public void setKnockback(Knockback knockback) {
         this.knockback = knockback;
@@ -49,6 +56,7 @@ public class MovingPart implements EntityPart {
 
     /**
      * Gets the Knockback of the Entity
+     * 
      * @return knockback
      */
     public Knockback getKnockback() {
@@ -56,17 +64,19 @@ public class MovingPart implements EntityPart {
     }
 
     /**
-     * Checks whether the Entity has been applied a Knockback
-     * @return Boolean
+     * Check if the entity is knocked back.
+     * 
+     * @return True if the entity is knocked back, false otherwise.
      */
     public boolean isKnockedBack() {
         return knockback != null;
     }
 
     /**
-     * Processes moving inputs
-     * @param gameData
-     * @param entity
+     * A method that processes the MovingPart.
+     * 
+     * @param gameData The GameData object.
+     * @param entity   The Entity object.
      */
     @Override
     public void process(GameData gameData, Entity entity) {
@@ -79,7 +89,8 @@ public class MovingPart implements EntityPart {
             if (knockback.hasRunOut()) {
                 knockback = null;
             } else {
-                // Otherwise, move in the direction set in the Knockback, with the knockback.speed and decrement the knockback duration
+                // Otherwise, move in the direction set in the Knockback, with the
+                // knockback.speed and decrement the knockback duration
                 Vector2 deltaPosition = new Vector2(knockback.getDirection()).times(knockback.getSpeed());
                 positionPart.move(deltaPosition);
                 knockback.decrementDuration();
@@ -87,7 +98,8 @@ public class MovingPart implements EntityPart {
             }
         }
 
-        // Get the Entity Direction from the MovementController                -- should be gotten from MovementController
+        // Get the Entity Direction from the MovementController -- should be gotten from
+        // MovementController
         Direction direction = positionPart.getDirection();
         positionPart.setDirection(direction);
 
