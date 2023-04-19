@@ -11,5 +11,5 @@ public interface EntityPart {
      * @param gameData The GameData object.
      * @param entity The Entity object.
      */
-    public void process(GameData gameData, Entity entity);
+    void process(GameData gameData, Entity entity);
 }
