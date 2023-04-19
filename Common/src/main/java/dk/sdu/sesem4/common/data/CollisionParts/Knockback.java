@@ -3,12 +3,23 @@ package dk.sdu.sesem4.common.data.CollisionParts;
 import dk.sdu.sesem4.common.util.Direction;
 
 /**
- * A class that represents the Knockback.
+ * The Knockback class represents a Knockback that is applied to an Entity upon
  */
 public class Knockback {
 
+	/**
+	 * The direction the Knockback should push the Entity in
+	 */
 	private Direction direction;
+
+	/**
+	 * The duration of the Knockback
+	 */
 	private int duration;
+
+	/**
+	 * The speed with which the Knockback should push the Entity in
+	 */
 	private float speed;
 
 	/**
@@ -55,7 +66,7 @@ public class Knockback {
 	 * @return direction
 	 */
 	public Direction getDirection() {
-		return direction;
+		return this.direction;
 	}
 
 	/**
@@ -92,8 +103,8 @@ public class Knockback {
 			return false;
 		Knockback otherKnockback = (Knockback) other;
 
-		return otherKnockback.direction == this.direction &&
-				otherKnockback.duration == this.duration &&
-				otherKnockback.speed == this.speed;
+		return otherKnockback.direction == this.direction
+				&& otherKnockback.duration == this.duration
+				&& otherKnockback.speed == this.speed;
 	}
 }

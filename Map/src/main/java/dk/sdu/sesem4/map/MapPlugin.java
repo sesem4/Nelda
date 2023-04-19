@@ -7,14 +7,18 @@ import dk.sdu.sesem4.common.data.process.Priority;
 import dk.sdu.sesem4.common.event.*;
 
 /**
- * @author Jakob L.M. & Jon F.J.
  * The MapPlugin class is the entry point for the map module.
  */
 public class MapPlugin implements PluginServiceSPI {
+	/**
+	 * The Map object that is used to store the map data.
+	 */
+	private Map map;
 
-
-	Map map;
-	MapProcessingService mapProcessingService;
+	/**
+	 * The MapProcessingService object that is used to process the map data.
+	 */
+	private MapProcessingService mapProcessingService;
 
 	/**
 	 * This method is called when the game is started.
@@ -24,9 +28,9 @@ public class MapPlugin implements PluginServiceSPI {
 	 */
 	@Override
 	public void start(GameData gameData) {
-		map = new Map();
-		mapProcessingService = new MapProcessingService(map);
-		mapProcessingService.loadWorld("overworld", 16, 8);
+		this.map = new Map();
+		this.mapProcessingService = new MapProcessingService(map);
+		this.mapProcessingService.loadWorld("overworld", 16, 8);
 		gameData.setGameWorld(new GameWorld(mapProcessingService.getCurrentMap()));
 		EventManager.getInstance().subscribe(MapTransitionEventType.class, (eventType, data) -> {
 			System.out.println("Got notified!");
@@ -54,8 +58,8 @@ public class MapPlugin implements PluginServiceSPI {
 	 */
 	@Override
 	public void stop(GameData gameData) {
-		mapProcessingService = null;
-		map = null;
+		this.mapProcessingService = null;
+		this.map = null;
 	}
 
 	/**
@@ -66,6 +70,6 @@ public class MapPlugin implements PluginServiceSPI {
 	 * @param priority The priority of the process.
 	 */
 	public void process(GameData gameData, Priority priority) {
-		mapProcessingService.process(gameData, priority);
+		this.mapProcessingService.process(gameData, priority);
 	}
 }

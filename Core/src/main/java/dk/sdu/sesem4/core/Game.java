@@ -26,20 +26,57 @@ import java.util.ArrayList;
  * The Game class, where all process is handled and the game is rendered.
  */
 public class Game extends ApplicationAdapter implements InputProcessor {
+	/**
+	 * The gameData, which is used to store all the data for the game.
+	 */
 	private GameData gameData;
+	/**
+	 * The camera, which is used to render the game.
+	 */
 	private OrthographicCamera camera;
+	/**
+	 * The textures, which is used to load an image with a specific width and height.
+	 */
 	private ArrayList<Texture> textures;
+	/**
+	 * The tiledMapRenderer, which is used to render the map.
+	 */
 	private TiledMapRenderer tiledMapRenderer;
+	/**
+	 * The eventManager, which is used to handle events.
+	 */
 	private EventManager eventManager;
+	/**
+	 * The counter, which is used to change the texture of the sprite.
+	 */
 	private int counter;
 
+	/**
+	 *  The spriteBatch, which is used to render the sprite.
+	 */
 	private SpriteBatch sb;
+	/**
+	 * The sprite, which is used to render the sprite.
+	 */
 	private Sprite sprite;
 
+	/**
+	 * The booleans, which is used to check if a key is pressed.
+	 */
 	private boolean up, down, left, right = false;
+
+	/**
+	 * The moveSpeed, which is used to set the speed of the sprite.
+	 */
 	private float moveSpeed = 1.3f;
 
+	/**
+	 * The width and height, which is used to set the size of the camera.
+	 */
 	private float w, h;
+	/**
+	 * The mapPlugin, which is used to start the map plugin.
+	 */
 	private MapPlugin mapPlugin = new MapPlugin();
 
 	/**
@@ -144,7 +181,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 	/**
 	 * This method is responsible for changing the map, where the eventManager is notified.
-	 * @param direction
+	 * @param direction The direction, which is used to change the map.
 	 */
 	private void changeMap(Direction direction) {
 		System.out.println("Change map");

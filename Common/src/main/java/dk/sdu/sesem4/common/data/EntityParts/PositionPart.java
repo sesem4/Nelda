@@ -7,15 +7,16 @@ import dk.sdu.sesem4.common.util.Direction;
 
 /**
  * A class that represents the PositionPart.
- * 
- * @author @AnneLærke & Muhammed & Jakob
  */
 public class PositionPart implements EntityPart {
 
-     // The position of the entity.
+     /**
+      * The position of the entity.
+      */
      private Vector2 position;
-
-     // The direction of the entity.
+     /**
+      * The direction of the entity.
+      */
      private Direction direction;
 
      /**

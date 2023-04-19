@@ -8,11 +8,12 @@ import java.util.stream.Collectors;
 
 /**
  * A class that represents the GameEntities.
-* @author Muhammed and Anne Lærke
  */
 public class GameEntities {
 
-    // The list of entities.
+    /**
+     * The list of entities.
+     */
     private List<Entity> entities;
 
     /**

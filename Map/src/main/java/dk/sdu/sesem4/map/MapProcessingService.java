@@ -22,7 +22,7 @@ public class MapProcessingService implements ProcessingServiceSPI {
 	}
 
 	//Tiled map loader
-	TmxMapLoader tmxMapLoader = new TmxMapLoader();
+	private TmxMapLoader tmxMapLoader = new TmxMapLoader();
 
 	/**
 	 * This method just returns the current "resources" folder.
@@ -42,7 +42,7 @@ public class MapProcessingService implements ProcessingServiceSPI {
 	 * @param worldHeight An integer that represents the height of the world to load.
 	 */
 	public void loadWorld(String worldName, int worldWidth, int worldHeight) {
-		map.world = new TiledMap[worldWidth * worldHeight];
+		this.map.world = new TiledMap[worldWidth * worldHeight];
 
 		for (int x = 0; x < worldWidth; x++) {
 			for (int y = 0; y < worldHeight; y++) {

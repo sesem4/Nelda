@@ -63,38 +63,38 @@
                 </configuration>
             </plugin>
             <!-- execute the resulting project -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.6.0</version>
-                <inherited>false</inherited>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <executable>${java}</executable>
-                    <workingDirectory>.</workingDirectory>
-                    <longModulepath>false</longModulepath>
-                    <arguments>
-                        <argument>-Dorg.lwjgl.util.Debug=true</argument>
-                        <argument>-Djava.library.path=libs</argument>
-                        <argument>--module-path=mods</argument>
-                        <argument>--class-path=libs/*</argument>
-                        <!-- because spark.core is an automatic module and actually required,
-                        monitor.observer.zero would be resolved as well and does not need
-                        to be added explicitly;
-                        I still wanted to do it for clarity, but for some reason that results
-                        in "java.lang.module.FindException: Module monitor.observer.zero not found";
-                        strange... -->
-                        <!--<argument>&#45;&#45;add-modules=monitor.observer.zero</argument>-->
-                        <argument>--module=Core/dk.sdu.sesem4.core.Main</argument>
-                    </arguments>
-                </configuration>
-            </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.6.0</version>
+                    <inherited>false</inherited>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <executable>${java}</executable>
+                        <workingDirectory>.</workingDirectory>
+                        <longModulepath>false</longModulepath>
+                        <arguments>
+                            <argument>-Dorg.lwjgl.util.Debug=true</argument>
+                            <argument>-Djava.library.path=libs</argument>
+                            <argument>--module-path=mods</argument>
+                            <argument>--class-path=libs/*</argument>
+                            <!-- because spark.core is an automatic module and actually required,
+                            monitor.observer.zero would be resolved as well and does not need
+                            to be added explicitly;
+                            I still wanted to do it for clarity, but for some reason that results
+                            in "java.lang.module.FindException: Module monitor.observer.zero not found";
+                            strange... -->
+                            <!--<argument>&#45;&#45;add-modules=monitor.observer.zero</argument>-->
+                            <argument>--module=Core/dk.sdu.sesem4.core.Main</argument>
+                        </arguments>
+                    </configuration>
+                </plugin>
         </plugins>
     </build>
 

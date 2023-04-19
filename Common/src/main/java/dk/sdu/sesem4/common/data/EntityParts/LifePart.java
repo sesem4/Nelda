@@ -5,8 +5,6 @@ import dk.sdu.sesem4.common.data.gamedata.GameData;
 
 /**
  * A class that represents the LifePart.
- * 
- * @author Anne Lærke & Muhammed & Jakob
  */
 public class LifePart implements EntityPart {
      /**

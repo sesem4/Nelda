@@ -8,14 +8,17 @@ import dk.sdu.sesem4.common.util.Direction;
 
 /**
  * Moving part, that handles and represents moving in the game
- * 
- * @author @AnneLærke & Muhammed & Jakob
  */
 public class MovingPart implements EntityPart {
 
+    /**
+     * The Knockback of the Entity
+     */
     private Knockback knockback;
 
-    // The speed that the entity should move.
+    /**
+     * The speed that the entity should move.
+     */
     private int moveSpeed;
 
     /**

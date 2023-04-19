@@ -1,8 +1,18 @@
 package dk.sdu.sesem4.common.data.CollisionParts;
 
+/**
+ * The KnockbackPart is a CollisionPart that is applied to an Entity upon collision with another Entity.
+ */
 public class KnockbackPart implements CollisionPart {
 
+	/**
+	 * The duration for how long the Entity Knockback effects should be applied to another Entity upon collision
+	 */
 	private int duration;
+
+	/**
+	 * The speed that the Entity knockback should push another Entity upon collision
+	 */
 	private float speed;
 
 	/**

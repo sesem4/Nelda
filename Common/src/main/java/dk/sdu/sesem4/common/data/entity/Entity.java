@@ -14,24 +14,25 @@ import java.util.Map;
 
 /**
  * The Entity class for all entities in the game.
- *
- * @author Muhammed and Anne Lærke
  */
 public abstract class Entity {
-
-     // A Map to store all the EntityParts with their Class as key.
+     /**
+      * A Map to store all the EntityParts with their Class as key.
+      */
      private final Map<Class, EntityPart> entityParts = new HashMap<>();
-
-     // A Map to store all the CollisionParts with their Class as key.
+     /**
+      * A Map to store all the CollisionParts with their Class as key.
+       */
      private final Map<Class, CollisionPart> collisionParts = new HashMap<>();
-
-     // Width and height of the entity.
+     /**
+      * Width and height of the entity.
+      */
      private static final int width = 16;
      private static final int height = 16;
-
-     // The type of the entity.
+     /**
+        * The type of the entity.
+      */
      private EntityType entityType;
-
      public Entity(EntityType entityType) {
           this.entityType = entityType;
      }

@@ -6,6 +6,9 @@ import java.nio.file.Path;
  * A class that represents the game world.
  */
 public class GameWorld {
+	/**
+	 * The path to the map
+	 */
 	Path map;
 
 	/**

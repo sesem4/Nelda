@@ -4,7 +4,6 @@ import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 /**
  * An interface that represents the EntityParts.
- * @author Anne Lærke & Muhammed
  */
 public interface EntityPart {
 /**
