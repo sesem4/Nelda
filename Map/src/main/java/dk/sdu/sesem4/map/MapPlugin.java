@@ -20,7 +20,7 @@ public class MapPlugin implements PluginServiceSPI {
 	 * This method is called when the game is started.
 	 * It creates a new Map object, a new MapProcessingService object and loads the world.
 	 * It also subscribes to the MapTransitionEventType.
-	 * @param gameData
+	 * @param gameData The game data.
 	 */
 	@Override
 	public void start(GameData gameData) {
@@ -50,7 +50,7 @@ public class MapPlugin implements PluginServiceSPI {
 	/**
 	 * This method is called when the game is stopped.
 	 * It sets the MapProcessingService and the Map object to null.
-	 * @param gameData
+	 * @param gameData The game data.
 	 */
 	@Override
 	public void stop(GameData gameData) {
