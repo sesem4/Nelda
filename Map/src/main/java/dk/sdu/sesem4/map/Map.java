@@ -9,8 +9,32 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
  */
 public class Map {
 	//Array of TiledMaps
-	TiledMap[] world;
-	final int STARTING_MAP_INDEX = 119;
-	String currentWorldName = "overworld";
-	int currentMapIndex = STARTING_MAP_INDEX;
+	private TiledMap[] world;
+	private final int STARTING_MAP_INDEX = 119;
+	private String currentWorldName = "overworld";
+	private int currentMapIndex = STARTING_MAP_INDEX;
+
+	public TiledMap[] getWorld() {
+		return world;
+	}
+
+	public void setWorld(TiledMap[] world) {
+		this.world = world;
+	}
+
+	public String getCurrentWorldName() {
+		return currentWorldName;
+	}
+
+	public void setCurrentWorldName(String currentWorldName) {
+		this.currentWorldName = currentWorldName;
+	}
+
+	public int getCurrentMapIndex() {
+		return currentMapIndex;
+	}
+
+	public void setCurrentMapIndex(int currentMapIndex) {
+		this.currentMapIndex = currentMapIndex;
+	}
 }

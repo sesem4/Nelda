@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
  * Constructs a new GdxTestRunner.
  * The constructor creates a new HeadlessApplicationConfiguration object and a new HeadlessApplication object,
  * passing in the (this) object and the conf object as parameters.
- * The Gdx.gl variable is then set to a mock GL20 object using the Mockito.mock method from the Mockito library.
+ * The Gdx.gl variable is then set to a mock GL20 object using the `Mockito.mock` method from the Mockito library.
  */
 @RunWith(GdxTestRunner.class)
 public class MapProcessingServiceTest extends MapProcessingService {
@@ -30,7 +30,7 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	 * It calls the constructor of its superclass, ApplicationTest, passing in a new Map object as a parameter.
 	 */
 	public MapProcessingServiceTest() {
-		super(new Map());
+		super();
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	 */
 	@Test
 	public void testCorrectFilesExist() {
-
+		// TODO: make this.
 	}
 
 	/**
@@ -69,8 +69,8 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	 */
 	@Test
 	public void testLoadWorldLoadsFiles() {
-		assertEquals(map.world.length, worldWidth*worldHeight);
-		for (TiledMap tiledMap : map.world) {
+		assertEquals(map.getWorld().length, worldWidth*worldHeight);
+		for (TiledMap tiledMap : map.getWorld()) {
 			assertNotNull(tiledMap);
 		}
 	}
@@ -89,7 +89,7 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	 */
 	@Test
 	public void testCorrectFileContents() {
-		TiledMap m = map.world[0];
+		TiledMap m = map.getWorld()[0];
 
 		// get the id of the tile at (0, 0)
 		TiledMapTileLayer layer = (TiledMapTileLayer) m.getLayers().get(0);
@@ -107,10 +107,11 @@ public class MapProcessingServiceTest extends MapProcessingService {
 
 	/**
 	 * Tests that the correct world indices are loaded into the Map object.
+	 * We do this by checking each corner of the map
 	 */
 	@Test
 	public void testCorrectWorldIndices() {
-
+		// TODO: Make this.
 	}
 
 
