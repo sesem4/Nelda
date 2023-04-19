@@ -181,12 +181,10 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 	/**
 	 * This method is responsible for changing the map, where the eventManager is notified.
-	 * @param direction The direction, which is used to change the map.
+	 * @param direction The direction in which the map should be changed.
 	 */
 	private void changeMap(Direction direction) {
-		System.out.println("Change map");
 		eventManager.notify(MapTransitionEventType.class, new MapTransitionEvent(direction));
-//		this.mapPlugin.changeMap(gameData, deltaIndex);
 	}
 
 	/**
@@ -245,10 +243,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//		Vector3 clickCoordinates = new Vector3(screenX,screenY,0);
-//		Vector3 position = camera.unproject(clickCoordinates);
-//		sprite.setPosition(position.x, position.y);
-		return true;
+		return false;
 	}
 
 	@Override
