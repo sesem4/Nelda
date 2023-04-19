@@ -11,7 +11,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
+ * @author Jakob L.M. & Jon F.J.
  * This test makes sure that a map is loaded into the array and returns the array of maps.
+ * Constructs a new GdxTestRunner.
+ * The constructor creates a new HeadlessApplicationConfiguration object and a new HeadlessApplication object,
+ * passing in the (this) object and the conf object as parameters.
+ * The Gdx.gl variable is then set to a mock GL20 object using the Mockito.mock method from the Mockito library.
  */
 @RunWith(GdxTestRunner.class)
 public class MapProcessingServiceTest extends MapProcessingService {
@@ -20,12 +25,17 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	// How many maps the world is high
 	int worldHeight = 8;
 
+	/**
+	 * This constructor creates a new MapProcessingServiceTest.
+	 * It calls the constructor of its superclass, ApplicationTest, passing in a new Map object as a parameter.
+	 */
 	public MapProcessingServiceTest() {
 		super(new Map());
 	}
 
 	/**
-	 * Before each test all the maps will be loaded into the world.
+	 * This method loads the world before each test by calling the loadWorld method from the MapProcessingService class,
+	 * passing in the parameters "overworld", worldWidth, and worldHeight as arguments.
 	 */
 	@Before
 	public void loadWorld() {
@@ -45,7 +55,7 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	}
 
 	/**
-	 * ensure all the correct files exist
+	 * Tests all the correct files exist
 	 */
 	@Test
 	public void testCorrectFilesExist() {
@@ -53,7 +63,9 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	}
 
 	/**
-	 * Ensure the files are loaded by MapProcessingService
+	 * Tests that the correct files are loaded into the TiledMap objects.
+	 * It first checks that the length of the world array is equal to worldWidth times worldHeight.
+	 * It then loops through each TiledMap in the world array, ensuring that it is not null.
 	 */
 	@Test
 	public void testLoadWorldLoadsFiles() {
@@ -64,7 +76,16 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	}
 
 	/**
-	 * ensure the file contents are correct
+	 * Tests whether the correct file contents are loaded into the map.
+	 * <p>
+	 * This test method tests whether the correct file contents are loaded into the map. It does this by calling the
+	 * {@link #loadWorld(String, int, int)} method of the {@link MapProcessingService} class to load the "test" world into
+	 * memory. It then gets the TiledMap object for the first map in the world and checks the IDs of the tiles at (0, 0), (7,
+	 * 4), and (15, 4) to ensure that they match the expected values.
+	 * </p>
+	 * <p>
+	 * If the IDs do not match the expected values, an assertion error is thrown.
+	 * </p>
 	 */
 	@Test
 	public void testCorrectFileContents() {
@@ -85,12 +106,13 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	}
 
 	/**
-	 * ensure the maps are loaded into the correct indices
+	 * Tests that the correct world indices are loaded into the Map object.
 	 */
 	@Test
 	public void testCorrectWorldIndices() {
 
 	}
+
 
 	// TODO: ensure that the map is changed when a mapTransition event is emitted
 	// TODO: ensure that the map is changed correctly
