@@ -9,14 +9,13 @@ public class GameWorld {
 	/**
 	 * The path to the map
 	 */
-	Path map;
+	private Path map;
 
 	/**
 	 * Constructs a GameWorld
 	 *
 	 * @param map the path to the map
 	 */
-
 	public GameWorld(Path map) {
 		this.map = map;
 	}
