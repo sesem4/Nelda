@@ -3,11 +3,9 @@ package dk.sdu.sesem4.common.data.gamedata;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.entity.EntityType;
 import dk.sdu.sesem4.common.data.entity.classes.TestEntity;
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
