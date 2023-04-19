@@ -108,7 +108,7 @@ public class GdxTestRunner extends BlockJUnit4ClassRunner implements Application
 	 * Waits until the test has been invoked in the render method.
 	 * <p>
 	 * This method is called by the {@link #runChild(FrameworkMethod, RunNotifier)} method to wait until the test has been
-	 * added to the {@code invokeInRender} map by the {@link #addTestMethod(FrameworkMethod, Description)} method.
+	 * added to the {@code invokeInRender}.
 	 * </p>
 	 * <p>
 	 * This method is synchronized on the {@code invokeInRender} object to ensure that it is thread-safe.
