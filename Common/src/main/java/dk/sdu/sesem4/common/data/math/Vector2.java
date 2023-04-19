@@ -134,7 +134,7 @@ public class Vector2 {
 
 
     /**
-     * Ceheck if two vectors are equal
+     * Check if two vectors are equal
      * @param other the other vector
      * @return true if the vectors are equal
      */
