@@ -37,9 +37,9 @@ public class MapProcessingService implements ProcessingServiceSPI {
 	 * This method loads the world from the .tmx files into an array of TiledMaps.
 	 * It takes three parameters:
 	 *
-	 * @param String worldName A string that represents the name of the world to load.
-	 * @param int worldWidth An integer that represents the width of the world to load.
-	 * @param int worldHeight An integer that represents the height of the world to load.
+	 * @param worldName A string that represents the name of the world to load.
+	 * @param worldWidth An integer that represents the width of the world to load.
+	 * @param worldHeight An integer that represents the height of the world to load.
 	 */
 	public void loadWorld(String worldName, int worldWidth, int worldHeight) {
 		map.world = new TiledMap[worldWidth * worldHeight];
@@ -63,9 +63,9 @@ public class MapProcessingService implements ProcessingServiceSPI {
 
 	/**
 	 * This method is used to get the file name for a given map. It takes three parameters:
-	 * @param String worldName: a string that represents the name of the world to load.
-	 * @param int x: an integer that represents the x-coordinate of the map.
-	 * @param int y: an integer that represents the y-coordinate of the map.
+	 * @param worldName: a string that represents the name of the world to load.
+	 * @param x: an integer that represents the x-coordinate of the map.
+	 * @param y: an integer that represents the y-coordinate of the map.
 	 * @return The method returns a string that represents the file name of the map.
 	 * The file name is constructed from the worldName parameter, the x and y coordinates,
 	 * and an array of letters that are used to represent the columns of the map.
@@ -94,8 +94,8 @@ public class MapProcessingService implements ProcessingServiceSPI {
 	 * This method sets the current map in the game data. If there is a MapTransition event,
 	 * it changes the current map index to reflect that.
 	 *
-	 * @param GameData gameData The game data.
-	 * @param Priority priority The priority.
+	 * @param gameData The game data.
+	 * @param priority The priority.
 	 */
 	@Override
 	public void process(GameData gameData, Priority priority) {
