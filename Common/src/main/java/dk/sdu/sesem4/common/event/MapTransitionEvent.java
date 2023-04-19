@@ -3,6 +3,7 @@ package dk.sdu.sesem4.common.event;
 import dk.sdu.sesem4.common.util.Direction;
 
 /**
+ * @author Jakob L.M. & Jon F.J.
  * A class that represents the MapTransitionEvent, which is used to transition the map.
  */
 public class MapTransitionEvent extends Event {
