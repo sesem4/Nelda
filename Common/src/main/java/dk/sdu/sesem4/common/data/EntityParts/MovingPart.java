@@ -102,9 +102,12 @@ public class MovingPart implements EntityPart {
             }
         }
 
-        // Get the Entity Direction from the MovementController -- should be gotten from
-        // MovementController
-        Direction direction = positionPart.getDirection();
+        // Handle actual movement
+        Direction direction = this.movementController.getMovement(gameData, entity);
+        if (direction == null) {
+            return;
+        }
+
         positionPart.setDirection(direction);
 
         // Update Entity position
