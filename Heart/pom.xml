@@ -10,6 +10,8 @@
         <version>0.0.0</version>
     </parent>
     <artifactId>Heart</artifactId>
+    <packaging>jar</packaging>
+    <name>Heart</name>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

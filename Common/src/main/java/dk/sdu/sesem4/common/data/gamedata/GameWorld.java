@@ -1,19 +1,41 @@
 package dk.sdu.sesem4.common.data.gamedata;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
+import java.nio.file.Path;
 
+/**
+ * A class that represents the game world.
+ */
 public class GameWorld {
-	TiledMap map;
+	/**
+	 * The path to the map
+	 */
+	private Path map;
 
-	public GameWorld(TiledMap map) {
+	/**
+	 * Constructs a GameWorld
+	 *
+	 * @param map the path to the map
+	 */
+	public GameWorld(Path map) {
 		this.map = map;
 	}
 
-	public TiledMap getMap() {
+
+	/**
+	 * Gets the path to the map
+	 *
+	 * @return map
+	 */
+	public Path getMap() {
 		return map;
 	}
 
-	public void setMap(TiledMap map) {
+	/**
+	 * Sets the path to the map
+	 *
+	 * @param map the path to the map
+	 */
+	public void setMap(Path map) {
 		this.map = map;
 	}
 }
