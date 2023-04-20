@@ -52,6 +52,8 @@ public class PositionPartTest {
 		Vector2 expectedEndPosition = startPosition.plus(deltaPosition);
 		positionPart.move(deltaPosition);
 		Vector2 actualEndPosition = positionPart.getPosition();
-		assertEquals(expectedEndPosition, actualEndPosition);
+		// we have to use an epsilon, because we're doing floating-point stuff
+		Vector2 difference = actualEndPosition.minus(expectedEndPosition);
+		assertTrue(difference.getX() + difference.getY() < 0.0001);
 	}
 }
