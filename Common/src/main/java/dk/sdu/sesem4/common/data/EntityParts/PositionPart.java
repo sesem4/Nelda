@@ -2,6 +2,7 @@ package dk.sdu.sesem4.common.data.EntityParts;
 
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
+import dk.sdu.sesem4.common.data.math.Rectangle;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.util.Direction;
 
@@ -11,34 +12,29 @@ import java.util.*;
  * A class that represents the PositionPart.
  */
 public class PositionPart implements EntityPart {
-
-     /**
-      * The position of the entity.
-      */
-     private Vector2 position;
-     /**
-      * The direction of the entity.
-      */
+     private Rectangle boundingBox;
      private Direction direction;
 
-     /**
-      * The constructor for the PositionPart class.
-      * 
-      * @param position  The position of the entity.
-      * @param direction The direction of the vector
-      */
-     public PositionPart(Vector2 position, Direction direction) {
-          this.position = position;
+     public PositionPart(Vector2 position, Vector2 size, Direction direction) {
+          this.boundingBox = new Rectangle(position, size);
           this.direction = direction;
      }
 
-     /**
-      * Get the position of the entity.
-      * 
-      * @return The position of the entity.
-      */
+     public PositionPart(Rectangle boundingBox, Direction direction) {
+          this.boundingBox = boundingBox;
+          this.direction = direction;
+     }
+
+     public Rectangle getBoundingBox() {
+          return boundingBox;
+     }
+
+     public void setBoundingBox(Rectangle boundingBox) {
+          this.boundingBox = boundingBox;
+     }
+
      public Vector2 getPosition() {
-          return this.position;
+          return this.getBoundingBox().getPosition();
      }
 
      /**
@@ -48,7 +44,7 @@ public class PositionPart implements EntityPart {
       *                 positioned at
       */
      public void setPosition(Vector2 position) {
-          this.position = position;
+          boundingBox.setPosition(position);
      }
 
      /**
@@ -59,6 +55,14 @@ public class PositionPart implements EntityPart {
       */
      public void move(Vector2 deltaPosition) {
           this.setPosition(this.getPosition().plus(deltaPosition));
+     }
+
+     public Vector2 getSize() {
+          return boundingBox.getSize();
+     }
+
+     public void setSize(Vector2 size) {
+          boundingBox.setSize(size);
      }
 
      /**
@@ -87,5 +91,6 @@ public class PositionPart implements EntityPart {
       */
      @Override
      public void process(GameData gameData, Entity entity) {
+
      }
 }

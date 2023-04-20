@@ -14,16 +14,18 @@ import java.util.*;
  * Moving part, that handles and represents moving in the game
  */
 public class MovingPart implements EntityPart {
-
-    /**
-     * The Knockback of the Entity
-     */
     private Knockback knockback;
 
     /**
      * The speed that the entity should move.
      */
     private int moveSpeed;
+
+    /**
+     * The entity's previous position.
+     * It is set as the first thing when processing
+     */
+    private Vector2 previousPosition;
 
     /**
      * the list of string path for the sprites of each direction
@@ -153,6 +155,8 @@ public class MovingPart implements EntityPart {
     public void process(GameData gameData, Entity entity) {
         // Get the current position if the Entity
         PositionPart positionPart = entity.getEntityPart(PositionPart.class);
+        
+        previousPosition = positionPart.getPosition();
 
         // Check if the Entity is knocked back
         if (this.isKnockedBack()) {
@@ -223,5 +227,10 @@ public class MovingPart implements EntityPart {
         if (listSize > 0) {
             spritePart.setSprite(spriteList.get((int) (gameData.getElapsedTime() / this.spriteFrameRate) % listSize));
         }
+    }
+    
+    public void undoMovement(Entity entity) {
+        PositionPart positionPart = entity.getEntityPart(PositionPart.class);
+        positionPart.setPosition(previousPosition);
     }
 }
