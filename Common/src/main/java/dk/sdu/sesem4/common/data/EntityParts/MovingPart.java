@@ -122,10 +122,10 @@ public class MovingPart implements EntityPart {
                 y -= this.getMoveSpeed();
                 break;
             case LEFT:
-                x += this.getMoveSpeed();
+                x -= this.getMoveSpeed();
                 break;
             case RIGHT:
-                x -= this.getMoveSpeed();
+                x += this.getMoveSpeed();
                 break;
         }
         positionPart.getPosition().setX(x);
