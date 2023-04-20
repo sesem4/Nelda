@@ -15,7 +15,7 @@ public class Map {
 	private int currentMapIndex = STARTING_MAP_INDEX;
 
 	public TiledMap[] getWorld() {
-		return world;
+		return this.world;
 	}
 
 	public void setWorld(TiledMap[] world) {
@@ -23,7 +23,7 @@ public class Map {
 	}
 
 	public String getCurrentWorldName() {
-		return currentWorldName;
+		return this.currentWorldName;
 	}
 
 	public void setCurrentWorldName(String currentWorldName) {
@@ -31,7 +31,7 @@ public class Map {
 	}
 
 	public int getCurrentMapIndex() {
-		return currentMapIndex;
+		return this.currentMapIndex;
 	}
 
 	public void setCurrentMapIndex(int currentMapIndex) {

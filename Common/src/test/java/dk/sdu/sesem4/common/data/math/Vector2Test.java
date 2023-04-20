@@ -7,13 +7,13 @@ import org.junit.Test;
  */
 public class Vector2Test {
     private Vector2 a;
-    private  Vector2 b;
+    private Vector2 b;
 
     // Tests if two vectors can be added and if the result is correct.
     @Test
     public void testAdd() {
-        a = new Vector2(2, 3);
-        b = new Vector2(5, 1);
+        this.a = new Vector2(2, 3);
+        this.b = new Vector2(5, 1);
 
         Vector2 actual = a.plus(b);
 
@@ -24,8 +24,8 @@ public class Vector2Test {
     // Tests if two vectors can be subtracted and if the result is correct.
     @Test
     public void testAddWorksForNegatives() {
-        a = new Vector2(2, -3);
-        b = new Vector2(-5, 1);
+        this.a = new Vector2(2, -3);
+        this.b = new Vector2(-5, 1);
 
         Vector2 actual = a.plus(b);
 

@@ -20,8 +20,10 @@ import org.junit.runner.RunWith;
  */
 @RunWith(GdxTestRunner.class)
 public class MapProcessingServiceTest extends MapProcessingService {
+
 	// How many maps the world is wide
 	int worldWidth = 16;
+
 	// How many maps the world is high
 	int worldHeight = 8;
 
@@ -40,7 +42,7 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	@Before
 	public void loadWorld() {
 		// world is inherited from MapProcessingService
-		super.loadWorld("overworld", worldWidth, worldHeight);
+		super.loadWorld("overworld", this.worldWidth, this.worldHeight);
 	}
 
 	/**
@@ -69,8 +71,8 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	 */
 	@Test
 	public void testLoadWorldLoadsFiles() {
-		assertEquals(map.getWorld().length, worldWidth*worldHeight);
-		for (TiledMap tiledMap : map.getWorld()) {
+		assertEquals(this.map.getWorld().length, this.worldWidth*this.worldHeight);
+		for (TiledMap tiledMap : this.map.getWorld()) {
 			assertNotNull(tiledMap);
 		}
 	}
@@ -89,7 +91,7 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	 */
 	@Test
 	public void testCorrectFileContents() {
-		TiledMap m = map.getWorld()[0];
+		TiledMap m = this.map.getWorld()[0];
 
 		// get the id of the tile at (0, 0)
 		TiledMapTileLayer layer = (TiledMapTileLayer) m.getLayers().get(0);

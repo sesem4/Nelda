@@ -26,26 +26,32 @@ import java.util.ArrayList;
  * The Game class, where all process is handled and the game is rendered.
  */
 public class Game extends ApplicationAdapter implements InputProcessor {
+
 	/**
 	 * The gameData, which is used to store all the data for the game.
 	 */
 	private GameData gameData;
+
 	/**
 	 * The camera, which is used to render the game.
 	 */
 	private OrthographicCamera camera;
+
 	/**
 	 * The textures, which is used to load an image with a specific width and height.
 	 */
 	private ArrayList<Texture> textures;
+
 	/**
 	 * The tiledMapRenderer, which is used to render the map.
 	 */
 	private TiledMapRenderer tiledMapRenderer;
+
 	/**
 	 * The eventManager, which is used to handle events.
 	 */
 	private EventManager eventManager;
+
 	/**
 	 * The counter, which is used to change the texture of the sprite.
 	 */
@@ -74,6 +80,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	 * The width and height, which is used to set the size of the camera.
 	 */
 	private float w, h;
+
 	/**
 	 * The mapPlugin, which is used to start the map plugin.
 	 */
@@ -87,29 +94,29 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		gameData = new GameData();
 		eventManager = EventManager.getInstance();
 
-		textures = new ArrayList<>();
+		this.textures = new ArrayList<>();
 		for (int i = 1; i <= 5; i++) {
 			textures.add(new Texture(Gdx.files.local("Core/src/main/resources/Zelda" + i + ".png")));
 		}
 
-		w = 16 * 16;
-		h = 11 * 16;
+		this.w = 16 * 16;
+		this.h = 11 * 16;
 
 		mapPlugin.start(gameData);
 
 		sb = new SpriteBatch();
-		sprite = new Sprite(textures.get(2));
+		sprite = new Sprite(this.textures.get(2));
 		sprite.setSize(16, 16);
-		sprite.setPosition(w/2-sprite.getWidth()/2, h/2-sprite.getHeight()/2);
+		sprite.setPosition(this.w/2-sprite.getWidth()/2, this.h/2-sprite.getHeight()/2);
 
 		TiledMap map = Utils.loadMap(gameData.getGameWorld().getMap());
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+		this.tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
 		Gdx.input.setInputProcessor(this);
 
-		camera = new OrthographicCamera();
-		camera.update();
-		camera.setToOrtho(false, w, h);
+		this.camera = new OrthographicCamera();
+		this.camera.update();
+		this.camera.setToOrtho(false, w, h);
 	}
 
 	/**
@@ -117,66 +124,66 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	 */
 	@Override
 	public void render() {
-		mapPlugin.process(gameData, new Priority());
+		this.mapPlugin.process(gameData, new Priority());
 
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		camera.update();
+		this.camera.update();
 		TiledMap map = Utils.loadMap(gameData.getGameWorld().getMap());
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-		tiledMapRenderer.setView(camera);
-		tiledMapRenderer.render();
+		this.tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+		this.tiledMapRenderer.setView(camera);
+		this.tiledMapRenderer.render();
 
-		sb.setProjectionMatrix(camera.combined);
-		sb.begin();
-		sprite.draw(sb);
+		this.sb.setProjectionMatrix(camera.combined);
+		this.sb.begin();
+		this.sprite.draw(sb);
 
 		float bottomEdge = 0;
-		float topEdge = h;
+		float topEdge = this.h;
 		float leftEdge = 0;
-		float rightEdge = w;
-		if (sprite.getY() + sprite.getHeight()/2 < bottomEdge) {
+		float rightEdge = this.w;
+		if (this.sprite.getY() + this.sprite.getHeight()/2 < bottomEdge) {
 			changeMap(Direction.DOWN);
-			sprite.setY(topEdge - sprite.getHeight()/2);
+			this.sprite.setY(topEdge - this.sprite.getHeight()/2);
 		}
-		if (sprite.getY() + sprite.getHeight()/2 > topEdge) {
+		if (this.sprite.getY() + this.sprite.getHeight()/2 > topEdge) {
 			changeMap(Direction.UP);
-			sprite.setY(bottomEdge - sprite.getHeight()/2);
+			this.sprite.setY(bottomEdge - this.sprite.getHeight()/2);
 		}
-		if (sprite.getX() + sprite.getWidth()/2 < leftEdge) {
+		if (this.sprite.getX() + this.sprite.getWidth()/2 < leftEdge) {
 			changeMap(Direction.LEFT);
-			sprite.setX(rightEdge - sprite.getWidth()/2);
+			this.sprite.setX(rightEdge - this.sprite.getWidth()/2);
 		}
-		if (sprite.getX() + sprite.getWidth()/2 > rightEdge) {
+		if (this.sprite.getX() + this.sprite.getWidth()/2 > rightEdge) {
 			changeMap(Direction.RIGHT);
-			sprite.setX(leftEdge - sprite.getWidth()/2);
+			this.sprite.setX(leftEdge - this.sprite.getWidth()/2);
 		}
 
-		counter = (counter + 1) % 16;
+		this.counter = (this.counter + 1) % 16;
 
-		if (left) {
-			sprite.setFlip(true, false);
-			sprite.setTexture(textures.get(counter < 8 ? 3 : 4));
-			sprite.translateX(-moveSpeed);
+		if (this.left) {
+			this.sprite.setFlip(true, false);
+			this.sprite.setTexture(this.textures.get(this.counter < 8 ? 3 : 4));
+			this.sprite.translateX(-this.moveSpeed);
 		}
-		if (right) {
-			sprite.setFlip(false, false);
-			sprite.setTexture(textures.get(counter < 8 ? 3 : 4));
-			sprite.translateX(moveSpeed);
+		if (this.right) {
+			this.sprite.setFlip(false, false);
+			this.sprite.setTexture(this.textures.get(this.counter < 8 ? 3 : 4));
+			this.sprite.translateX(this.moveSpeed);
 		}
-		if (up) {
-			sprite.setFlip(counter < 8, false);
-			sprite.setTexture(textures.get(2));
-			sprite.translateY(moveSpeed);
+		if (this.up) {
+			this.sprite.setFlip(this.counter < 8, false);
+			this.sprite.setTexture(this.textures.get(2));
+			this.sprite.translateY(this.moveSpeed);
 		}
-		if (down) {
-			sprite.setFlip(false, false);
-			sprite.setTexture(textures.get(counter < 8 ? 0 : 1));
-			sprite.translateY(-moveSpeed);
+		if (this.down) {
+			this.sprite.setFlip(false, false);
+			this.sprite.setTexture(this.textures.get(counter < 8 ? 0 : 1));
+			this.sprite.translateY(-this.moveSpeed);
 		}
-		sb.end();
+		this.sb.end();
 	}
 
 	/**
@@ -195,16 +202,16 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == Input.Keys.LEFT) {
-			left = true;
+			this.left = true;
 		}
 		if (keycode == Input.Keys.RIGHT) {
-			right = true;
+			this.right = true;
 		}
 		if (keycode == Input.Keys.UP) {
-			up = true;
+			this.up = true;
 		}
 		if (keycode == Input.Keys.DOWN) {
-			down = true;
+			this.down = true;
 		}
 		return false;
 	}
@@ -217,16 +224,16 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public boolean keyUp(int keycode) {
 		if (keycode == Input.Keys.LEFT) {
-			left = false;
+			this.left = false;
 		}
 		if (keycode == Input.Keys.RIGHT) {
-			right = false;
+			this.right = false;
 		}
 		if (keycode == Input.Keys.UP) {
-			up = false;
+			this.up = false;
 		}
 		if (keycode == Input.Keys.DOWN) {
-			down = false;
+			this.down = false;
 		}
 		return false;
 	}

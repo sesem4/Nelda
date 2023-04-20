@@ -27,16 +27,16 @@ public class MapProcessingService implements ProcessingServiceSPI {
 			Direction direction = ((MapTransitionEvent)data).getDirection();
 			switch (direction) {
 				case UP:
-					map.setCurrentMapIndex(map.getCurrentMapIndex() - 16);
+					this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() - 16);
 					break;
 				case DOWN:
-					map.setCurrentMapIndex(map.getCurrentMapIndex() + 16);
+					this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() + 16);
 					break;
 				case LEFT:
-					map.setCurrentMapIndex(map.getCurrentMapIndex() - 1);
+					this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() - 1);
 					break;
 				case RIGHT:
-					map.setCurrentMapIndex(map.getCurrentMapIndex() + 1);
+					this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() + 1);
 					break;
 			}
 		});
@@ -78,7 +78,7 @@ public class MapProcessingService implements ProcessingServiceSPI {
 			}
 		}
 
-		map.setWorld(world);
+		this.map.setWorld(world);
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class MapProcessingService implements ProcessingServiceSPI {
 	 * @return String that represents the file name of the map
 	 */
 	public Path getCurrentMap() {
-		String relativeFileName = getFileNameForMap(map.getCurrentWorldName(), map.getCurrentMapIndex() % 16, map.getCurrentMapIndex() / 16);
+		String relativeFileName = getFileNameForMap(this.map.getCurrentWorldName(), this.map.getCurrentMapIndex() % 16, this.map.getCurrentMapIndex() / 16);
 		return Paths.get(relativeFileName);
 	}
 

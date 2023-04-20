@@ -55,11 +55,11 @@ public class GdxTestRunner extends BlockJUnit4ClassRunner implements Application
 	 */
 	@Override
 	public void render() {
-		synchronized (invokeInRender) {
-			for (Map.Entry<FrameworkMethod, RunNotifier> each : invokeInRender.entrySet()) {
+		synchronized (this.invokeInRender) {
+			for (Map.Entry<FrameworkMethod, RunNotifier> each : this.invokeInRender.entrySet()) {
 				super.runChild(each.getKey(), each.getValue());
 			}
-			invokeInRender.clear();
+			this.invokeInRender.clear();
 		}
 	}
 
@@ -96,9 +96,9 @@ public class GdxTestRunner extends BlockJUnit4ClassRunner implements Application
 	 */
 	@Override
 	protected void runChild(FrameworkMethod method, RunNotifier notifier) {
-		synchronized (invokeInRender) {
+		synchronized (this.invokeInRender) {
 			// add for invoking in render phase, where gl context is available
-			invokeInRender.put(method, notifier);
+			this.invokeInRender.put(method, notifier);
 		}
 		// wait until that test was invoked
 		waitUntilInvokedInRenderMethod();
@@ -118,8 +118,8 @@ public class GdxTestRunner extends BlockJUnit4ClassRunner implements Application
 		try {
 			while (true) {
 				Thread.sleep(10);
-				synchronized (invokeInRender) {
-					if (invokeInRender.isEmpty())
+				synchronized (this.invokeInRender) {
+					if (this.invokeInRender.isEmpty())
 						break;
 				}
 			}

@@ -9,6 +9,7 @@ import dk.sdu.sesem4.common.data.process.Priority;
  * The MapPlugin class is the entry point for the map module.
  */
 public class MapPlugin implements PluginServiceSPI {
+
 	/**
 	 * The MapProcessingService object that is used to process the map data.
 	 */
