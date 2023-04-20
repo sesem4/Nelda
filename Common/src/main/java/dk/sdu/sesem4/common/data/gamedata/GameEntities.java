@@ -52,15 +52,20 @@ public class GameEntities {
                 .findFirst()
                 .orElse(null);
     }
+
     /**
      * Get the list of all the entities by type.
      * @param entityTypes The type of the entities to be returned.
      * @return List<Entity> The list of entities.
      * @param <E> The type of the entities to be returned.
      */
-    public <E extends Entity> List<Entity> getEntities(Class<E> entityTypes) {
+    public <E extends Entity> List<Entity> getEntitiesOfType(Class<E> entityTypes) {
         return this.entities.stream()
                 .filter(entityTypes::isInstance)
                 .collect(Collectors.toList());
+    }
+
+    public List<Entity> getEntities() {
+        return this.entities;
     }
 }
