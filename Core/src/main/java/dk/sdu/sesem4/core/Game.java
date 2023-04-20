@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.process.Priority;
 import dk.sdu.sesem4.common.util.Direction;
@@ -19,8 +20,10 @@ import dk.sdu.sesem4.common.event.EventManager;
 import dk.sdu.sesem4.common.event.MapTransitionEvent;
 import dk.sdu.sesem4.common.event.MapTransitionEventType;
 import dk.sdu.sesem4.map.MapPlugin;
+import dk.sdu.sesem4.mapcollision.MapCollision;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Game class, where all process is handled and the game is rendered.
@@ -87,12 +90,19 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	private MapPlugin mapPlugin = new MapPlugin();
 
 	/**
+	 * Arraylist of all PostProcessingServices
+	 */
+	private final List<PostProcessingServiceSPI> postProcessingServiceSPIList = new ArrayList<>();
+
+	/**
 	 * This method is responsible for setting up the game, where the different plugins are started and the gameData is created, as well as the eventManager.
 	 */
 	@Override
 	public void create() {
 		gameData = new GameData();
 		eventManager = EventManager.getInstance();
+		// Calls the method postProcessingService, this will add all the postProcessingServices
+		postProcessingService();
 
 		this.textures = new ArrayList<>();
 		for (int i = 1; i <= 5; i++) {
@@ -184,6 +194,11 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			this.sprite.translateY(-this.moveSpeed);
 		}
 		this.sb.end();
+
+		// Update PostEntityProcessingService
+		for (PostProcessingServiceSPI postProcessingServiceSPI : this.postProcessingServiceSPIList) {
+			postProcessingServiceSPI.postProcess(gameData, new Priority());
+		}
 	}
 
 	/**
@@ -192,6 +207,16 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	 */
 	private void changeMap(Direction direction) {
 		eventManager.notify(MapTransitionEventType.class, new MapTransitionEvent(direction));
+	}
+
+	/**
+	 * Adds post-processing services.
+	 */
+	private void postProcessingService() {
+
+		//Adds a post-processing service for map collision
+		PostProcessingServiceSPI mapCollision = new MapCollision();
+		this.postProcessingServiceSPIList.add(mapCollision);
 	}
 
 	/**
