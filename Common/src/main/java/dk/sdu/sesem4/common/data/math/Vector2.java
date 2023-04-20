@@ -82,6 +82,15 @@ public class Vector2 {
     }
 
     /**
+     * Divide x and y with a scalar
+     * @param scalar scalar
+     * @return new vector
+     */
+    public Vector2 divide(float scalar) {
+        return new Vector2(this.x/scalar, this.y/scalar);
+    }
+
+    /**
      * Plus x and y of this vector with x and y of other vector
      * @param other the other vector
      * @return new vector
