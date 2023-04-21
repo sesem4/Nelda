@@ -1,22 +1,29 @@
 {
-    "activeFile": "overworld/A1.tmx",
+    "activeFile": "",
     "expandedProjectPaths": [
         ".",
         "overworld"
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "Tileset0.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "Tileset1.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "Tileset2.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "overworld/A1.tmx": {
-            "scale": 4,
+            "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1689.125,
-                "y": 1150.5
+                "x": 134,
+                "y": 79
             }
         },
         "overworld/A2.tmx": {
@@ -25,6 +32,22 @@
             "viewCenter": {
                 "x": 183.5,
                 "y": 121.66666666666669
+            }
+        },
+        "overworld/A5.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1616,
+                "y": -324
+            }
+        },
+        "overworld/A6.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1612,
+                "y": -504
             }
         },
         "overworld/B1.tmx": {
@@ -99,12 +122,28 @@
                 "y": 87.89707602339182
             }
         },
+        "overworld/J3.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1054,
+                "y": 482
+            }
+        },
         "overworld/K1.tmx": {
             "scale": 4.857954545454545,
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 127.93450292397661,
                 "y": 87.89707602339182
+            }
+        },
+        "overworld/K3.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 796,
+                "y": 480
             }
         },
         "overworld/L1.tmx": {
@@ -115,12 +154,28 @@
                 "y": 87.89707602339182
             }
         },
+        "overworld/L3.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 538,
+                "y": 478
+            }
+        },
         "overworld/M1.tmx": {
             "scale": 4.857954545454545,
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 127.93450292397661,
                 "y": 87.89707602339182
+            }
+        },
+        "overworld/M3.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 280,
+                "y": 476
             }
         },
         "overworld/N1.tmx": {
@@ -131,12 +186,36 @@
                 "y": 87.89707602339182
             }
         },
+        "overworld/N3.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 4,
+                "y": 456
+            }
+        },
         "overworld/O1.tmx": {
             "scale": 4.857954545454545,
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 127.93450292397661,
                 "y": 87.89707602339182
+            }
+        },
+        "overworld/O3.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -268,
+                "y": 440
+            }
+        },
+        "overworld/O4.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -266,
+                "y": 266
             }
         },
         "overworld/P1.tmx": {
@@ -146,28 +225,52 @@
                 "x": 127.93450292397661,
                 "y": 87.89707602339182
             }
+        },
+        "overworld/P3.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -2220,
+                "y": 32
+            }
+        },
+        "overworld/P4.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -524,
+                "y": 264
+            }
+        },
+        "overworld/P5.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -500,
+                "y": 112
+            }
         }
     },
-    "last.worldFilePath": "C:/Users/jlm19/OneDrive/Skrivebord/Nelda/Map",
+    "last.worldFilePath": "C:/Github/Semester project/Nelda/Map/src/main/resources",
     "loadedWorlds": [
-        "C:/Users/jlm19/OneDrive/Skrivebord/Nelda/Map/overworld.world"
+        "C:/Github/Semester project/Nelda/Map/src/main/resources/overworld.world"
     ],
     "openFiles": [
-        "overworld/A1.tmx"
     ],
     "project": "overworld.tiled-project",
+    "property.type": "bool",
     "recentFiles": [
+        "Tileset1.tsx",
+        "Tileset2.tsx",
+        "Tileset0.tsx",
         "overworld/A1.tmx",
-        "overworld/B1.tmx",
-        "overworld/C1.tmx",
-        "overworld/D1.tmx",
-        "overworld/E1.tmx",
-        "overworld/F1.tmx",
-        "overworld/G1.tmx",
-        "overworld/H1.tmx",
-        "overworld/I1.tmx",
-        "overworld/J1.tmx",
-        "overworld/K1.tmx",
-        "overworld/L1.tmx"
+        "overworld/A6.tmx",
+        "overworld/A5.tmx",
+        "overworld/P3.tmx",
+        "overworld/O4.tmx",
+        "overworld/P5.tmx",
+        "overworld/O3.tmx",
+        "overworld/N3.tmx",
+        "overworld/M3.tmx"
     ]
 }
