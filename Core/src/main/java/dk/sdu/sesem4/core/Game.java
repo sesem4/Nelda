@@ -12,7 +12,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import dk.sdu.sesem4.common.SPI.PluginServiceSPI;
 import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
+import dk.sdu.sesem4.common.SPI.ProcessingServiceSPI;
+import dk.sdu.sesem4.common.data.entity.Entity;
+import dk.sdu.sesem4.common.data.entity.EntityType;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.process.Priority;
 import dk.sdu.sesem4.common.util.Direction;
@@ -20,7 +24,8 @@ import dk.sdu.sesem4.common.event.EventManager;
 import dk.sdu.sesem4.common.event.MapTransitionEvent;
 import dk.sdu.sesem4.common.event.MapTransitionEventType;
 import dk.sdu.sesem4.map.MapPlugin;
-import dk.sdu.sesem4.mapcollision.MapCollision;
+import dk.sdu.sesem4.player.Player;
+import dk.sdu.sesem4.player.PlayerPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,12 +92,18 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	/**
 	 * The mapPlugin, which is used to start the map plugin.
 	 */
-	private MapPlugin mapPlugin = new MapPlugin();
+//	private MapPlugin mapPlugin = new MapPlugin();
 
 	/**
 	 * Arraylist of all PostProcessingServices
 	 */
 	private final List<PostProcessingServiceSPI> postProcessingServiceSPIList = new ArrayList<>();
+
+	private final List<ProcessingServiceSPI> processingServiceSPIList = new ArrayList<>();
+
+	private List<PluginServiceSPI> pluginServiceSPIList = new ArrayList<>();
+
+	private List<Entity> entities = new ArrayList<>();
 
 	/**
 	 * This method is responsible for setting up the game, where the different plugins are started and the gameData is created, as well as the eventManager.
@@ -101,8 +112,6 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	public void create() {
 		gameData = new GameData();
 		eventManager = EventManager.getInstance();
-		// Calls the method postProcessingService, this will add all the postProcessingServices
-		postProcessingService();
 
 		this.textures = new ArrayList<>();
 		for (int i = 1; i <= 5; i++) {
@@ -112,21 +121,34 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		this.w = 16 * 16;
 		this.h = 11 * 16;
 
-		mapPlugin.start(gameData);
-
-		sb = new SpriteBatch();
-		sprite = new Sprite(this.textures.get(2));
-		sprite.setSize(16, 16);
-		sprite.setPosition(this.w/2-sprite.getWidth()/2, this.h/2-sprite.getHeight()/2);
-
-		TiledMap map = Utils.loadMap(gameData.getGameWorld().getMap());
-		this.tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+//		entities.add(new Player(EntityType.Player));
+//		sb = new SpriteBatch();
+//		sprite = new Sprite(this.textures.get(2));
+//		sprite = new Sprite(this.textures.get(2));
+//		sprite.setSize(16, 16);
+//		sprite.setPosition(this.w/2-sprite.getWidth()/2, this.h/2-sprite.getHeight()/2);
+//
 
 		Gdx.input.setInputProcessor(this);
 
 		this.camera = new OrthographicCamera();
 		this.camera.update();
 		this.camera.setToOrtho(false, w, h);
+
+		MapPlugin mapPlugin = new MapPlugin();
+		PlayerPlugin playerPlugin = new PlayerPlugin();
+
+		pluginServiceSPIList = List.of(mapPlugin, playerPlugin);
+
+		processingServiceSPIList.add(mapPlugin);
+		processingServiceSPIList.add(playerPlugin);
+
+		postProcessingServiceSPIList.add(mapPlugin);
+		postProcessingServiceSPIList.add(playerPlugin);
+
+		// Calls the method startPluginServices, this will start all the pluginServices
+		startPluginServices();
+
 	}
 
 	/**
@@ -134,66 +156,93 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	 */
 	@Override
 	public void render() {
-		this.mapPlugin.process(gameData, new Priority());
 
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
 		this.camera.update();
+
+		updateProcessingServices();
+
 		TiledMap map = Utils.loadMap(gameData.getGameWorld().getMap());
 		this.tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 		this.tiledMapRenderer.setView(camera);
 		this.tiledMapRenderer.render();
 
-		this.sb.setProjectionMatrix(camera.combined);
-		this.sb.begin();
-		this.sprite.draw(sb);
 
-		float bottomEdge = 0;
-		float topEdge = this.h;
-		float leftEdge = 0;
-		float rightEdge = this.w;
-		if (this.sprite.getY() + this.sprite.getHeight()/2 < bottomEdge) {
-			changeMap(Direction.DOWN);
-			this.sprite.setY(topEdge - this.sprite.getHeight()/2);
-		}
-		if (this.sprite.getY() + this.sprite.getHeight()/2 > topEdge) {
-			changeMap(Direction.UP);
-			this.sprite.setY(bottomEdge - this.sprite.getHeight()/2);
-		}
-		if (this.sprite.getX() + this.sprite.getWidth()/2 < leftEdge) {
-			changeMap(Direction.LEFT);
-			this.sprite.setX(rightEdge - this.sprite.getWidth()/2);
-		}
-		if (this.sprite.getX() + this.sprite.getWidth()/2 > rightEdge) {
-			changeMap(Direction.RIGHT);
-			this.sprite.setX(leftEdge - this.sprite.getWidth()/2);
-		}
+//		Sprite sprite = new Sprite();
+//		this.sb.setProjectionMatrix(camera.combined);
+//		this.sb.begin();
 
-		this.counter = (this.counter + 1) % 16;
+//		this.sprite.draw(sprite);
+//
+//		float bottomEdge = 0;
+//		float topEdge = this.h;
+//		float leftEdge = 0;
+//		float rightEdge = this.w;
+//		if (this.sprite.getY() + this.sprite.getHeight()/2 < bottomEdge) {
+//			changeMap(Direction.DOWN);
+//			this.sprite.setY(topEdge - this.sprite.getHeight()/2);
+//		}
+//		if (this.sprite.getY() + this.sprite.getHeight()/2 > topEdge) {
+//			changeMap(Direction.UP);
+//			this.sprite.setY(bottomEdge - this.sprite.getHeight()/2);
+//		}
+//		if (this.sprite.getX() + this.sprite.getWidth()/2 < leftEdge) {
+//			changeMap(Direction.LEFT);
+//			this.sprite.setX(rightEdge - this.sprite.getWidth()/2);
+//		}
+//		if (this.sprite.getX() + this.sprite.getWidth()/2 > rightEdge) {
+//			changeMap(Direction.RIGHT);
+//			this.sprite.setX(leftEdge - this.sprite.getWidth()/2);
+//		}
+//
+//		this.counter = (this.counter + 1) % 16;
+//
+//		if (this.left) {
+//			this.sprite.setFlip(true, false);
+//			this.sprite.setTexture(this.textures.get(this.counter < 8 ? 3 : 4));
+//			this.sprite.translateX(-this.moveSpeed);
+//		}
+//		if (this.right) {
+//			this.sprite.setFlip(false, false);
+//			this.sprite.setTexture(this.textures.get(this.counter < 8 ? 3 : 4));
+//			this.sprite.translateX(this.moveSpeed);
+//		}
+//		if (this.up) {
+//			this.sprite.setFlip(this.counter < 8, false);
+//			this.sprite.setTexture(this.textures.get(2));
+//			this.sprite.translateY(this.moveSpeed);
+//		}
+//		if (this.down) {
+//			this.sprite.setFlip(false, false);
+//			this.sprite.setTexture(this.textures.get(counter < 8 ? 0 : 1));
+//			this.sprite.translateY(-this.moveSpeed);
+//		}
+//		this.sb.end();
 
-		if (this.left) {
-			this.sprite.setFlip(true, false);
-			this.sprite.setTexture(this.textures.get(this.counter < 8 ? 3 : 4));
-			this.sprite.translateX(-this.moveSpeed);
+		updatePostProcessingServices();
+
+	}
+
+	private void startPluginServices() {
+		for (PluginServiceSPI pluginServiceSPI : pluginServiceSPIList) {
+			pluginServiceSPI.start(gameData);
+
+			System.out.println("Plugin started: " + pluginServiceSPI.getClass().getName());
+
 		}
-		if (this.right) {
-			this.sprite.setFlip(false, false);
-			this.sprite.setTexture(this.textures.get(this.counter < 8 ? 3 : 4));
-			this.sprite.translateX(this.moveSpeed);
+	}
+
+	private void updateProcessingServices() {
+		for (ProcessingServiceSPI processingServiceSPI : processingServiceSPIList) {
+			processingServiceSPI.process(gameData, new Priority());
 		}
-		if (this.up) {
-			this.sprite.setFlip(this.counter < 8, false);
-			this.sprite.setTexture(this.textures.get(2));
-			this.sprite.translateY(this.moveSpeed);
-		}
-		if (this.down) {
-			this.sprite.setFlip(false, false);
-			this.sprite.setTexture(this.textures.get(counter < 8 ? 0 : 1));
-			this.sprite.translateY(-this.moveSpeed);
-		}
-		this.sb.end();
+	}
+
+	private void updatePostProcessingServices() {
 
 		// Update PostEntityProcessingService
 		for (PostProcessingServiceSPI postProcessingServiceSPI : this.postProcessingServiceSPIList) {
@@ -207,16 +256,6 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	 */
 	private void changeMap(Direction direction) {
 		eventManager.notify(MapTransitionEventType.class, new MapTransitionEvent(direction));
-	}
-
-	/**
-	 * Adds post-processing services.
-	 */
-	private void postProcessingService() {
-
-		//Adds a post-processing service for map collision
-		PostProcessingServiceSPI mapCollision = new MapCollision();
-		this.postProcessingServiceSPIList.add(mapCollision);
 	}
 
 	/**
