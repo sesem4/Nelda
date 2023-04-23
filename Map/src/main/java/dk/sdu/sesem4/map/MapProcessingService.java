@@ -30,11 +30,6 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	//Tiled map loader
 	private TmxMapLoader tmxMapLoader = new TmxMapLoader();
 
-	/**
-	 * This method is called from the MapPlugin class when the game is started.
-	 * @param gameData The GameData object that contains the game data.
-	 * @param world The world that the map is loaded into.
-	 */
 	public MapProcessingService() {
 		this.map = new Map();
 		EventManager.getInstance().subscribe(MapTransitionEventType.class, (eventType, data) -> {
@@ -145,6 +140,11 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		gameData.getGameWorld().setMap(getCurrentMap());
 	}
 
+	/**
+	 * This method is post process.
+	 * @param gameData The game data
+	 * @param priority The priority, which is to be run for the current process round
+	 */
 	@Override
 	public void postProcess(GameData gameData, Priority priority) {
 		walkable(gameData);
@@ -181,12 +181,16 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		TiledMapTileLayer.Cell cell = layer.getCell(tileX, tileY);
 		MapProperties cellProperties = cell.getTile().getProperties();
 
+//		if (cellProperties.get("solid",boolean.class)){
+//
+//			return true;
+//		}
 		//check if the tile is solid
 		if (cellProperties.get("solid",boolean.class)) {
 			System.out.println("not solid");
 			return false;
 		}
-		System.out.println("im inn baby");
+		System.out.println("its solid");
 		return true;
 	}
 }
