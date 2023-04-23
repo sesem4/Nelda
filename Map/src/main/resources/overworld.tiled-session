@@ -30,8 +30,8 @@
             "scale": 3,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 183.5,
-                "y": 121.66666666666669
+                "x": 183.33333333333334,
+                "y": 121.66666666666664
             }
         },
         "overworld/A5.tmx": {
@@ -56,6 +56,14 @@
             "viewCenter": {
                 "x": 1682,
                 "y": 592
+            }
+        },
+        "overworld/B3.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -127,
+                "y": -278
             }
         },
         "overworld/C1.tmx": {

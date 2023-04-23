@@ -1,11 +1,16 @@
 package dk.sdu.sesem4.map;
 
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 import static org.junit.Assert.*;
 
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
+import dk.sdu.sesem4.common.data.math.Vector2;
+import dk.sdu.sesem4.common.util.Direction;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,13 +24,17 @@ import org.junit.runner.RunWith;
  * The Gdx.gl variable is then set to a mock GL20 object using the `Mockito.mock` method from the Mockito library.
  */
 @RunWith(GdxTestRunner.class)
-public class MapProcessingServiceTest extends MapProcessingService {
+public class MapProcessingServiceTest
+		extends MapProcessingService
+{
 
 	// How many maps the world is wide
 	int worldWidth = 16;
 
 	// How many maps the world is high
 	int worldHeight = 8;
+
+//	private TiledMap map;
 
 	/**
 	 * This constructor creates a new MapProcessingServiceTest.
@@ -91,10 +100,10 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	 */
 	@Test
 	public void testCorrectFileContents() {
-		TiledMap m = this.map.getWorld()[0];
+		TiledMap map = this.map.getWorld()[0];
 
 		// get the id of the tile at (0, 0)
-		TiledMapTileLayer layer = (TiledMapTileLayer) m.getLayers().get(0);
+		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
 		TiledMapTileLayer.Cell cell = layer.getCell(0, 0);
 		TiledMapTile tile = cell.getTile();
 		int id = tile.getId();
@@ -114,6 +123,25 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	@Test
 	public void testCorrectWorldIndices() {
 		// TODO: Make this.
+	}
+
+	@Test
+	public void testcheckIfOnSolidTile(){
+
+		//save the map as a TiledMapTileLayer
+		TiledMap map = this.map.getWorld()[0];
+		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
+
+		//get the properties of the map and the cells
+		TiledMapTileLayer.Cell cell1 = layer.getCell(0, 0);
+		TiledMapTileLayer.Cell cell2 = layer.getCell(7, 0);
+		MapProperties cellProperties = cell1.getTile().getProperties();
+		MapProperties cellProperties2 = cell2.getTile().getProperties();
+
+		//assert that the cells are solid and not solid
+		assertEquals(cellProperties.get("solid"), false);
+		assertEquals(cellProperties2.get("solid"), true);
+
 	}
 
 
