@@ -16,7 +16,6 @@ import dk.sdu.sesem4.common.SPI.PluginServiceSPI;
 import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
 import dk.sdu.sesem4.common.SPI.ProcessingServiceSPI;
 import dk.sdu.sesem4.common.data.entity.Entity;
-import dk.sdu.sesem4.common.data.entity.EntityType;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.process.Priority;
 import dk.sdu.sesem4.common.util.Direction;
@@ -24,7 +23,6 @@ import dk.sdu.sesem4.common.event.EventManager;
 import dk.sdu.sesem4.common.event.MapTransitionEvent;
 import dk.sdu.sesem4.common.event.MapTransitionEventType;
 import dk.sdu.sesem4.map.MapPlugin;
-import dk.sdu.sesem4.player.Player;
 import dk.sdu.sesem4.player.PlayerPlugin;
 
 import java.util.ArrayList;
@@ -88,11 +86,6 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	 * The width and height, which is used to set the size of the camera.
 	 */
 	private float w, h;
-
-	/**
-	 * The mapPlugin, which is used to start the map plugin.
-	 */
-//	private MapPlugin mapPlugin = new MapPlugin();
 
 	/**
 	 * Arraylist of all PostProcessingServices
