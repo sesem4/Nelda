@@ -7,10 +7,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 import static org.junit.Assert.*;
 
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
-import dk.sdu.sesem4.common.data.math.Vector2;
-import dk.sdu.sesem4.common.util.Direction;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
