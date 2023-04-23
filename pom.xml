@@ -27,7 +27,6 @@
         <module>Map</module>
         <module>Player</module>
         <module>Sword</module>
-        <module>MapCollision</module>
     </modules>
 
     <repositories>
