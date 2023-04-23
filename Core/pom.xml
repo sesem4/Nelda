@@ -38,8 +38,9 @@
         </dependency>
         <dependency>
             <groupId>dk.sdu.sesem4</groupId>
-            <artifactId>MapCollision</artifactId>
+            <artifactId>Player</artifactId>
             <version>0.0.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
