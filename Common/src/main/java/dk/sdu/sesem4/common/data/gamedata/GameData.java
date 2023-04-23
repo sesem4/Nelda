@@ -21,7 +21,7 @@ public class GameData {
 	private float deltaTime;
 
 	public GameData() {
-
+		gameEntities = new GameEntities();
 	}
 
 	public GameWorld getGameWorld() {
