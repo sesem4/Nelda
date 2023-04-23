@@ -32,6 +32,6 @@ public class PlayerPlugin implements PluginServiceSPI, ProcessingServiceSPI, Pos
 
     @Override
     public void process(GameData gameData, Priority priority) {
-         playerProcessingService.postProcess(gameData, priority);
+         playerProcessingService.process(gameData, priority);
     }
 }
