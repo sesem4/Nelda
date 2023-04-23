@@ -1,5 +1,6 @@
 package dk.sdu.sesem4.map;
 
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -9,8 +10,6 @@ import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
 import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
-import dk.sdu.sesem4.common.data.math.Rectangle;
-import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.process.Priority;
 import dk.sdu.sesem4.common.event.EventManager;
 import dk.sdu.sesem4.common.event.MapTransitionEvent;
@@ -18,7 +17,6 @@ import dk.sdu.sesem4.common.event.MapTransitionEventType;
 import dk.sdu.sesem4.common.util.Direction;
 
 import java.nio.file.*;
-import java.util.Set;
 
 /**
  * @author Jakob L.M. & Jon F.J.
@@ -29,6 +27,14 @@ import java.util.Set;
 public class MapProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI {
 	protected Map map;
 
+	//Tiled map loader
+	private TmxMapLoader tmxMapLoader = new TmxMapLoader();
+
+	/**
+	 * This method is called from the MapPlugin class when the game is started.
+	 * @param gameData The GameData object that contains the game data.
+	 * @param world The world that the map is loaded into.
+	 */
 	public MapProcessingService() {
 		this.map = new Map();
 		EventManager.getInstance().subscribe(MapTransitionEventType.class, (eventType, data) -> {
@@ -49,9 +55,6 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 			}
 		});
 	}
-
-	//Tiled map loader
-	private TmxMapLoader tmxMapLoader = new TmxMapLoader();
 
 	/**
 	 * This method just returns the current "resources" folder.
@@ -120,6 +123,17 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		return Paths.get(relativeFileName);
 	}
 
+	public TiledMap getCurrentTiledMap() {
+		return this.map.getWorld()[this.map.getCurrentMapIndex()];
+	}
+
+	public int getTileMapID(int x, int y){
+		TiledMapTileLayer layer = (TiledMapTileLayer) getCurrentTiledMap().getLayers().get(0);
+		TiledMapTileLayer.Cell cell = layer.getCell(x, y);
+		return cell.getTile().getId();
+	}
+
+
 	/**
 	 * This method sets the current map in the game data.
 	 *
@@ -133,28 +147,46 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 
 	@Override
 	public void postProcess(GameData gameData, Priority priority) {
-		TiledMap currMap = map.getWorld()[map.getCurrentMapIndex()];
+		walkable(gameData);
+	}
 
-		for (Entity entity : gameData.getGameEntities().getEntities()) {
+	private void walkable(GameData gameData) {
+		for (Entity entity: gameData.getGameEntities().getEntities()) {
 			PositionPart positionPart = entity.getEntityPart(PositionPart.class);
-			Rectangle entityRectangle = positionPart.getBoundingBox();
-
-			boolean bottomLeftPassible = isPositionPassible(currMap, entityRectangle.getBottomLeftCorner());
-			boolean bottomRightPassible = isPositionPassible(currMap, entityRectangle.getBottomRightCorner());
-			boolean topLeftPassible = isPositionPassible(currMap, entityRectangle.getTopLeftCorner());
-			boolean topRightPassible = isPositionPassible(currMap, entityRectangle.getTopRightCorner());
-
-			if (!(bottomLeftPassible && bottomRightPassible && topLeftPassible && topRightPassible)) {
-				MovingPart movingPart = entity.getEntityPart(MovingPart.class);
-				movingPart.undoMovement(entity);
+			if (positionPart != null) {
+				//get the current position of the entity
+				int x = (int) positionPart.getPosition().getX();
+				int y = (int) positionPart.getPosition().getY();
+				if (!checkIfOnSolidTile(x,y)){
+					MovingPart movingPart = entity.getEntityPart(MovingPart.class);
+					movingPart.undoMovement(entity);
+				}
 			}
 		}
 	}
 
-	private boolean isPositionPassible(TiledMap map, Vector2 position) {
-		Set<Integer> passibleTiles = Set.of(0);
-		TiledMapTileLayer t = ((TiledMapTileLayer)map.getLayers().get(0));
-		int tileId = t.getCell((int)position.times(8).getX(), (int)position.times(8).getY()).getTile().getId();
-		return passibleTiles.contains(tileId % 42);
+	private boolean checkIfOnSolidTile(int x, int y) {
+		TiledMap currentMap = getCurrentTiledMap();
+
+		//get the current tile
+		// divide by the tile width and height
+		int tileX = x / 16;
+		int tileY = y / 16;
+
+		//get the tile's id
+		int tileID = getTileMapID(tileX, tileY);
+
+		//get the tile cell properties on the layer
+		TiledMapTileLayer layer = (TiledMapTileLayer) currentMap.getLayers().get(0);
+		TiledMapTileLayer.Cell cell = layer.getCell(tileX, tileY);
+		MapProperties cellProperties = cell.getTile().getProperties();
+
+		//check if the tile is solid
+		if (cellProperties.get("solid",boolean.class)) {
+			System.out.println("not solid");
+			return false;
+		}
+		System.out.println("im inn baby");
+		return true;
 	}
 }
