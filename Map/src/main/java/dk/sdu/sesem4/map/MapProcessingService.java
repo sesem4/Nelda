@@ -12,9 +12,9 @@ import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Rectangle;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.process.Priority;
-import dk.sdu.sesem4.common.event.EventManager;
-import dk.sdu.sesem4.common.event.MapTransitionEvent;
-import dk.sdu.sesem4.common.event.MapTransitionEventType;
+import dk.sdu.sesem4.common.event.*;
+import dk.sdu.sesem4.common.event.events.MapTransitionEvent;
+import dk.sdu.sesem4.common.event.events.MapTransitionEventType;
 import dk.sdu.sesem4.common.util.Direction;
 
 import java.nio.file.*;
@@ -26,28 +26,12 @@ import java.util.Set;
  * It is called from the MapPlugin class when the game is started.
  */
 
-public class MapProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI {
+public class MapProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI, EventListener {
 	protected Map map;
 
 	public MapProcessingService() {
 		this.map = new Map();
-		EventManager.getInstance().subscribe(MapTransitionEventType.class, (eventType, data) -> {
-			Direction direction = ((MapTransitionEvent)data).getDirection();
-			switch (direction) {
-				case UP:
-					this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() - 16);
-					break;
-				case DOWN:
-					this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() + 16);
-					break;
-				case LEFT:
-					this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() - 1);
-					break;
-				case RIGHT:
-					this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() + 1);
-					break;
-			}
-		});
+		EventManager.getInstance().subscribe(MapTransitionEventType.class, this);
 	}
 
 	//Tiled map loader
@@ -128,7 +112,33 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 */
 	@Override
 	public void process(GameData gameData, Priority priority) {
-		gameData.getGameWorld().setMap(getCurrentMap());
+
+	}
+
+	@Override
+	public void processNotification(Class<? extends EventType> eventType, Event data) {
+		if (!(data instanceof  MapTransitionEvent)) {
+			return;
+		}
+		MapTransitionEvent eventData = (MapTransitionEvent) data;
+
+		Direction direction = eventData.getDirection();
+		switch (direction) {
+			case UP:
+				this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() - 16);
+				break;
+			case DOWN:
+				this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() + 16);
+				break;
+			case LEFT:
+				this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() - 1);
+				break;
+			case RIGHT:
+				this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() + 1);
+				break;
+		}
+
+		eventData.getGameData().getGameWorld().setMap(getCurrentMap());
 	}
 
 	@Override
