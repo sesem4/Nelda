@@ -2,8 +2,6 @@ package dk.sdu.sesem4.core;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,20 +10,22 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import dk.sdu.sesem4.common.SPI.PluginServiceSPI;
+import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
+import dk.sdu.sesem4.common.SPI.ProcessingServiceSPI;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.process.Priority;
 import dk.sdu.sesem4.common.util.Direction;
 import dk.sdu.sesem4.common.event.EventManager;
-import dk.sdu.sesem4.common.event.MapTransitionEvent;
-import dk.sdu.sesem4.common.event.MapTransitionEventType;
-import dk.sdu.sesem4.map.MapPlugin;
+import dk.sdu.sesem4.common.util.SPILocator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Game class, where all process is handled and the game is rendered.
  */
-public class Game extends ApplicationAdapter implements InputProcessor {
+public class Game extends ApplicationAdapter {
 
 	/**
 	 * The gameData, which is used to store all the data for the game.
@@ -38,7 +38,8 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	private OrthographicCamera camera;
 
 	/**
-	 * The textures, which is used to load an image with a specific width and height.
+	 * The textures, which is used to load an image with a specific width and
+	 * height.
 	 */
 	private ArrayList<Texture> textures;
 
@@ -58,9 +59,9 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	private int counter;
 
 	/**
-	 *  The spriteBatch, which is used to render the sprite.
+	 * The spriteBatch, which is used to render the sprite.
 	 */
-	private SpriteBatch sb;
+	private SpriteBatch spriteBatch;
 	/**
 	 * The sprite, which is used to render the sprite.
 	 */
@@ -84,15 +85,20 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	/**
 	 * The mapPlugin, which is used to start the map plugin.
 	 */
-	private MapPlugin mapPlugin = new MapPlugin();
+	// private MapPlugin mapPlugin = new MapPlugin();
 
 	/**
 	 * This method is responsible for setting up the game, where the different plugins are started and the gameData is created, as well as the eventManager.
 	 */
 	@Override
 	public void create() {
+
 		gameData = new GameData();
 		eventManager = EventManager.getInstance();
+
+		// Locate all plugin services and start plugins
+		List<PluginServiceSPI> pluginCreators = SPILocator.locateAll(PluginServiceSPI.class);
+		pluginCreators.forEach((plugin) -> plugin.start(gameData));
 
 		this.textures = new ArrayList<>();
 		for (int i = 1; i <= 5; i++) {
@@ -102,9 +108,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		this.w = 16 * 16;
 		this.h = 11 * 16;
 
-		mapPlugin.start(gameData);
-
-		sb = new SpriteBatch();
+		spriteBatch = new SpriteBatch();
 		sprite = new Sprite(this.textures.get(2));
 		sprite.setSize(16, 16);
 		sprite.setPosition(this.w/2-sprite.getWidth()/2, this.h/2-sprite.getHeight()/2);
@@ -112,19 +116,22 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		TiledMap map = Utils.loadMap(gameData.getGameWorld().getMap());
 		this.tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
-		Gdx.input.setInputProcessor(this);
-
 		this.camera = new OrthographicCamera();
 		this.camera.update();
 		this.camera.setToOrtho(false, w, h);
 	}
 
 	/**
-	 * This method is responsible for rendering the game, where the map is rendered and the different entities are drawn.
+	 * This method is responsible for rendering the game, where the map is rendered
+	 * and the different entities are drawn.
 	 */
 	@Override
 	public void render() {
-		this.mapPlugin.process(gameData, new Priority());
+		eventManager = EventManager.getInstance();
+
+		// Locate all plugin processors and run the process
+		List<ProcessingServiceSPI> pluginProcessors = SPILocator.locateAll(ProcessingServiceSPI.class);
+		pluginProcessors.forEach((plugin) -> plugin.process(gameData, new Priority()));
 
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -136,29 +143,29 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		this.tiledMapRenderer.setView(camera);
 		this.tiledMapRenderer.render();
 
-		this.sb.setProjectionMatrix(camera.combined);
-		this.sb.begin();
-		this.sprite.draw(sb);
+		this.spriteBatch.setProjectionMatrix(camera.combined);
+		this.spriteBatch.begin();
+		this.sprite.draw(spriteBatch);
 
 		float bottomEdge = 0;
 		float topEdge = this.h;
 		float leftEdge = 0;
 		float rightEdge = this.w;
-		if (this.sprite.getY() + this.sprite.getHeight()/2 < bottomEdge) {
+		if (this.sprite.getY() + this.sprite.getHeight() / 2 < bottomEdge) {
 			changeMap(Direction.DOWN);
-			this.sprite.setY(topEdge - this.sprite.getHeight()/2);
+			this.sprite.setY(topEdge - this.sprite.getHeight() / 2);
 		}
-		if (this.sprite.getY() + this.sprite.getHeight()/2 > topEdge) {
+		if (this.sprite.getY() + this.sprite.getHeight() / 2 > topEdge) {
 			changeMap(Direction.UP);
-			this.sprite.setY(bottomEdge - this.sprite.getHeight()/2);
+			this.sprite.setY(bottomEdge - this.sprite.getHeight() / 2);
 		}
-		if (this.sprite.getX() + this.sprite.getWidth()/2 < leftEdge) {
+		if (this.sprite.getX() + this.sprite.getWidth() / 2 < leftEdge) {
 			changeMap(Direction.LEFT);
-			this.sprite.setX(rightEdge - this.sprite.getWidth()/2);
+			this.sprite.setX(rightEdge - this.sprite.getWidth() / 2);
 		}
-		if (this.sprite.getX() + this.sprite.getWidth()/2 > rightEdge) {
+		if (this.sprite.getX() + this.sprite.getWidth() / 2 > rightEdge) {
 			changeMap(Direction.RIGHT);
-			this.sprite.setX(leftEdge - this.sprite.getWidth()/2);
+			this.sprite.setX(leftEdge - this.sprite.getWidth() / 2);
 		}
 
 		this.counter = (this.counter + 1) % 16;
@@ -183,93 +190,21 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			this.sprite.setTexture(this.textures.get(counter < 8 ? 0 : 1));
 			this.sprite.translateY(-this.moveSpeed);
 		}
-		this.sb.end();
+		this.spriteBatch.end();
+
+		// Locate all plugin post processors and run the post process
+		List<PostProcessingServiceSPI> pluginPostProcessors = SPILocator.locateAll(PostProcessingServiceSPI.class);
+		pluginPostProcessors.forEach((plugin) -> plugin.postProcess(gameData, new Priority()));
 	}
 
 	/**
-	 * This method is responsible for changing the map, where the eventManager is notified.
+	 * This method is responsible for changing the map, where the eventManager is
+	 * notified.
+	 * 
 	 * @param direction The direction in which the map should be changed.
 	 */
 	private void changeMap(Direction direction) {
-		eventManager.notify(MapTransitionEventType.class, new MapTransitionEvent(direction));
+		/*eventManager.notify(MapTransitionEventType.class, new MapTransitionEvent(direction));*/
 	}
 
-	/**
-	 * Checks if a key is pressed, and if so, sets the boolean to true.
-	 * @param keycode The key that is pressed.
-	 * @return Returns true if the key is pressed. Return false otherwise.
-	 */
-	@Override
-	public boolean keyDown(int keycode) {
-		if (keycode == Input.Keys.LEFT) {
-			this.left = true;
-		}
-		if (keycode == Input.Keys.RIGHT) {
-			this.right = true;
-		}
-		if (keycode == Input.Keys.UP) {
-			this.up = true;
-		}
-		if (keycode == Input.Keys.DOWN) {
-			this.down = true;
-		}
-		return false;
-	}
-
-	/**
-	 * Checks if a key is released, and if so, sets the boolean to false.
-	 * @param keycode The key that is released.
-	 * @return true if the key is released.
-	 */
-	@Override
-	public boolean keyUp(int keycode) {
-		if (keycode == Input.Keys.LEFT) {
-			this.left = false;
-		}
-		if (keycode == Input.Keys.RIGHT) {
-			this.right = false;
-		}
-		if (keycode == Input.Keys.UP) {
-			this.up = false;
-		}
-		if (keycode == Input.Keys.DOWN) {
-			this.down = false;
-		}
-		return false;
-	}
-
-	/**
-	 * Check if a specific key is typed.
-	 * @param character the key that is typed.
-	 * @return true if the key is typed.
-	 */
-	@Override
-	public boolean keyTyped(char character) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(float amountX, float amountY) {
-		return false;
-	}
 }

@@ -21,7 +21,8 @@ public class GameData {
 	private float deltaTime;
 
 	public GameData() {
-
+		setGameWorld(new GameWorld());
+		setGameEntities(new GameEntities());
 	}
 
 	public GameWorld getGameWorld() {
