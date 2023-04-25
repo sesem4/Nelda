@@ -63,6 +63,24 @@ public class Vector2 {
     public void setY(float y) {
         this.y = y;
     }
+    
+    /**
+     * Add x and y of this Vector with x and y of another Vector
+     * @param other the Vector to add
+     * @return the resulting Vector after adding
+     */
+    public Vector2 plus(Vector2 other) {
+        return new Vector2(this.x+other.x, this.y+other.y);
+    }
+    
+    /**
+     * Subtract x and y of another Vector from x and y of this Vector
+     * @param other the Vector to subtract
+     * @return the resulting Vector after subtracting
+     */
+    public Vector2 minus(Vector2 other) {
+        return new Vector2(this.x-other.x, this.y-other.y);
+    }
 
     /**
      * Multiply x and y by a scalar
@@ -80,24 +98,6 @@ public class Vector2 {
      */
     public Vector2 divide(float scalar) {
         return new Vector2(this.x/scalar, this.y/scalar);
-    }
-
-    /**
-     * Add x and y of this Vector with x and y of another Vector
-     * @param other the Vector to add
-     * @return the resulting Vector after adding
-     */
-    public Vector2 plus(Vector2 other) {
-        return new Vector2(this.x+other.x, this.y+other.y);
-    }
-
-    /**
-     * Subtract x and y of another Vector from x and y of this Vector
-     * @param other the Vector to subtract
-     * @return the resulting Vector after subtracting
-     */
-    public Vector2 minus(Vector2 other) {
-        return new Vector2(this.x-other.x, this.y-other.y);
     }
 
     /**
