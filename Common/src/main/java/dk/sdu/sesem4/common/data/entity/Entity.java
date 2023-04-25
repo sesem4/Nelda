@@ -18,19 +18,20 @@ import java.util.Set;
  */
 public abstract class Entity {
 	/**
-	* A Map to store all the EntityParts with their Class as key.
-	*/
+	 * A Map to store all the EntityParts with their Class as key.
+	 */
 	private final Map<Class, EntityPart> entityParts = new HashMap<>();
-
+	
 	/**
-	* A Map to store all the CollisionParts with their Class as key.
-	*/
+	 * A Map to store all the CollisionParts with their Class as key.
+	 */
 	private final Map<Class, CollisionPart> collisionParts = new HashMap<>();
-
+	
 	/**
-	* The type of the entity.
-	*/
+	 * The type of the entity.
+	 */
 	private EntityType entityType;
+	
 	public Entity(EntityType entityType) {
 		this.entityType = entityType;
 	}
@@ -121,23 +122,23 @@ public abstract class Entity {
      }
 
 	/**
-	* Emit to entity that it has collided with another entity.
-	*
-	* @param other The other Entity which this entity has collided with.
-	*/
+	 * Emit to entity that it has collided with another entity.
+	 *
+	 * @param other The other Entity which this entity has collided with.
+	 */
 	public void collided(Entity other) {
 		HashMap<EntityType, Set<EntityType>> entityTypeCollisions = new HashMap<>() {{
-			put(EntityType.Player,              Set.of(EntityType.Enemy, EntityType.EnemyProjectile, EntityType.Item));
-			put(EntityType.Enemy,               Set.of(EntityType.PlayerProjectile));
-			put(EntityType.PlayerProjectile,    Set.of(EntityType.Enemy));
-			put(EntityType.EnemyProjectile,     Set.of(EntityType.Player));
-			put(EntityType.Item,                Set.of(EntityType.Player));
+			put(EntityType.Player, Set.of(EntityType.Enemy, EntityType.EnemyProjectile, EntityType.Item));
+			put(EntityType.Enemy, Set.of(EntityType.PlayerProjectile));
+			put(EntityType.PlayerProjectile, Set.of(EntityType.Enemy));
+			put(EntityType.EnemyProjectile, Set.of(EntityType.Player));
+			put(EntityType.Item, Set.of(EntityType.Player));
 		}};
-
+		
 		Set<EntityType> stuffWeShouldCollideWith = entityTypeCollisions.get(this.getEntityType());
 		if (!stuffWeShouldCollideWith.contains(other.getEntityType()))
 			return;
-
+		
 		doDamage(other);
 		doKnockback(other);
 	}
