@@ -150,8 +150,12 @@ public class Vector2 {
         float xDiff = Math.abs(this.getX() - otherVector.getX());
         float yDiff = Math.abs(this.getY() - otherVector.getY());
         
-        float epsilon = 0.0001f;
         
-        return xDiff < epsilon && yDiff < epsilon;
+        // this exists because of IEEE-754 equality weirdness (Infinities, NaN, Positive and Negative Zero, etc.)
+        boolean sameX = Float.compare(this.getX(), otherVector.getX()) == 0;
+        boolean sameY = Float.compare(this.getY(), otherVector.getY()) == 0;
+        
+        float epsilon = 0.0001f;
+        return (sameX || xDiff < epsilon) && (sameY || yDiff < epsilon);
     }
 }
