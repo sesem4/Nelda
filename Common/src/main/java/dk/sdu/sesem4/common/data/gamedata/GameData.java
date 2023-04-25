@@ -20,6 +20,11 @@ public class GameData {
 	 */
 	private float deltaTime;
 
+	/**
+	 * Current frame count since start of the game.
+	 */
+	private int elapsedTime;
+
 	public GameData() {
 
 	}
@@ -46,5 +51,13 @@ public class GameData {
 
 	public void setDeltaTime(float deltaTime) {
 		this.deltaTime = deltaTime;
+	}
+
+	public int getElapsedTime() {
+		return elapsedTime;
+	}
+
+	public void processElapsedTime() {
+		this.elapsedTime += this.getDeltaTime();
 	}
 }

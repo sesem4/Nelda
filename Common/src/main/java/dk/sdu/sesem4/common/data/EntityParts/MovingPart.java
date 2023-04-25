@@ -1,10 +1,13 @@
 package dk.sdu.sesem4.common.data.EntityParts;
 
+import dk.sdu.sesem4.common.SPI.MovementControllerSPI;
 import dk.sdu.sesem4.common.data.CollisionParts.Knockback;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.util.Direction;
+
+import java.util.*;
 
 /**
  * Moving part, that handles and represents moving in the game
@@ -22,12 +25,29 @@ public class MovingPart implements EntityPart {
     private int moveSpeed;
 
     /**
+     * the list of string path for the sprites of each direction
+     */
+    private Map<Direction, List<String>> movementSpriteList;
+
+    private MovementControllerSPI movementController;
+
+    private int spriteFrameRate;
+
+    /**
      * The constructor for the MovingPart class.
      * 
      * @param moveSpeed the speed which the Entity should move with
      */
-    public MovingPart(int moveSpeed) {
+    public MovingPart(int moveSpeed, int spriteFrameRate, MovementControllerSPI movementController) {
         this.moveSpeed = moveSpeed;
+        this.spriteFrameRate = spriteFrameRate;
+        this.movementController = movementController;
+
+        // Setup sprite list
+        this.movementSpriteList = new HashMap<>();
+        for(Direction spriteListDirection: Direction.values()){
+            this.movementSpriteList.put(spriteListDirection, new ArrayList<>());
+        }
     }
 
     /**
@@ -74,6 +94,36 @@ public class MovingPart implements EntityPart {
      */
     public boolean isKnockedBack() {
         return this.knockback != null;
+    }
+
+    /**
+     * Replace the sprites for the given direction.
+     *
+     * @param direction The direction to replace the sprites for
+     * @param sprites The list of sprites to replaced with. The content should be the string path of the sprite
+     */
+    public void setSprites(Direction direction, List<String> sprites) {
+        this.movementSpriteList.replace(direction, sprites);
+    }
+
+    /**
+     * Add a sprite to the current list of sprites for the provided direction
+     *
+     * @param direction The direction to add sprite to
+     * @param sprite The string path of sprite
+     */
+    public void addSprite(Direction direction, String sprite) {
+        this.movementSpriteList.get(direction).add(sprite);
+    }
+
+    /**
+     * Get the list of sprites for the provided direction
+     *
+     * @param direction The direction to get sprites from
+     * @return The list of sprites. The content is a list of string path for the sprites
+     */
+    public List<String> getSprites(Direction direction) {
+        return this.movementSpriteList.get(direction);
     }
 
     /**
@@ -129,5 +179,22 @@ public class MovingPart implements EntityPart {
         }
         positionPart.getPosition().setX(x);
         positionPart.getPosition().setY(y);
+
+        setSprite(gameData, entity, positionPart);
+
+    }
+
+    /**
+     *  Set the current sprite of the entity based on the direction and the elapsed time of the game, since the game started
+     * @param gameData
+     * @param entity
+     * @param positionPart
+     */
+    protected void setSprite(GameData gameData, Entity entity, PositionPart positionPart) {
+        List<String> spriteList = this.movementSpriteList.get(positionPart.getDirection());
+        int listSize = spriteList.size();
+        if (listSize > 0) {
+            entity.setCurrentSprite(spriteList.get((int) (gameData.getElapsedTime() / this.spriteFrameRate) % listSize));
+        }
     }
 }

@@ -33,6 +33,11 @@ public abstract class Entity {
         * The type of the entity.
       */
      private EntityType entityType;
+     /**
+      * Sprite location of currentSprite for entity
+      */
+     private String currentSprite;
+
      public Entity(EntityType entityType) {
           this.entityType = entityType;
      }
