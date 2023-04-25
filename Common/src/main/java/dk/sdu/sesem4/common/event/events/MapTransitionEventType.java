@@ -1,4 +1,6 @@
-package dk.sdu.sesem4.common.event;
+package dk.sdu.sesem4.common.event.events;
+
+import dk.sdu.sesem4.common.event.EventType;
 
 /**
  * @author Jakob L.M. & Jon F.J.
