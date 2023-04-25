@@ -8,25 +8,14 @@ import java.lang.Math;
  * 2 point vector (X and Y)
  */
 public class Vector2 {
-
-    /**
-     * Vector point one in the 2D vector
-     */
     float x;
-
-    /**
-     * Vector point two in the 2D vector
-     */
     float y;
 
-    /**
-     * Creates a new vector with the given x and y values
-     */
     public Vector2() {
         this(0, 0);
     }
 
-/**
+    /**
      * Creates a new vector with the given x and y values
      */
     public Vector2(float x, float y) {
@@ -35,7 +24,7 @@ public class Vector2 {
     }
 
     /**
-     * Creates a new vector with the given direction
+     * Creates a new vector with magnitude 1 and the given direction
      */
     public Vector2(Direction direction) {
         this.x = 0;
@@ -73,7 +62,7 @@ public class Vector2 {
     }
 
     /**
-     * Times x and y with a scalar
+     * Multiply x and y by a scalar
      * @param scalar scalar
      * @return new vector
      */
@@ -82,7 +71,7 @@ public class Vector2 {
     }
 
     /**
-     * Divide x and y with a scalar
+     * Divide x and y by a scalar
      * @param scalar scalar
      * @return new vector
      */
@@ -91,7 +80,7 @@ public class Vector2 {
     }
 
     /**
-     * Plus x and y of this vector with x and y of other vector
+     * Add x and y of this vector with x and y of another vector
      * @param other the other vector
      * @return new vector
      */
@@ -100,7 +89,7 @@ public class Vector2 {
     }
 
     /**
-     * Minus x and y of this vector with x and y of other vector
+     * Subtract x and y of another vector from x and y of this vector
      * @param other the other vector
      * @return new vector
      */
@@ -109,8 +98,9 @@ public class Vector2 {
     }
 
     /**
-     * Change the direction of the vector to the opposite direction
-     * @return the direction of the vector
+     * Convert this vector to a direction.
+     * This is done by getting the direction with the highest magnitude
+     * @return the created direction
      */
     public Direction toDirection() {
         // get the longest part of the vector.
@@ -131,7 +121,7 @@ public class Vector2 {
         }
     }
 
-/**
+    /**
      * Get the direction to another vector
      * @param other the other vector
      * @return the direction to the other vector
@@ -150,7 +140,7 @@ public class Vector2 {
     @Override
     public boolean equals(Object other) {
         if (other == null) return false;
-        if (other == this) return true;
+        // This is done because we override equals on Object, which can only take another Object, so we need to make sure the other is actually a Vector2
         if (!(other instanceof Vector2)) return false;
         Vector2 otherVector = (Vector2)other;
 
