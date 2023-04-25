@@ -5,18 +5,21 @@ import dk.sdu.sesem4.common.util.Direction;
 import java.lang.Math;
 
 /**
- * 2 point vector (X and Y)
+ * 2-dimensional Vector (X and Y)
  */
 public class Vector2 {
     float x;
     float y;
-
+    
+    /**
+     * Creates a new Vector with (x,y) = (0,0)
+     */
     public Vector2() {
         this(0, 0);
     }
 
     /**
-     * Creates a new vector with the given x and y values
+     * Creates a new Vector with the given x and y values
      */
     public Vector2(float x, float y) {
         this.x = x;
@@ -24,7 +27,7 @@ public class Vector2 {
     }
 
     /**
-     * Creates a new vector with magnitude 1 and the given direction
+     * Creates a new Vector with magnitude 1 and the given direction
      */
     public Vector2(Direction direction) {
         this.x = 0;
@@ -63,8 +66,8 @@ public class Vector2 {
 
     /**
      * Multiply x and y by a scalar
-     * @param scalar scalar
-     * @return new vector
+     * @param scalar the scalar to multiply by
+     * @return the resulting Vector after multiplying
      */
     public Vector2 times(float scalar) {
         return new Vector2(this.x*scalar, this.y*scalar);
@@ -72,33 +75,33 @@ public class Vector2 {
 
     /**
      * Divide x and y by a scalar
-     * @param scalar scalar
-     * @return new vector
+     * @param scalar the scalar for divide by
+     * @return the resulting Vector after dividing
      */
     public Vector2 divide(float scalar) {
         return new Vector2(this.x/scalar, this.y/scalar);
     }
 
     /**
-     * Add x and y of this vector with x and y of another vector
-     * @param other the other vector
-     * @return new vector
+     * Add x and y of this Vector with x and y of another Vector
+     * @param other the Vector to add
+     * @return the resulting Vector after adding
      */
     public Vector2 plus(Vector2 other) {
         return new Vector2(this.x+other.x, this.y+other.y);
     }
 
     /**
-     * Subtract x and y of another vector from x and y of this vector
-     * @param other the other vector
-     * @return new vector
+     * Subtract x and y of another Vector from x and y of this Vector
+     * @param other the Vector to subtract
+     * @return the resulting Vector after subtracting
      */
     public Vector2 minus(Vector2 other) {
         return new Vector2(this.x-other.x, this.y-other.y);
     }
 
     /**
-     * Convert this vector to a direction.
+     * Convert this Vector to a direction.
      * This is done by getting the direction with the highest magnitude
      * @return the created direction
      */
@@ -122,9 +125,9 @@ public class Vector2 {
     }
 
     /**
-     * Get the direction to another vector
-     * @param other the other vector
-     * @return the direction to the other vector
+     * Get the direction to another Vector
+     * @param other the other Vector
+     * @return the direction to the other Vector
      */
     public Direction getDirectionTo(Vector2 other) {
         Vector2 deltaPosition = this.minus(other);
@@ -133,9 +136,9 @@ public class Vector2 {
 
 
     /**
-     * Check if two vectors are equal
-     * @param other the other vector
-     * @return true if the vectors are equal
+     * Check if two Vectors are equal
+     * @param other the object to check equality against
+     * @return true if the Vectors are equal. false otherwise
      */
     @Override
     public boolean equals(Object other) {
