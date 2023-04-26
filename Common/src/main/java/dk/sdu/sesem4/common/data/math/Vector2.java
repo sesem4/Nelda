@@ -17,17 +17,20 @@ public class Vector2 {
     public Vector2() {
         this(0, 0);
     }
-
+    
     /**
      * Creates a new Vector with the given x and y values
+     * @param x The x component of the Vector
+     * @param y The y component of the Vector
      */
     public Vector2(float x, float y) {
         this.x = x;
         this.y = y;
     }
-
+    
     /**
      * Creates a new Vector with magnitude 1 and the given direction
+     * @param direction The direction to create the Vector2 from
      */
     public Vector2(Direction direction) {
         this.x = 0;
