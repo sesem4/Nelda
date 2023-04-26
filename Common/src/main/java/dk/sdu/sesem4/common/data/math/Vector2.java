@@ -146,7 +146,16 @@ public class Vector2 {
         // This is done because we override equals on Object, which can only take another Object, so we need to make sure the other is actually a Vector2
         if (!(other instanceof Vector2)) return false;
         Vector2 otherVector = (Vector2)other;
-        
+    
+        if (Float.isNaN(this.getX()) || Float.isNaN(this.getY())) {
+            return false;
+        }
+    
+        if (Float.isNaN(otherVector.getX()) || Float.isNaN(otherVector.getY())) {
+            return false;
+        }
+    
+    
         float xDiff = Math.abs(this.getX() - otherVector.getX());
         float yDiff = Math.abs(this.getY() - otherVector.getY());
         
