@@ -130,6 +130,8 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		Gdx.graphics.getDeltaTime();
+
 		this.camera.update();
 		TiledMap map = Utils.loadMap(gameData.getGameWorld().getMap());
 		this.tiledMapRenderer = new OrthogonalTiledMapRenderer(map);

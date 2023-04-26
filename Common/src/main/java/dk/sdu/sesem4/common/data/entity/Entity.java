@@ -33,10 +33,6 @@ public abstract class Entity {
         * The type of the entity.
       */
      private EntityType entityType;
-     /**
-      * Sprite location of currentSprite for entity
-      */
-     private String currentSprite;
 
      public Entity(EntityType entityType) {
           this.entityType = entityType;
@@ -204,22 +200,5 @@ public abstract class Entity {
 
           // Set the Knockback
           ourMovingPart.setKnockback(knockback);
-     }
-
-     /**
-      * Get the current sprite as the string path to the sprite.
-      * @return String path to sprite
-      */
-     public String getCurrentSprite() {
-          return currentSprite;
-     }
-
-
-     /**
-      * Set the current sprite as the string path to the sprite
-      * @param currentSprite The string path to the sprite
-      */
-     public void setCurrentSprite(String currentSprite) {
-          this.currentSprite = currentSprite;
      }
 }
