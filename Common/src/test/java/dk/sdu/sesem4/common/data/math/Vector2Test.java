@@ -150,11 +150,26 @@ public class Vector2Test {
     public void testDivideByZeroGivesInfinity() {
         a = new Vector2(8, -3);
         float scalar = 0;
-    
+        
         Vector2 actual = a.divide(scalar);
-    
+        
         Vector2 expected = new Vector2(Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY);
+        
+        assertEquals(expected, actual);
+    }
     
+    /**
+     * Division by negative zero will result in negative infinity
+     */
+    @Test
+    public void testDivideByNegativeZeroGivesInfinity() {
+        a = new Vector2(8, -3);
+        float scalar = -0f;
+        
+        Vector2 actual = a.divide(scalar);
+        
+        Vector2 expected = new Vector2(Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
+        
         assertEquals(expected, actual);
     }
     
@@ -239,7 +254,7 @@ public class Vector2Test {
     }
     
     @Test
-    public void testEqualsAgainstFloatCompare() {
+    public void testEqualsAgainstFloatingPointCompare() {
         // All Vectors in this method will use the same X and Y for sake of simplicity.
         // Equality is unchanged by this
         List<Float> cases = List.of(Float.NaN, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, +0f, -0f);
@@ -253,7 +268,7 @@ public class Vector2Test {
                 boolean actual = new Vector2(a, a).equals(new Vector2(b, b));
 
                 // according to IEEE 754-2019, "Comparisons shall ignore the sign of zero (so +0 = −0)."
-                if (a == +0f && b == -0f) {
+                if (a == 0 && b == 0) {
                     expected = true;
                 }
                 // according to IEEE 754-2019, "Every NaN shall compare unordered with everything, including itself."
