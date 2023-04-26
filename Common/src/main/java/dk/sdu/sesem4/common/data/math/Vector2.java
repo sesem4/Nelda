@@ -130,7 +130,7 @@ public class Vector2 {
      * @return the direction to the other Vector
      */
     public Direction getDirectionTo(Vector2 other) {
-        Vector2 deltaPosition = this.minus(other);
+        Vector2 deltaPosition = other.minus(this);
         return deltaPosition.toDirection();
     }
 
