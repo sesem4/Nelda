@@ -15,6 +15,9 @@ public class Vector2Test {
     private Vector2 a;
     private Vector2 b;
     
+    /**
+     * No-arg constructor returns (0,0)
+     */
     @Test
     public void testDefaultConstructor() {
         a = new Vector2();
@@ -23,6 +26,9 @@ public class Vector2Test {
         assertEquals(a, b);
     }
     
+    /**
+     * X,Y constructor returns (X,Y)
+     */
     @Test
     public void testXYConstructor() {
         float x = 5;
@@ -33,6 +39,9 @@ public class Vector2Test {
         assertTrue(Math.abs(a.getY() - y) < 0.0001);
     }
     
+    /**
+     * Direction constructor returns vector with magnitude 1 in the correct direction
+     */
     @Test
     public void testDirectionConstructor() {
         Map<Direction, Vector2> argumentToExpected = Map.of(
@@ -50,7 +59,9 @@ public class Vector2Test {
         }
     }
     
-    // Tests if two Vectors can be added and that the result is correct.
+    /**
+     * Vectors can be added, and the result is correct.
+     */
     @Test
     public void testAdd() {
         a = new Vector2(2, 3);
@@ -61,8 +72,10 @@ public class Vector2Test {
         Vector2 expected = new Vector2(7, 4);
         assertEquals(expected, actual);
     }
-
-    // Tests that two Vectors with negative values can be added and that the result is correct.
+    
+    /**
+     * Vectors with negative values can be added, and the result is correct.
+     */
     @Test
     public void testAddWorksForNegatives() {
         a = new Vector2(2, -3);
@@ -74,6 +87,9 @@ public class Vector2Test {
         assertEquals(expected, actual);
     }
     
+    /**
+     * Vectors can be subtracted, and the result is correct
+     */
     @Test
     public void testSubtract() {
         a = new Vector2(10, -3);
@@ -86,6 +102,9 @@ public class Vector2Test {
         assertEquals(expected, actual);
     }
     
+    /**
+     * Subtracting also works with negative values
+     */
     @Test
     public void testSubtractWithNegative() {
         a = new Vector2(10, -3);
@@ -98,6 +117,9 @@ public class Vector2Test {
         assertEquals(expected, actual);
     }
     
+    /**
+     * Vectors can be multiplied by a scalar, and the result is correct
+     */
     @Test
     public void testTimes() {
         a = new Vector2(8, -3);
@@ -110,6 +132,9 @@ public class Vector2Test {
         assertEquals(expected, actual);
     }
     
+    /**
+     * Multiplication works with a negative scalar
+     */
     @Test
     public void testTimesWithNegativeScalar() {
         a = new Vector2(8, -3);
@@ -122,6 +147,9 @@ public class Vector2Test {
         assertEquals(expected, actual);
     }
     
+    /**
+     * Vectors can be divided by a scalar, and the result is correct
+     */
     @Test
     public void testDivide() {
         a = new Vector2(8, -3);
@@ -134,6 +162,9 @@ public class Vector2Test {
         assertEquals(expected, actual);
     }
     
+    /**
+     * Division works with a negative scalar
+     */
     @Test
     public void testDivideWithNegativeScalar() {
         a = new Vector2(8, -3);
@@ -146,6 +177,9 @@ public class Vector2Test {
         assertEquals(expected, actual);
     }
     
+    /**
+     * Division by zero will result in infinity
+     */
     @Test
     public void testDivideByZeroGivesInfinity() {
         a = new Vector2(8, -3);
@@ -173,6 +207,10 @@ public class Vector2Test {
         assertEquals(expected, actual);
     }
     
+    /**
+     * Vectors can be converted to Directions
+     * This only tests on Vectors with magnitude 1 in each cardinal direction
+     */
     @Test
     public void testToDirectionSimple() {
         Map<Vector2, Direction> argumentToExpected = Map.of(
@@ -190,6 +228,9 @@ public class Vector2Test {
         }
     }
     
+    /**
+     * Direction conversion will use the component with the larger magnitude
+     */
     @Test
     public void testToDirectionComplex() {
         Map<Vector2, Direction> argumentToExpected = Map.of(
@@ -218,6 +259,10 @@ public class Vector2Test {
         }
     }
     
+    /**
+     * Vectors can get direction to each other
+     * From A to B will always be the exact opposite of From B to A
+     */
     @Test
     public void testGetDirectionTo() {
         a = new Vector2(10, 10);
@@ -232,6 +277,9 @@ public class Vector2Test {
         assertEquals(Direction.LEFT, b.getDirectionTo(a));
     }
     
+    /**
+     * Vectors equal other vectors with the same components
+     */
     @Test
     public void testEquals() {
         float x = 5;
@@ -253,6 +301,9 @@ public class Vector2Test {
         }
     }
     
+    /**
+     * Special cases for NaN, Infinities, Positive and Negative zero work as described in IEEE-754
+     */
     @Test
     public void testEqualsAgainstFloatingPointCompare() {
         // All Vectors in this method will use the same X and Y for sake of simplicity.
@@ -267,11 +318,11 @@ public class Vector2Test {
                 boolean expected = Objects.equals(a, b);
                 boolean actual = new Vector2(a, a).equals(new Vector2(b, b));
 
-                // according to IEEE 754-2019, "Comparisons shall ignore the sign of zero (so +0 = −0)."
+                // according to IEEE-754, "Comparisons shall ignore the sign of zero (so +0 = −0)."
                 if (a == 0 && b == 0) {
                     expected = true;
                 }
-                // according to IEEE 754-2019, "Every NaN shall compare unordered with everything, including itself."
+                // according to IEEE-754, "Every NaN shall compare unordered with everything, including itself."
                 // unordered will mean it always results in false for all comparisons, even equality checks with itself
                 if (Float.isNaN(a) || Float.isNaN(b)) {
                     expected = false;
