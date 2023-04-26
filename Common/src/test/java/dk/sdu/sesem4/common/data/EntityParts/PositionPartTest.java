@@ -14,10 +14,6 @@ public class PositionPartTest {
 		this.positionPart = new PositionPart(new Vector2(0, 0), new Vector2(16, 16), Direction.UP);
 	}
 
-	public void x() {
-
-	}
-
 	@Test
 	public void testGetSetPosition() {
 		Vector2 expected = new Vector2(189.6f, 4753.4f);
@@ -44,7 +40,12 @@ public class PositionPartTest {
 
 		assertEquals(expected, actual);
 	}
-
+	
+	/**
+	 * tests moving the positionPart by using a startPosition and a deltaPosition.
+	 * We then compute the expectedEndPosition by adding the two vectors together
+	 * Finally, check that they're the same (with an epsilon)
+	 */
 	@Test
 	public void testMove() {
 		Vector2 startPosition = new Vector2(189.6f, 4753.4f);
