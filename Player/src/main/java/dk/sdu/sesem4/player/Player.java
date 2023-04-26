@@ -5,7 +5,6 @@ import dk.sdu.sesem4.common.data.entity.EntityType;
 import dk.sdu.sesem4.common.util.Direction;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
