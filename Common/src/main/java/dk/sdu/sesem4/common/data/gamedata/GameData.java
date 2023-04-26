@@ -26,7 +26,8 @@ public class GameData {
 	private double elapsedTime;
 
 	public GameData() {
-
+		setGameWorld(new GameWorld());
+		setGameEntities(new GameEntities());
 	}
 
 	public GameWorld getGameWorld() {

@@ -12,6 +12,13 @@ public class GameWorld {
 	private Path map;
 
 	/**
+	 * Construct an empty GameWorld
+	 */
+	public GameWorld() {
+		this(null);
+	}
+
+	/**
 	 * Constructs a GameWorld
 	 *
 	 * @param map the path to the map
