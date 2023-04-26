@@ -11,6 +11,10 @@ public class RectangleTest extends TestCase {
 	float xSize;
 	float ySize;
 	
+	/**
+	 * sets up xPosition, yPosition, xSize, and ySize
+	 * and generates rectangle from those
+	 */
 	@Override
 	public void setUp() {
 		xPosition = 7;
@@ -77,6 +81,9 @@ public class RectangleTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 	
+	/**
+	 * Test collisions between two rectangles
+	 */
 	public void testCollidesWith() {
 		// we need to test the following scenarios:
 		// a.left is before b.left
