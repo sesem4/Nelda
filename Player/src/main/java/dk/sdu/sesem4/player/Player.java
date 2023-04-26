@@ -23,8 +23,6 @@ public class Player extends Entity {
 
 	/**
 	 * Constructor for the Player class.
-	 *
-	 * @param entityType The type of the entity.
 	 */
 	public Player() {
 		super(EntityType.Player);

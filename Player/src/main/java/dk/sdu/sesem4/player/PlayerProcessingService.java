@@ -14,10 +14,20 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class processes the player each game loop and changes its Movement, Position, LifePart, and Path to Texture.
+ * It also includes methods for creating and getting the player entity.
+ */
 public class PlayerProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI {
 
-	Player player;
+	protected Player player;
 
+	/**
+	 * Processes the player for each game loop, changing its Movement, Position, LifePart, and Path to Texture.
+	 *
+	 * @param gameData The {@link GameData} object for the game.
+	 * @param priority The priority of the processing service.
+	 */
 	@Override
 	public void process(GameData gameData, Priority priority) {
 		//process the player for each game loop, change Movement, Position, LifePart, Path to Texture,
@@ -25,6 +35,7 @@ public class PlayerProcessingService implements ProcessingServiceSPI, PostProces
 			PositionPart positionPart = player.getEntityPart(PositionPart.class);
 			MovingPart movingPart = player.getEntityPart(MovingPart.class);
 			LifePart lifePart = player.getEntityPart(LifePart.class);
+//			TexturePart texturePart = player.getEntityPart(TexturePart.class);
 
 			//set the direction of the player
 
@@ -34,16 +45,43 @@ public class PlayerProcessingService implements ProcessingServiceSPI, PostProces
 			positionPart.process(gameData, player);
 			movingPart.process(gameData, player);
 			lifePart.process(gameData, player);
-
+//			texturePart.process(gameData, player);
 		}
 	}
 
+	/**
+	 * Post-processes the player, checking if the movement matches the direction set in `process`.
+	 * If it does not match, it changes the direction to the movement direction.
+	 *
+	 * @param gameData The {@link GameData} object for the game.
+	 * @param priority The priority of the processing service.
+	 */
 	@Override
 	public void postProcess(GameData gameData, Priority priority) {
 		// postProcess check if the movement matches the direction set in process,
+		// if it does not match, then change the direction to the movement direction
+		for (Entity player : gameData.getGameEntities().getEntities(Player.class)) {
+			PositionPart positionPart = player.getEntityPart(PositionPart.class);
+			MovingPart movingPart = player.getEntityPart(MovingPart.class);
+			LifePart lifePart = player.getEntityPart(LifePart.class);
+//			TexturePart texturePart = player.getEntityPart(TexturePart.class);
+
+			positionPart.getPosition();
+
+			//set the direction of the player
+
+
+			//set the texture based on the direction
+		}
+
 	}
 
-	public Entity createPlayer() {
+	/**
+	 * Creates a new player entity and sets its speed, position, and life.
+	 *
+	 * @return The new player entity.
+	 */
+	public Entity createPlayer(){
 		//create a new player
 		this.player = new Player();
 		//set the speed of the player
@@ -60,6 +98,11 @@ public class PlayerProcessingService implements ProcessingServiceSPI, PostProces
 		return this.player;
 	}
 
+	/**
+	 * Loads all player textures into a list of paths.
+	 *
+	 * @return A list of paths to the player textures.
+	 */
 	private List<Path> loadTextures() {
 		//load all player textures into a Path array
 		List<Path> entityTexturesList = new ArrayList<Path>();
@@ -79,5 +122,6 @@ public class PlayerProcessingService implements ProcessingServiceSPI, PostProces
 	public Entity getPlayer() {
 		return this.player;
 	}
-
 }
+
+
