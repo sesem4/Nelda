@@ -175,8 +175,33 @@ public class Vector2Test {
         }
     }
     
-    //TODO: add test to ensure that toDirection will choose the direction with the higher magnitude
+    @Test
+    public void testToDirectionComplex() {
+        Map<Vector2, Direction> argumentToExpected = Map.of(
+                // x component is bigger than x
+                // positive x
+                new Vector2(2, 1), Direction.RIGHT,
+                new Vector2(2, -1), Direction.RIGHT,
+                // negative x
+                new Vector2(-2, 1), Direction.LEFT,
+                new Vector2(-2, -1), Direction.LEFT,
+        
+                // y component bigger than x
+                // positive y
+                new Vector2(1, 2), Direction.UP,
+                new Vector2(-1, 2), Direction.UP,
+                // negative y
+                new Vector2(1, -2), Direction.DOWN,
+                new Vector2(-1, -2), Direction.DOWN
+        );
     
+        // for each case, check that it matches the expected
+        for (Map.Entry<Vector2, Direction> entry : argumentToExpected.entrySet()) {
+            Direction actual = entry.getKey().toDirection();
+            Direction expected = entry.getValue();
+            assertEquals(expected, actual);
+        }
+    }
     
     @Test
     public void testGetDirectionTo() {
