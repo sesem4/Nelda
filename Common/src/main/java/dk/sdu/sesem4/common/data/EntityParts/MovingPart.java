@@ -59,6 +59,15 @@ public class MovingPart implements EntityPart {
     }
 
     /**
+     *
+     * @param moveSpeed
+     *
+     * @deprecated
+     */
+    public MovingPart(int moveSpeed) {
+        this(moveSpeed, 1, null);
+    }
+    /**
      * Get the speed that the entity should move.
      * 
      * @return The speed that the entity should move.
@@ -159,9 +168,14 @@ public class MovingPart implements EntityPart {
                 return;
             }
         }
+        Direction direction = null;
 
         // Handle actual movement
-        Direction direction = this.movementController.getMovement(gameData, entity);
+        if (this.movementController != null) {
+            direction = this.movementController.getMovement(gameData, entity);
+        } else {
+            direction = Direction.UP;
+        }
         if (direction == null) {
             return;
         }
