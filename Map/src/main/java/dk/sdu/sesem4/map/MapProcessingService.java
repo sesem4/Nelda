@@ -29,7 +29,10 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 
 	//Tiled map loader
 	private TmxMapLoader tmxMapLoader = new TmxMapLoader();
-
+	/**
+	 * MapProcessingService loads the world from the .tmx files into an array of TiledMaps.
+	 * It is called from the MapPlugin class when the game is started.
+	 */
 	public MapProcessingService() {
 		this.map = new Map();
 		EventManager.getInstance().subscribe(MapTransitionEventType.class, (eventType, data) -> {
@@ -150,6 +153,10 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		walkable(gameData);
 	}
 
+	/**
+	 * This method checks whether an entity is on a solid tile. If it is not on a solid tile, it undoes the entity's movement.
+	 * @param gameData The game data.
+	 */
 	private void walkable(GameData gameData) {
 		for (Entity entity: gameData.getGameEntities().getEntities()) {
 			PositionPart positionPart = entity.getEntityPart(PositionPart.class);
@@ -165,6 +172,12 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		}
 	}
 
+	/**
+	 * This method checks whether a tile is solid.
+	 * @param x The x-coordinate of the tile.
+	 * @param y The y-coordinate of the tile.
+	 * @return Whether the tile is solid.
+	 */
 	private boolean checkIfOnSolidTile(int x, int y) {
 		TiledMap currentMap = getCurrentTiledMap();
 
@@ -181,16 +194,10 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		TiledMapTileLayer.Cell cell = layer.getCell(tileX, tileY);
 		MapProperties cellProperties = cell.getTile().getProperties();
 
-//		if (cellProperties.get("solid",boolean.class)){
-//
-//			return true;
-//		}
 		//check if the tile is solid
 		if (cellProperties.get("solid",boolean.class)) {
-			System.out.println("not solid");
 			return false;
 		}
-		System.out.println("its solid");
 		return true;
 	}
 }
