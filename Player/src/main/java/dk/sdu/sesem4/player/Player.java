@@ -26,8 +26,8 @@ public class Player extends Entity {
 	 *
 	 * @param entityType The type of the entity.
 	 */
-	public Player(EntityType entityType) {
-		super(entityType);
+	public Player() {
+		super(EntityType.Player);
 	}
 
 	/**

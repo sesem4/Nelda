@@ -1,13 +1,11 @@
 package dk.sdu.sesem4.player;
 
-import dk.sdu.sesem4.common.SPI.ControlSPI;
 import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
 import dk.sdu.sesem4.common.SPI.ProcessingServiceSPI;
 import dk.sdu.sesem4.common.data.EntityParts.LifePart;
 import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
 import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.entity.Entity;
-import dk.sdu.sesem4.common.data.entity.EntityType;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.process.Priority;
@@ -16,10 +14,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI, ControlSPI {
+public class PlayerProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI {
 
 	Player player;
-
 
 	@Override
 	public void process(GameData gameData, Priority priority) {
@@ -29,10 +26,7 @@ public class PlayerProcessingService implements ProcessingServiceSPI, PostProces
 			MovingPart movingPart = player.getEntityPart(MovingPart.class);
 			LifePart lifePart = player.getEntityPart(LifePart.class);
 
-			//set the movements
-			Vector2 move = move(gameData, player);
-
-			positionPart.setPosition(move);
+			//set the direction of the player
 
 			//set the texture based on the direction
 
@@ -42,8 +36,6 @@ public class PlayerProcessingService implements ProcessingServiceSPI, PostProces
 			lifePart.process(gameData, player);
 
 		}
-
-
 	}
 
 	@Override
@@ -53,7 +45,7 @@ public class PlayerProcessingService implements ProcessingServiceSPI, PostProces
 
 	public Entity createPlayer() {
 		//create a new player
-		this.player = new Player(EntityType.Player);
+		this.player = new Player();
 		//set the speed of the player
 		this.player.addEntityPart(new MovingPart(this.player.getSpeed()));
 		//set the position of the player
@@ -88,8 +80,4 @@ public class PlayerProcessingService implements ProcessingServiceSPI, PostProces
 		return this.player;
 	}
 
-	@Override
-	public Vector2 move(GameData gameData, Entity entity) {
-		return null;
-	}
 }
