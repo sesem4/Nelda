@@ -175,6 +175,23 @@ public class Vector2Test {
         }
     }
     
+    //TODO: add test to ensure that toDirection will choose the direction with the higher magnitude
+    
+    
+    @Test
+    public void testGetDirectionTo() {
+        a = new Vector2(10, 10);
+        b = new Vector2(10, 8);
+        
+        assertEquals(Direction.DOWN, a.getDirectionTo(b));
+        assertEquals(Direction.UP, b.getDirectionTo(a));
+        
+        b = new Vector2(12, 10);
+        
+        assertEquals(Direction.RIGHT, a.getDirectionTo(b));
+        assertEquals(Direction.LEFT, b.getDirectionTo(a));
+    }
+    
     @Test
     public void testEquals() {
         float x = 5;
