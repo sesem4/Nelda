@@ -13,7 +13,7 @@ public interface ControlSPI {
 	 *
 	 * @param gameData The game data
 	 * @param entity   The entity to move on the map
-	 * @return dX and dY change in float array, that the entity has to move
+	 * @return dX and dY change in a Vector2, that the entity has to move
 	 */
 	Vector2 move(GameData gameData, Entity entity);
 }
