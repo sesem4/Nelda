@@ -97,6 +97,18 @@ public class Vector2 {
      * @return the resulting Vector after dividing
      */
     public Vector2 divide(float scalar) {
+        // this behaviour is defined in IEEE-754 Section 7.3
+        // "For division, when the divisor is zero and the dividend is a finite non-zero number, the sign of the
+        // infinity is the exclusive OR of the operands’ signs"
+        if (scalar == 0) {
+            // this just means scalar == -0f
+            boolean scalarSign = Float.compare(scalar, -0f) == 0;
+            boolean xSign = this.getX() > 0;
+            boolean ySign = this.getY() > 0;
+            float x = scalarSign ^ xSign ? Float.POSITIVE_INFINITY : Float.NEGATIVE_INFINITY;
+            float y = scalarSign ^ ySign ? Float.POSITIVE_INFINITY : Float.NEGATIVE_INFINITY;
+            return new Vector2(x, y);
+        }
         return new Vector2(this.x/scalar, this.y/scalar);
     }
 
