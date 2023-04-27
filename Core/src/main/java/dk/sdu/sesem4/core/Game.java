@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import dk.sdu.sesem4.common.SPI.PluginServiceSPI;
 import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
@@ -21,6 +22,7 @@ import dk.sdu.sesem4.common.data.process.Priority;
 import dk.sdu.sesem4.common.util.SPILocator;
 
 import java.util.HashMap;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -71,9 +73,6 @@ public class Game extends ApplicationAdapter {
 
 		spriteBatch = new SpriteBatch();
 
-		TiledMap map = Utils.loadMap(gameData.getGameWorld().getMap());
-		this.tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-
 		this.camera = new OrthographicCamera();
 		this.camera.update();
 		float w = 16 * 16;
@@ -104,15 +103,11 @@ public class Game extends ApplicationAdapter {
 
 		this.camera.update();
 		
-		// render map
-		TiledMap map = Utils.loadMap(gameData.getGameWorld().getMap());
-		this.tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-		this.tiledMapRenderer.setView(camera);
-		this.tiledMapRenderer.render();
+		renderMap();
 
 		// render sprites
-		this.spriteBatch.setProjectionMatrix(camera.combined);
-		this.spriteBatch.begin();
+		spriteBatch.setProjectionMatrix(camera.combined);
+		spriteBatch.begin();
 		
 		List<Entity> entities = gameData.getGameEntities().getEntities(Entity.class);
 
@@ -157,5 +152,17 @@ public class Game extends ApplicationAdapter {
 		this.textureCache.put(filePath, texture);
 
 		return texture;
+	}
+	
+	private void renderMap() {
+		TiledMap map = loadMap(gameData.getGameWorld().getMap());
+		tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+		tiledMapRenderer.setView(camera);
+		tiledMapRenderer.render();
+	}
+	
+	TiledMap loadMap(Path path) {
+		TmxMapLoader tmxMapLoader = new TmxMapLoader();
+		return tmxMapLoader.load(path.toString());
 	}
 }
