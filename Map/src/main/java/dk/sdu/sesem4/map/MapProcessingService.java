@@ -19,7 +19,7 @@ import dk.sdu.sesem4.common.event.events.MapTransitionEventType;
 import dk.sdu.sesem4.common.util.Direction;
 
 import java.nio.file.*;
-import java.util.Set;
+import java.util.HashMap;
 
 /**
  * The MapProcessingService class is responsible for loading the world from the .tmx files into an array of TiledMaps.
@@ -27,7 +27,9 @@ import java.util.Set;
  */
 public class MapProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI, EventListener {
 	protected Map map;
-
+	
+	HashMap<Path, TiledMap> cachedTiledMaps = new HashMap<>();
+	
 	public MapProcessingService() {
 		this.map = new Map();
 		EventManager.getInstance().subscribe(MapTransitionEventType.class, this);
@@ -51,7 +53,7 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 * @param worldName: a string that represents the name of the world to load.
 	 * @param x: an integer that represents the x-coordinate of the map.
 	 * @param y: an integer that represents the y-coordinate of the map.
-	 * @return a string that represents the file name of the map.
+	 * @return the path to the map's tmx file.
 	 */
 	private Path getPathForMap(String worldName, int x, int y) {
 //		URL url = this.getClass().getClassLoader().getResource(worldName + "/" + columns[x] + (y + 1) + ".tmx");
@@ -62,38 +64,29 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	}
 
 	/**
-	 * Gets the current tiled map.
-	 * @return The current tiled map.
+	 * Gets the path to the current tmx file.
+	 * @return Path to the current tmx file.
 	 */
 	public Path getCurrentMap() {
 		return getPathForMap(this.map.getCurrentWorldName(), this.map.getCurrentMapIndex() % 16, this.map.getCurrentMapIndex() / 16);
 	}
-
+	
 	/**
-	 * Loads the current tiled map.
-	 * @param currentTiledMap The current tiled map to load.
-	 * @return The loaded tiled map.
+	 * Returns the TiledMap for the current map index
+	 * @return TiledMap for the current map index
 	 */
-	public Path getCurrentTiledMap() {
-		return this.map.getWorld()[this.map.getCurrentMapIndex()];
+	public TiledMap getCurrentTiledMap() {
+		Path path = getCurrentMap();
+		
+		if (cachedTiledMaps.containsKey(path)) {
+			return cachedTiledMaps.get(path);
+		}
+		
+		TiledMap map = new TmxMapLoader().load(path.toString());
+		cachedTiledMaps.put(path, map);
+		return map;
 	}
 
-	public TiledMap loadTiledMap(Path currentTiledMap) {
-		return tmxMapLoader.load(getCurrentTiledMap().toString());
-	}
-
-	/**
-	 * Gets the tile map ID.
-	 * @param x The x-coordinate.
-	 * @param y The y-coordinate.
-	 * @return The tile map ID.
-	 */
-	public int getTileMapID(int x, int y){
-		TiledMap currentMap = loadTiledMap(getCurrentTiledMap());
-		TiledMapTileLayer layer = (TiledMapTileLayer) currentMap.getLayers().get(0);
-		TiledMapTileLayer.Cell cell = layer.getCell(x, y);
-		return cell.getTile().getId();
-	}
 
 	/**
 	 * Processes the game data.
@@ -104,11 +97,11 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	public void process(GameData gameData, Priority priority) {
 		gameData.getGameWorld().setMap(this.getCurrentMap());
 	}
-
+	
 	/**
-	 * Post-processes the game data.
-	 * @param gameData The game data.
-	 * @param priority The priority.
+	 * Processes the MapTransition event.
+	 * @param eventType Class for the event that is to be processed
+	 * @param data Data for the event to be processed
 	 */
 	@Override
 	public void processNotification(Class<? extends EventType> eventType, Event data) {
@@ -144,88 +137,59 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 */
 	@Override
 	public void postProcess(GameData gameData, Priority priority) {
-		walkable(gameData);
+		checkMapCollisions(gameData);
 	}
 
 	/**
 	 * Determines if a given entity can move on the map.
 	 * @param gameData The game data.
 	 */
-	private void walkable(GameData gameData) {
-		for (Entity entity: gameData.getGameEntities().getEntities()) {
+	private void checkMapCollisions(GameData gameData) {
+		TiledMap currentTiledMap = getCurrentTiledMap();
+		for (Entity entity : gameData.getGameEntities().getEntities()) {
 			PositionPart positionPart = entity.getEntityPart(PositionPart.class);
 			Rectangle entityRectangle = positionPart.getBoundingBox();
-			TiledMap currentMap = loadTiledMap(getCurrentTiledMap());
 
-			if (!(passible(currentMap, entityRectangle))) {
+			if (!isRectangleValid(entityRectangle, currentTiledMap)) {
 				MovingPart movingPart = entity.getEntityPart(MovingPart.class);
 				movingPart.undoMovement(entity);
 			}
-
-			//get the current position of the entity
-			int x = (int) positionPart.getPosition().getX();
-			int y = (int) positionPart.getPosition().getY();
-			//check if the entity is on a solid tile
-			if (checkIfOnSolidTile(x,y)){
-				MovingPart movingPart = entity.getEntityPart(MovingPart.class);
-				movingPart.undoMovement(entity);
-			}
-
 		}
 	}
-
+	
 	/**
-	 * Checks whether an entity is on a solid tile.
-	 * @param x The x-coordinate.
-	 * @param y The y-coordinate.
-	 * @return Whether the entity is on a solid tile.
+	 * Determines if an entity can pass through a given position.
+	 * @param entityRectangle The entity's bounding box.
+	 * @return Whether the entity can pass through the position.
 	 */
-	private boolean checkIfOnSolidTile(int x, int y) {
-		TiledMap currentMap = loadTiledMap(getCurrentTiledMap());
-
-		//get the current tile
-		// divide by the tile width and height
-		int tileX = x / 16;
-		int tileY = y / 16;
-
-		//get the tile's id
-		int tileID = getTileMapID(tileX, tileY);
-
-		//get the tile cell properties on the layer
-		TiledMapTileLayer layer = (TiledMapTileLayer) currentMap.getLayers().get(0);
-		TiledMapTileLayer.Cell cell = layer.getCell(tileX, tileY);
-		MapProperties cellProperties = cell.getTile().getProperties();
-
-		//check if the tile is solid,
-		return !cellProperties.get("solid", boolean.class);
+	private boolean isRectangleValid(Rectangle entityRectangle, TiledMap map){
+		boolean bottomLeftPassible = isPositionPassible(entityRectangle.getBottomLeftCorner(), map);
+		boolean bottomRightPassible = isPositionPassible(entityRectangle.getBottomRightCorner(), map);
+		boolean topLeftPassible = isPositionPassible(entityRectangle.getTopLeftCorner(), map);
+		boolean topRightPassible = isPositionPassible(entityRectangle.getTopRightCorner(), map);
+		
+		return bottomLeftPassible && bottomRightPassible && topLeftPassible && topRightPassible;
 	}
 
 	/**
 	 * Determines if a particular position on the map is passable.
-	 * @param map The map.
 	 * @param position The position to check.
 	 * @return Whether the position is passable.
 	 */
-	private boolean isPositionPassible(TiledMap map, Vector2 position){
-		Set<Integer> passibleTiles = Set.of(0);
-		TiledMapTileLayer t = ((TiledMapTileLayer) map.getLayers().get(0));
-		int tileId = t.getCell((int) position.times(8).getX(), (int) position.times(8).getY()).getTile().getId();
-		return passibleTiles.contains(tileId % 42);
-	}
-
-	/**
-	 * Determines if an entity can pass through a given position.
-	 * @param currentMap The current map.
-	 * @param entityRectangle The entity's bounding box.
-	 * @return Whether the entity can pass through the position.
-	 */
-	private boolean passible(TiledMap currentMap, Rectangle entityRectangle){
-		boolean bottomLeftPassible = isPositionPassible(currentMap, entityRectangle.getBottomLeftCorner());
-		boolean bottomRightPassible = isPositionPassible(currentMap, entityRectangle.getBottomRightCorner());
-		boolean topLeftPassible = isPositionPassible(currentMap, entityRectangle.getTopLeftCorner());
-		boolean topRightPassible = isPositionPassible(currentMap, entityRectangle.getTopRightCorner());
-
-		return bottomLeftPassible && bottomRightPassible && topLeftPassible && topRightPassible;
-
+	private boolean isPositionPassible(Vector2 position, TiledMap map) {
+		// get the current tile
+		// divide by the tile width and height
+		int tileX = (int)position.getX() / 16;
+		int tileY = (int)position.getY() / 16;
+		
+		//get the tile cell properties on the layer
+		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
+		TiledMapTileLayer.Cell cell = layer.getCell(tileX, tileY);
+		MapProperties cellProperties = cell.getTile().getProperties();
+		
+		//check if the tile is solid,
+		boolean isPassible = cellProperties.get("solid", boolean.class);
+		
+		return isPassible;
 	}
 }
