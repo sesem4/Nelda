@@ -5,6 +5,7 @@ import dk.sdu.sesem4.common.SPI.ProcessingServiceSPI;
 import dk.sdu.sesem4.common.data.EntityParts.LifePart;
 import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
 import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
+import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
@@ -35,17 +36,20 @@ public class PlayerProcessingService implements ProcessingServiceSPI, PostProces
 			PositionPart positionPart = player.getEntityPart(PositionPart.class);
 			MovingPart movingPart = player.getEntityPart(MovingPart.class);
 			LifePart lifePart = player.getEntityPart(LifePart.class);
-//			TexturePart texturePart = player.getEntityPart(TexturePart.class);
+			SpritePart spritePart = player.getEntityPart(SpritePart.class);
 
 			//set the direction of the player
+			movingPart.
 
-			//set the texture based on the direction
 
-			//process all the parts
-			positionPart.process(gameData, player);
+					//set the texture based on the direction
+
+
+					//process all the parts
+							positionPart.process(gameData, player);
 			movingPart.process(gameData, player);
 			lifePart.process(gameData, player);
-//			texturePart.process(gameData, player);
+			spritePart.process(gameData, player);
 		}
 	}
 
@@ -81,7 +85,7 @@ public class PlayerProcessingService implements ProcessingServiceSPI, PostProces
 	 *
 	 * @return The new player entity.
 	 */
-	public Entity createPlayer(){
+	public Entity createPlayer() {
 		//create a new player
 		this.player = new Player();
 		//set the speed of the player

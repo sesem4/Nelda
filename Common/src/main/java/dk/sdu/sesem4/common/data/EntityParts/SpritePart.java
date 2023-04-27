@@ -1,9 +1,13 @@
 package dk.sdu.sesem4.common.data.EntityParts;
 
+import dk.sdu.sesem4.common.data.entity.Entity;
+import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
 
-public class SpritePart {
-	/** Current sprite for entity */
+public class SpritePart implements EntityPart {
+	/**
+	 * Current sprite for entity
+	 */
 	private SpriteData sprite;
 
 	/**
@@ -21,5 +25,10 @@ public class SpritePart {
 
 	public void setSprite(SpriteData sprite) {
 		this.sprite = sprite;
+	}
+
+	@Override
+	public void process(GameData gameData, Entity entity) {
+
 	}
 }
