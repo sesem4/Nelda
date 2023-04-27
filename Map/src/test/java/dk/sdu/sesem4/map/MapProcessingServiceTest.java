@@ -141,7 +141,7 @@ public class MapProcessingServiceTest extends MapProcessingService {
 	 * and the `solid` property of the second cell is `true`.
 	 */
 	@Test
-	public void testcheckIfOnSolidTile(){
+	public void testTilesCanBeSolid(){
 		this.map.setCurrentMapIndex(0);
 		TiledMap map = new TmxMapLoader().load(this.getCurrentMap().toString());
 		//save the map as a TiledMapTileLayer
@@ -156,7 +156,6 @@ public class MapProcessingServiceTest extends MapProcessingService {
 		//assert that the cells are solid and not solid
 		assertEquals(cellProperties.get("solid"), false);
 		assertEquals(cellProperties2.get("solid"), true);
-
 	}
 
 
