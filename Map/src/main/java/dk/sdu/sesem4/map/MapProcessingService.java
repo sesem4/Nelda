@@ -140,7 +140,13 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 
 		eventData.getGameData().getGameWorld().setMap(getCurrentMap());
 	}
-
+	
+	/**
+	 * Do collision check for all entities. This is done by checking that all corners of the entity
+	 * are on a passible tile. If at least one corner isn't, we undo the Entity's movement.
+	 * @param gameData The game data
+	 * @param priority The priority, which is to be run for the current process round
+	 */
 	@Override
 	public void postProcess(GameData gameData, Priority priority) {
 		TiledMap currMap = map.getWorld()[map.getCurrentMapIndex()];
