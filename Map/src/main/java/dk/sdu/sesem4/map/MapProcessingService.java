@@ -29,12 +29,8 @@ import java.util.Set;
  * MapProcessingService loads the world from the .tmx files into an array of TiledMaps.
  * It is called from the MapPlugin class when the game is started.
  */
+public class MapProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI, EventListener {
 
-<<<<<<<<< Temporary merge branch 1
-public class MapProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI {
-=========
-public class MapProcessingService implements ProcessingServiceSPI, EventListener {
->>>>>>>>> Temporary merge branch 2
 	protected Map map;
 
 	public MapProcessingService() {
@@ -170,20 +166,15 @@ public class MapProcessingService implements ProcessingServiceSPI, EventListener
 	public void postProcess(GameData gameData, Priority priority) {
 		walkable(gameData);
 
-		for (Entity entity : gameData.getGameEntities().getEntities()) {
-			PositionPart positionPart = entity.getEntityPart(PositionPart.class);
-			Rectangle entityRectangle = positionPart.getBoundingBox();
+//		for (Entity entity : gameData.getGameEntities().getEntities()) {
+//			PositionPart positionPart = entity.getEntityPart(PositionPart.class);
+//			Rectangle entityRectangle = positionPart.getBoundingBox();
+//			TiledMap currentMap = getCurrentTiledMap();
+//			boolean bottomLeftPassible = isPositionPassible(currentMap, entityRectangle.getBottomLeftCorner());
+//			boolean bottomRightPassible = isPositionPassible(currentMap, entityRectangle.getBottomRightCorner());
+//			boolean topLeftPassible = isPositionPassible(currentMap, entityRectangle.getTopLeftCorner());
+//			boolean topRightPassible = isPositionPassible(currentMap, entityRectangle.getTopRightCorner());
 
-			boolean bottomLeftPassible = isPositionPassible(currMap, entityRectangle.getBottomLeftCorner());
-			boolean bottomRightPassible = isPositionPassible(currMap, entityRectangle.getBottomRightCorner());
-			boolean topLeftPassible = isPositionPassible(currMap, entityRectangle.getTopLeftCorner());
-			boolean topRightPassible = isPositionPassible(currMap, entityRectangle.getTopRightCorner());
-
-			if (!(bottomLeftPassible && bottomRightPassible && topLeftPassible && topRightPassible)) {
-				MovingPart movingPart = entity.getEntityPart(MovingPart.class);
-				movingPart.undoMovement(entity);
-			}
-		}
 	}
 	/**
 	 * This method checks whether an entity is on a solid tile. If it is not on a solid tile, it undoes the entity's movement.
@@ -192,17 +183,27 @@ public class MapProcessingService implements ProcessingServiceSPI, EventListener
 	private void walkable(GameData gameData) {
 		for (Entity entity: gameData.getGameEntities().getEntities()) {
 			PositionPart positionPart = entity.getEntityPart(PositionPart.class);
-			if (positionPart != null) {
-				//get the current position of the entity
-				int x = (int) positionPart.getPosition().getX();
-				int y = (int) positionPart.getPosition().getY();
-				if (!checkIfOnSolidTile(x,y)){
-					MovingPart movingPart = entity.getEntityPart(MovingPart.class);
-					movingPart.undoMovement(entity);
-				}
+			Rectangle entityRectangle = positionPart.getBoundingBox();
+			TiledMap currentMap = getCurrentTiledMap();
+
+			if (!(passible(currentMap, entityRectangle))) {
+				MovingPart movingPart = entity.getEntityPart(MovingPart.class);
+				movingPart.undoMovement(entity);
 			}
+
+			//get the current position of the entity
+			int x = (int) positionPart.getPosition().getX();
+			int y = (int) positionPart.getPosition().getY();
+			//check if the entity is on a solid tile
+			if (checkIfOnSolidTile(x,y)){
+				MovingPart movingPart = entity.getEntityPart(MovingPart.class);
+				movingPart.undoMovement(entity);
+			}
+
 		}
 	}
+
+
 
 	/**
 	 * This method checks whether a tile is solid.
@@ -221,10 +222,28 @@ public class MapProcessingService implements ProcessingServiceSPI, EventListener
 		//get the tile's id
 		int tileID = getTileMapID(tileX, tileY);
 
-	private boolean isPositionPassible(TiledMap map, Vector2 position) {
+		//get the tile cell properties on the layer
+		TiledMapTileLayer layer = (TiledMapTileLayer) currentMap.getLayers().get(0);
+		TiledMapTileLayer.Cell cell = layer.getCell(tileX, tileY);
+		MapProperties cellProperties = cell.getTile().getProperties();
+
+		//check if the tile is solid,
+		return !cellProperties.get("solid", boolean.class);
+	}
+	private boolean isPositionPassible(TiledMap map, Vector2 position){
 		Set<Integer> passibleTiles = Set.of(0);
-		TiledMapTileLayer t = ((TiledMapTileLayer)map.getLayers().get(0));
-		int tileId = t.getCell((int)position.times(8).getX(), (int)position.times(8).getY()).getTile().getId();
+		TiledMapTileLayer t = ((TiledMapTileLayer) map.getLayers().get(0));
+		int tileId = t.getCell((int) position.times(8).getX(), (int) position.times(8).getY()).getTile().getId();
 		return passibleTiles.contains(tileId % 42);
+	}
+
+	private boolean passible(TiledMap currentMap, Rectangle entityRectangle){
+		boolean bottomLeftPassible = isPositionPassible(currentMap, entityRectangle.getBottomLeftCorner());
+		boolean bottomRightPassible = isPositionPassible(currentMap, entityRectangle.getBottomRightCorner());
+		boolean topLeftPassible = isPositionPassible(currentMap, entityRectangle.getTopLeftCorner());
+		boolean topRightPassible = isPositionPassible(currentMap, entityRectangle.getTopRightCorner());
+
+		return bottomLeftPassible && bottomRightPassible && topLeftPassible && topRightPassible;
+
 	}
 }
