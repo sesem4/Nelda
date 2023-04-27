@@ -1,23 +1,24 @@
 package dk.sdu.sesem4.common.data.math;
-import static org.junit.Assert.*;
 
 import dk.sdu.sesem4.common.util.Direction;
-import junit.framework.TestCase;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.junit.Test;
+import static org.junit.Assert.*;
 /**
  * A class that tests the Vector2 class.
  */
-public class Vector2Test extends TestCase {
+public class Vector2Test {
     private Vector2 a;
     private Vector2 b;
     
     /**
      * No-arg constructor returns (0,0)
      */
+    @Test
     public void testDefaultConstructor() {
         a = new Vector2();
         b = new Vector2(0, 0);
@@ -28,6 +29,7 @@ public class Vector2Test extends TestCase {
     /**
      * X,Y constructor returns (X,Y)
      */
+    @Test
     public void testXYConstructor() {
         float x = 5;
         float y = 9;
@@ -40,6 +42,7 @@ public class Vector2Test extends TestCase {
     /**
      * Direction constructor returns vector with magnitude 1 in the correct direction
      */
+    @Test
     public void testDirectionConstructor() {
         Map<Direction, Vector2> argumentToExpected = Map.of(
                 Direction.UP, new Vector2(0, 1),
@@ -59,6 +62,7 @@ public class Vector2Test extends TestCase {
     /**
      * Vectors can be added, and the result is correct.
      */
+    @Test
     public void testAdd() {
         a = new Vector2(2, 3);
         b = new Vector2(5, 1);
@@ -72,6 +76,7 @@ public class Vector2Test extends TestCase {
     /**
      * Vectors with negative values can be added, and the result is correct.
      */
+    @Test
     public void testAddWorksForNegatives() {
         a = new Vector2(2, -3);
         b = new Vector2(-5, 1);
@@ -85,6 +90,7 @@ public class Vector2Test extends TestCase {
     /**
      * Vectors can be subtracted, and the result is correct
      */
+    @Test
     public void testSubtract() {
         a = new Vector2(10, -3);
         b = new Vector2(7, 2);
@@ -99,6 +105,7 @@ public class Vector2Test extends TestCase {
     /**
      * Subtracting also works with negative values
      */
+    @Test
     public void testSubtractWithNegative() {
         a = new Vector2(10, -3);
         b = new Vector2(-2, -7);
@@ -113,6 +120,7 @@ public class Vector2Test extends TestCase {
     /**
      * Vectors can be multiplied by a scalar, and the result is correct
      */
+    @Test
     public void testTimes() {
         a = new Vector2(8, -3);
         float scalar = 10;
@@ -127,6 +135,7 @@ public class Vector2Test extends TestCase {
     /**
      * Multiplication works with a negative scalar
      */
+    @Test
     public void testTimesWithNegativeScalar() {
         a = new Vector2(8, -3);
         float scalar = -10;
@@ -141,6 +150,7 @@ public class Vector2Test extends TestCase {
     /**
      * Vectors can be divided by a scalar, and the result is correct
      */
+    @Test
     public void testDivide() {
         a = new Vector2(8, -3);
         float scalar = 10;
@@ -155,6 +165,7 @@ public class Vector2Test extends TestCase {
     /**
      * Division works with a negative scalar
      */
+    @Test
     public void testDivideWithNegativeScalar() {
         a = new Vector2(8, -3);
         float scalar = -10;
@@ -169,6 +180,7 @@ public class Vector2Test extends TestCase {
     /**
      * Division by zero will result in infinity
      */
+    @Test
     public void testDivideByZeroGivesInfinity() {
         a = new Vector2(8, -3);
         float scalar = 0;
@@ -183,6 +195,7 @@ public class Vector2Test extends TestCase {
     /**
      * Division by negative zero will result in negative infinity
      */
+    @Test
     public void testDivideByNegativeZeroGivesInfinity() {
         a = new Vector2(8, -3);
         float scalar = -0f;
@@ -198,6 +211,7 @@ public class Vector2Test extends TestCase {
      * Vectors can be converted to Directions
      * This only tests on Vectors with magnitude 1 in each cardinal direction
      */
+    @Test
     public void testToDirectionSimple() {
         Map<Vector2, Direction> argumentToExpected = Map.of(
                 new Vector2(0, 1), Direction.UP,
@@ -217,6 +231,7 @@ public class Vector2Test extends TestCase {
     /**
      * Direction conversion will use the component with the larger magnitude
      */
+    @Test
     public void testToDirectionComplex() {
         Map<Vector2, Direction> argumentToExpected = Map.of(
                 // x component is bigger than x
@@ -248,6 +263,7 @@ public class Vector2Test extends TestCase {
      * Vectors can get direction to each other
      * From A to B will always be the exact opposite of From B to A
      */
+    @Test
     public void testGetDirectionTo() {
         a = new Vector2(10, 10);
         b = new Vector2(10, 8);
@@ -264,6 +280,7 @@ public class Vector2Test extends TestCase {
     /**
      * Vectors equal other vectors with the same components
      */
+    @Test
     public void testEquals() {
         float x = 5;
         float y = 9;
@@ -287,6 +304,7 @@ public class Vector2Test extends TestCase {
     /**
      * Special cases for NaN, Infinities, Positive and Negative zero work as described in IEEE-754
      */
+    @Test
     public void testEqualsAgainstFloatingPointCompare() {
         // All Vectors in this method will use the same X and Y for sake of simplicity.
         // Equality is unchanged by this
