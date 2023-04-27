@@ -10,6 +10,9 @@ import dk.sdu.sesem4.common.data.process.Priority;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * CollisionSystem is a PostProcessor, that processes collisions between entities.
+ */
 public class CollisionSystem implements PostProcessingServiceSPI {
 	@Override
 	public void postProcess(GameData gameData, Priority priority) {
