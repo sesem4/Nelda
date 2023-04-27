@@ -144,7 +144,7 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 * Determines if a given entity can move on the map.
 	 * @param gameData The game data.
 	 */
-	private void checkMapCollisions(GameData gameData) {
+	protected void checkMapCollisions(GameData gameData) {
 		TiledMap currentTiledMap = getCurrentTiledMap();
 		for (Entity entity : gameData.getGameEntities().getEntities()) {
 			PositionPart positionPart = entity.getEntityPart(PositionPart.class);
@@ -162,13 +162,12 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 * @param entityRectangle The entity's bounding box.
 	 * @return Whether the entity can pass through the position.
 	 */
-	private boolean isRectangleValid(Rectangle entityRectangle, TiledMap map){
-		Vector2 epsilon = new Vector2(0.00001f, 0.00001f);
-		boolean bottomLeftPassible = isPositionPassible(entityRectangle.getBottomLeftCorner().minus(epsilon), map);
-		boolean bottomRightPassible = isPositionPassible(entityRectangle.getBottomRightCorner().minus(epsilon), map);
-		boolean topLeftPassible = isPositionPassible(entityRectangle.getTopLeftCorner().minus(epsilon), map);
-		boolean topRightPassible = isPositionPassible(entityRectangle.getTopRightCorner().minus(epsilon), map);
-		
+	protected boolean isRectangleValid(Rectangle entityRectangle, TiledMap map) {
+		float epsilon = 0.0001f;
+		boolean bottomLeftPassible = isPositionPassible(entityRectangle.getBottomLeftCorner().plus(new Vector2(epsilon, epsilon)), map);
+		boolean bottomRightPassible = isPositionPassible(entityRectangle.getBottomRightCorner().plus(new Vector2(-epsilon, epsilon)), map);
+		boolean topLeftPassible = isPositionPassible(entityRectangle.getTopLeftCorner().plus(new Vector2(epsilon, -epsilon)), map);
+		boolean topRightPassible = isPositionPassible(entityRectangle.getTopRightCorner().plus(new Vector2(-epsilon, -epsilon)), map);
 		return bottomLeftPassible && bottomRightPassible && topLeftPassible && topRightPassible;
 	}
 
@@ -177,7 +176,7 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 * @param position The position to check.
 	 * @return Whether the position is passable.
 	 */
-	private boolean isPositionPassible(Vector2 position, TiledMap map) {
+	protected boolean isPositionPassible(Vector2 position, TiledMap map) {
 		// get the current tile
 		// divide by the tile width and height
 		int tileX = (int)position.getX() / 16;
