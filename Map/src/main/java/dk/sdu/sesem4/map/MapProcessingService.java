@@ -59,13 +59,13 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 * @param worldHeight An integer that represents the height of the world to load.
 	 */
 	public void loadWorld(String worldName, int worldWidth, int worldHeight) {
-		TiledMap[] world = new TiledMap[worldWidth * worldHeight];
+		Path[] world = new Path[worldWidth * worldHeight];
 
 		for (int x = 0; x < worldWidth; x++) {
 			for (int y = 0; y < worldHeight; y++) {
 				String fileName = getFileNameForMap(worldName, x, y);
 				try {
-					TiledMap loadedMap = tmxMapLoader.load(fileName);
+					Path loadedMap = Paths.get(getResourcesDirectory() + fileName);
 					world[x + y * worldWidth] = loadedMap;
 				} catch (Exception e) {
 					world[x + y * worldWidth] = null;
@@ -108,12 +108,17 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		return Paths.get(relativeFileName);
 	}
 
-	public TiledMap getCurrentTiledMap() {
+	public Path getCurrentTiledMap() {
 		return this.map.getWorld()[this.map.getCurrentMapIndex()];
 	}
 
+	public TiledMap loadTiledMap(Path currentTiledMap) {
+		return tmxMapLoader.load(getCurrentTiledMap().toString());
+	}
+
 	public int getTileMapID(int x, int y){
-		TiledMapTileLayer layer = (TiledMapTileLayer) getCurrentTiledMap().getLayers().get(0);
+		TiledMap currentMap = loadTiledMap(getCurrentTiledMap());
+		TiledMapTileLayer layer = (TiledMapTileLayer) currentMap.getLayers().get(0);
 		TiledMapTileLayer.Cell cell = layer.getCell(x, y);
 		return cell.getTile().getId();
 	}
@@ -165,17 +170,8 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	@Override
 	public void postProcess(GameData gameData, Priority priority) {
 		walkable(gameData);
-
-//		for (Entity entity : gameData.getGameEntities().getEntities()) {
-//			PositionPart positionPart = entity.getEntityPart(PositionPart.class);
-//			Rectangle entityRectangle = positionPart.getBoundingBox();
-//			TiledMap currentMap = getCurrentTiledMap();
-//			boolean bottomLeftPassible = isPositionPassible(currentMap, entityRectangle.getBottomLeftCorner());
-//			boolean bottomRightPassible = isPositionPassible(currentMap, entityRectangle.getBottomRightCorner());
-//			boolean topLeftPassible = isPositionPassible(currentMap, entityRectangle.getTopLeftCorner());
-//			boolean topRightPassible = isPositionPassible(currentMap, entityRectangle.getTopRightCorner());
-
 	}
+
 	/**
 	 * This method checks whether an entity is on a solid tile. If it is not on a solid tile, it undoes the entity's movement.
 	 * @param gameData The game data.
@@ -184,7 +180,7 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		for (Entity entity: gameData.getGameEntities().getEntities()) {
 			PositionPart positionPart = entity.getEntityPart(PositionPart.class);
 			Rectangle entityRectangle = positionPart.getBoundingBox();
-			TiledMap currentMap = getCurrentTiledMap();
+			TiledMap currentMap = loadTiledMap(getCurrentTiledMap());
 
 			if (!(passible(currentMap, entityRectangle))) {
 				MovingPart movingPart = entity.getEntityPart(MovingPart.class);
@@ -204,7 +200,6 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	}
 
 
-
 	/**
 	 * This method checks whether a tile is solid.
 	 * @param x The x-coordinate of the tile.
@@ -212,7 +207,7 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 * @return Whether the tile is solid.
 	 */
 	private boolean checkIfOnSolidTile(int x, int y) {
-		TiledMap currentMap = getCurrentTiledMap();
+		TiledMap currentMap = loadTiledMap(getCurrentTiledMap());
 
 		//get the current tile
 		// divide by the tile width and height
@@ -230,6 +225,7 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		//check if the tile is solid,
 		return !cellProperties.get("solid", boolean.class);
 	}
+
 	private boolean isPositionPassible(TiledMap map, Vector2 position){
 		Set<Integer> passibleTiles = Set.of(0);
 		TiledMapTileLayer t = ((TiledMapTileLayer) map.getLayers().get(0));
