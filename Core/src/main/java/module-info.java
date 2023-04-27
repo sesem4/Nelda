@@ -1,6 +1,5 @@
 module Core {
-    requires Common;
-    requires Map;
-    requires java.desktop;
-    requires ShadedLibGDX;
+	requires Common;
+	requires java.desktop;
+	requires ShadedLibGDX;
 }

@@ -1,0 +1,106 @@
+@startuml Collision Part System
+skinparam style strictuml
+title Collision Part System
+
+participant Core
+participant CollisionEventManager
+participant Collision
+participant Player
+participant Enemy
+participant DamagePart
+participant KnockbackPart
+
+activate Core
+Core -> Player : create()
+activate Player
+Player -> Player : createDamagePart()
+Player -> Player : createKnockbackPart()
+Player -> Core : void
+deactivate Player
+
+Core -> Enemy : create()
+activate Enemy
+Enemy -> Enemy : createDamagePart()
+Enemy -> Enemy : createKnockbackPart()
+Enemy -> Core : void
+deactivate Enemy
+
+Core -> Player : process()
+Core -> Enemy : process()
+Core -> Collision : postProcess()
+activate Collision
+
+Collision -> CollisionEventManager : notify(player, enemy)
+activate CollisionEventManager
+
+' Player
+CollisionEventManager -> Player : processCollision(enemy)
+
+activate Player
+
+Player -> Enemy : getCollisionParts()
+activate Enemy
+Enemy -> Player : CollisionParts
+deactivate Enemy
+
+Player -> DamagePart : getDamange()
+activate DamagePart
+DamagePart -> Player : damage
+deactivate DamagePart
+
+Player -> LifePart : doDamage(damage)
+activate LifePart
+LifePart -> Player : void
+deactivate LifePart
+
+Player -> KnockbackPart : getKnockback()
+activate KnockbackPart
+KnockbackPart -> Player : knockback
+deactivate KnockbackPart
+
+Player -> MovementPart : doKnockback(knockback)
+activate MovementPart
+MovementPart -> Player : void
+deactivate MovementPart
+
+Player -> CollisionEventManager : void
+deactivate Player
+
+' Enemy
+
+CollisionEventManager -> Enemy : processCollision(player)
+activate Enemy
+
+Enemy -> Player : getCollisionParts()
+activate Player
+Player -> Enemy : CollisionParts
+deactivate Player
+
+Enemy -> DamagePart : getDamange()
+activate DamagePart
+DamagePart -> Enemy : damage
+deactivate DamagePart
+
+Enemy -> LifePart : doDamage(damage)
+activate LifePart
+LifePart -> Enemy : void
+deactivate LifePart
+
+Enemy -> KnockbackPart : getKnockback()
+activate KnockbackPart
+KnockbackPart -> Enemy : knockback
+deactivate KnockbackPart
+
+Enemy -> MovementPart : doKnockback(knockback)
+activate MovementPart
+MovementPart -> Enemy : void
+deactivate MovementPart
+
+Enemy -> CollisionEventManager : void
+deactivate Enemy
+
+CollisionEventManager -> Collision : void
+deactivate CollisionEventManager
+
+Collision -> Core : void
+deactivate Collision

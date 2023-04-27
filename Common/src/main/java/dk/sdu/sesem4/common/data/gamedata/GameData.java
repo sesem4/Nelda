@@ -20,8 +20,14 @@ public class GameData {
 	 */
 	private float deltaTime;
 
-	public GameData() {
+	/**
+	 * Current time since the start of the game in seconds.
+	 */
+	private double elapsedTime;
 
+	public GameData() {
+		setGameWorld(new GameWorld());
+		setGameEntities(new GameEntities());
 	}
 
 	public GameWorld getGameWorld() {
@@ -46,5 +52,16 @@ public class GameData {
 
 	public void setDeltaTime(float deltaTime) {
 		this.deltaTime = deltaTime;
+	}
+
+	public double getElapsedTime() {
+		return elapsedTime;
+	}
+
+	/**
+	 * Update elapsed time
+	 */
+	public void processElapsedTime() {
+		this.elapsedTime += this.getDeltaTime();
 	}
 }

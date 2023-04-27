@@ -2,198 +2,160 @@ package dk.sdu.sesem4.core;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import dk.sdu.sesem4.common.SPI.PluginServiceSPI;
+import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
+import dk.sdu.sesem4.common.SPI.ProcessingServiceSPI;
+import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
+import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
+import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
-import dk.sdu.sesem4.map.MapPlugin;
+import dk.sdu.sesem4.common.data.process.Priority;
+import dk.sdu.sesem4.common.util.SPILocator;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class Game extends ApplicationAdapter implements InputProcessor {
+/**
+ * The Game class, where all process is handled and the game is rendered.
+ */
+public class Game extends ApplicationAdapter {
 
-	GameData gameData;
-	OrthographicCamera camera;
-	ArrayList<Texture> textures;
-	TiledMapRenderer tiledMapRenderer;
-	int counter;
+	/**
+	 * The gameData, which is used to store all the data for the game.
+	 */
+	private GameData gameData;
 
-	SpriteBatch sb;
-	Sprite sprite;
+	/**
+	 * The camera, which is used to render the game.
+	 */
+	private OrthographicCamera camera;
 
-	boolean up, down, left, right = false;
+	/**
+	 * The tiledMapRenderer, which is used to render the map.
+	 */
+	private TiledMapRenderer tiledMapRenderer;
 
-	float w, h;
+	/**
+	 * The spriteBatch, which is used to render the sprite.
+	 */
+	private SpriteBatch spriteBatch;
 
+	/**
+	 * Cache for sprites based on file path.
+	 */
+	private Map<String, Texture> textureCache;
+
+	public Game() {
+		this.textureCache = new HashMap<>();
+	}
+
+	/**
+	 * This method is responsible for setting up the game, where the different plugins are started and the gameData is created, as well as the eventManager.
+	 */
 	@Override
 	public void create() {
 		gameData = new GameData();
 
-		textures = new ArrayList<>();
-		for (int i = 1; i <= 4; i++) {
-			textures.add(new Texture(Gdx.files.local("Core/src/main/resources/Zelda" + i + ".png")));
-		}
+		// Locate all plugin services and start plugins
+		List<PluginServiceSPI> pluginCreators = SPILocator.locateAll(PluginServiceSPI.class);
+		pluginCreators.forEach((plugin) -> plugin.start(gameData));
 
-		//Load the map into a array of maps save in the core module.
-		MapPlugin mapPlugin = new MapPlugin();
-		mapPlugin.start(gameData);
+		spriteBatch = new SpriteBatch();
 
-		sb = new SpriteBatch();
-		sprite = new Sprite(textures.get(0));
+		TiledMap map = Utils.loadMap(gameData.getGameWorld().getMap());
+		this.tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(gameData.getGameWorld().getMap());
-
-		Gdx.input.setInputProcessor(this);
-
-		w = 16 * 16;
-		h = 11 * 16;
-		camera = new OrthographicCamera();
-
-		camera.setToOrtho(false, w, h);
+		this.camera = new OrthographicCamera();
+		this.camera.update();
+		float w = 16 * 16;
+		float h = 11 * 16;
+		this.camera.setToOrtho(false, w, h);
 	}
 
+	/**
+	 * This method is responsible for rendering the game, where the map is rendered
+	 * and the different entities are drawn.
+	 */
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		// Set deltaTime
+		this.gameData.setDeltaTime(Gdx.graphics.getDeltaTime());
+		this.gameData.processElapsedTime();
+
+		// Locate all plugin processors and run the process
+		List<ProcessingServiceSPI> pluginProcessors = SPILocator.locateAll(ProcessingServiceSPI.class);
+		pluginProcessors.forEach((plugin) -> plugin.process(gameData, new Priority()));
+
+		// OpenGL stuff
+		Gdx.gl.glClearColor(1, 0, 0, 0);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		camera.update();
+		Gdx.graphics.getDeltaTime();
 
-		tiledMapRenderer.setView(camera);
-		tiledMapRenderer.render();
+		this.camera.update();
+		
+		// render map
+		TiledMap map = Utils.loadMap(gameData.getGameWorld().getMap());
+		this.tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+		this.tiledMapRenderer.setView(camera);
+		this.tiledMapRenderer.render();
 
-		sb.begin();
-		sprite.setSize(32, 32);
-		sb.draw(sprite, sprite.getX(), sprite.getY(), Gdx.graphics.getWidth() / 16, Gdx.graphics.getHeight() / 11);
+		// render sprites
+		this.spriteBatch.setProjectionMatrix(camera.combined);
+		this.spriteBatch.begin();
+		
+		List<Entity> entities = gameData.getGameEntities().getEntities(Entity.class);
 
-		if (sprite.getY() + sprite.getHeight() < 0) {
-			tiledMapRenderer = new OrthogonalTiledMapRenderer(gameData.getGameWorld().getMap());
-
-			sprite.setY(Gdx.graphics.getHeight() - sprite.getHeight());
-		}
-		if (sprite.getY() + sprite.getHeight() > Gdx.graphics.getHeight()) {
-			tiledMapRenderer = new OrthogonalTiledMapRenderer(gameData.getGameWorld().getMap());
-
-			sprite.setY(0);
-		}
-		if (sprite.getX() + sprite.getWidth() < 0) {
-			tiledMapRenderer = new OrthogonalTiledMapRenderer(gameData.getGameWorld().getMap());
-
-			sprite.setX(Gdx.graphics.getWidth() - sprite.getWidth());
-		}
-		if (sprite.getX() + sprite.getWidth() > Gdx.graphics.getWidth()) {
-			tiledMapRenderer = new OrthogonalTiledMapRenderer(gameData.getGameWorld().getMap());
-
-			sprite.setX(0);
-		}
-
-		counter++;
-		if (counter >= 60) {
-			counter = 0;
-		}
-		if (left) {
-			if (counter < 30) {
-				sprite.setTexture(textures.get(2));
-			} else {
-				sprite.setTexture(textures.get(3));
+		for (Entity entity : entities) {
+			// Get parts used for rendering
+			SpritePart spritePart = entity.getEntityPart(SpritePart.class);
+			PositionPart positionPart = entity.getEntityPart(PositionPart.class);
+			if (spritePart == null || positionPart == null) {
+				continue;
 			}
-			sprite.setFlip(true, false);
-			sprite.setX(sprite.getX() - 1);
+
+			// Create sprite
+			Sprite sprite = new Sprite(getSprite(spritePart.getSprite().getTexture().toString()));
+
+			// Set sprite size and position from entity parts
+			sprite.setSize(16, 16); // TODO: Size has to be set from entity, but this is included in a later update
+			sprite.setPosition(positionPart.getPosition().getX(), positionPart.getPosition().getY());
+
+			// Draw sprite
+			sprite.draw(spriteBatch);
 		}
-		if (right) {
-			if (counter < 30) {
-				sprite.setTexture(textures.get(2));
-			} else {
-				sprite.setTexture(textures.get(3));
-			}
-			sprite.translateX(1);
-			sprite.setFlip(false, false);
-		}
-		if (up) {
-			sprite.setFlip(counter >= 30, false);
-			sprite.translateY(1);
-			sprite.setTexture(textures.get(1));
-		}
-		if (down) {
-			sprite.setFlip(counter < 30, false);
-			sprite.translateY(-1);
-			sprite.setTexture(textures.get(0));
-		}
-		sb.end();
+
+		this.spriteBatch.end();
+
+		// Locate all plugin post processors and run the post process
+		List<PostProcessingServiceSPI> pluginPostProcessors = SPILocator.locateAll(PostProcessingServiceSPI.class);
+		pluginPostProcessors.forEach((plugin) -> plugin.postProcess(gameData, new Priority()));
 	}
 
-	@Override
-	public boolean keyDown(int keycode) {
-		if (keycode == Input.Keys.LEFT) {
-			left = true;
+	/**
+	 * Get sprite with caching
+	 *
+	 * @param filePath Path for sprite
+	 * @return Sprite texture
+	 */
+	private Texture getSprite(String filePath) {
+		if (this.textureCache.containsKey(filePath)) {
+			return this.textureCache.get(filePath);
 		}
-		if (keycode == Input.Keys.RIGHT) {
-			right = true;
-		}
-		if (keycode == Input.Keys.UP) {
-			up = true;
-		}
-		if (keycode == Input.Keys.DOWN) {
-			down = true;
-		}
-		return false;
-	}
 
-	@Override
-	public boolean keyUp(int keycode) {
-		if (keycode == Input.Keys.LEFT) {
-			left = false;
-		}
-		if (keycode == Input.Keys.RIGHT) {
-			right = false;
-		}
-		if (keycode == Input.Keys.UP) {
-			up = false;
-		}
-		if (keycode == Input.Keys.DOWN) {
-			down = false;
-		}
-		return false;
-	}
+		Texture texture = new Texture(Gdx.files.local(filePath));
+		this.textureCache.put(filePath, texture);
 
-	@Override
-	public boolean keyTyped(char character) {
-		return false;
+		return texture;
 	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//		Vector3 clickCoordinates = new Vector3(screenX,screenY,0);
-//		Vector3 position = camera.unproject(clickCoordinates);
-//		sprite.setPosition(position.x, position.y);
-		return true;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(float amountX, float amountY) {
-		return false;
-	}
-
 }

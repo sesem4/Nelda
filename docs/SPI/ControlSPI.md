@@ -10,7 +10,9 @@
     <td>
 
 ```java
-Vector2 move(GameData gameData, Entity entity)
+Direction move(GameData gameData, Entity entity)
+
+Type getType()
 ```
 </td>
 </tr>

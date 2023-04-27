@@ -10,6 +10,7 @@ public class Main {
 		config.setForegroundFPS(60);
 		config.setResizable(true);
 		config.setTitle("Nelda");
+		config.setWindowedMode(1000, 600);
 		new Lwjgl3Application(new Game(), config);
 	}
 }
