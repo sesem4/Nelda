@@ -44,8 +44,6 @@ public class PlayerProcessingService implements ProcessingServiceSPI {
 			spritePart.process(gameData, player);
 		}
 	}
-
-
 }
 
 
