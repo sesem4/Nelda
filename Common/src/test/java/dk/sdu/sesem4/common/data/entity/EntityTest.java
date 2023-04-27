@@ -37,7 +37,7 @@ public class EntityTest {
 	public void setupEntity() {
 		this.entity = new TestEntity(EntityType.Player);
 		this.lifePart = new LifePart(3);
-		this.positionPart = new PositionPart(new Vector2(0, 0), Direction.UP);
+		this.positionPart = new PositionPart(new Vector2(0, 0), new Vector2(16, 16), Direction.UP);
 		this.movingPart = new MovingPart(5);
 		this.damagePart = new DamagePart(1);
 		this.knockbackPart = new KnockbackPart(30, 10);
@@ -52,7 +52,7 @@ public class EntityTest {
 	private void setupOtherEntity(EntityType entityType) {
 		this.otherEntity = new TestEntity(entityType);
 		this.otherLifePart = new LifePart(3);
-		this.otherPositionPart = new PositionPart(new Vector2(0, 0), Direction.UP);
+		this.otherPositionPart = new PositionPart(new Vector2(0, 0), new Vector2(16, 16), Direction.UP);
 		this.otherMovingPart = new MovingPart(5);
 		this.otherDamagePart = new DamagePart(1);
 		this.otherKnockbackPart = new KnockbackPart(30, 10);

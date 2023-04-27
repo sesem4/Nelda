@@ -1,9 +1,16 @@
 package dk.sdu.sesem4.map;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
 import dk.sdu.sesem4.common.SPI.ProcessingServiceSPI;
+import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
+import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
+import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
+import dk.sdu.sesem4.common.data.math.Rectangle;
+import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.process.Priority;
 import dk.sdu.sesem4.common.event.*;
 import dk.sdu.sesem4.common.event.events.MapTransitionEvent;
@@ -11,6 +18,7 @@ import dk.sdu.sesem4.common.event.events.MapTransitionEventType;
 import dk.sdu.sesem4.common.util.Direction;
 
 import java.nio.file.*;
+import java.util.Set;
 
 /**
  * @author Jakob L.M. & Jon F.J.
@@ -18,7 +26,7 @@ import java.nio.file.*;
  * It is called from the MapPlugin class when the game is started.
  */
 
-public class MapProcessingService implements ProcessingServiceSPI, EventListener {
+public class MapProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI, EventListener {
 	protected Map map;
 
 	public MapProcessingService() {
@@ -131,5 +139,38 @@ public class MapProcessingService implements ProcessingServiceSPI, EventListener
 		}
 
 		eventData.getGameData().getGameWorld().setMap(getCurrentMap());
+	}
+	
+	/**
+	 * Do collision check for all entities. This is done by checking that all corners of the entity
+	 * are on a passible tile. If at least one corner isn't, we undo the Entity's movement.
+	 * @param gameData The game data
+	 * @param priority The priority, which is to be run for the current process round
+	 */
+	@Override
+	public void postProcess(GameData gameData, Priority priority) {
+		TiledMap currMap = map.getWorld()[map.getCurrentMapIndex()];
+
+		for (Entity entity : gameData.getGameEntities().getEntities()) {
+			PositionPart positionPart = entity.getEntityPart(PositionPart.class);
+			Rectangle entityRectangle = positionPart.getBoundingBox();
+
+			boolean bottomLeftPassible = isPositionPassible(currMap, entityRectangle.getBottomLeftCorner());
+			boolean bottomRightPassible = isPositionPassible(currMap, entityRectangle.getBottomRightCorner());
+			boolean topLeftPassible = isPositionPassible(currMap, entityRectangle.getTopLeftCorner());
+			boolean topRightPassible = isPositionPassible(currMap, entityRectangle.getTopRightCorner());
+
+			if (!(bottomLeftPassible && bottomRightPassible && topLeftPassible && topRightPassible)) {
+				MovingPart movingPart = entity.getEntityPart(MovingPart.class);
+				movingPart.undoMovement(entity);
+			}
+		}
+	}
+
+	private boolean isPositionPassible(TiledMap map, Vector2 position) {
+		Set<Integer> passibleTiles = Set.of(0);
+		TiledMapTileLayer t = ((TiledMapTileLayer)map.getLayers().get(0));
+		int tileId = t.getCell((int)position.times(8).getX(), (int)position.times(8).getY()).getTile().getId();
+		return passibleTiles.contains(tileId % 42);
 	}
 }

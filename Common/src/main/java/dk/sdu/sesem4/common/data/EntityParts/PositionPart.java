@@ -2,53 +2,49 @@ package dk.sdu.sesem4.common.data.EntityParts;
 
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
+import dk.sdu.sesem4.common.data.math.Rectangle;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.util.Direction;
 
-import java.util.*;
-
 /**
- * A class that represents the PositionPart.
+ * Handles data for the position, size and direction of entity
  */
 public class PositionPart implements EntityPart {
-
      /**
-      * The position of the entity.
+      * The Entity's bounding-box rectangle.
+      * This includes position and size.
       */
-     private Vector2 position;
+     private Rectangle boundingBox;
+     
      /**
-      * The direction of the entity.
+      * The direction the entity is facing
       */
      private Direction direction;
 
-     /**
-      * The constructor for the PositionPart class.
-      * 
-      * @param position  The position of the entity.
-      * @param direction The direction of the vector
-      */
-     public PositionPart(Vector2 position, Direction direction) {
-          this.position = position;
+     public PositionPart(Vector2 position, Vector2 size, Direction direction) {
+          this.boundingBox = new Rectangle(position, size);
           this.direction = direction;
      }
 
-     /**
-      * Get the position of the entity.
-      * 
-      * @return The position of the entity.
-      */
-     public Vector2 getPosition() {
-          return this.position;
+     public PositionPart(Rectangle boundingBox, Direction direction) {
+          this.boundingBox = boundingBox;
+          this.direction = direction;
      }
 
-     /**
-      * Set the position of the entity.
-      * 
-      * @param position the Vector2 (x and y coordinates) the Entity should be
-      *                 positioned at
-      */
+     public Rectangle getBoundingBox() {
+          return boundingBox;
+     }
+     
+     public void setBoundingBox(Rectangle boundingBox) {
+          this.boundingBox = boundingBox;
+     }
+
+     public Vector2 getPosition() {
+          return this.getBoundingBox().getPosition();
+     }
+     
      public void setPosition(Vector2 position) {
-          this.position = position;
+          boundingBox.setPosition(position);
      }
 
      /**
@@ -60,32 +56,31 @@ public class PositionPart implements EntityPart {
      public void move(Vector2 deltaPosition) {
           this.setPosition(this.getPosition().plus(deltaPosition));
      }
-
+     
      /**
-      * Get the direction of the entity.
-      * 
-      * @return The direction of the entity.
+      * @return the size (width and height) of the entity
       */
+     public Vector2 getSize() {
+          return boundingBox.getSize();
+     }
+     
+     /**
+      * @param size the size (width and height) of the entity
+      */
+     public void setSize(Vector2 size) {
+          boundingBox.setSize(size);
+     }
+     
      public Direction getDirection() {
           return this.direction;
      }
-
-     /**
-      * Sets the Direction of the Entity
-      * 
-      * @param direction The direction the Entity should be going in
-      */
+     
      public void setDirection(Direction direction) {
           this.direction = direction;
      }
 
-     /**
-      * A method that processes the PositionPart.
-      * 
-      * @param gameData The GameData object.
-      * @param entity   The Entity object.
-      */
      @Override
      public void process(GameData gameData, Entity entity) {
+
      }
 }
