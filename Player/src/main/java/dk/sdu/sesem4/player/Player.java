@@ -2,6 +2,7 @@ package dk.sdu.sesem4.player;
 
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.entity.EntityType;
+import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.util.Direction;
 
 import java.nio.file.Path;
@@ -13,11 +14,12 @@ public class Player extends Entity {
 	private int speed = 5;
 	private int hearts = 3;
 	private int frameRate = 10;
-	private final float startPositionX = 128;
-	private final float startPositionY = 88;
-	private float currentPositionX = startPositionX;
-	private float currentPositionY = startPositionY;
 	private List<Path> texturesPath = new ArrayList<Path>();
+
+	private final Vector2 startPosition = new Vector2(128, 88);
+	private final Vector2 size = new Vector2(16, 16);
+
+	private Vector2 currentPosition = this.startPosition;
 
 	private Direction direction = Direction.UP;
 
@@ -75,65 +77,11 @@ public class Player extends Entity {
 
 	/**
 	 * Set the frame rate of the player.
+	 *
 	 * @param frameRate
 	 */
 	public void setFrameRate(int frameRate) {
 		this.frameRate = frameRate;
-	}
-	/**
-	 * Get the start position of the player on the x-axis.
-	 *
-	 * @return The start position of the player on the x-axis.
-	 */
-	public float getStartPositionX() {
-		return this.startPositionX;
-	}
-
-	/**
-	 * Get the start position of the player on the y-axis.
-	 *
-	 * @return The start position of the player on the y-axis.
-	 */
-	public float getStartPositionY() {
-		return this.startPositionY;
-	}
-
-	/**
-	 * Get the current position of the player on the x-axis.
-	 *
-	 * @return The current position of the player on the x-axis.
-	 */
-	public float getCurrentPositionX() {
-		return this.currentPositionX;
-	}
-
-	/**
-	 * Get the current position of the player on the y-axis.
-	 *
-	 * @return Get the current position of the player on the y-axis.
-	 */
-	public float getCurrentPositionY() {
-		return currentPositionY;
-	}
-
-
-	/**
-	 * Set the current position of the player on the x-axis.
-	 *
-	 * @param currentPositionX
-	 */
-	public void setCurrentPositionX(float currentPositionX) {
-		this.currentPositionX = currentPositionX;
-	}
-
-
-	/**
-	 * Set the current position of the player on the y-axis.
-	 *
-	 * @param currentPositionY
-	 */
-	public void setCurrentPositionY(float currentPositionY) {
-		this.currentPositionY = currentPositionY;
 	}
 
 	/**
@@ -154,6 +102,47 @@ public class Player extends Entity {
 		this.direction = direction;
 	}
 
+	/**
+	 * Get the start position of the player.
+	 *
+	 * @return The start position of the player.
+	 */
+	public Vector2 getStartPosition() {
+		return this.startPosition;
+	}
+
+	/**
+	 * Get the current position of the player.
+	 *
+	 * @return The current position of the player.
+	 */
+	public Vector2 getCurrentPosition() {
+		return this.currentPosition;
+	}
+
+	/**
+	 * Set the current position of the player.
+	 *
+	 * @param currentPosition The current position of the player.
+	 */
+	public void setCurrentPosition(Vector2 currentPosition) {
+		this.currentPosition = currentPosition;
+	}
+
+	/**
+	 * Get the size of the player.
+	 *
+	 * @return The size of the player.
+	 */
+	public Vector2 getSize() {
+		return this.size;
+	}
+
+	/**
+	 * Get the path to the textures of the player.
+	 *
+	 * @return The path to the textures of the player.
+	 */
 	public List<Path> getTexturesPath() {
 		return this.texturesPath;
 	}
