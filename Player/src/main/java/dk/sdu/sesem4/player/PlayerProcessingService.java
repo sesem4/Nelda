@@ -22,8 +22,6 @@ import java.util.List;
  */
 public class PlayerProcessingService implements ProcessingServiceSPI {
 
-	protected Player player;
-
 	/**
 	 * Processes the player for each game loop, changing its Movement, Position, LifePart, and Path to Texture.
 	 *
@@ -47,85 +45,6 @@ public class PlayerProcessingService implements ProcessingServiceSPI {
 		}
 	}
 
-	/**
-	 * Creates a new player entity and sets its speed, position, and life.
-	 *
-	 * @return The new player entity.
-	 */
-	public Entity createPlayer() {
-		List<Path> paths = this.loadTextures();
-
-		//create a new player
-		this.player = new Player();
-
-		MovingPart movingPart = new MovingPart(
-				this.player.getSpeed(),
-				this.player.getFrameRate(),
-				(gameData, entity) -> null );
-
-		// Up uses same sprite but flips it.
-		List<SpriteData> up = List.of(
-				new SpriteData(paths.get(2), true, false),
-				new SpriteData(paths.get(2), false, false)
-		);
-		// right, uses two different sprites.
-		List<SpriteData> right = List.of(
-				new SpriteData(paths.get(3), false, false),
-				new SpriteData(paths.get(4), false, false)
-		);
-		// left uses sprits for going right, but flips them
-		List<SpriteData> left = List.of(
-				new SpriteData(paths.get(3), true, false),
-				new SpriteData(paths.get(4), true, false)
-		);
-		// down uses two different sprites.
-		List<SpriteData> down = List.of(
-				new SpriteData(paths.get(0), false, false),
-				new SpriteData(paths.get(1), false, false)
-		);
-
-		movingPart.setSprites(Direction.UP, up);
-		movingPart.setSprites(Direction.RIGHT, right);
-		movingPart.setSprites(Direction.LEFT, left);
-		movingPart.setSprites(Direction.DOWN, down);
-
-		//set the speed of the player
-		this.player.addEntityPart(movingPart);
-		//set the position of the player
-		this.player.addEntityPart(new PositionPart(new Vector2(
-				this.player.getStartPositionX(),
-				this.player.getStartPositionY()),
-				this.player.getDirection()));
-		//set the life of player
-		this.player.addEntityPart(new LifePart(this.player.getHearts()));
-
-		return this.player;
-	}
-
-	/**
-	 * Loads all player textures into a list of paths.
-	 *
-	 * @return A list of paths to the player textures.
-	 */
-	private List<Path> loadTextures() {
-		//load all player textures into a Path array
-		List<Path> entityTexturesList = new ArrayList<Path>();
-
-		//save each path to the png files into an array of paths.
-		for (int i = 1; i <= 5; i++) {
-			try {
-				Path path = Path.of("Zelda" + i + ".png");
-				entityTexturesList.add(path);
-			} catch (NullPointerException e) {
-				e.printStackTrace();
-			}
-		}
-		return entityTexturesList;
-	}
-
-	public Entity getPlayer() {
-		return this.player;
-	}
 
 }
 
