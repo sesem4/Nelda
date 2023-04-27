@@ -163,10 +163,11 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 * @return Whether the entity can pass through the position.
 	 */
 	private boolean isRectangleValid(Rectangle entityRectangle, TiledMap map){
-		boolean bottomLeftPassible = isPositionPassible(entityRectangle.getBottomLeftCorner(), map);
-		boolean bottomRightPassible = isPositionPassible(entityRectangle.getBottomRightCorner(), map);
-		boolean topLeftPassible = isPositionPassible(entityRectangle.getTopLeftCorner(), map);
-		boolean topRightPassible = isPositionPassible(entityRectangle.getTopRightCorner(), map);
+		Vector2 epsilon = new Vector2(0.00001f, 0.00001f);
+		boolean bottomLeftPassible = isPositionPassible(entityRectangle.getBottomLeftCorner().minus(epsilon), map);
+		boolean bottomRightPassible = isPositionPassible(entityRectangle.getBottomRightCorner().minus(epsilon), map);
+		boolean topLeftPassible = isPositionPassible(entityRectangle.getTopLeftCorner().minus(epsilon), map);
+		boolean topRightPassible = isPositionPassible(entityRectangle.getTopRightCorner().minus(epsilon), map);
 		
 		return bottomLeftPassible && bottomRightPassible && topLeftPassible && topRightPassible;
 	}
