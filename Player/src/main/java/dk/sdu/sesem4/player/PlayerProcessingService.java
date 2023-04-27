@@ -9,6 +9,8 @@ import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.process.Priority;
+import dk.sdu.sesem4.common.data.rendering.SpriteData;
+import dk.sdu.sesem4.common.util.Direction;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -51,8 +53,42 @@ public class PlayerProcessingService implements ProcessingServiceSPI {
 	 * @return The new player entity.
 	 */
 	public Entity createPlayer() {
+		List<Path> paths = this.loadTextures();
+
 		//create a new player
 		this.player = new Player();
+
+		MovingPart movingPart = new MovingPart(
+				this.player.getSpeed(),
+				this.player.getFrameRate(),
+				(gameData, entity) -> null );
+
+		// Up uses same sprite but flips it.
+		List<SpriteData> up = List.of(
+				new SpriteData(paths.get(2), true, false),
+				new SpriteData(paths.get(2), false, false)
+		);
+		// right, uses two different sprites.
+		List<SpriteData> right = List.of(
+				new SpriteData(paths.get(3), false, false),
+				new SpriteData(paths.get(4), false, false)
+		);
+		// left uses sprits for going right, but flips them
+		List<SpriteData> left = List.of(
+				new SpriteData(paths.get(3), true, false),
+				new SpriteData(paths.get(4), true, false)
+		);
+		// down uses two different sprites.
+		List<SpriteData> down = List.of(
+				new SpriteData(paths.get(0), false, false),
+				new SpriteData(paths.get(1), false, false)
+		);
+
+		movingPart.setSprites(Direction.UP, up);
+		movingPart.setSprites(Direction.RIGHT, right);
+		movingPart.setSprites(Direction.LEFT, left);
+		movingPart.setSprites(Direction.DOWN, down);
+
 		//set the speed of the player
 		this.player.addEntityPart(movingPart);
 		//set the position of the player
