@@ -123,7 +123,6 @@ public class MapProcessingServiceTest
 
 	/**
 	 * Tests that the `checkIfOnSolidTile` method works correctly.
-	 *
 	 * The method first saves the map as a `TiledMapTileLayer` object and gets the properties of the
 	 * cells at `(0, 0)` and `(7, 0)`. It then asserts that the `solid` property of the first cell is `false`
 	 * and the `solid` property of the second cell is `true`.
