@@ -2,10 +2,9 @@ name: Format
 
 on:
   push:
-    branches: [ master ]
+    # branches: [ master ]
 
 jobs:
-
   formatting:
     runs-on: ubuntu-latest
     steps:
