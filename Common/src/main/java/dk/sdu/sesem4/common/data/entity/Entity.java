@@ -11,32 +11,30 @@ import dk.sdu.sesem4.common.util.Direction;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The Entity class for all entities in the game.
  */
 public abstract class Entity {
-     /**
-      * A Map to store all the EntityParts with their Class as key.
-      */
-     private final Map<Class, EntityPart> entityParts = new HashMap<>();
-     /**
-      * A Map to store all the CollisionParts with their Class as key.
-       */
-     private final Map<Class, CollisionPart> collisionParts = new HashMap<>();
-     /**
-      * Width and height of the entity.
-      */
-     private static final int width = 16;
-     private static final int height = 16;
-     /**
-        * The type of the entity.
-      */
-     private EntityType entityType;
-
-     public Entity(EntityType entityType) {
-          this.entityType = entityType;
-     }
+	/**
+	 * A Map to store all the EntityParts with their Class as key.
+	 */
+	private final Map<Class, EntityPart> entityParts = new HashMap<>();
+	
+	/**
+	 * A Map to store all the CollisionParts with their Class as key.
+	 */
+	private final Map<Class, CollisionPart> collisionParts = new HashMap<>();
+	
+	/**
+	 * The type of the entity.
+	 */
+	private EntityType entityType;
+	
+	public Entity(EntityType entityType) {
+		this.entityType = entityType;
+	}
 
      /**
       * Process the entity.
@@ -123,15 +121,27 @@ public abstract class Entity {
           this.entityType = entityType;
      }
 
-     /**
-      * Emit to entity that it has collided with another entity.
-      *
-      * @param other The other Entity which this entity has collided with.
-      */
-     public void collided(Entity other) {
-          doDamage(other);
-          doKnockback(other);
-     }
+	/**
+	 * Emit to entity that it has collided with another entity.
+	 *
+	 * @param other The other Entity which this entity has collided with.
+	 */
+	public void collided(Entity other) {
+		HashMap<EntityType, Set<EntityType>> entityTypeCollisions = new HashMap<>() {{
+			put(EntityType.Player, Set.of(EntityType.Enemy, EntityType.EnemyProjectile, EntityType.Item));
+			put(EntityType.Enemy, Set.of(EntityType.PlayerProjectile));
+			put(EntityType.PlayerProjectile, Set.of(EntityType.Enemy));
+			put(EntityType.EnemyProjectile, Set.of(EntityType.Player));
+			put(EntityType.Item, Set.of(EntityType.Player));
+		}};
+		
+		Set<EntityType> stuffWeShouldCollideWith = entityTypeCollisions.get(this.getEntityType());
+		if (!stuffWeShouldCollideWith.contains(other.getEntityType()))
+			return;
+		
+		doDamage(other);
+		doKnockback(other);
+	}
 
      /**
       * Do damage according to other's DamagePart

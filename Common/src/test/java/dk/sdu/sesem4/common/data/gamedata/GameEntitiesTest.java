@@ -27,7 +27,7 @@ public class GameEntitiesTest {
     public void testAddEntity() {
         Entity entity = new TestEntity(EntityType.Player);
         this.gameEntities.addEntity(entity);
-        assertEquals(1, this.gameEntities.getEntitiesOfType(Entity.class).size());
+        assertEquals(1, this.gameEntities.getEntities(Entity.class).size());
     }
     // Tests the removeEntity method.
     @Test
@@ -35,7 +35,7 @@ public class GameEntitiesTest {
         Entity entity = new TestEntity(EntityType.Player);
         this.gameEntities.addEntity(entity);
         this.gameEntities.removeEntity(entity);
-        assertEquals(0, this.gameEntities.getEntitiesOfType(Entity.class).size());
+        assertEquals(0, this.gameEntities.getEntities(Entity.class).size());
     }
     // Tests the getEntities method.
     @Test
@@ -46,9 +46,9 @@ public class GameEntitiesTest {
         this.gameEntities.addEntity(entity);
         this.gameEntities.addEntity(entity1);
         this.gameEntities.addEntity(entity2);
-        List<Entity> entities = this.gameEntities.getEntitiesOfType(Entity.class);
+        List<Entity> entities = this.gameEntities.getEntities(Entity.class);
         assertEquals(3, entities.size());
-        assertEquals(entities, this.gameEntities.getEntitiesOfType(Entity.class));
+        assertEquals(entities, this.gameEntities.getEntities(Entity.class));
     }
     // Tests if we can get a specific entity from the GameEntities object.
     @Test

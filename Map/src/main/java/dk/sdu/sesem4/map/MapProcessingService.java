@@ -10,6 +10,8 @@ import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
 import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
+import dk.sdu.sesem4.common.data.math.Rectangle;
+import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.process.Priority;
 import dk.sdu.sesem4.common.event.Event;
 import dk.sdu.sesem4.common.event.EventListener;
@@ -20,6 +22,7 @@ import dk.sdu.sesem4.common.event.events.MapTransitionEventType;
 import dk.sdu.sesem4.common.util.Direction;
 
 import java.nio.file.*;
+import java.util.Set;
 
 /**
  * @author Jakob L.M. & Jon F.J.
@@ -27,19 +30,20 @@ import java.nio.file.*;
  * It is called from the MapPlugin class when the game is started.
  */
 
-public class MapProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI, EventListener {
+<<<<<<<<< Temporary merge branch 1
+public class MapProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI {
+=========
+public class MapProcessingService implements ProcessingServiceSPI, EventListener {
+>>>>>>>>> Temporary merge branch 2
 	protected Map map;
 
-	//Tiled map loader
-	private TmxMapLoader tmxMapLoader = new TmxMapLoader();
-	/**
-	 * MapProcessingService loads the world from the .tmx files into an array of TiledMaps.
-	 * It is called from the MapPlugin class when the game is started.
-	 */
 	public MapProcessingService() {
 		this.map = new Map();
 		EventManager.getInstance().subscribe(MapTransitionEventType.class, this);
 	}
+
+	//Tiled map loader
+	private TmxMapLoader tmxMapLoader = new TmxMapLoader();
 
 	/**
 	 * This method just returns the current "resources" folder.
@@ -132,7 +136,7 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 
 	@Override
 	public void processNotification(Class<? extends EventType> eventType, Event data) {
-		if (!(data instanceof MapTransitionEvent)) {
+		if (!(data instanceof  MapTransitionEvent)) {
 			return;
 		}
 		MapTransitionEvent eventData = (MapTransitionEvent) data;
@@ -157,15 +161,30 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	}
 
 	/**
-	 * This method is post process.
+	 * Do collision check for all entities. This is done by checking that all corners of the entity
+	 * are on a passible tile. If at least one corner isn't, we undo the Entity's movement.
 	 * @param gameData The game data
 	 * @param priority The priority, which is to be run for the current process round
 	 */
 	@Override
 	public void postProcess(GameData gameData, Priority priority) {
 		walkable(gameData);
-	}
 
+		for (Entity entity : gameData.getGameEntities().getEntities()) {
+			PositionPart positionPart = entity.getEntityPart(PositionPart.class);
+			Rectangle entityRectangle = positionPart.getBoundingBox();
+
+			boolean bottomLeftPassible = isPositionPassible(currMap, entityRectangle.getBottomLeftCorner());
+			boolean bottomRightPassible = isPositionPassible(currMap, entityRectangle.getBottomRightCorner());
+			boolean topLeftPassible = isPositionPassible(currMap, entityRectangle.getTopLeftCorner());
+			boolean topRightPassible = isPositionPassible(currMap, entityRectangle.getTopRightCorner());
+
+			if (!(bottomLeftPassible && bottomRightPassible && topLeftPassible && topRightPassible)) {
+				MovingPart movingPart = entity.getEntityPart(MovingPart.class);
+				movingPart.undoMovement(entity);
+			}
+		}
+	}
 	/**
 	 * This method checks whether an entity is on a solid tile. If it is not on a solid tile, it undoes the entity's movement.
 	 * @param gameData The game data.
@@ -202,12 +221,10 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		//get the tile's id
 		int tileID = getTileMapID(tileX, tileY);
 
-		//get the tile cell properties on the layer
-		TiledMapTileLayer layer = (TiledMapTileLayer) currentMap.getLayers().get(0);
-		TiledMapTileLayer.Cell cell = layer.getCell(tileX, tileY);
-		MapProperties cellProperties = cell.getTile().getProperties();
-
-		//check if the tile is solid
-		return !cellProperties.get("solid", boolean.class);
+	private boolean isPositionPassible(TiledMap map, Vector2 position) {
+		Set<Integer> passibleTiles = Set.of(0);
+		TiledMapTileLayer t = ((TiledMapTileLayer)map.getLayers().get(0));
+		int tileId = t.getCell((int)position.times(8).getX(), (int)position.times(8).getY()).getTile().getId();
+		return passibleTiles.contains(tileId % 42);
 	}
 }
