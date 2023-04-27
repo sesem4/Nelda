@@ -7,7 +7,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -20,9 +20,7 @@ import org.junit.runner.RunWith;
  * The Gdx.gl variable is then set to a mock GL20 object using the `Mockito.mock` method from the Mockito library.
  */
 @RunWith(GdxTestRunner.class)
-public class MapProcessingServiceTest
-		extends MapProcessingService
-{
+public class MapProcessingServiceTest extends MapProcessingService {
 
 	// How many maps the world is wide
 	int worldWidth = 16;
@@ -30,24 +28,12 @@ public class MapProcessingServiceTest
 	// How many maps the world is high
 	int worldHeight = 8;
 
-//	private TiledMap map;
-
 	/**
 	 * This constructor creates a new MapProcessingServiceTest.
 	 * It calls the constructor of its superclass, ApplicationTest, passing in a new Map object as a parameter.
 	 */
 	public MapProcessingServiceTest() {
 		super();
-	}
-
-	/**
-	 * This method loads the world before each test by calling the loadWorld method from the MapProcessingService class,
-	 * passing in the parameters "overworld", worldWidth, and worldHeight as arguments.
-	 */
-	@Before
-	public void loadWorld() {
-		// world is inherited from MapProcessingService
-		super.loadWorld("overworld", this.worldWidth, this.worldHeight);
 	}
 
 	/**
@@ -66,29 +52,18 @@ public class MapProcessingServiceTest
 	 */
 	@Test
 	public void testCorrectFilesExist() {
-		// TODO: make this.
-	}
-
-	/**
-	 * Tests that the correct files are loaded into the TiledMap objects.
-	 * It first checks that the length of the world array is equal to worldWidth times worldHeight.
-	 * It then loops through each TiledMap in the world array, ensuring that it is not null.
-	 */
-	@Test
-	public void testLoadWorldLoadsFiles() {
-		assertEquals(this.map.getWorld().length, this.worldWidth*this.worldHeight);
-		for (TiledMap tiledMap : this.map.getWorld()) {
-			assertNotNull(tiledMap);
+		for (int i = 0; i < worldWidth*worldHeight; i++) {
+			this.map.setCurrentMapIndex(i);
+			new TmxMapLoader().load(this.getCurrentMap().toString());
 		}
 	}
 
 	/**
 	 * Tests whether the correct file contents are loaded into the map.
 	 * <p>
-	 * This test method tests whether the correct file contents are loaded into the map. It does this by calling the
-	 * {@link #loadWorld(String, int, int)} method of the {@link MapProcessingService} class to load the "test" world into
-	 * memory. It then gets the TiledMap object for the first map in the world and checks the IDs of the tiles at (0, 0), (7,
-	 * 4), and (15, 4) to ensure that they match the expected values.
+	 * This test method tests whether the correct file contents are loaded into the map.
+	 * It does this by getting the TiledMap object for the first map in the world and checking the IDs of the tiles at
+	 * (0, 0), (7, 4), and (15, 4) to ensure that they match the expected values.
 	 * </p>
 	 * <p>
 	 * If the IDs do not match the expected values, an assertion error is thrown.
@@ -96,7 +71,9 @@ public class MapProcessingServiceTest
 	 */
 	@Test
 	public void testCorrectFileContents() {
-		TiledMap map = this.map.getWorld()[0];
+		this.map.setCurrentMapIndex(0);
+		TmxMapLoader loader = new TmxMapLoader();
+		TiledMap map = loader.load(this.getCurrentMap().toString());
 
 		// get the id of the tile at (0, 0)
 		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
@@ -114,12 +91,48 @@ public class MapProcessingServiceTest
 
 	/**
 	 * Tests that the correct world indices are loaded into the Map object.
-	 * We do this by checking each corner of the map
+	 * We do this by checking each corner of the world
 	 */
 	@Test
 	public void testCorrectWorldIndices() {
-		// TODO: Make this.
+		int topLeftCornerIndex = 0;
+		int topRightCornerIndex = worldWidth-1;
+		int bottomLeftCornerIndex = worldWidth*(worldHeight-1);
+		int bottomRightCornerIndex = (worldWidth*worldHeight)-1;
+		
+		
+		TmxMapLoader mapLoader = new TmxMapLoader();
+		
+		this.map.setCurrentMapIndex(topLeftCornerIndex);
+		TiledMap topLeftMap = mapLoader.load(this.getCurrentMap().toString());
+		assertEquals(12, getCellId(topLeftMap, 0, 0));
+		assertEquals(34, getCellId(topLeftMap, 7, 4));
+		assertEquals(3, getCellId(topLeftMap, 15, 4));
+		
+		this.map.setCurrentMapIndex(topRightCornerIndex);
+		TiledMap topRightMap = mapLoader.load(this.getCurrentMap().toString());
+		assertEquals(15, getCellId(topRightMap, 0, 0));
+		assertEquals(41, getCellId(topRightMap, 8, 7));
+		assertEquals(34, getCellId(topRightMap, 8, 0));
+		
+		this.map.setCurrentMapIndex(bottomLeftCornerIndex);
+		TiledMap bottomLeftMap = mapLoader.load(this.getCurrentMap().toString());
+		assertEquals(12, getCellId(bottomLeftMap, 0, 0));
+		assertEquals(28, getCellId(bottomLeftMap, 8, 7));
+		assertEquals(37, getCellId(bottomLeftMap, 6, 3));
+		
+		this.map.setCurrentMapIndex(bottomRightCornerIndex);
+		TiledMap bottomRightMap = mapLoader.load(this.getCurrentMap().toString());
+		assertEquals(15, getCellId(bottomRightMap, 0, 0));
+		assertEquals(18, getCellId(bottomRightMap, 8, 5));
+		assertEquals(11, getCellId(bottomRightMap, 1, 7));
 	}
+	
+	private int getCellId(TiledMap map, int x, int y) {
+		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
+		return layer.getCell(x, y).getTile().getId();
+	}
+	
 
 	/**
 	 * Tests that the `checkIfOnSolidTile` method works correctly.
@@ -129,9 +142,9 @@ public class MapProcessingServiceTest
 	 */
 	@Test
 	public void testcheckIfOnSolidTile(){
-
+		this.map.setCurrentMapIndex(0);
+		TiledMap map = new TmxMapLoader().load(this.getCurrentMap().toString());
 		//save the map as a TiledMapTileLayer
-		TiledMap map = this.map.getWorld()[0];
 		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
 
 		//get the properties of the map and the cells

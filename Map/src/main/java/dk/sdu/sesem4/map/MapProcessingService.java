@@ -13,10 +13,7 @@ import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Rectangle;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.process.Priority;
-import dk.sdu.sesem4.common.event.Event;
-import dk.sdu.sesem4.common.event.EventListener;
-import dk.sdu.sesem4.common.event.EventManager;
-import dk.sdu.sesem4.common.event.EventType;
+import dk.sdu.sesem4.common.event.*;
 import dk.sdu.sesem4.common.event.events.MapTransitionEvent;
 import dk.sdu.sesem4.common.event.events.MapTransitionEventType;
 import dk.sdu.sesem4.common.util.Direction;
@@ -29,7 +26,6 @@ import java.util.Set;
  * It is called from the MapPlugin class when the game is started.
  */
 public class MapProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI, EventListener {
-
 	protected Map map;
 
 	public MapProcessingService() {
@@ -37,36 +33,13 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		EventManager.getInstance().subscribe(MapTransitionEventType.class, this);
 	}
 
-	//Tiled map loader
-	private TmxMapLoader tmxMapLoader = new TmxMapLoader();
-
+	/**
+	 * This method just returns the current "resources" folder.
+	 * It is needed, so we can do tests with a custom "resources" folder.
+	 * @return the resources directory to get resource files from
+	 */
 	protected String getResourcesDirectory() {
 		return "Map/src/main/resources/";
-	}
-
-	/**
-	 * Loads the world from the .tmx files into an array of Paths.
-	 * @param worldName The name of the world to load.
-	 * @param worldWidth The width of the world.
-	 * @param worldHeight The height of the world.
-	 */
-	public void loadWorld(String worldName, int worldWidth, int worldHeight) {
-		Path[] world = new Path[worldWidth * worldHeight];
-
-		for (int x = 0; x < worldWidth; x++) {
-			for (int y = 0; y < worldHeight; y++) {
-				String fileName = getFileNameForMap(worldName, x, y);
-				try {
-					Path loadedMap = Paths.get(getResourcesDirectory() + fileName);
-					world[x + y * worldWidth] = loadedMap;
-				} catch (Exception e) {
-					world[x + y * worldWidth] = null;
-					System.out.println("ERROR loading " + fileName);
-				}
-			}
-		}
-
-		this.map.setWorld(world);
 	}
 
 	/**
@@ -80,11 +53,12 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 * @param y: an integer that represents the y-coordinate of the map.
 	 * @return a string that represents the file name of the map.
 	 */
-	private String getFileNameForMap(String worldName, int x, int y) {
+	private Path getPathForMap(String worldName, int x, int y) {
 //		URL url = this.getClass().getClassLoader().getResource(worldName + "/" + columns[x] + (y + 1) + ".tmx");
 //		String fileName = url.getPath();
 		String[] columns = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-		return getResourcesDirectory() + worldName + "/" + columns[x] + (y + 1) + ".tmx";
+		String fileName = getResourcesDirectory() + worldName + "/" + columns[x] + (y + 1) + ".tmx";
+		return Paths.get(fileName);
 	}
 
 	/**
@@ -92,8 +66,7 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 * @return The current tiled map.
 	 */
 	public Path getCurrentMap() {
-		String relativeFileName = getFileNameForMap(this.map.getCurrentWorldName(), this.map.getCurrentMapIndex() % 16, this.map.getCurrentMapIndex() / 16);
-		return Paths.get(relativeFileName);
+		return getPathForMap(this.map.getCurrentWorldName(), this.map.getCurrentMapIndex() % 16, this.map.getCurrentMapIndex() / 16);
 	}
 
 	/**
@@ -129,7 +102,7 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 */
 	@Override
 	public void process(GameData gameData, Priority priority) {
-
+		gameData.getGameWorld().setMap(this.getCurrentMap());
 	}
 
 	/**
@@ -139,7 +112,7 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 */
 	@Override
 	public void processNotification(Class<? extends EventType> eventType, Event data) {
-		if (!(data instanceof  MapTransitionEvent)) {
+		if (!(data instanceof MapTransitionEvent)) {
 			return;
 		}
 		MapTransitionEvent eventData = (MapTransitionEvent) data;
@@ -164,9 +137,10 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	}
 
 	/**
-	 * Post-processes the game data.
-	 * @param gameData The game data.
-	 * @param priority The priority.
+	 * Do collision check for all entities. This is done by checking that all corners of the entity
+	 * are on a passible tile. If at least one corner isn't, we undo the Entity's movement.
+	 * @param gameData The game data
+	 * @param priority The priority, which is to be run for the current process round
 	 */
 	@Override
 	public void postProcess(GameData gameData, Priority priority) {

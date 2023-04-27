@@ -27,9 +27,7 @@ public class MapPlugin implements PluginServiceSPI, ProcessingServiceSPI, PostPr
 	public void start(GameData gameData) {
 		System.out.println("Vi har nu startet map!");
 
-
 		this.mapProcessingService = new MapProcessingService();
-		this.mapProcessingService.loadWorld("overworld", 16, 8);
 		gameData.setGameWorld(new GameWorld(mapProcessingService.getCurrentMap()));
 	}
 

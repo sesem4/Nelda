@@ -10,62 +10,62 @@ import java.util.stream.Collectors;
  * A class that represents the GameEntities.
  */
 public class GameEntities {
-
-    /**
-     * The list of entities.
-     */
-    private List<Entity> entities;
-
-    /**
-     * The constructor for the GameEntities class, where the list of entities is initialized.
-     */
-    public GameEntities() {
-        this.entities = new LinkedList<>();
-    }
-
-    /**
-     * Add an entity to the list of entities.
-     * @param entity The entity to be added.
-     * @return boolean True if the entity was added, false otherwise.
-     */
-    public boolean addEntity(Entity entity) {
-        return this.entities.add(entity);
-    }
-
-    /**
-     * Remove an entity from the list of entities.
-     * @param entity The entity to be removed.
-     * @return boolean True if the entity was removed, false otherwise.
-     */
-    public boolean removeEntity(Entity entity) {
-        return this.entities.remove(entity);
-    }
-
-    /**
-     * Get a specific entity from the list of entities
-     * @param entity The entity to be returned.
-     * @return Entity The entity.
-     */
-    public Entity getEntity(Entity entity){
-        return this.entities.stream()
-                .filter(e -> e.equals(entity))
-                .findFirst()
-                .orElse(null);
-    }
-    
-    /**
-     * Get the list of all the entities by type.
-     * @param entityTypes The type of the entities to be returned.
-     * @return List<E> The list of entities.
-     * @param <E> The type of the entities to be returned.
-     */
-    public <E extends Entity> List<E> getEntities(Class<E> entityTypes) {
-        return (List<E>) this.entities.stream()
-                .filter(entityTypes::isInstance)
-                .collect(Collectors.toList());
-    }
-    
-    public List<Entity> getEntities() {
-        return entities;
-    }
+	
+	/**
+	 * The list of entities.
+	 */
+	private List<Entity> entities;
+	
+	/**
+	 * The constructor for the GameEntities class, where the list of entities is initialized.
+	 */
+	public GameEntities() {
+		this.entities = new LinkedList<>();
+	}
+	
+	/**
+	 * Add an entity to the list of entities.
+	 * @param entity The entity to be added.
+	 * @return boolean True if the entity was added, false otherwise.
+	 */
+	public boolean addEntity(Entity entity) {
+		return this.entities.add(entity);
+	}
+	
+	/**
+	 * Remove an entity from the list of entities.
+	 * @param entity The entity to be removed.
+	 * @return boolean True if the entity was removed, false otherwise.
+	 */
+	public boolean removeEntity(Entity entity) {
+		return this.entities.remove(entity);
+	}
+	
+	/**
+	 * Get a specific entity from the list of entities
+	 * @param entity The entity to be returned.
+	 * @return Entity The entity.
+	 */
+	public Entity getEntity(Entity entity){
+		return this.entities.stream()
+				.filter(e -> e.equals(entity))
+				.findFirst()
+				.orElse(null);
+	}
+	
+	/**
+	 * Get the list of all the entities by type.
+	 * @param entityTypes The type of the entities to be returned.
+	 * @return List<E> The list of entities.
+	 * @param <E> The type of the entities to be returned.
+	 */
+	public <E extends Entity> List<E> getEntities(Class<E> entityTypes) {
+		return (List<E>) this.entities.stream()
+				.filter(entityTypes::isInstance)
+				.collect(Collectors.toList());
+	}
+	
+	public List<Entity> getEntities() {
+		return entities;
+	}
 }
