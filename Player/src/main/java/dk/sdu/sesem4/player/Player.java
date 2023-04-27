@@ -12,6 +12,7 @@ public class Player extends Entity {
 
 	private int speed = 5;
 	private int hearts = 3;
+	private int frameRate = 10;
 	private final float startPositionX = 128;
 	private final float startPositionY = 88;
 	private float currentPositionX = startPositionX;
@@ -63,6 +64,22 @@ public class Player extends Entity {
 		this.hearts = hearts;
 	}
 
+	/**
+	 * Get the frame rate of the player.
+	 *
+	 * @return The frame rate of the player.
+	 */
+	public int getFrameRate() {
+		return frameRate;
+	}
+
+	/**
+	 * Set the frame rate of the player.
+	 * @param frameRate
+	 */
+	public void setFrameRate(int frameRate) {
+		this.frameRate = frameRate;
+	}
 	/**
 	 * Get the start position of the player on the x-axis.
 	 *

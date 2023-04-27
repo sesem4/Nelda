@@ -1,6 +1,5 @@
 package dk.sdu.sesem4.player;
 
-import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
 import dk.sdu.sesem4.common.SPI.ProcessingServiceSPI;
 import dk.sdu.sesem4.common.data.EntityParts.LifePart;
 import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
@@ -19,7 +18,7 @@ import java.util.List;
  * This class processes the player each game loop and changes its Movement, Position, LifePart, and Path to Texture.
  * It also includes methods for creating and getting the player entity.
  */
-public class PlayerProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI {
+public class PlayerProcessingService implements ProcessingServiceSPI {
 
 	protected Player player;
 
@@ -38,46 +37,12 @@ public class PlayerProcessingService implements ProcessingServiceSPI, PostProces
 			LifePart lifePart = player.getEntityPart(LifePart.class);
 			SpritePart spritePart = player.getEntityPart(SpritePart.class);
 
-			//set the direction of the player
-			movingPart.
-
-
-					//set the texture based on the direction
-
-
-					//process all the parts
-							positionPart.process(gameData, player);
+			//process all the parts
+			positionPart.process(gameData, player);
 			movingPart.process(gameData, player);
 			lifePart.process(gameData, player);
 			spritePart.process(gameData, player);
 		}
-	}
-
-	/**
-	 * Post-processes the player, checking if the movement matches the direction set in `process`.
-	 * If it does not match, it changes the direction to the movement direction.
-	 *
-	 * @param gameData The {@link GameData} object for the game.
-	 * @param priority The priority of the processing service.
-	 */
-	@Override
-	public void postProcess(GameData gameData, Priority priority) {
-		// postProcess check if the movement matches the direction set in process,
-		// if it does not match, then change the direction to the movement direction
-		for (Entity player : gameData.getGameEntities().getEntities(Player.class)) {
-			PositionPart positionPart = player.getEntityPart(PositionPart.class);
-			MovingPart movingPart = player.getEntityPart(MovingPart.class);
-			LifePart lifePart = player.getEntityPart(LifePart.class);
-//			TexturePart texturePart = player.getEntityPart(TexturePart.class);
-
-			positionPart.getPosition();
-
-			//set the direction of the player
-
-
-			//set the texture based on the direction
-		}
-
 	}
 
 	/**
@@ -89,7 +54,7 @@ public class PlayerProcessingService implements ProcessingServiceSPI, PostProces
 		//create a new player
 		this.player = new Player();
 		//set the speed of the player
-		this.player.addEntityPart(new MovingPart(this.player.getSpeed()));
+		this.player.addEntityPart(movingPart);
 		//set the position of the player
 		this.player.addEntityPart(new PositionPart(new Vector2(
 				this.player.getStartPositionX(),
@@ -97,8 +62,7 @@ public class PlayerProcessingService implements ProcessingServiceSPI, PostProces
 				this.player.getDirection()));
 		//set the life of player
 		this.player.addEntityPart(new LifePart(this.player.getHearts()));
-		//load all the player textures and save it in an array to be processed
-		this.player.setTexturesPath(this.loadTextures());
+
 		return this.player;
 	}
 
@@ -126,6 +90,7 @@ public class PlayerProcessingService implements ProcessingServiceSPI, PostProces
 	public Entity getPlayer() {
 		return this.player;
 	}
+
 }
 
 
