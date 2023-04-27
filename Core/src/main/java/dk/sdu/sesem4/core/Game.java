@@ -155,10 +155,15 @@ public class Game extends ApplicationAdapter {
 	}
 	
 	private void renderMap() {
-		TiledMap map = loadMap(gameData.getGameWorld().getMap());
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-		tiledMapRenderer.setView(camera);
-		tiledMapRenderer.render();
+		try{
+			TiledMap map = loadMap(gameData.getGameWorld().getMap());
+			tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+			tiledMapRenderer.setView(camera);
+			tiledMapRenderer.render();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	TiledMap loadMap(Path path) {
