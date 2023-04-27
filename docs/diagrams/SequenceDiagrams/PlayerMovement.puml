@@ -1,39 +1,57 @@
 @startuml Player Movement
 skinparam style strictuml
 title Player Movement (UC01)
-Actor User
-activate GameInput
-activate Core
 
-User -> GameInput: keys
-Core -> Player: process(world)
+participant Core
+participant Player
+participant KeyboardController
+participant KeyboardMovementController
+participant MovingPart
+participant SPILocator
+
+
+activate Core
+Core -> Player : start()
 activate Player
-Player -> MovementPart: process(world, entity)
-activate MovementPart
-User -> GameInput: keys
-note left
-	User can input keys
-	out of sync with
-	our processing loop
-end note
-alt PositionPart exists
-	User -> GameInput: keys
-	MovementPart -> PositionPart: getPosition(entity)
-	activate PositionPart
-	PositionPart -> MovementPart: player position
-	deactivate PositionPart
-	User -> GameInput: keys
-	MovementPart -> GameInput: getKeys()
-	GameInput -> MovementPart: pressed keys
-	User -> GameInput: keys
-	MovementPart -> PositionPart: setPosition(entity, position)
-	activate PositionPart
-	PositionPart -> MovementPart
-	deactivate PositionPart
-end
-MovementPart -> Player
-deactivate MovementPart
-Player -> Core
+Player -> SPILocator : locateAll(ControlSPI)
+activate SPILocator
+SPILocator -> Player : SPIs
+deactivate SPILocator
+
+Player -> KeyboardController : getType()
+activate KeyboardController
+KeyboardController -> Player : ControlType
+deactivate KeyboardController
+
+alt ControlType == KEYBOARD
+Player -> KeyboardController : getMovementController()
+activate KeyboardController
+KeyboardController -> KeyboardMovementController : new()
+activate KeyboardMovementController
+KeyboardMovementController -> KeyboardController : KeyboardMovementController
+deactivate KeyboardMovementController
+KeyboardController -> Player : MovementController
+deactivate KeyboardController
+
+end alt
+
+Player -> Core : void
 deactivate Player
-User -> GameInput: keys
+
+Core -> Player : process()
+activate Player
+
+Player -> MovingPart : process()
+activate MovingPart
+
+MovingPart -> KeyboardMovementController : getMovement()
+activate KeyboardMovementController
+KeyboardMovementController -> MovingPart : Direction
+deactivate KeyboardMovementController
+
+MovingPart -> Player : void
+deactivate MovingPart
+
+Player -> Core : void
+deactivate Player
 @enduml
