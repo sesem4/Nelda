@@ -208,9 +208,6 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		MapProperties cellProperties = cell.getTile().getProperties();
 
 		//check if the tile is solid
-		if (cellProperties.get("solid",boolean.class)) {
-			return false;
-		}
-		return true;
+		return !cellProperties.get("solid", boolean.class);
 	}
 }
