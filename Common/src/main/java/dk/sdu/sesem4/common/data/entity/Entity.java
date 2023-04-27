@@ -33,6 +33,7 @@ public abstract class Entity {
         * The type of the entity.
       */
      private EntityType entityType;
+
      public Entity(EntityType entityType) {
           this.entityType = entityType;
      }
