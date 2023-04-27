@@ -1,11 +1,8 @@
 package dk.sdu.sesem4.map;
 
 import dk.sdu.sesem4.common.SPI.PluginServiceSPI;
-import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
-import dk.sdu.sesem4.common.SPI.ProcessingServiceSPI;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.gamedata.GameWorld;
-import dk.sdu.sesem4.common.data.process.Priority;
 
 /**
  * The MapPlugin class is the entry point for the map module.
