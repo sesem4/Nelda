@@ -8,6 +8,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import static org.junit.Assert.*;
 
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import dk.sdu.sesem4.common.data.math.Rectangle;
+import dk.sdu.sesem4.common.data.math.Vector2;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -156,6 +158,28 @@ public class MapProcessingServiceTest extends MapProcessingService {
 		//assert that the cells are solid and not solid
 		assertEquals(cellProperties.get("solid"), false);
 		assertEquals(cellProperties2.get("solid"), true);
+	}
+	
+	@Test
+	public void testIsRectangleValid() {
+		java.util.Map<Vector2, Boolean> positions = java.util.Map.of(
+				new Vector2(0*16, 0*16), false,
+				new Vector2(7*16, 0*16), true,
+				new Vector2(7*16, 5*16), true,
+				new Vector2(7*16, 5.5f*16), false
+		);
+		
+		map.setCurrentMapIndex(0);
+		TiledMap tiledMap = getCurrentTiledMap();
+		
+		for (java.util.Map.Entry<Vector2, Boolean> entrySet : positions.entrySet()) {
+			Rectangle rectangle = new Rectangle(entrySet.getKey(), new Vector2(16, 16));
+			boolean actual = isRectangleValid(rectangle, tiledMap);
+			
+			boolean expected = entrySet.getValue();
+			
+			assertEquals(expected, actual);
+		}
 	}
 
 
