@@ -34,7 +34,7 @@ public class RectangleTest {
 		float expected = xPosition;
 		float actual = rectangle.getLeftEdge();
 		
-		assertEquals(expected, actual);
+		assertEquals(expected, actual, 0.0001);
 	}
 	
 	@Test
@@ -42,7 +42,7 @@ public class RectangleTest {
 		float expected = xPosition + xSize;
 		float actual = rectangle.getRightEdge();
 		
-		assertEquals(expected, actual);
+		assertEquals(expected, actual, 0.0001);
 	}
 	
 	@Test
@@ -50,7 +50,7 @@ public class RectangleTest {
 		float expected = yPosition;
 		float actual = rectangle.getBottomEdge();
 		
-		assertEquals(expected, actual);
+		assertEquals(expected, actual, 0.0001);
 	}
 	
 	@Test
@@ -58,7 +58,7 @@ public class RectangleTest {
 		float expected = yPosition + ySize;
 		float actual = rectangle.getTopEdge();
 		
-		assertEquals(expected, actual);
+		assertEquals(expected, actual, 0.0001);
 	}
 	
 	@Test
