@@ -31,17 +31,6 @@
             <artifactId>Common</artifactId>
             <version>0.0.0</version>
         </dependency>
-        <dependency>
-            <groupId>dk.sdu.sesem4</groupId>
-            <artifactId>Map</artifactId>
-            <version>0.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>dk.sdu.sesem4</groupId>
-            <artifactId>Player</artifactId>
-            <version>0.0.0</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
     <build>

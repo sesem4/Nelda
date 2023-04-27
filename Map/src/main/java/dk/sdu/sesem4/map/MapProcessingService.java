@@ -1,14 +1,8 @@
 package dk.sdu.sesem4.map;
 
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
 import dk.sdu.sesem4.common.SPI.ProcessingServiceSPI;
-import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
-import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
-import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.process.Priority;
 import dk.sdu.sesem4.common.event.EventManager;
@@ -24,7 +18,7 @@ import java.nio.file.*;
  * It is called from the MapPlugin class when the game is started.
  */
 
-public class MapProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI {
+public class MapProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI, EventListener {
 	protected Map map;
 
 	//Tiled map loader
@@ -35,23 +29,7 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 */
 	public MapProcessingService() {
 		this.map = new Map();
-		EventManager.getInstance().subscribe(MapTransitionEventType.class, (eventType, data) -> {
-			Direction direction = ((MapTransitionEvent)data).getDirection();
-			switch (direction) {
-				case UP:
-					this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() - 16);
-					break;
-				case DOWN:
-					this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() + 16);
-					break;
-				case LEFT:
-					this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() - 1);
-					break;
-				case RIGHT:
-					this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() + 1);
-					break;
-			}
-		});
+		EventManager.getInstance().subscribe(MapTransitionEventType.class, this);
 	}
 
 	/**
@@ -140,7 +118,33 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 */
 	@Override
 	public void process(GameData gameData, Priority priority) {
-		gameData.getGameWorld().setMap(getCurrentMap());
+
+	}
+
+	@Override
+	public void processNotification(Class<? extends EventType> eventType, Event data) {
+		if (!(data instanceof  MapTransitionEvent)) {
+			return;
+		}
+		MapTransitionEvent eventData = (MapTransitionEvent) data;
+
+		Direction direction = eventData.getDirection();
+		switch (direction) {
+			case UP:
+				this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() - 16);
+				break;
+			case DOWN:
+				this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() + 16);
+				break;
+			case LEFT:
+				this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() - 1);
+				break;
+			case RIGHT:
+				this.map.setCurrentMapIndex(this.map.getCurrentMapIndex() + 1);
+				break;
+		}
+
+		eventData.getGameData().getGameWorld().setMap(getCurrentMap());
 	}
 
 	/**

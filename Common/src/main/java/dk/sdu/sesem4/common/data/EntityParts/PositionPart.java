@@ -6,6 +6,8 @@ import dk.sdu.sesem4.common.data.math.Rectangle;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.util.Direction;
 
+import java.util.*;
+
 /**
  * A class that represents the PositionPart.
  */
