@@ -25,8 +25,7 @@ import java.nio.file.*;
 import java.util.Set;
 
 /**
- * @author Jakob L.M. & Jon F.J.
- * MapProcessingService loads the world from the .tmx files into an array of TiledMaps.
+ * The MapProcessingService class is responsible for loading the world from the .tmx files into an array of TiledMaps.
  * It is called from the MapPlugin class when the game is started.
  */
 public class MapProcessingService implements ProcessingServiceSPI, PostProcessingServiceSPI, EventListener {
@@ -41,22 +40,15 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	//Tiled map loader
 	private TmxMapLoader tmxMapLoader = new TmxMapLoader();
 
-	/**
-	 * This method just returns the current "resources" folder.
-	 * It is needed, so we can do tests with a custom "resources" folder.
-	 * @return the resources directory to get resource files from
-	 */
 	protected String getResourcesDirectory() {
 		return "Map/src/main/resources/";
 	}
 
 	/**
-	 * This method loads the world from the .tmx files into an array of TiledMaps.
-	 * It takes three parameters:
-	 *
-	 * @param worldName A string that represents the name of the world to load.
-	 * @param worldWidth An integer that represents the width of the world to load.
-	 * @param worldHeight An integer that represents the height of the world to load.
+	 * Loads the world from the .tmx files into an array of Paths.
+	 * @param worldName The name of the world to load.
+	 * @param worldWidth The width of the world.
+	 * @param worldHeight The height of the world.
 	 */
 	public void loadWorld(String worldName, int worldWidth, int worldHeight) {
 		Path[] world = new Path[worldWidth * worldHeight];
@@ -96,18 +88,19 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	}
 
 	/**
-	 * The method returns the current Path being used.
-	 * It first calls the method getFileNameForMap to get the file name of the current map.
-	 * The getFileNameForMap method takes three parameters: worldName, x, and y, a string that represents the file name of the map. The method then returns the Path object created from the file name.
-	 * The method first calls the getCurrentMapIndex method to get the current map index,
-	 * and then calls the getFileNameForMap method to get the file name for the map.
-	 * @return String that represents the file name of the map
+	 * Gets the current tiled map.
+	 * @return The current tiled map.
 	 */
 	public Path getCurrentMap() {
 		String relativeFileName = getFileNameForMap(this.map.getCurrentWorldName(), this.map.getCurrentMapIndex() % 16, this.map.getCurrentMapIndex() / 16);
 		return Paths.get(relativeFileName);
 	}
 
+	/**
+	 * Loads the current tiled map.
+	 * @param currentTiledMap The current tiled map to load.
+	 * @return The loaded tiled map.
+	 */
 	public Path getCurrentTiledMap() {
 		return this.map.getWorld()[this.map.getCurrentMapIndex()];
 	}
@@ -116,6 +109,12 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		return tmxMapLoader.load(getCurrentTiledMap().toString());
 	}
 
+	/**
+	 * Gets the tile map ID.
+	 * @param x The x-coordinate.
+	 * @param y The y-coordinate.
+	 * @return The tile map ID.
+	 */
 	public int getTileMapID(int x, int y){
 		TiledMap currentMap = loadTiledMap(getCurrentTiledMap());
 		TiledMapTileLayer layer = (TiledMapTileLayer) currentMap.getLayers().get(0);
@@ -123,10 +122,8 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		return cell.getTile().getId();
 	}
 
-
 	/**
-	 * This method sets the current map in the game data.
-	 *
+	 * Processes the game data.
 	 * @param gameData The game data.
 	 * @param priority The priority.
 	 */
@@ -135,6 +132,11 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 
 	}
 
+	/**
+	 * Post-processes the game data.
+	 * @param gameData The game data.
+	 * @param priority The priority.
+	 */
 	@Override
 	public void processNotification(Class<? extends EventType> eventType, Event data) {
 		if (!(data instanceof  MapTransitionEvent)) {
@@ -162,10 +164,9 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	}
 
 	/**
-	 * Do collision check for all entities. This is done by checking that all corners of the entity
-	 * are on a passible tile. If at least one corner isn't, we undo the Entity's movement.
-	 * @param gameData The game data
-	 * @param priority The priority, which is to be run for the current process round
+	 * Post-processes the game data.
+	 * @param gameData The game data.
+	 * @param priority The priority.
 	 */
 	@Override
 	public void postProcess(GameData gameData, Priority priority) {
@@ -173,7 +174,7 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	}
 
 	/**
-	 * This method checks whether an entity is on a solid tile. If it is not on a solid tile, it undoes the entity's movement.
+	 * Determines if a given entity can move on the map.
 	 * @param gameData The game data.
 	 */
 	private void walkable(GameData gameData) {
@@ -199,12 +200,11 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		}
 	}
 
-
 	/**
-	 * This method checks whether a tile is solid.
-	 * @param x The x-coordinate of the tile.
-	 * @param y The y-coordinate of the tile.
-	 * @return Whether the tile is solid.
+	 * Checks whether an entity is on a solid tile.
+	 * @param x The x-coordinate.
+	 * @param y The y-coordinate.
+	 * @return Whether the entity is on a solid tile.
 	 */
 	private boolean checkIfOnSolidTile(int x, int y) {
 		TiledMap currentMap = loadTiledMap(getCurrentTiledMap());
@@ -226,6 +226,12 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		return !cellProperties.get("solid", boolean.class);
 	}
 
+	/**
+	 * Determines if a particular position on the map is passable.
+	 * @param map The map.
+	 * @param position The position to check.
+	 * @return Whether the position is passable.
+	 */
 	private boolean isPositionPassible(TiledMap map, Vector2 position){
 		Set<Integer> passibleTiles = Set.of(0);
 		TiledMapTileLayer t = ((TiledMapTileLayer) map.getLayers().get(0));
@@ -233,6 +239,12 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		return passibleTiles.contains(tileId % 42);
 	}
 
+	/**
+	 * Determines if an entity can pass through a given position.
+	 * @param currentMap The current map.
+	 * @param entityRectangle The entity's bounding box.
+	 * @return Whether the entity can pass through the position.
+	 */
 	private boolean passible(TiledMap currentMap, Rectangle entityRectangle){
 		boolean bottomLeftPassible = isPositionPassible(currentMap, entityRectangle.getBottomLeftCorner());
 		boolean bottomRightPassible = isPositionPassible(currentMap, entityRectangle.getBottomRightCorner());
