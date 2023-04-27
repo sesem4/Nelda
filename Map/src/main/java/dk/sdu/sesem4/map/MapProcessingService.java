@@ -1,13 +1,22 @@
 package dk.sdu.sesem4.map;
 
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
 import dk.sdu.sesem4.common.SPI.ProcessingServiceSPI;
+import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
+import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
+import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.process.Priority;
+import dk.sdu.sesem4.common.event.Event;
+import dk.sdu.sesem4.common.event.EventListener;
 import dk.sdu.sesem4.common.event.EventManager;
-import dk.sdu.sesem4.common.event.MapTransitionEvent;
-import dk.sdu.sesem4.common.event.MapTransitionEventType;
+import dk.sdu.sesem4.common.event.EventType;
+import dk.sdu.sesem4.common.event.events.MapTransitionEvent;
+import dk.sdu.sesem4.common.event.events.MapTransitionEventType;
 import dk.sdu.sesem4.common.util.Direction;
 
 import java.nio.file.*;
@@ -123,7 +132,7 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 
 	@Override
 	public void processNotification(Class<? extends EventType> eventType, Event data) {
-		if (!(data instanceof  MapTransitionEvent)) {
+		if (!(data instanceof MapTransitionEvent)) {
 			return;
 		}
 		MapTransitionEvent eventData = (MapTransitionEvent) data;

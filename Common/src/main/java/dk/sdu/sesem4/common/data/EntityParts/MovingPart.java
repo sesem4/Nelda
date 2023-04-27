@@ -224,4 +224,8 @@ public class MovingPart implements EntityPart {
             spritePart.setSprite(spriteList.get((int) (gameData.getElapsedTime() / this.spriteFrameRate) % listSize));
         }
     }
+
+    public void undoMovement(Entity entity) {
+
+    }
 }
