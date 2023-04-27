@@ -26,9 +26,6 @@ public class MapProcessingService implements ProcessingServiceSPI, EventListener
 		EventManager.getInstance().subscribe(MapTransitionEventType.class, this);
 	}
 
-	//Tiled map loader
-	private TmxMapLoader tmxMapLoader = new TmxMapLoader();
-
 	/**
 	 * This method just returns the current "resources" folder.
 	 * It is needed, so we can do tests with a custom "resources" folder.
@@ -36,33 +33,6 @@ public class MapProcessingService implements ProcessingServiceSPI, EventListener
 	 */
 	protected String getResourcesDirectory() {
 		return "Map/src/main/resources/";
-	}
-
-	/**
-	 * This method loads the world from the .tmx files into an array of TiledMaps.
-	 * It takes three parameters:
-	 *
-	 * @param worldName A string that represents the name of the world to load.
-	 * @param worldWidth An integer that represents the width of the world to load.
-	 * @param worldHeight An integer that represents the height of the world to load.
-	 */
-	public void loadWorld(String worldName, int worldWidth, int worldHeight) {
-		TiledMap[] world = new TiledMap[worldWidth * worldHeight];
-
-		for (int x = 0; x < worldWidth; x++) {
-			for (int y = 0; y < worldHeight; y++) {
-				String fileName = getFileNameForMap(worldName, x, y);
-				try {
-					TiledMap loadedMap = tmxMapLoader.load(fileName);
-					world[x + y * worldWidth] = loadedMap;
-				} catch (Exception e) {
-					world[x + y * worldWidth] = null;
-					System.out.println("ERROR loading " + fileName);
-				}
-			}
-		}
-
-		this.map.setWorld(world);
 	}
 
 	/**
@@ -76,11 +46,12 @@ public class MapProcessingService implements ProcessingServiceSPI, EventListener
 	 * @param y: an integer that represents the y-coordinate of the map.
 	 * @return a string that represents the file name of the map.
 	 */
-	private String getFileNameForMap(String worldName, int x, int y) {
+	private Path getPathForMap(String worldName, int x, int y) {
 //		URL url = this.getClass().getClassLoader().getResource(worldName + "/" + columns[x] + (y + 1) + ".tmx");
 //		String fileName = url.getPath();
 		String[] columns = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-		return getResourcesDirectory() + worldName + "/" + columns[x] + (y + 1) + ".tmx";
+		String fileName = getResourcesDirectory() + worldName + "/" + columns[x] + (y + 1) + ".tmx";
+		return Paths.get(fileName);
 	}
 
 	/**
@@ -92,8 +63,7 @@ public class MapProcessingService implements ProcessingServiceSPI, EventListener
 	 * @return String that represents the file name of the map
 	 */
 	public Path getCurrentMap() {
-		String relativeFileName = getFileNameForMap(this.map.getCurrentWorldName(), this.map.getCurrentMapIndex() % 16, this.map.getCurrentMapIndex() / 16);
-		return Paths.get(relativeFileName);
+		return getPathForMap(this.map.getCurrentWorldName(), this.map.getCurrentMapIndex() % 16, this.map.getCurrentMapIndex() / 16);
 	}
 
 	/**
@@ -104,12 +74,12 @@ public class MapProcessingService implements ProcessingServiceSPI, EventListener
 	 */
 	@Override
 	public void process(GameData gameData, Priority priority) {
-
+		gameData.getGameWorld().setMap(this.getCurrentMap());
 	}
 
 	@Override
 	public void processNotification(Class<? extends EventType> eventType, Event data) {
-		if (!(data instanceof  MapTransitionEvent)) {
+		if (!(data instanceof MapTransitionEvent)) {
 			return;
 		}
 		MapTransitionEvent eventData = (MapTransitionEvent) data;
