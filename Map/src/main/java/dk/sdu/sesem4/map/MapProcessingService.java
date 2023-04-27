@@ -119,7 +119,7 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 */
 	@Override
 	public void postProcess(GameData gameData, Priority priority) {
-		TiledMap currMap = map.getWorld()[map.getCurrentMapIndex()];
+		TiledMap currMap = new TmxMapLoader().load(getCurrentMap().toString());
 
 		for (Entity entity : gameData.getGameEntities().getEntities()) {
 			PositionPart positionPart = entity.getEntityPart(PositionPart.class);
