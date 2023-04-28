@@ -6,6 +6,7 @@ module Common {
 	 */
 	requires java.desktop;
 	requires ShadedLibGDX;
+	requires KeyboardControl;
 
 	/**
 	 * SPI's
