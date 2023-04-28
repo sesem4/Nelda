@@ -56,10 +56,14 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 	 * @return the path to the map's tmx file.
 	 */
 	private Path getPathForMap(String worldName, int x, int y) {
+		char[] columns = new char[26];
+		for(int i = 0; i < columns.length; i++){
+			columns[i] = (char) ('A' + i);
+		}
+		
+		String fileName = getResourcesDirectory() + worldName + "/" + columns[x] + (y + 1) + ".tmx";
 //		URL url = this.getClass().getClassLoader().getResource(worldName + "/" + columns[x] + (y + 1) + ".tmx");
 //		String fileName = url.getPath();
-		String[] columns = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-		String fileName = getResourcesDirectory() + worldName + "/" + columns[x] + (y + 1) + ".tmx";
 		return Paths.get(fileName);
 	}
 
