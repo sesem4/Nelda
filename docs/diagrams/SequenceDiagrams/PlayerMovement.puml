@@ -57,7 +57,7 @@
 'deactivate Player
 '@enduml
 
-@startuml
+
 @startuml Player Movement (UC01)
 skinparam style strictuml
 title Player Movement (UC01)
@@ -125,6 +125,4 @@ MovingPart -> Player : void
 deactivate MovingPart
 Player -> Core : void
 deactivate Player
-@enduml
-
 @enduml

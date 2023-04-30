@@ -19,9 +19,9 @@ public interface ControlSPI {
 	 * @return dX and dY change in float array, that the entity has to move
 	 */
 	Vector2 move(GameData gameData, Entity entity);
-
 	ControlType getType();
-
 	KeyBoardMovementController getMovementController();
+	boolean isKeyPressed();
+	boolean isKeyReleased();
 
 }

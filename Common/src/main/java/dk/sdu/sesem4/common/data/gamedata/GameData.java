@@ -1,5 +1,8 @@
 package dk.sdu.sesem4.common.data.gamedata;
 
+import dk.sdu.sesem4.keyboardcontrol.KeyBoardController;
+import dk.sdu.sesem4.keyboardcontrol.KeyBoardMovementController;
+
 /**
  * Data for the game
  *
@@ -10,7 +13,6 @@ public class GameData {
 	 * Game world data
 	 */
 	private GameWorld gameWorld;
-
 	/**
 	 * Game data entities
 	 */
@@ -24,6 +26,8 @@ public class GameData {
 	 * Current time since the start of the game in seconds.
 	 */
 	private double elapsedTime;
+
+	private KeyBoardMovementController keyBoardMovementController;
 
 	public GameData() {
 		setGameWorld(new GameWorld());
@@ -56,6 +60,10 @@ public class GameData {
 
 	public double getElapsedTime() {
 		return elapsedTime;
+	}
+
+	public KeyBoardMovementController getKeys(){
+		return this.keyBoardMovementController;
 	}
 
 	/**
