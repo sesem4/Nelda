@@ -153,19 +153,25 @@ public class Game extends ApplicationAdapter {
 
 		return texture;
 	}
-	
+
+	/**
+	 * This method is responsible for rendering the map.
+	 */
 	private void renderMap() {
-		try{
+		// if there is a map, load it and render it.
+		if (gameData.getGameWorld().getMap() != null){
 			TiledMap map = loadMap(gameData.getGameWorld().getMap());
 			tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 			tiledMapRenderer.setView(camera);
 			tiledMapRenderer.render();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-
 	}
-	
+
+	/**
+	 * This method is responsible for loading the map.
+	 * @param path The path to the map.
+	 * @return The map.
+	 */
 	TiledMap loadMap(Path path) {
 		TmxMapLoader tmxMapLoader = new TmxMapLoader();
 		return tmxMapLoader.load(path.toString());
