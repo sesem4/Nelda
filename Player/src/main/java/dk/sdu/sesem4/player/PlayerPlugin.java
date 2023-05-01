@@ -18,7 +18,7 @@ import java.util.List;
 
 public class PlayerPlugin implements PluginServiceSPI {
 
-	private Player player;
+	protected Player player;
 
 	@Override
 	public void start(GameData gameData) {
