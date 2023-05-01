@@ -19,6 +19,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>dk.sdu.sesem4</groupId>
+            <artifactId>shadedlibgdx</artifactId>
+            <version>${shadedlibgdx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dk.sdu.sesem4</groupId>
+            <artifactId>Common</artifactId>
+            <version>0.0.0</version>
+        </dependency>
+    </dependencies>
+
 
 
 </project>

@@ -6,8 +6,6 @@ module Common {
 	 */
 	requires java.desktop;
 	requires ShadedLibGDX;
-	requires KeyboardControl;
-
 	/**
 	 * SPI's
 	 */
@@ -19,6 +17,7 @@ module Common {
 	uses PluginServiceSPI;
 	uses PostProcessingServiceSPI;
 	uses ProcessingServiceSPI;
+	uses MovementControllerSPI;
 
 	/**
 	 * Export of elements

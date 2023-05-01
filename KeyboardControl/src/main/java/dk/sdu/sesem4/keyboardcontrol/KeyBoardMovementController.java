@@ -1,64 +1,30 @@
 package dk.sdu.sesem4.keyboardcontrol;
 
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import dk.sdu.sesem4.common.SPI.MovementControllerSPI;
+import dk.sdu.sesem4.common.data.entity.Entity;
+import dk.sdu.sesem4.common.data.gamedata.GameData;
+import dk.sdu.sesem4.common.util.Direction;
 
-public class KeyBoardMovementController {
-    private boolean up, down, left, right, space;
+public class KeyBoardMovementController implements MovementControllerSPI{
+        @Override
+        public Direction getMovement(GameData gameData, Entity entity) {
+            if(Gdx.input.isKeyPressed(Input.Keys.W)){
+                return Direction.UP;
+            }
+            if(Gdx.input.isKeyPressed(Input.Keys.S)){
+                return Direction.DOWN;
+            }
+            if(Gdx.input.isKeyPressed(Input.Keys.A)){
+                return Direction.LEFT;
+            }
+            if(Gdx.input.isKeyPressed(Input.Keys.D)){
+                return Direction.RIGHT;
+            }
+             return null;
+        }
 
-    public KeyBoardMovementController(){
-        this.up = false;
-        this.down = false;
-        this.left = false;
-        this.right = false;
-        this.space = false;
-    }
-
-    public void setUp(boolean up) {
-        this.up = up;
-    }
-
-    public void setDown(boolean down) {
-        this.down = down;
-    }
-
-    public void setLeft(boolean left) {
-        this.left = left;
-    }
-
-    public void setRight(boolean right) {
-        this.right = right;
-    }
-
-    public void setSpace(boolean space) {
-        this.space = space;
-    }
-
-    public boolean isUp() {
-        return up;
-    }
-
-    public boolean isDown() {
-        return down;
-    }
-
-    public boolean isLeft() {
-        return left;
-    }
-
-    public boolean isRight() {
-        return right;
-    }
-
-    public boolean isSpace() {
-        return space;
-    }
-
-    public boolean isKeyPressed(){
-        return up || down || left || right || space;
-    }
-
-    public boolean isKeyReleased(){
-        return !up && !down && !left && !right && !space;
-    }
 
 }

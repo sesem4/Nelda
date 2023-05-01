@@ -1,4 +1,4 @@
-package dk.sdu.sesem4.keyboardcontrol;
+package dk.sdu.sesem4.common.data.controllerParts;
 
 /**
  * Enum for the different types of controls
