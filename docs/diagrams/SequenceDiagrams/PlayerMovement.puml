@@ -102,14 +102,14 @@ KeyboardMovementController -> KeyboardController : KeyboardMovementController
 deactivate KeyboardMovementController
 KeyboardController -> Player : MovementController
 deactivate KeyboardController
-Player -> KeyboardMovementController : isKeyPressed()
-activate KeyboardMovementController
-KeyboardMovementController -> Player : keyPressed
-deactivate KeyboardMovementController
-Player -> KeyboardMovementController : isKeyReleased()
-activate KeyboardMovementController
-KeyboardMovementController -> Player : keyReleased
-deactivate KeyboardMovementController
+' Player -> KeyboardMovementController : isKeyPressed()
+' activate KeyboardMovementController
+' KeyboardMovementController -> Player : keyPressed
+' deactivate KeyboardMovementController
+' Player -> KeyboardMovementController : isKeyReleased()
+' activate KeyboardMovementController
+' KeyboardMovementController -> Player : keyReleased
+' deactivate KeyboardMovementController
 end alt
 Player -> Core : void
 deactivate Player
