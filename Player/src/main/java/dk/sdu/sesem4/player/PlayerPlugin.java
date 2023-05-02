@@ -1,10 +1,14 @@
 package dk.sdu.sesem4.player;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import dk.sdu.sesem4.common.SPI.MovementControllerSPI;
 import dk.sdu.sesem4.common.SPI.PluginServiceSPI;
 import dk.sdu.sesem4.common.data.EntityParts.LifePart;
 import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
 import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
+import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
 import dk.sdu.sesem4.common.util.Direction;
@@ -42,9 +46,18 @@ public class PlayerPlugin implements PluginServiceSPI {
 		List<Path> paths = this.loadTextures();
 
 		MovingPart movingPart = new MovingPart(
-			player.getSpeed(),
-			player.getFrameRate(),
-			(gameData, entity) -> null  // TODO: THIS LINE IS STILL MISSING, WAITING FOR KEYBOARDCOMPONENT TO WORK.
+				player.getSpeed(),
+				player.getFrameRate(),
+				new MovementControllerSPI() {
+					@Override
+					public Direction getMovement(GameData gameData, Entity entity) {
+						if(Gdx.input.isKeyPressed(Input.Keys.W)) return Direction.UP;
+						if(Gdx.input.isKeyPressed(Input.Keys.S)) return Direction.DOWN;
+						if(Gdx.input.isKeyPressed(Input.Keys.A)) return Direction.LEFT;
+						if(Gdx.input.isKeyPressed(Input.Keys.D)) return Direction.RIGHT;
+						return null;
+					}
+				}
 		);
 
 		// Up uses same sprite but flips it.
