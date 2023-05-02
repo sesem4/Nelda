@@ -16,7 +16,7 @@ import java.util.List;
 
 public class PlayerPlugin implements PluginServiceSPI {
 
-	protected Player player;
+	private Player player;
 
 	@Override
 	public void start(GameData gameData) {
@@ -35,8 +35,8 @@ public class PlayerPlugin implements PluginServiceSPI {
 	/**
 	 * Creates a new player entity and sets its speed, position, and life.
 	 */
-	public void createPlayer() {
-		this.player = new Player();
+	private Player createPlayer() {
+		Player player = new Player();
 
 		List<Path> paths = this.loadTextures();
 
@@ -102,9 +102,9 @@ public class PlayerPlugin implements PluginServiceSPI {
 	 *
 	 * @return A list of paths to the player textures.
 	 */
-	private List<Path> loadTextures() {
+	protected List<Path> loadTextures() {
 		//load all player textures into a Path array
-		List<Path> entityTexturesList = new ArrayList<Path>();
+		List<Path> entityTexturesList = new ArrayList<>();
 
 		//save each path to the png files into an array of paths.
 		for (int i = 1; i <= 5; i++) {
