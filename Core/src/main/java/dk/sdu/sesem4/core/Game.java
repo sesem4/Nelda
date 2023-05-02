@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * The Game class, where all process is handled and the game is rendered.
@@ -54,7 +55,7 @@ public class Game extends ApplicationAdapter {
 	/**
 	 * Cache for sprites based on file path.
 	 */
-	private Map<String, Texture> textureCache;
+	private Map<UUID, Sprite> textureCache;
 
 	public Game() {
 		this.textureCache = new HashMap<>();
@@ -120,7 +121,7 @@ public class Game extends ApplicationAdapter {
 			}
 
 			// Create sprite
-			Sprite sprite = new Sprite(getSprite(spritePart.getSprite().getTexture().toString()));
+			Sprite sprite = getSprite(spritePart);
 
 			// Set sprite size and position from entity parts
 			sprite.setSize(16, 16); // TODO: Size has to be set from entity, but this is included in a later update
@@ -143,15 +144,17 @@ public class Game extends ApplicationAdapter {
 	 * @param filePath Path for sprite
 	 * @return Sprite texture
 	 */
-	private Texture getSprite(String filePath) {
-		if (this.textureCache.containsKey(filePath)) {
-			return this.textureCache.get(filePath);
+	private Sprite getSprite(SpritePart spritePart) {
+		if (this.textureCache.containsKey(spritePart.getId())) {
+			return this.textureCache.get(spritePart.getId());
 		}
 
-		Texture texture = new Texture(Gdx.files.local(filePath));
-		this.textureCache.put(filePath, texture);
+		Texture texture = new Texture(Gdx.files.local(spritePart.getSprite().getTexture().toString()));
+		Sprite sprite = new Sprite(texture);
+		sprite.setFlip(spritePart.getSprite().isxFlipped(), spritePart.getSprite().isyFlipped());
+		this.textureCache.put(spritePart.getId(), sprite);
 
-		return texture;
+		return sprite;
 	}
 
 	/**
