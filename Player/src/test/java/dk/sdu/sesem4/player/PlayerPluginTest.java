@@ -68,15 +68,14 @@ class PlayerPluginTest {
 
 		// Check if the number of paths is 5, which means that the playerPlugin load all paths
 		assertEquals(5, textures.size());
-/*
+
 		// Loop through all files, and check that the file exists
 		for (Path texture : textures) {
 			// Remove "Player" from the path, so it matches the path in the component
-			Path path = Paths.get(texture.toString().replace("Player" + File.separator, ""));
+			Path path = Player.class.getResource(texture.toString()).toPath();
 
 			// Check if the file exists
 			assertTrue(Files.exists(path));
 		}
- */
 	}
 }
