@@ -2,6 +2,7 @@ package dk.sdu.sesem4.common.data.rendering;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 public class SpriteData {
 	/** Path for the texture of the sprite */
@@ -10,7 +11,11 @@ public class SpriteData {
 	private boolean xFlipped;
 	/** Sprite is flipped on the y-axis */
 	private boolean yFlipped;
-	
+	/** Ressource location, of the sprite texture */
+	private Class<?> ressourceClass;
+	/** Unique id for sprite */
+	private final UUID id;
+
 	/**
 	 * Construct a SpriteData based on texture, if flipped x and if flipped y.
 	 *
@@ -19,9 +24,15 @@ public class SpriteData {
 	 * @param yFlipped True if sprite should be flipped on the y-axis
 	 */
 	public SpriteData(Path texture, boolean xFlipped, boolean yFlipped) {
+		this(texture, xFlipped, yFlipped, null);
+	}
+
+	public SpriteData(Path texture, boolean xFlipped, boolean yFlipped, Class<?> ressourceClass) {
 		this.texture = texture;
 		this.xFlipped = xFlipped;
 		this.yFlipped = yFlipped;
+		this.ressourceClass = ressourceClass;
+		this.id = UUID.randomUUID();
 	}
 	
 	/**
@@ -64,4 +75,14 @@ public class SpriteData {
 	public void setYFlipped(boolean yFlipped) {
 		this.yFlipped = yFlipped;
 	}
+
+	public Class<?> getRessourceClass() {
+		return this.ressourceClass;
+	}
+
+
+	public UUID getId() {
+		return id;
+	}
+
 }

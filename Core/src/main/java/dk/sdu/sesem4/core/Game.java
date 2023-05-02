@@ -19,8 +19,10 @@ import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.process.Priority;
+import dk.sdu.sesem4.common.data.rendering.SpriteData;
 import dk.sdu.sesem4.common.util.SPILocator;
 
+import java.io.*;
 import java.util.HashMap;
 import java.nio.file.Path;
 import java.util.List;
@@ -141,18 +143,52 @@ public class Game extends ApplicationAdapter {
 	/**
 	 * Get sprite with caching
 	 *
-	 * @param filePath Path for sprite
+	 * @param spritePart Sprite part to get Sprite from
 	 * @return Sprite texture
 	 */
 	private Sprite getSprite(SpritePart spritePart) {
-		if (this.textureCache.containsKey(spritePart.getId())) {
-			return this.textureCache.get(spritePart.getId());
+		SpriteData spriteData = spritePart.getSprite();
+
+		// Load cached version
+		if (this.textureCache.containsKey(spriteData.getId())) {
+			return this.textureCache.get(spriteData.getId());
 		}
 
-		Texture texture = new Texture(Gdx.files.local(spritePart.getSprite().getTexture().toString()));
+		// Ensure ressource class has been set, otherwise crash
+		if (spriteData.getRessourceClass() == null) {
+			throw new Error("Resource class not set on sprite");
+		}
+
+		// Get image data
+		InputStream input = spriteData.getRessourceClass().getResourceAsStream(("/" + spriteData.getTexture()).toString());
+		File targetFile;
+		try	{
+			if (input == null) {
+				throw new Error("Sprite file is not present");
+			}
+			// Load file in
+			byte[] buffer = input.readAllBytes();
+			// Save file in the current directory
+			targetFile = new File("Nelda-"+spriteData.getId()+".tmp");
+			targetFile.deleteOnExit(); // Auto delete file when game closes
+			OutputStream outStream = new FileOutputStream(targetFile);
+			outStream.write(buffer);
+		} catch (IOException ioException) {
+			System.out.println("IO exception");
+			return new Sprite();
+		}
+
+		// Use the absolute path from the temporary file, to load into LibGDX
+		Texture texture = new Texture(
+				Gdx.files.absolute(
+						targetFile.getAbsolutePath()
+				)
+		);
 		Sprite sprite = new Sprite(texture);
 		sprite.setFlip(spritePart.getSprite().isxFlipped(), spritePart.getSprite().isyFlipped());
-		this.textureCache.put(spritePart.getId(), sprite);
+
+		// Cache sprite
+		this.textureCache.put(spriteData.getId(), sprite);
 
 		return sprite;
 	}
