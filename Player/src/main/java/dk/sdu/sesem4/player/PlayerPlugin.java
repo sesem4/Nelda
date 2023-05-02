@@ -21,7 +21,7 @@ public class PlayerPlugin implements PluginServiceSPI {
 	@Override
 	public void start(GameData gameData) {
 		// create a new player into the game
-		createPlayer();
+		this.player = createPlayer();
 		gameData.getGameEntities().addEntity(this.player);
 	}
 
@@ -41,9 +41,9 @@ public class PlayerPlugin implements PluginServiceSPI {
 		List<Path> paths = this.loadTextures();
 
 		MovingPart movingPart = new MovingPart(
-			this.player.getSpeed(),
-			this.player.getFrameRate(),
-			(gameData, entity) -> null  // THIS LINE IS STILL MISSING, WAITING FOR KEYBOARDCOMPONENT TO WORK.
+			player.getSpeed(),
+			player.getFrameRate(),
+			(gameData, entity) -> null  // TODO: THIS LINE IS STILL MISSING, WAITING FOR KEYBOARDCOMPONENT TO WORK.
 		);
 
 		// Up uses same sprite but flips it.
@@ -73,28 +73,30 @@ public class PlayerPlugin implements PluginServiceSPI {
 		movingPart.setSprites(Direction.DOWN, down);
 
 		//set the speed of the player
-		this.player.addEntityPart(movingPart);
+		player.addEntityPart(movingPart);
 
 		//set the position of the player
-		this.player.addEntityPart(
+		player.addEntityPart(
 			new PositionPart(
-				this.player.getStartPosition(),
-				this.player.getSize(),
-				this.player.getDirection()
+				player.getStartPosition(),
+				player.getSize(),
+				player.getDirection()
 			)
 		);
 
 		//set the life of player
-		this.player.addEntityPart(
-			new LifePart(this.player.getHearts())
+		player.addEntityPart(
+			new LifePart(player.getHearts())
 		);
 
 
-		this.player.addEntityPart(
+		player.addEntityPart(
 			new SpritePart(
 				new SpriteData(paths.get(0), false, false)
 			)
 		);
+
+		return player;
 	}
 
 	/**
