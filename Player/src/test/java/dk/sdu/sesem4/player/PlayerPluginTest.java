@@ -7,15 +7,17 @@ import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import org.junit.jupiter.api.*;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerPluginTest {
 	private static GameData gameData;
-    private Player player;
+	private Player player;
 	private PlayerPlugin playerPlugin;
 
 	@BeforeAll
@@ -69,8 +71,11 @@ class PlayerPluginTest {
 
 		// Loop through all files, and check that the file exists
 		for (Path texture : textures) {
-			System.out.println(texture);
-			assertTrue(Files.exists(texture));
+			// Remove "Player" from the path, so it matches the path in the component
+			Path path = Paths.get(texture.toString().replace("Player" + File.separator, ""));
+
+			// Check if the file exists
+			assertTrue(Files.exists(path));
 		}
 	}
 }
