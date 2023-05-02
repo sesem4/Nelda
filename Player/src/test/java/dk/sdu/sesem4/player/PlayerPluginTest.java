@@ -71,7 +71,6 @@ class PlayerPluginTest {
 		for (Path texture : textures) {
 			System.out.println(texture);
 			assertTrue(Files.exists(texture));
-		    new Texture(Gdx.files.local(filePath));
 		}
 	}
 }
