@@ -9,6 +9,7 @@ import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
 import dk.sdu.sesem4.common.util.Direction;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -108,9 +109,12 @@ public class PlayerPlugin implements PluginServiceSPI {
 		//load all player textures into a Path array
 		List<Path> entityTexturesList = new ArrayList<>();
 
-		//save each path to the png files into an array of paths.
+		// Generate folder for the textures
+		String folder = "Player" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
+
+		//save each folder to the png files into an array of paths.
 		for (int i = 1; i <= 5; i++) {
-			Path file = Paths.get("Player/src/main/resources/Zelda" + i + ".png");
+			Path file = Paths.get(folder + "Zelda" + i + ".png");
 			entityTexturesList.add(file);
 		}
 		return entityTexturesList;
