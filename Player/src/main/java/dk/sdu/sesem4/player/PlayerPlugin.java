@@ -46,18 +46,18 @@ public class PlayerPlugin implements PluginServiceSPI {
 		List<Path> paths = this.loadTextures();
 
 		MovingPart movingPart = new MovingPart(
-				player.getSpeed(),
-				player.getFrameRate(),
-				new MovementControllerSPI() {
-					@Override
-					public Direction getMovement(GameData gameData, Entity entity) {
-						if(Gdx.input.isKeyPressed(Input.Keys.W)) return Direction.UP;
-						if(Gdx.input.isKeyPressed(Input.Keys.S)) return Direction.DOWN;
-						if(Gdx.input.isKeyPressed(Input.Keys.A)) return Direction.LEFT;
-						if(Gdx.input.isKeyPressed(Input.Keys.D)) return Direction.RIGHT;
-						return null;
-					}
+			player.getSpeed(),
+			player.getFrameRate(),
+			new MovementControllerSPI() {
+				@Override
+				public Direction getMovement(GameData gameData, Entity entity) {
+					if (Gdx.input.isKeyPressed(Input.Keys.W)) return Direction.UP;
+					if (Gdx.input.isKeyPressed(Input.Keys.S)) return Direction.DOWN;
+					if (Gdx.input.isKeyPressed(Input.Keys.A)) return Direction.LEFT;
+					if (Gdx.input.isKeyPressed(Input.Keys.D)) return Direction.RIGHT;
+					return null;
 				}
+			}
 		);
 
 		// Up uses same sprite but flips it.
