@@ -11,9 +11,9 @@ import java.util.List;
 
 public class Player extends Entity {
 
-	private int speed = 5;
+	private int speed = 1;
 	private int hearts = 3;
-	private int frameRate = 10;
+	private int frameRate = 1;
 	private List<Path> texturesPath = new ArrayList<Path>();
 
 	private final Vector2 startPosition = new Vector2(128, 88);

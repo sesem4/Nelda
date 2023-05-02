@@ -25,6 +25,11 @@
 			<version>0.0.0</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>dk.sdu.sesem4</groupId>
+			<artifactId>shadedlibgdx</artifactId>
+			<version>${shadedlibgdx.version}</version>
+		</dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
