@@ -7,14 +7,8 @@ import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
-import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.process.Priority;
-import dk.sdu.sesem4.common.data.rendering.SpriteData;
-import dk.sdu.sesem4.common.util.Direction;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class processes the player each game loop and changes its Movement, Position, LifePart, and Path to Texture.

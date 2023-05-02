@@ -6,8 +6,6 @@ import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
 import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
-import dk.sdu.sesem4.common.data.math.Rectangle;
-import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
 import dk.sdu.sesem4.common.util.Direction;
 
