@@ -110,11 +110,11 @@ public class PlayerPlugin implements PluginServiceSPI {
 		List<Path> entityTexturesList = new ArrayList<>();
 
 		// Generate folder for the textures
-		String folder = "Player" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
+		//String folder = "Player" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
 
 		//save each folder to the png files into an array of paths.
 		for (int i = 1; i <= 5; i++) {
-			Path file = Paths.get(folder + "Zelda" + i + ".png");
+			Path file = Paths.get("Zelda" + i + ".png");
 			entityTexturesList.add(file);
 		}
 		return entityTexturesList;
