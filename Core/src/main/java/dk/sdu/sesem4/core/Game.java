@@ -65,7 +65,8 @@ public class Game extends ApplicationAdapter {
 	}
 
 	/**
-	 * This method is responsible for setting up the game, where the different plugins are started and the gameData is created, as well as the eventManager.
+	 * This method is responsible for setting up the game, where the different
+	 * plugins are started and the gameData is created, as well as the eventManager.
 	 */
 	@Override
 	public void create() {
@@ -106,13 +107,13 @@ public class Game extends ApplicationAdapter {
 		Gdx.graphics.getDeltaTime();
 
 		this.camera.update();
-		
+
 		renderMap();
 
 		// render sprites
 		spriteBatch.setProjectionMatrix(camera.combined);
 		spriteBatch.begin();
-		
+
 		List<Entity> entities = gameData.getGameEntities().getEntities(Entity.class);
 
 		for (Entity entity : entities) {
@@ -161,14 +162,14 @@ public class Game extends ApplicationAdapter {
 			return this.textureCache.get(key);
 		}
 
-		// Ensure ressource class has been set, otherwise crash
-		if (spriteData.getRessourceClass() == null) {
+		// Ensure resource class has been set, otherwise crash
+		if (spriteData.getResourceClass() == null) {
 			System.out.println("Resource class not set on sprite");
 			return null;
 		}
 
 		// Get image data
-		File file = Resource.getInstance().getRessource(spriteData.getRessourceClass(), spriteData.getTexture());
+		File file = Resource.getInstance().getResource(spriteData.getResourceClass(), spriteData.getTexture());
 		if (file == null) {
 			return null;
 		}
@@ -176,9 +177,7 @@ public class Game extends ApplicationAdapter {
 		// Use the absolute path from the temporary file, to load into LibGDX texture
 		Texture texture = new Texture(
 				Gdx.files.absolute(
-						file.getAbsolutePath()
-				)
-		);
+						file.getAbsolutePath()));
 
 		// Cache texture
 		this.textureCache.put(key, texture);
@@ -191,7 +190,7 @@ public class Game extends ApplicationAdapter {
 	 */
 	private void renderMap() {
 		// if there is a map, load it and render it.
-		if (gameData.getGameWorld().getMap() != null){
+		if (gameData.getGameWorld().getMap() != null) {
 			TiledMap map = loadMap(gameData.getGameWorld().getMap());
 			tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 			tiledMapRenderer.setView(camera);
@@ -201,6 +200,7 @@ public class Game extends ApplicationAdapter {
 
 	/**
 	 * This method is responsible for loading the map.
+	 * 
 	 * @param path The path to the map.
 	 * @return The map.
 	 */

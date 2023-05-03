@@ -13,17 +13,17 @@ import java.util.UUID;
  * @author The0Mikkel & MGertz
  */
 public class Resource {
-	/** Resource file prefix. */
+    /** Resource file prefix. */
     private static final String resourcePrefix = "/";
-	/** Temporary file name prefix. */
+    /** Temporary file name prefix. */
     private static final String tmpFilePrefix = "Nelda";
-	/** Temporary file format. */
+    /** Temporary file format. */
     private static final String tmpFileFormat = "tmp";
-	/** Instance of the resource system. */
+    /** Instance of the resource system. */
     private static Resource instance;
-	/** Map of path UUIDs based on class and path. */
+    /** Map of path UUIDs based on class and path. */
     private Map<Class<?>, Map<Path, UUID>> pathUUID;
-	/** File cache, to prevent duplicate temporary files. */
+    /** File cache, to prevent duplicate temporary files. */
     private Map<UUID, File> fileCache;
 
     private Resource() {
@@ -31,11 +31,11 @@ public class Resource {
         this.fileCache = new HashMap<>();
     }
 
-	/**
-	 * Get ressource instance.
-	 *
-	 * @return Resource instance.
-	 */
+    /**
+     * Get resource instance.
+     *
+     * @return Resource instance.
+     */
     public static Resource getInstance() {
         if (Resource.instance == null) {
             Resource.instance = new Resource();
@@ -43,11 +43,12 @@ public class Resource {
         return Resource.instance;
     }
 
-	/**
-	 * Invalidate the current cache, and delete all current files used by the system.
-	 *
-	 * @throws IOException Can be thrown by the deletion process.
-	 */
+    /**
+     * Invalidate the current cache, and delete all current files used by the
+     * system.
+     *
+     * @throws IOException Can be thrown by the deletion process.
+     */
     public void invalidateCache() throws IOException {
         this.pathUUID = new HashMap<>();
 
@@ -55,82 +56,83 @@ public class Resource {
         this.fileCache = new HashMap<>();
     }
 
-	/**
-	 * Delete specific cached file
-	 *
-	 * @param file File object to delete
-	 */
-	public void deleteFile(File file) {
-		this.fileCache.values().remove(file);
-	}
+    /**
+     * Delete specific cached file
+     *
+     * @param file File object to delete
+     */
+    public void deleteFile(File file) {
+        this.fileCache.values().remove(file);
+    }
 
-	/**
-	 * Get a ressource file as a File.
-	 *
-	 * @param ressourceClass Class which represents where the file is located
-	 * @param path Path for the ressource
-	 *
-	 * @return File that has been retrieved from ressources
-	 */
-    public File getRessource(Class<?> ressourceClass, Path path) {
+    /**
+     * Get a resource file as a File.
+     *
+     * @param resourceClass Class which represents where the file is located
+     * @param path          Path for the resource
+     *
+     * @return File that has been retrieved from resources
+     */
+    public File getResource(Class<?> resourceClass, Path path) {
         // Ensure valid values
-        if (ressourceClass == null || path == null) {
+        if (resourceClass == null || path == null) {
             return null;
         }
 
-		// Get cached file
-        File cachedFile = getCachedFile(ressourceClass, path);
+        // Get cached file
+        File cachedFile = getCachedFile(resourceClass, path);
         if (cachedFile != null) {
             return cachedFile;
         }
 
-		// Generate tmp file
-        UUID uuid = generatePathUUID(ressourceClass, path);
-        File file = generateTmpFile(ressourceClass, path, uuid);
+        // Generate tmp file
+        UUID uuid = generatePathUUID(resourceClass, path);
+        File file = generateTmpFile(resourceClass, path, uuid);
         if (file == null) {
             return null;
         }
-		cacheFile(uuid, file);
+        cacheFile(uuid, file);
 
         return file;
     }
 
-	/**
-	 * Check if a ressource exists. This does not check cache.
-	 *
-	 * @param ressourceClass Class which represents where the file is located
-	 * @param path Path for the ressource
-	 *
-	 * @return Boolean representing if the ressource actually exists. True indicates the ressource is locatable.
-	 */
-    public static boolean exists(Class<?> ressourceClass, Path path) {
-        if (ressourceClass == null || path == null) {
+    /**
+     * Check if a resource exists. This does not check cache.
+     *
+     * @param resourceClass Class which represents where the file is located
+     * @param path          Path for the resource
+     *
+     * @return Boolean representing if the resource actually exists. True indicates
+     *         he resource is locatable.
+     */
+    public static boolean exists(Class<?> resourceClass, Path path) {
+        if (resourceClass == null || path == null) {
             return false;
         }
 
-        URL url = getRessourceAsURL(ressourceClass, path);
+        URL url = getResourceAsURL(resourceClass, path);
         return url != null;
     }
 
-	/**
-	 * Get cached file
-	 *
-	 * @param ressourceClass Class which represents where the file is located
-	 * @param path Path for the ressource
-	 *
-	 * @return Cached file or null if no cached file exist
-	 */
-    private File getCachedFile(Class<?> ressourceClass, Path path) {
-        return this.getCachedFile(this.getPathUUID(ressourceClass, path));
+    /**
+     * Get cached file
+     *
+     * @param resourceClass Class which represents where the file is located
+     * @param path          Path for the resource
+     *
+     * @return Cached file or null if no cached file exist
+     */
+    private File getCachedFile(Class<?> resourceClass, Path path) {
+        return this.getCachedFile(this.getPathUUID(resourceClass, path));
     }
 
-	/**
-	 * Get cached file
-	 *
-	 * @param uuid UUID representing the cached file
-	 *
-	 * @return Cached file or null if no cached file exist
-	 */
+    /**
+     * Get cached file
+     *
+     * @param uuid UUID representing the cached file
+     *
+     * @return Cached file or null if no cached file exist
+     */
     private File getCachedFile(UUID uuid) {
         if (!this.fileCache.containsKey(uuid)) {
             return null;
@@ -139,86 +141,87 @@ public class Resource {
         return this.fileCache.get(uuid);
     }
 
-	/**
-	 * Cache file
-	 *
-	 * @param uuid Representing file
-	 * @param file File to cache
-	 */
+    /**
+     * Cache file
+     *
+     * @param uuid Representing file
+     * @param file File to cache
+     */
     private void cacheFile(UUID uuid, File file) {
         this.fileCache.put(uuid, file);
     }
 
-	/**
-	 * Get path UUID, based resource class and path
-	 *
-	 * @param ressourceClass Class which represents where the file is located
-	 * @param path Path for the ressource
-	 *
-	 * @return UUID representing the unique path
-	 */
-    private UUID getPathUUID(Class<?> ressourceClass, Path path) {
-        if (!this.pathUUID.containsKey(ressourceClass)) {
+    /**
+     * Get path UUID, based resource class and path
+     *
+     * @param resourceClass Class which represents where the file is located
+     * @param path          Path for the resource
+     *
+     * @return UUID representing the unique path
+     */
+    private UUID getPathUUID(Class<?> resourceClass, Path path) {
+        if (!this.pathUUID.containsKey(resourceClass)) {
             return null;
         }
 
-        Map<Path, UUID> ressourceClassUUIDs = this.pathUUID.get(ressourceClass);
-        if (!ressourceClassUUIDs.containsKey(path)) {
+        Map<Path, UUID> resourceClassUUIDs = this.pathUUID.get(resourceClass);
+        if (!resourceClassUUIDs.containsKey(path)) {
             return null;
         }
 
-        return ressourceClassUUIDs.get(path);
+        return resourceClassUUIDs.get(path);
     }
 
-	/**
-	 * Generate path UUID, based resource class and path
-	 *
-	 * @param ressourceClass Class which represents where the file is located
-	 * @param path Path for the ressource
-	 *
-	 * @return UUID representing the unique path
-	 */
-    private UUID generatePathUUID(Class<?> ressourceClass, Path path) {
-        UUID existingUUID = getPathUUID(ressourceClass, path);
+    /**
+     * Generate path UUID, based resource class and path
+     *
+     * @param resourceClass Class which represents where the file is located
+     * @param path          Path for the resource
+     *
+     * @return UUID representing the unique path
+     */
+    private UUID generatePathUUID(Class<?> resourceClass, Path path) {
+        UUID existingUUID = getPathUUID(resourceClass, path);
         if (existingUUID != null) {
             return existingUUID;
         }
 
         UUID uuid = UUID.randomUUID();
-        storePathUUID(ressourceClass, path, uuid);
+        storePathUUID(resourceClass, path, uuid);
         return uuid;
     }
 
-	/**
-	 * Store path UUID
-	 *
-	 * @param ressourceClass Class which represents where the file is located
-	 * @param path Path for the ressource
-	 * @param uuid The UUID for the ressource and path combined
-	 */
-    private void storePathUUID(Class<?> ressourceClass, Path path, UUID uuid) {
-        if (!this.pathUUID.containsKey(ressourceClass)) {
-            this.pathUUID.put(ressourceClass, new HashMap<>());
+    /**
+     * Store path UUID
+     *
+     * @param resourceClass Class which represents where the file is located
+     * @param path          Path for the resource
+     * @param uuid          The UUID for the resource and path combined
+     */
+    private void storePathUUID(Class<?> resourceClass, Path path, UUID uuid) {
+        if (!this.pathUUID.containsKey(resourceClass)) {
+            this.pathUUID.put(resourceClass, new HashMap<>());
         }
 
-        Map<Path, UUID> ressourceClassUUIDs = this.pathUUID.get(ressourceClass);
-        if (!ressourceClassUUIDs.containsKey(path)) {
-            ressourceClassUUIDs.put(path, uuid);
+        Map<Path, UUID> resourceClassUUIDs = this.pathUUID.get(resourceClass);
+        if (!resourceClassUUIDs.containsKey(path)) {
+            resourceClassUUIDs.put(path, uuid);
         }
     }
 
-	/**
-	 * Generate a temporary file that is a clone of the ressource
-	 *
-	 * @param ressourceClass Class which represents where the file is located
-	 * @param path Path for the ressource
-	 * @param uuid The UUID for the ressource and path combined
-	 *
-	 * @return Temporary file, that can be used as a replacement for the actual ressource file
-	 */
-    private File generateTmpFile(Class<?> ressourceClass, Path path, UUID uuid) {
+    /**
+     * Generate a temporary file that is a clone of the resource
+     *
+     * @param resourceClass Class which represents where the file is located
+     * @param path          Path for the resource
+     * @param uuid          The UUID for the resource and path combined
+     *
+     * @return Temporary file, that can be used as a replacement for the actual
+     *         resource file
+     */
+    private File generateTmpFile(Class<?> resourceClass, Path path, UUID uuid) {
         // Get image data
-        InputStream input = getRessourceStream(ressourceClass, path);
+        InputStream input = getResourceStream(resourceClass, path);
         if (input == null) {
             return null;
         }
@@ -228,7 +231,7 @@ public class Resource {
             // Load file in
             byte[] buffer = input.readAllBytes();
             // Save file in the current directory
-			String tmpdir = System.getProperty("java.io.tmpdir");
+            String tmpdir = System.getProperty("java.io.tmpdir");
             tmpFile = new File(tmpdir + "/" + tmpFilePrefix + "-" + uuid + "." + tmpFileFormat);
             tmpFile.deleteOnExit(); // Auto delete file when game closes
             OutputStream outStream = new FileOutputStream(tmpFile);
@@ -240,27 +243,27 @@ public class Resource {
         return tmpFile;
     }
 
-	/**
-	 * Get ressource as URL
-	 *
-	 * @param ressourceClass Class which represents where the file is located
-	 * @param path Path for the ressource
-	 *
-	 * @return URL representing the ressource
-	 */
-    private static URL getRessourceAsURL(Class<?> ressourceClass, Path path) {
-        return ressourceClass.getResource((resourcePrefix + path));
+    /**
+     * Get resource as URL
+     *
+     * @param resourceClass Class which represents where the file is located
+     * @param path          Path for the resource
+     *
+     * @return URL representing the resource
+     */
+    private static URL getResourceAsURL(Class<?> resourceClass, Path path) {
+        return resourceClass.getResource((resourcePrefix + path));
     }
 
-	/**
-	 * Get ressource as stream
-	 *
-	 * @param ressourceClass Class which represents where the file is located
-	 * @param path Path for the ressource
-	 *
-	 * @return URL representing the ressource
-	 */
-    private static InputStream getRessourceStream(Class<?> ressourceClass, Path path) {
-        return ressourceClass.getResourceAsStream((resourcePrefix + path));
+    /**
+     * Get resource as stream
+     *
+     * @param resourceClass Class which represents where the file is located
+     * @param path          Path for the resource
+     *
+     * @return URL representing the resource
+     */
+    private static InputStream getResourceStream(Class<?> resourceClass, Path path) {
+        return resourceClass.getResourceAsStream((resourcePrefix + path));
     }
 }
