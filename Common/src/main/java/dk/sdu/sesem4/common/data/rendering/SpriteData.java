@@ -2,7 +2,6 @@ package dk.sdu.sesem4.common.data.rendering;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.UUID;
 
 public class SpriteData {
 	/** Path for the texture of the sprite */
