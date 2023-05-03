@@ -32,14 +32,14 @@ public class MovingPartTest {
 
 	@Test
 	public void testGetMoveSpeed() {
-		assertEquals(10,movingPart.getMoveSpeed());
+		assertEquals(10f,movingPart.getMoveSpeed(), 0.001);
 	}
 
 	@Test
 	public void testSetMoveSpeed() {
-		assertEquals(10,movingPart.getMoveSpeed());
-		movingPart.setMoveSpeed(20);
-		assertEquals(20,movingPart.getMoveSpeed());
+		assertEquals(10f,movingPart.getMoveSpeed(), 0.001);
+		movingPart.setMoveSpeed(20f);
+		assertEquals(20f,movingPart.getMoveSpeed(), 0.001);
 	}
 
 	@Test
