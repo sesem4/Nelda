@@ -177,7 +177,7 @@ public class Game extends ApplicationAdapter {
 			// Load file in
 			byte[] buffer = input.readAllBytes();
 			// Save file in the current directory
-			targetFile = new File("Nelda-"+spriteData.getId()+".tmp");
+			targetFile = new File("Nelda-"+key+".tmp");
 			targetFile.deleteOnExit(); // Auto delete file when game closes
 			OutputStream outStream = new FileOutputStream(targetFile);
 			outStream.write(buffer);
