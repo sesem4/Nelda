@@ -57,7 +57,7 @@ public class Game extends ApplicationAdapter {
 	/**
 	 * Cache for sprites based on file path.
 	 */
-	private Map<UUID, Sprite> textureCache;
+	private Map<String, Texture> textureCache;
 
 	public Game() {
 		this.textureCache = new HashMap<>();
@@ -123,11 +123,16 @@ public class Game extends ApplicationAdapter {
 			}
 
 			// Create sprite
-			Sprite sprite = getSprite(spritePart);
+			Texture texture = getTexture(spritePart);
+			if (texture == null) {
+				break;
+			}
+			Sprite sprite = new Sprite(texture);
 
 			// Set sprite size and position from entity parts
-			sprite.setSize(16, 16); // TODO: Size has to be set from entity, but this is included in a later update
+			sprite.setSize(positionPart.getSize().getX(), positionPart.getSize().getY());
 			sprite.setPosition(positionPart.getPosition().getX(), positionPart.getPosition().getY());
+			sprite.setFlip(spritePart.getSprite().isxFlipped(), spritePart.getSprite().isyFlipped());
 
 			// Draw sprite
 			sprite.draw(spriteBatch);
@@ -146,17 +151,19 @@ public class Game extends ApplicationAdapter {
 	 * @param spritePart Sprite part to get Sprite from
 	 * @return Sprite texture
 	 */
-	private Sprite getSprite(SpritePart spritePart) {
+	private Texture getTexture(SpritePart spritePart) {
 		SpriteData spriteData = spritePart.getSprite();
+		String key = spriteData.getTexture().toString();
 
 		// Load cached version
-		if (this.textureCache.containsKey(spriteData.getId())) {
-			return this.textureCache.get(spriteData.getId());
+		if (this.textureCache.containsKey(key)) {
+			return this.textureCache.get(key);
 		}
 
 		// Ensure ressource class has been set, otherwise crash
 		if (spriteData.getRessourceClass() == null) {
-			throw new Error("Resource class not set on sprite");
+			System.out.println("Resource class not set on sprite");
+			return null;
 		}
 
 		// Get image data
@@ -164,7 +171,8 @@ public class Game extends ApplicationAdapter {
 		File targetFile;
 		try	{
 			if (input == null) {
-				throw new Error("Sprite file is not present");
+				System.out.println("Sprite file is not present");
+				return null;
 			}
 			// Load file in
 			byte[] buffer = input.readAllBytes();
@@ -175,22 +183,20 @@ public class Game extends ApplicationAdapter {
 			outStream.write(buffer);
 		} catch (IOException ioException) {
 			System.out.println("IO exception");
-			return new Sprite();
+			return null;
 		}
 
-		// Use the absolute path from the temporary file, to load into LibGDX
+		// Use the absolute path from the temporary file, to load into LibGDX texture
 		Texture texture = new Texture(
 				Gdx.files.absolute(
 						targetFile.getAbsolutePath()
 				)
 		);
-		Sprite sprite = new Sprite(texture);
-		sprite.setFlip(spritePart.getSprite().isxFlipped(), spritePart.getSprite().isyFlipped());
 
-		// Cache sprite
-		this.textureCache.put(spriteData.getId(), sprite);
+		// Cache texture
+		this.textureCache.put(key, texture);
 
-		return sprite;
+		return texture;
 	}
 
 	/**

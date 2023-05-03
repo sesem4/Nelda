@@ -13,8 +13,6 @@ public class SpriteData {
 	private boolean yFlipped;
 	/** Ressource location, of the sprite texture */
 	private Class<?> ressourceClass;
-	/** Unique id for sprite */
-	private final UUID id;
 
 	/**
 	 * Construct a SpriteData based on texture, if flipped x and if flipped y.
@@ -32,7 +30,6 @@ public class SpriteData {
 		this.xFlipped = xFlipped;
 		this.yFlipped = yFlipped;
 		this.ressourceClass = ressourceClass;
-		this.id = UUID.randomUUID();
 	}
 	
 	/**
@@ -78,11 +75,6 @@ public class SpriteData {
 
 	public Class<?> getRessourceClass() {
 		return this.ressourceClass;
-	}
-
-
-	public UUID getId() {
-		return id;
 	}
 
 }
