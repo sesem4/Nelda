@@ -49,7 +49,6 @@ public class MovingPart implements EntityPart {
 	 * @param moveSpeed the speed which the Entity should move with
 	 * @param spriteFrameRate the amount of frames that should be shown per second
 	 * @param movementController the MovementControllerSPI which should be used to handle the movement of the Entity
-	 * @deprecated
 	 */
 	public MovingPart(int moveSpeed, int spriteFrameRate, MovementControllerSPI movementController) {
 		this((float) moveSpeed, (float) spriteFrameRate, movementController);
