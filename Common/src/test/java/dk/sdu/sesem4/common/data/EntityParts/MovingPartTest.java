@@ -32,7 +32,7 @@ public class MovingPartTest {
 
 	@Test
 	public void testGetMoveSpeed() {
-		assertEquals(10,movingPart.getMoveSpeed(), 0.001);
+		assertEquals(10f,movingPart.getMoveSpeed(), 0.001);
 	}
 
 	@Test
