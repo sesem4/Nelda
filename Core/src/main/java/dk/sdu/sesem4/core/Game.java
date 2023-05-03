@@ -20,6 +20,7 @@ import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.process.Priority;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
+import dk.sdu.sesem4.common.data.resource.Resource;
 import dk.sdu.sesem4.common.util.SPILocator;
 
 import java.io.*;
@@ -167,29 +168,15 @@ public class Game extends ApplicationAdapter {
 		}
 
 		// Get image data
-		InputStream input = spriteData.getRessourceClass().getResourceAsStream(("/" + spriteData.getTexture()).toString());
-		File targetFile;
-		try	{
-			if (input == null) {
-				System.out.println("Sprite file is not present");
-				return null;
-			}
-			// Load file in
-			byte[] buffer = input.readAllBytes();
-			// Save file in the current directory
-			targetFile = new File("Nelda-"+key+".tmp");
-			targetFile.deleteOnExit(); // Auto delete file when game closes
-			OutputStream outStream = new FileOutputStream(targetFile);
-			outStream.write(buffer);
-		} catch (IOException ioException) {
-			System.out.println("IO exception");
+		File file = Resource.getInstance().getRessource(spriteData.getRessourceClass(), spriteData.getTexture());
+		if (file == null) {
 			return null;
 		}
 
 		// Use the absolute path from the temporary file, to load into LibGDX texture
 		Texture texture = new Texture(
 				Gdx.files.absolute(
-						targetFile.getAbsolutePath()
+						file.getAbsolutePath()
 				)
 		);
 
