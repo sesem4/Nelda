@@ -191,8 +191,6 @@ public class MovingPart implements EntityPart {
 		// Handle actual movement
 		if (this.movementController != null) {
 			direction = this.movementController.getMovement(gameData, entity);
-		} else {
-			direction = Direction.UP;
 		}
 		if (direction == null) {
 			return;
