@@ -191,8 +191,6 @@ public class MovingPart implements EntityPart {
 		// Handle actual movement
 		if (this.movementController != null) {
 			direction = this.movementController.getMovement(gameData, entity);
-		} else {
-			direction = Direction.UP;
 		}
 		if (direction == null) {
 			return;
@@ -244,6 +242,9 @@ public class MovingPart implements EntityPart {
 	}
 	
 	public void undoMovement(Entity entity) {
+		if (previousPosition == null) {
+			return;
+		}
 		PositionPart positionPart = entity.getEntityPart(PositionPart.class);
 		positionPart.setPosition(previousPosition);
 	}
