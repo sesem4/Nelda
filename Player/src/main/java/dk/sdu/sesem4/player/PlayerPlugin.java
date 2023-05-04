@@ -62,23 +62,23 @@ public class PlayerPlugin implements PluginServiceSPI {
 
 		// Up uses same sprite but flips it.
 		List<SpriteData> up = List.of(
-			new SpriteData(paths.get(2), true, false),
-			new SpriteData(paths.get(2), false, false)
+			new SpriteData(paths.get(2), true, false, Player.class),
+			new SpriteData(paths.get(2), false, false, Player.class)
 		);
 		// right, uses two different sprites.
 		List<SpriteData> right = List.of(
-			new SpriteData(paths.get(3), false, false),
-			new SpriteData(paths.get(4), false, false)
+			new SpriteData(paths.get(3), false, false, Player.class),
+			new SpriteData(paths.get(4), false, false, Player.class)
 		);
 		// left uses sprits for going right, but flips them
 		List<SpriteData> left = List.of(
-			new SpriteData(paths.get(3), true, false),
-			new SpriteData(paths.get(4), true, false)
+			new SpriteData(paths.get(3), true, false, Player.class),
+			new SpriteData(paths.get(4), true, false, Player.class)
 		);
 		// down uses two different sprites.
 		List<SpriteData> down = List.of(
-			new SpriteData(paths.get(0), false, false),
-			new SpriteData(paths.get(1), false, false)
+			new SpriteData(paths.get(0), false, false, Player.class),
+			new SpriteData(paths.get(1), false, false, Player.class)
 		);
 
 		movingPart.setSprites(Direction.UP, up);
@@ -106,7 +106,7 @@ public class PlayerPlugin implements PluginServiceSPI {
 
 		player.addEntityPart(
 			new SpritePart(
-				new SpriteData(paths.get(0), false, false)
+				new SpriteData(paths.get(0), false, false, Player.class)
 			)
 		);
 
