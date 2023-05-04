@@ -14,7 +14,6 @@ import dk.sdu.sesem4.octorok.red.RedOctorok;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -49,7 +48,7 @@ abstract public class OctorokPlugin implements PluginServiceSPI {
 	private Octorok createOctorok(Vector2 coordinate, Class<? extends Octorok> octorokClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
 		Octorok octorok = octorokClass.getDeclaredConstructor().newInstance();
 
-		List<Path> textures = this.loadTextures(octorokClass);
+		List<String> textures = this.loadTextures(octorokClass);
 
 		MovingPart movingPart = new MovingPart(
 				octorok.getSpeed(),
@@ -110,8 +109,8 @@ abstract public class OctorokPlugin implements PluginServiceSPI {
 		return octorok;
 	}
 
-	private List<Path> loadTextures(Class<? extends Octorok> octorokClass) {
-		List<Path> textureList = new ArrayList<>();
+	private List<String> loadTextures(Class<? extends Octorok> octorokClass) {
+		List<String> textureList = new ArrayList<>();
 
 		String prefix;
 		if (octorokClass == RedOctorok.class) {
@@ -121,10 +120,8 @@ abstract public class OctorokPlugin implements PluginServiceSPI {
 		}
 
 		for (int i = 0; i < 4; i++) {
-			Path path = Paths.get(prefix + "/" + i + ".png");
+			String path = "/" + prefix + i + ".png";
 			textureList.add(path);
-			System.out.println(Resource.exists(this.getClass(), path));
-			System.out.println(path);
 		}
 
 		return textureList;
