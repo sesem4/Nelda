@@ -15,9 +15,7 @@ public class Octorok extends Entity {
 	private float frameRate = 10;
 
 	private List<Path> textures = new ArrayList<>();
-
 	private final Vector2 size = new Vector2(16,16);
-	private Vector2 currentPosition = new Vector2(16,88);
 	private Direction direction = Direction.UP;
 
 	public Octorok() {
@@ -50,14 +48,6 @@ public class Octorok extends Entity {
 
 	public Vector2 getSize() {
 		return size;
-	}
-
-	public Vector2 getCurrentPosition() {
-		return currentPosition;
-	}
-
-	public void setCurrentPosition(Vector2 currentPosition) {
-		this.currentPosition = currentPosition;
 	}
 
 	public Direction getDirection() {

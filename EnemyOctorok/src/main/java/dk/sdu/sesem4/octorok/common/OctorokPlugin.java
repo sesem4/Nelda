@@ -8,9 +8,11 @@ import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
+import dk.sdu.sesem4.common.data.resource.Resource;
 import dk.sdu.sesem4.common.util.Direction;
 import dk.sdu.sesem4.octorok.red.RedOctorok;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -85,10 +87,9 @@ abstract public class OctorokPlugin implements PluginServiceSPI {
 		octorok.addEntityPart(movingPart);
 
 		// set the position of the Octorok
-		// octorok.setCurrentPosition(coordinate);
 		octorok.addEntityPart(
 				new PositionPart(
-						octorok.getCurrentPosition(),
+						coordinate,
 						octorok.getSize(),
 						octorok.getDirection()
 				)
@@ -120,7 +121,10 @@ abstract public class OctorokPlugin implements PluginServiceSPI {
 		}
 
 		for (int i = 0; i < 4; i++) {
-			textureList.add(Paths.get(prefix + "/" + i + ".png"));
+			Path path = Paths.get(prefix + "/" + i + ".png");
+			textureList.add(path);
+			System.out.println(Resource.exists(this.getClass(), path));
+			System.out.println(path);
 		}
 
 		return textureList;
