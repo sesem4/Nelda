@@ -43,7 +43,7 @@ public class PlayerPlugin implements PluginServiceSPI {
 	private Player createPlayer() {
 		Player player = new Player();
 
-		List<Path> paths = this.loadTextures();
+		List<String> paths = this.loadTextures();
 
 		MovingPart movingPart = new MovingPart(
 			player.getSpeed(),
@@ -118,14 +118,14 @@ public class PlayerPlugin implements PluginServiceSPI {
 	 *
 	 * @return A list of paths to the player textures.
 	 */
-	protected List<Path> loadTextures() {
+	protected List<String> loadTextures() {
 		//load all player textures into a Path array
-		List<Path> entityTexturesList = new ArrayList<>();
+		List<String> entityTexturesList = new ArrayList<>();
 
 		//save each folder to the png files into an array of paths.
 		for (int i = 1; i <= 5; i++) {
-			Path file = Paths.get("Zelda" + i + ".png");
-			entityTexturesList.add(file);
+			String path = "Zelda" + i + ".png";
+			entityTexturesList.add(path);
 		}
 		return entityTexturesList;
 	}
