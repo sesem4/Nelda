@@ -30,12 +30,12 @@ void spawnEnemy(GameData gameData, float x, float y)
 </tr>
 <tr>
 <td><Strong>PreConditions</strong></td>
-<td>A enemy spawn is requested, and that the game has started and a suitable map and region is loaded.
+<td>A enemy spawn is requested, and the game has started and a suitable map and region are loaded.
 </td>
 </tr>
 <tr>
 <td><Strong>PostConditions</strong></td>
-<td>Enemy has been spawned at x and y with default diffuclty.
+<td>Enemy has been spawned at x and y with default difficulty.
 </td>
 </tr>
 </tbody>
@@ -75,7 +75,7 @@ void spawnEnemy(GameData gameData, float x, float y, int difficulty)
 </tr>
 <tr>
 <td><Strong>PreConditions</strong></td>
-<td>A enemy spawn is requested, and the game has started and a suitable map and region is loaded.
+<td>A enemy spawn is requested, and the game has started and a suitable map and region are loaded.
 </td>
 </tr>
 <tr>
@@ -113,12 +113,12 @@ int[] getDifficulties()
 </tr>
 <tr>
 <td><Strong>PreConditions</strong></td>
-<td>A 
+<td>A game is running, and the component is available.
 </td>
 </tr>
 <tr>
 <td><Strong>PostConditions</strong></td>
-<td>Enemy has been spawned at x and y with specified difficulty if the difficulty is possible.
+<td>Difficulties for the enemy have been provided.
 </td>
 </tr>
 </tbody>
