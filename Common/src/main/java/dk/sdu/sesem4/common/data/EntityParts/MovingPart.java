@@ -19,7 +19,7 @@ public class MovingPart implements EntityPart {
 	/**
 	 * The speed that the entity should move.
 	 */
-	private int moveSpeed;
+	private float moveSpeed;
 	
 	/**
 	 * The entity's previous position.
@@ -41,14 +41,27 @@ public class MovingPart implements EntityPart {
 	/**
 	 * The amount of frames that should be shown per second
 	 */
-	private final int spriteFrameRate;
+	private final float spriteFrameRate;
 	
 	/**
 	 * The constructor for the MovingPart class.
 	 *
 	 * @param moveSpeed the speed which the Entity should move with
+	 * @param spriteFrameRate the amount of frames that should be shown per second
+	 * @param movementController the MovementControllerSPI which should be used to handle the movement of the Entity
 	 */
 	public MovingPart(int moveSpeed, int spriteFrameRate, MovementControllerSPI movementController) {
+		this((float) moveSpeed, (float) spriteFrameRate, movementController);
+	}
+
+	/**
+	 * The constructor for the MovingPart class.
+	 *
+	 * @param moveSpeed the speed which the Entity should move with
+	 * @param spriteFrameRate the amount of frames that should be shown per second
+	 * @param movementController the MovementControllerSPI which should be used to handle the movement of the Entity
+	 */
+	public MovingPart(float moveSpeed, float spriteFrameRate, MovementControllerSPI movementController) {
 		this.moveSpeed = moveSpeed;
 		this.spriteFrameRate = spriteFrameRate;
 		this.movementController = movementController;
@@ -69,12 +82,13 @@ public class MovingPart implements EntityPart {
 	public MovingPart(int moveSpeed) {
 		this(moveSpeed, 1, null);
 	}
+	
 	/**
 	 * Get the speed that the entity should move.
 	 *
 	 * @return The speed that the entity should move.
 	 */
-	public int getMoveSpeed() {
+	public float getMoveSpeed() {
 		return this.moveSpeed;
 	}
 	
@@ -83,7 +97,7 @@ public class MovingPart implements EntityPart {
 	 *
 	 * @param moveSpeed The speed of which the entity should move.
 	 */
-	public void setMoveSpeed(int moveSpeed) {
+	public void setMoveSpeed(float moveSpeed) {
 		this.moveSpeed = moveSpeed;
 	}
 	
@@ -225,11 +239,14 @@ public class MovingPart implements EntityPart {
 		List<SpriteData> spriteList = this.movementSpriteList.get(positionPart.getDirection());
 		int listSize = spriteList.size();
 		if (listSize > 0) {
-			spritePart.setSprite(spriteList.get((int) (gameData.getElapsedTime() / this.spriteFrameRate) % listSize));
+			spritePart.setSprite(spriteList.get((int) (gameData.getElapsedTime() * this.spriteFrameRate) % listSize));
 		}
 	}
 	
 	public void undoMovement(Entity entity) {
+		if (previousPosition == null) {
+			return;
+		}
 		PositionPart positionPart = entity.getEntityPart(PositionPart.class);
 		positionPart.setPosition(previousPosition);
 	}

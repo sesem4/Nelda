@@ -16,3 +16,4 @@ buildNumber.properties
 libs/*
 mods/*
 test.report
+*.tiled-session
