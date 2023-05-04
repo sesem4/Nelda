@@ -13,8 +13,6 @@ import java.util.UUID;
  * @author The0Mikkel & MGertz
  */
 public class Resource {
-    /** Resource file prefix. */
-    private static final String resourcePrefix = "/";
     /** Temporary file name prefix. */
     private static final String tmpFilePrefix = "Nelda";
     /** Temporary file format. */
@@ -105,7 +103,7 @@ public class Resource {
      * @return Boolean representing if the resource actually exists. True indicates
      *         he resource is locatable.
      */
-    public static boolean exists(Class<?> resourceClass, Path path) {
+    public static boolean exists(Class<?> resourceClass, String path) {
         if (resourceClass == null || path == null) {
             return false;
         }
@@ -251,8 +249,8 @@ public class Resource {
      *
      * @return URL representing the resource
      */
-    private static URL getResourceAsURL(Class<?> resourceClass, Path path) {
-        return resourceClass.getResource((resourcePrefix + path));
+    private static URL getResourceAsURL(Class<?> resourceClass, String path) {
+        return resourceClass.getResource(path);
     }
 
     /**
@@ -264,6 +262,6 @@ public class Resource {
      * @return URL representing the resource
      */
     private static InputStream getResourceStream(Class<?> resourceClass, String path) {
-        return resourceClass.getResourceAsStream((resourcePrefix + path));
+        return resourceClass.getResourceAsStream(path);
     }
 }
