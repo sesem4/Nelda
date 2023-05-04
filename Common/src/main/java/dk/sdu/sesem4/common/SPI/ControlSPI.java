@@ -1,20 +1,19 @@
 package dk.sdu.sesem4.common.SPI;
 
 import dk.sdu.sesem4.common.data.controllerParts.ControlType;
-import dk.sdu.sesem4.common.data.entity.Entity;
-import dk.sdu.sesem4.common.data.gamedata.GameData;
-import dk.sdu.sesem4.common.data.math.Vector2;
 
+/**
+ * This SPI is used for define the type of the control and getting the movement controller from the MovementControllerSPI
+ */
 public interface ControlSPI {
-	/**
-	 * Move around on the map
-	 * <br><br>
-	 * Pre-condition: An entity has to be existing, with position and direction data.<br>
-	 * post-condition: The entity has moved in the given direction.
-	 *
-	 * @param gameData The game data
-	 * @param entity   The entity to move on the map
-	 * @return dX and dY change in float array, that the entity has to move
+/**
+	 * Get the type of the control
+	 * @return The type of the control
 	 */
-	Vector2 move(GameData gameData, Entity entity);
+	ControlType getType();
+	/**
+	 * Get the movement controller from the MovementControllerSPI
+	 * @return The movement controller
+	 */
+	MovementControllerSPI getMovementController();
 }

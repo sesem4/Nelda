@@ -5,7 +5,7 @@
 'participant Core
 'participant Player
 'participant KeyboardController
-'participant KeyboardMovementController
+'participant MovementController
 'participant MovingPart
 'participant SPILocator
 '
@@ -98,7 +98,7 @@ Player -> KeyboardController : getMovementController()
 activate KeyboardController
 KeyboardController -> KeyboardMovementController : new()
 activate KeyboardMovementController
-KeyboardMovementController -> KeyboardController : KeyboardMovementController
+KeyboardMovementController -> KeyboardController : MovementController
 deactivate KeyboardMovementController
 KeyboardController -> Player : MovementController
 deactivate KeyboardController
