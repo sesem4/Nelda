@@ -29,6 +29,7 @@ public class PlayerProcessingService implements ProcessingServiceSPI {
 	 */
 	@Override
 	public void process(GameData gameData, Priority priority) {
+
 		//process the player for each game loop, change Movement, Position, LifePart, Path to Texture,
 		for (Entity player : gameData.getGameEntities().getEntities(Player.class)) {
 			PositionPart positionPart = player.getEntityPart(PositionPart.class);
@@ -77,5 +78,3 @@ public class PlayerProcessingService implements ProcessingServiceSPI {
 
 	}
 }
-
-
