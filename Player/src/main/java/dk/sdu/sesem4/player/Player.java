@@ -14,12 +14,9 @@ public class Player extends Entity {
 	private int speed = 1;
 	private int hearts = 3;
 	private int frameRate = 10;
-	private List<Path> texturesPath = new ArrayList<Path>();
 
 	private final Vector2 startPosition = new Vector2(128, 88);
 	private final Vector2 size = new Vector2(16, 16);
-
-	private Vector2 currentPosition = this.startPosition;
 
 	private Direction direction = Direction.UP;
 
@@ -111,23 +108,6 @@ public class Player extends Entity {
 		return this.startPosition;
 	}
 
-	/**
-	 * Get the current position of the player.
-	 *
-	 * @return The current position of the player.
-	 */
-	public Vector2 getCurrentPosition() {
-		return this.currentPosition;
-	}
-
-	/**
-	 * Set the current position of the player.
-	 *
-	 * @param currentPosition The current position of the player.
-	 */
-	public void setCurrentPosition(Vector2 currentPosition) {
-		this.currentPosition = currentPosition;
-	}
 
 	/**
 	 * Get the size of the player.
@@ -136,18 +116,5 @@ public class Player extends Entity {
 	 */
 	public Vector2 getSize() {
 		return this.size;
-	}
-
-	/**
-	 * Get the path to the textures of the player.
-	 *
-	 * @return The path to the textures of the player.
-	 */
-	public List<Path> getTexturesPath() {
-		return this.texturesPath;
-	}
-
-	public void setTexturesPath(List<Path> texturesPath) {
-		this.texturesPath = texturesPath;
 	}
 }
