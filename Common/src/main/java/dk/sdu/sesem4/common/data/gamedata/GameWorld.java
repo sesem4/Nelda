@@ -43,7 +43,7 @@ public class GameWorld {
 	 * @param map the path to the map
 	 */
 	public GameWorld(Path map) {
-		this(map, new Vector2(defaultHeight, defaultWidth));
+		this(map, new Vector2(defaultWidth, defaultHeight));
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class GameWorld {
 	 */
 	public GameWorld(Path map, Vector2 mapSize) {
 		if (mapSize == null) {
-			mapSize = new Vector2(defaultHeight, defaultWidth);
+			mapSize = new Vector2(defaultWidth, defaultHeight);
 		}
 
 		this.map = map;
@@ -105,7 +105,7 @@ public class GameWorld {
 	 */
 	public void setMapSize(Vector2 mapSize) {
 		if (mapSize == null) {
-			mapSize = new Vector2(defaultHeight, defaultWidth);
+			mapSize = new Vector2(defaultWidth, defaultHeight);
 		}
 
 		this.mapSize.setX(mapSize.getX());
