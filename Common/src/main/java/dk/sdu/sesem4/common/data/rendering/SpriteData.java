@@ -1,11 +1,8 @@
 package dk.sdu.sesem4.common.data.rendering;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 public class SpriteData {
 	/** Path for the texture of the sprite */
-	private Path texture;
+	private String texture;
 	/** Sprite is flipped on the x-axis */
 	private boolean xFlipped;
 	/** Sprite is flipped on the y-axis */
@@ -20,25 +17,23 @@ public class SpriteData {
 	 * @param xFlipped True if sprite should be flipped on the x-axis
 	 * @param yFlipped True if sprite should be flipped on the y-axis
 	 */
-	public SpriteData(Path texture, boolean xFlipped, boolean yFlipped) {
+	public SpriteData(String texture, boolean xFlipped, boolean yFlipped) {
 		this(texture, xFlipped, yFlipped, null);
 	}
 
-	public SpriteData(Path texture, boolean xFlipped, boolean yFlipped, Class<?> resourceClass) {
+	/**
+	 * Construct a SpriteData based on texture, if flipped x and if flipped y.
+	 *
+	 * @param texture       Path for texture
+	 * @param xFlipped      True if sprite should be flipped on the x-axis
+	 * @param yFlipped      True if sprite should be flipped on the y-axis
+	 * @param resourceClass The class which the ressource is located in
+	 */
+	public SpriteData(String texture, boolean xFlipped, boolean yFlipped, Class<?> resourceClass) {
 		this.texture = texture;
 		this.xFlipped = xFlipped;
 		this.yFlipped = yFlipped;
 		this.resourceClass = resourceClass;
-	}
-
-	/**
-	 * Construct a SpriteData based on the path for the texture of the sprite, where
-	 * xFlipped and yFlipped are false as default.
-	 * 
-	 * @param texture Path for texture
-	 */
-	public SpriteData(Path texture) {
-		this(texture, false, false);
 	}
 
 	/**
@@ -48,14 +43,14 @@ public class SpriteData {
 	 * @param fileName String file path
 	 */
 	public SpriteData(String fileName) {
-		this(Paths.get(fileName));
+		this(fileName, false, false);
 	}
 
-	public Path getTexture() {
+	public String getTexture() {
 		return texture;
 	}
 
-	public void setTexture(Path texture) {
+	public void setTexture(String texture) {
 		this.texture = texture;
 	}
 
