@@ -186,9 +186,15 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		int tileX = (int)position.getX() / 16;
 		int tileY = (int)position.getY() / 16;
 		
+		
+		
 		//get the tile cell properties on the layer
 		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
 		TiledMapTileLayer.Cell cell = layer.getCell(tileX, tileY);
+		// the cell is null if the player is out-of-bounds. This happens in-between maps, so just return true.
+		if (cell == null) {
+			return true;
+		}
 		MapProperties cellProperties = cell.getTile().getProperties();
 		
 		//check if the tile is solid,
