@@ -124,7 +124,7 @@ public class PlayerPlugin implements PluginServiceSPI {
 
 		//save each folder to the png files into an array of paths.
 		for (int i = 1; i <= 5; i++) {
-			String path = "Zelda" + i + ".png";
+			String path = "/Zelda" + i + ".png";
 			entityTexturesList.add(path);
 		}
 		return entityTexturesList;
