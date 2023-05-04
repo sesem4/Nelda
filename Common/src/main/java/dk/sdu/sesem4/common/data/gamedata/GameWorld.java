@@ -98,6 +98,11 @@ public class GameWorld {
 		this.mapSize.setY(y);
 	}
 
+	/**
+	 * Set the map size
+	 *
+	 * @param mapSize The total size of the new map, formatted as Vector2
+	 */
 	public void setMapSize(Vector2 mapSize) {
 		if (mapSize == null) {
 			mapSize = new Vector2(defaultHeight, defaultWidth);
