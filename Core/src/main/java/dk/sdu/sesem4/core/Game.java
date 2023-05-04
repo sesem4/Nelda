@@ -18,8 +18,6 @@ import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
-import dk.sdu.sesem4.common.data.gamedata.GameWorld;
-import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.process.Priority;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
 import dk.sdu.sesem4.common.data.resource.Resource;
@@ -60,7 +58,7 @@ public class Game extends ApplicationAdapter {
 	/**
 	 * Cache for sprites based on file path.
 	 */
-	private final Map<String, Texture> textureCache;
+	private Map<String, Texture> textureCache;
 
 	public Game() {
 		this.textureCache = new HashMap<>();
@@ -73,7 +71,6 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void create() {
 		gameData = new GameData();
-		GameWorld gameWorld = gameData.getGameWorld();
 
 		// Locate all plugin services and start plugins
 		List<PluginServiceSPI> pluginCreators = SPILocator.locateAll(PluginServiceSPI.class);
@@ -83,7 +80,9 @@ public class Game extends ApplicationAdapter {
 
 		this.camera = new OrthographicCamera();
 		this.camera.update();
-		this.camera.setToOrtho(false, gameWorld.getMapSize().getX(), gameWorld.getMapSize().getY());
+		float w = 16 * 16;
+		float h = 11 * 16;
+		this.camera.setToOrtho(false, w, h);
 	}
 
 	/**
@@ -156,7 +155,7 @@ public class Game extends ApplicationAdapter {
 	 */
 	private Texture getTexture(SpritePart spritePart) {
 		SpriteData spriteData = spritePart.getSprite();
-		String key = spriteData.getTexture();
+		String key = spriteData.getTexture().toString();
 
 		// Load cached version
 		if (this.textureCache.containsKey(key)) {
