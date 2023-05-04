@@ -5,6 +5,7 @@ import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
 import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
+import dk.sdu.sesem4.common.data.resource.Resource;
 import org.junit.jupiter.api.*;
 
 import java.net.URISyntaxException;
@@ -63,24 +64,22 @@ class PlayerPluginTest {
 	@Test
 	@DisplayName("Test that the paths from loadTextures() exist")
 	void loadPathsTest() throws URISyntaxException {
-		List<Path> textures = playerPlugin.loadTextures();
+		List<String> textures = playerPlugin.loadTextures();
 
 		// Check if the number of paths is 5, which means that the playerPlugin load all paths
 		assertEquals(5, textures.size());
 
+
 		// Loop through all files, and check that the file exists
-		for (Path texture : textures) {
+		for (String texture : textures) {
 			// Get the path of the file
-			URL url = Player.class.getResource("/" + texture.toString());
+			Resource.exists(Player.class, texture);
 
 			// Check that url is not null
-			assertNotNull(url);
-
-			// generate the new path
-			Path path = Paths.get(url.toURI());
+			assertNotNull(texture);
 
 			// Check that the file exists
-			assertTrue(Files.exists(path));
+			assertTrue(Resource.exists(Player.class, texture));
 		}
 	}
 }
