@@ -59,22 +59,29 @@ public class PlayerProcessingService implements ProcessingServiceSPI {
 		float topEdge = 16 * 11;
 		float leftEdge = 0;
 		float rightEdge = 16 * 16; //TODO create a method in gameData that returns the map size
+
+		// If player moves outside map in bottom side
 		if (positionPart.getPosition().getY() + (positionPart.getSize().getY() / 2) < bottomEdge) {
 			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.DOWN, gameData));
 			positionPart.setPosition(new Vector2(positionPart.getPosition().getX(), topEdge - positionPart.getSize().getY() / 2));
 		}
+
+		// If player moves outside map in top side
 		if (positionPart.getPosition().getY() + (positionPart.getSize().getY() / 2) > topEdge) {
 			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.UP, gameData));
 			positionPart.setPosition(new Vector2(positionPart.getPosition().getX(), bottomEdge - positionPart.getSize().getY() / 2));
 		}
+
+		// If player moved outside map in left side
 		if (positionPart.getPosition().getX() + (positionPart.getSize().getX() / 2) < leftEdge) {
 			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.LEFT, gameData));
 			positionPart.setPosition(new Vector2(rightEdge - positionPart.getSize().getX() / 2, positionPart.getPosition().getY()));
 		}
+
+		// If player moved outside map in right side.
 		if (positionPart.getPosition().getX() + (positionPart.getSize().getX() / 2) > rightEdge) {
 			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.RIGHT, gameData));
 			positionPart.setPosition(new Vector2(leftEdge - positionPart.getSize().getX() / 2, positionPart.getPosition().getY()));
 		}
-
 	}
 }
