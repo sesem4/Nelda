@@ -11,11 +11,11 @@ import static org.junit.Assert.*;
 public class SpriteDataTest {
 	@Test
 	public void testGetTexture() {
-		Path file = Paths.get("file");
+		String file = Paths.get("file").toString();
 		SpriteData spriteData = new SpriteData(file, true, true);
 		assertEquals(file, spriteData.getTexture());
 
-		file = Paths.get("other-file");
+		file = Paths.get("other-file").toString();
 		spriteData = new SpriteData(file);
 		assertEquals(file, spriteData.getTexture());
 
@@ -25,16 +25,16 @@ public class SpriteDataTest {
 
 	@Test
 	public void testSetTexture() {
-		Path file = Paths.get("file");
+		String file = Paths.get("file").toString();
 		SpriteData spriteData = new SpriteData(file);
-		Path otherFile = Paths.get("other-file");
+		String otherFile = Paths.get("other-file").toString();
 		spriteData.setTexture(otherFile);
 		assertEquals(otherFile, spriteData.getTexture());
 	}
 
 	@Test
 	public void testIsxFlipped() {
-		Path file = Paths.get("file");
+		String file = Paths.get("file").toString();
 
 		SpriteData spriteData = new SpriteData(file, true, true);
 		assertTrue(spriteData.isxFlipped());
@@ -45,7 +45,7 @@ public class SpriteDataTest {
 
 	@Test
 	public void testIsyFlipped() {
-		Path file = Paths.get("file");
+		String file = Paths.get("file").toString();
 
 		SpriteData spriteData = new SpriteData(file, true, true);
 		assertTrue(spriteData.isyFlipped());
@@ -56,7 +56,7 @@ public class SpriteDataTest {
 
 	@Test
 	public void testSetXFlipped() {
-		Path file = Paths.get("file");
+		String file = Paths.get("file").toString();
 
 		SpriteData spriteData = new SpriteData(file, true, true);
 		assertTrue(spriteData.isxFlipped());
@@ -67,7 +67,7 @@ public class SpriteDataTest {
 
 	@Test
 	public void testSetYFlipped() {
-		Path file = Paths.get("file");
+		String file = Paths.get("file").toString();
 
 		SpriteData spriteData = new SpriteData(file, true, true);
 		assertTrue(spriteData.isyFlipped());

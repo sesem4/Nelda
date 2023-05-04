@@ -22,7 +22,7 @@ public class Resource {
     /** Instance of the resource system. */
     private static Resource instance;
     /** Map of path UUIDs based on class and path. */
-    private Map<Class<?>, Map<Path, UUID>> pathUUID;
+    private Map<Class<?>, Map<String, UUID>> pathUUID;
     /** File cache, to prevent duplicate temporary files. */
     private Map<UUID, File> fileCache;
 
@@ -73,7 +73,7 @@ public class Resource {
      *
      * @return File that has been retrieved from resources
      */
-    public File getResource(Class<?> resourceClass, Path path) {
+    public File getResource(Class<?> resourceClass, String path) {
         // Ensure valid values
         if (resourceClass == null || path == null) {
             return null;
@@ -122,7 +122,7 @@ public class Resource {
      *
      * @return Cached file or null if no cached file exist
      */
-    private File getCachedFile(Class<?> resourceClass, Path path) {
+    private File getCachedFile(Class<?> resourceClass, String path) {
         return this.getCachedFile(this.getPathUUID(resourceClass, path));
     }
 
@@ -159,12 +159,12 @@ public class Resource {
      *
      * @return UUID representing the unique path
      */
-    private UUID getPathUUID(Class<?> resourceClass, Path path) {
+    private UUID getPathUUID(Class<?> resourceClass, String path) {
         if (!this.pathUUID.containsKey(resourceClass)) {
             return null;
         }
 
-        Map<Path, UUID> resourceClassUUIDs = this.pathUUID.get(resourceClass);
+        Map<String, UUID> resourceClassUUIDs = this.pathUUID.get(resourceClass);
         if (!resourceClassUUIDs.containsKey(path)) {
             return null;
         }
@@ -180,7 +180,7 @@ public class Resource {
      *
      * @return UUID representing the unique path
      */
-    private UUID generatePathUUID(Class<?> resourceClass, Path path) {
+    private UUID generatePathUUID(Class<?> resourceClass, String path) {
         UUID existingUUID = getPathUUID(resourceClass, path);
         if (existingUUID != null) {
             return existingUUID;
@@ -198,12 +198,12 @@ public class Resource {
      * @param path          Path for the resource
      * @param uuid          The UUID for the resource and path combined
      */
-    private void storePathUUID(Class<?> resourceClass, Path path, UUID uuid) {
+    private void storePathUUID(Class<?> resourceClass, String path, UUID uuid) {
         if (!this.pathUUID.containsKey(resourceClass)) {
             this.pathUUID.put(resourceClass, new HashMap<>());
         }
 
-        Map<Path, UUID> resourceClassUUIDs = this.pathUUID.get(resourceClass);
+        Map<String, UUID> resourceClassUUIDs = this.pathUUID.get(resourceClass);
         if (!resourceClassUUIDs.containsKey(path)) {
             resourceClassUUIDs.put(path, uuid);
         }
@@ -219,7 +219,7 @@ public class Resource {
      * @return Temporary file, that can be used as a replacement for the actual
      *         resource file
      */
-    private File generateTmpFile(Class<?> resourceClass, Path path, UUID uuid) {
+    private File generateTmpFile(Class<?> resourceClass, String path, UUID uuid) {
         // Get image data
         InputStream input = getResourceStream(resourceClass, path);
         if (input == null) {
@@ -263,7 +263,7 @@ public class Resource {
      *
      * @return URL representing the resource
      */
-    private static InputStream getResourceStream(Class<?> resourceClass, Path path) {
+    private static InputStream getResourceStream(Class<?> resourceClass, String path) {
         return resourceClass.getResourceAsStream((resourcePrefix + path));
     }
 }
