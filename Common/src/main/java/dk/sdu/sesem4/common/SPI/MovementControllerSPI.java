@@ -12,7 +12,4 @@ public interface MovementControllerSPI {
 	 * @return Direction of which the entity should move. This can be Null, if the entity should not move.
 	 */
 	Direction getMovement(GameData gameData, Entity entity);
-
-
-	
 }
