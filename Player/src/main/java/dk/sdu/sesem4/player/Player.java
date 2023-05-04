@@ -7,9 +7,9 @@ import dk.sdu.sesem4.common.util.Direction;
 
 public class Player extends Entity {
 
-	private int speed = 1;
-	private int hearts = 3;
-	private int frameRate = 10;
+	private final int speed = 1;
+	private final int hearts = 3;
+	private final int frameRate = 10;
 
 	private final Vector2 startPosition = new Vector2(128, 88);
 	private final Vector2 size = new Vector2(16, 16);
@@ -33,15 +33,6 @@ public class Player extends Entity {
 	}
 
 	/**
-	 * Set the speed of the entity.
-	 *
-	 * @param speed
-	 */
-	public void setSpeed(int speed) {
-		this.speed = speed;
-	}
-
-	/**
 	 * Get the amount of hearts the player has.
 	 *
 	 * @return int
@@ -51,30 +42,12 @@ public class Player extends Entity {
 	}
 
 	/**
-	 * Set the amount of hearts the player has.
-	 *
-	 * @param hearts The amount of hearts the player has.
-	 */
-	public void setHearts(int hearts) {
-		this.hearts = hearts;
-	}
-
-	/**
 	 * Get the frame rate of the player.
 	 *
 	 * @return The frame rate of the player.
 	 */
 	public int getFrameRate() {
 		return frameRate;
-	}
-
-	/**
-	 * Set the frame rate of the player.
-	 *
-	 * @param frameRate
-	 */
-	public void setFrameRate(int frameRate) {
-		this.frameRate = frameRate;
 	}
 
 	/**
