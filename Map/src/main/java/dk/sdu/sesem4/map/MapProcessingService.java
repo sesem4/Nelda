@@ -186,8 +186,6 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 		int tileX = (int)position.getX() / 16;
 		int tileY = (int)position.getY() / 16;
 		
-		
-		
 		//get the tile cell properties on the layer
 		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
 		TiledMapTileLayer.Cell cell = layer.getCell(tileX, tileY);
