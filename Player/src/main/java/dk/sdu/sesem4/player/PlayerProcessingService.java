@@ -38,7 +38,7 @@ public class PlayerProcessingService implements ProcessingServiceSPI {
 			SpritePart spritePart = player.getEntityPart(SpritePart.class);
 
 			//change map based on movement
-			mapTransition(gameData, positionPart);
+			checkMapTransition(gameData, positionPart);
 
 			//process all the parts
 			positionPart.process(gameData, player);
@@ -50,11 +50,12 @@ public class PlayerProcessingService implements ProcessingServiceSPI {
 
 	/**
 	 * Transistion the map based on the player's position
-	 * @param gameData The {@link GameData} object for the game.
+	 *
+	 * @param gameData     The {@link GameData} object for the game.
 	 * @param positionPart The {@link PositionPart} of the player.
 	 */
 
-	private void mapTransition(GameData gameData, PositionPart positionPart) {
+	private void checkMapTransition(GameData gameData, PositionPart positionPart) {
 		float bottomEdge = 0;
 		float topEdge = 16 * 11;
 		float leftEdge = 0;
