@@ -1,5 +1,7 @@
 package dk.sdu.sesem4.common.data.gamedata;
 
+import dk.sdu.sesem4.common.data.math.Vector2;
+
 import java.nio.file.Path;
 
 /**
@@ -23,6 +25,10 @@ public class GameWorld {
 	 * The path to the map
 	 */
 	private Path map;
+	/**
+	 * Size of current visible map
+	 */
+	private Vector2 mapSize;
 
 	/**
 	 * Construct an empty GameWorld
@@ -51,6 +57,7 @@ public class GameWorld {
 		}
 
 		this.map = map;
+		this.mapSize = mapSize;
 	}
 
 	/**
