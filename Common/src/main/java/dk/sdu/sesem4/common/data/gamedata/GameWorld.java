@@ -9,6 +9,19 @@ import java.nio.file.Path;
  */
 public class GameWorld {
 	/**
+	 * The size of a tile in pixels.
+	 * All tiles are squares, so only one value is needed.
+	 */
+	public static final int TILE_SIZE = 16;
+	/**
+	 * The default height of the game world
+	 */
+	private static final int defaultHeight = 11 * TILE_SIZE;
+	/**
+	 * The default width of the game world
+	 */
+	private static final int defaultWidth = 16 * TILE_SIZE;
+	/**
 	 * The path to the map
 	 */
 	private Path map;
@@ -30,8 +43,9 @@ public class GameWorld {
 	 * @param map the path to the map
 	 */
 	public GameWorld(Path map) {
-		this(map, new Vector2());
+		this(map, new Vector2(defaultHeight, defaultWidth));
 	}
+
 	/**
 	 * Constructs a GameWorld with a start size for the current visible map
 	 *
@@ -39,13 +53,12 @@ public class GameWorld {
 	 */
 	public GameWorld(Path map, Vector2 mapSize) {
 		if (mapSize == null) {
-			mapSize = new Vector2();
+			mapSize = new Vector2(defaultHeight, defaultWidth);
 		}
 
 		this.map = map;
 		this.mapSize = mapSize;
 	}
-
 
 	/**
 	 * Gets the path to the map
@@ -83,5 +96,14 @@ public class GameWorld {
 	public void setMapSize(float x, float y) {
 		this.mapSize.setX(x);
 		this.mapSize.setY(y);
+	}
+
+	public void setMapSize(Vector2 mapSize) {
+		if (mapSize == null) {
+			mapSize = new Vector2(defaultHeight, defaultWidth);
+		}
+
+		this.mapSize.setX(mapSize.getX());
+		this.mapSize.setY(mapSize.getY());
 	}
 }
