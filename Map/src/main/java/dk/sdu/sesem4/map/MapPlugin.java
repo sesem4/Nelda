@@ -24,7 +24,8 @@ public class MapPlugin implements PluginServiceSPI {
 	@Override
 	public void start(GameData gameData) {
 		this.mapProcessingService = new MapProcessingService();
-		gameData.setGameWorld(new GameWorld(mapProcessingService.getCurrentMap()));
+		gameData.getGameWorld().setMap(mapProcessingService.getCurrentMap());
+		gameData.getGameWorld().setMapSize(GameWorld.TILE_SIZE * 16, GameWorld.TILE_SIZE * 11);
 	}
 
 	/**
