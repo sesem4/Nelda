@@ -244,6 +244,9 @@ public class MovingPart implements EntityPart {
 	}
 	
 	public void undoMovement(Entity entity) {
+		if (previousPosition == null) {
+			return;
+		}
 		PositionPart positionPart = entity.getEntityPart(PositionPart.class);
 		positionPart.setPosition(previousPosition);
 	}
