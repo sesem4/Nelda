@@ -1,5 +1,4 @@
 package dk.sdu.sesem4.common.data.gamedata;
-
 /**
  * Data for the game
  *
@@ -10,7 +9,6 @@ public class GameData {
 	 * Game world data
 	 */
 	private GameWorld gameWorld;
-
 	/**
 	 * Game data entities
 	 */
@@ -19,7 +17,6 @@ public class GameData {
 	 * Delta time, which is the time between the last process loop and the current one.
 	 */
 	private float deltaTime;
-
 	/**
 	 * Current time since the start of the game in seconds.
 	 */
@@ -29,7 +26,6 @@ public class GameData {
 		setGameWorld(new GameWorld());
 		setGameEntities(new GameEntities());
 	}
-
 	public GameWorld getGameWorld() {
 		return gameWorld;
 	}
@@ -53,11 +49,9 @@ public class GameData {
 	public void setDeltaTime(float deltaTime) {
 		this.deltaTime = deltaTime;
 	}
-
 	public double getElapsedTime() {
 		return elapsedTime;
 	}
-
 	/**
 	 * Update elapsed time
 	 */
