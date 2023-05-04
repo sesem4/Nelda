@@ -5,10 +5,6 @@ import dk.sdu.sesem4.common.data.entity.EntityType;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.util.Direction;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Player extends Entity {
 
 	private int speed = 1;
@@ -107,7 +103,6 @@ public class Player extends Entity {
 	public Vector2 getStartPosition() {
 		return this.startPosition;
 	}
-
 
 	/**
 	 * Get the size of the player.
