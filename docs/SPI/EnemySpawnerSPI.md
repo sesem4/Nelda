@@ -2,14 +2,14 @@
 <tbody>
 <tr>
 <td><strong>SPI</strong></td>
-<td><h2>EnemySpawnerSPI</h2></td>
+<td><h2>SpawnableEnemySPI</h2></td>
 </tr>
 <tr>
 <td><Strong>Operation</strong></td>
     <td>
 
 ```java
-void spawnEnemy(GameData gameData, float x, float y)
+void spawnEnemy(GameData gameData, Vector2 coordinate)
 ```
 </td>
 </tr>
@@ -23,9 +23,7 @@ void spawnEnemy(GameData gameData, float x, float y)
 
 `GameData gameData` - The game data
 
-`Float x` - The x coordinate the enemy should spawn at
-
-`Float y` - The y coordinate the enemy should spawn at
+`Vector2 coordinate` - The x and y coordinate the enemy should spawn at, formatted as a Vector2.
 </td>
 </tr>
 <tr>
@@ -45,14 +43,14 @@ void spawnEnemy(GameData gameData, float x, float y)
 <tbody>
 <tr>
 <td><strong>SPI</strong></td>
-<td><h2>EnemySpawnerSPI</h2></td>
+<td><h2>SpawnableEnemySPI</h2></td>
 </tr>
 <tr>
 <td><Strong>Operation</strong></td>
     <td>
 
 ```java
-void spawnEnemy(GameData gameData, float x, float y, int difficulty)
+void spawnEnemy(GameData gameData, Vector2 coordinate, int difficulty)
 ```
 </td>
 </tr>
@@ -66,9 +64,7 @@ void spawnEnemy(GameData gameData, float x, float y, int difficulty)
 
 `GameData gameData` - The game data
 
-`Float x` - The x coordinate the enemy should spawn at
-
-`Float y` - The y coordinate the enemy should spawn at
+`Vector2 coordinate` - The x and y coordinate the enemy should spawn at, formatted as a Vector2.
 
 `int difficulty` - The difficulty of the enemy
 </td>
@@ -90,7 +86,7 @@ void spawnEnemy(GameData gameData, float x, float y, int difficulty)
 <tbody>
 <tr>
 <td><strong>SPI</strong></td>
-<td><h2>EnemySpawnerSPI</h2></td>
+<td><h2>SpawnableEnemySPI</h2></td>
 </tr>
 <tr>
 <td><Strong>Operation</strong></td>

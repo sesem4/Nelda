@@ -26,6 +26,7 @@
 		<module>Map</module>
 		<module>Player</module>
 		<module>Sword</module>
+		<module>EnemyOctorok</module>
 	</modules>
 	
 	<repositories>

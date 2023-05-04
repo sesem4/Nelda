@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="fLNG6U10Jc3AvwP7Pfjn" name="Page-1">
-        <mxGraphModel dx="2070" dy="-23" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
+        <mxGraphModel dx="373" dy="-839" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -357,7 +357,7 @@
                 <mxCell id="28" value="" style="shape=providedRequiredInterface;html=1;verticalLabelPosition=bottom;sketch=0;rotation=-90;" parent="1" vertex="1">
                     <mxGeometry x="1034" y="2345" width="20" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="34" value="Enemy Spawner" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                <mxCell id="34" value="Spawnable Enemy" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="1044" y="2332" width="81" height="46" as="geometry"/>
                 </mxCell>
                 <mxCell id="94" style="edgeStyle=orthogonalEdgeStyle;jumpStyle=arc;jumpSize=10;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.277;entryY=0.987;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" parent="1" source="82" target="5lTu8dcaC-K2s0UTSZmU-13" edge="1">
