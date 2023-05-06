@@ -27,7 +27,7 @@
 		<module>Map</module>
 		<module>Player</module>
 		<module>Sword</module>
-
+		<module>KeyboardControl</module>
 	</modules>
 	
 	<repositories>

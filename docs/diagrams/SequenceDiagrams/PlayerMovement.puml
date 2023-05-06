@@ -1,14 +1,79 @@
-@startuml Player Movement
+'@startuml Player Movement
+'skinparam style strictuml
+'title Player Movement (UC01)
+'
+'participant Core
+'participant Player
+'participant KeyboardController
+'participant MovementController
+'participant MovingPart
+'participant SPILocator
+'
+'
+'activate Core
+'Core -> Player : start()
+'activate Player
+'Player -> SPILocator : locateAll(ControlSPI)
+'activate SPILocator
+'SPILocator -> Player : SPIs
+'deactivate SPILocator
+'
+'Player -> KeyboardController : getType()
+'activate KeyboardController
+'KeyboardController -> Player : ControlType
+'deactivate KeyboardController
+'
+'alt ControlType == KEYBOARD
+'Player -> KeyboardController : getMovementController()
+'activate KeyboardController
+'KeyboardController -> KeyboardMovementController : new()
+'activate KeyboardMovementController
+'KeyboardMovementController -> KeyboardController : KeyboardMovementController
+'deactivate KeyboardMovementController
+'KeyboardController -> Player : MovementController
+'deactivate KeyboardController
+'
+'
+'end alt
+'
+'Player -> Core : void
+'deactivate Player
+'
+'Core -> Player : process()
+'activate Player
+'
+'Player -> MovingPart : process()
+'activate MovingPart
+'
+'MovingPart -> KeyboardMovementController : getMovement()
+'activate KeyboardMovementController
+'KeyboardMovementController -> MovingPart : Direction
+'deactivate KeyboardMovementController
+'
+'MovingPart -> Player : void
+'deactivate MovingPart
+'
+'Player -> Core : void
+'deactivate Player
+'@enduml
+
+
+@startuml Player Movement (UC01)
 skinparam style strictuml
 title Player Movement (UC01)
 
 participant Core
 participant Player
 participant KeyboardController
+participant ControlType
+note right of ControlType
+        ControlType is an enum
+        with values KEYBOARD
+        JOYSTICK, ...
+end note
 participant KeyboardMovementController
 participant MovingPart
 participant SPILocator
-
 
 activate Core
 Core -> Player : start()
@@ -20,38 +85,44 @@ deactivate SPILocator
 
 Player -> KeyboardController : getType()
 activate KeyboardController
+KeyboardController -> ControlType : getType
+activate ControlType
+ControlType -> KeyboardController : ControlType
+deactivate ControlType
 KeyboardController -> Player : ControlType
 deactivate KeyboardController
+
 
 alt ControlType == KEYBOARD
 Player -> KeyboardController : getMovementController()
 activate KeyboardController
 KeyboardController -> KeyboardMovementController : new()
 activate KeyboardMovementController
-KeyboardMovementController -> KeyboardController : KeyboardMovementController
+KeyboardMovementController -> KeyboardController : MovementController
 deactivate KeyboardMovementController
 KeyboardController -> Player : MovementController
 deactivate KeyboardController
-
+' Player -> KeyboardMovementController : isKeyPressed()
+' activate KeyboardMovementController
+' KeyboardMovementController -> Player : keyPressed
+' deactivate KeyboardMovementController
+' Player -> KeyboardMovementController : isKeyReleased()
+' activate KeyboardMovementController
+' KeyboardMovementController -> Player : keyReleased
+' deactivate KeyboardMovementController
 end alt
-
 Player -> Core : void
 deactivate Player
-
 Core -> Player : process()
 activate Player
-
 Player -> MovingPart : process()
 activate MovingPart
-
 MovingPart -> KeyboardMovementController : getMovement()
 activate KeyboardMovementController
 KeyboardMovementController -> MovingPart : Direction
 deactivate KeyboardMovementController
-
 MovingPart -> Player : void
 deactivate MovingPart
-
 Player -> Core : void
 deactivate Player
 @enduml

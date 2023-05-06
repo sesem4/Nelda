@@ -6,7 +6,6 @@ module Common {
 	 */
 	requires java.desktop;
 	requires ShadedLibGDX;
-
 	/**
 	 * SPI's
 	 */
@@ -18,6 +17,7 @@ module Common {
 	uses PluginServiceSPI;
 	uses PostProcessingServiceSPI;
 	uses ProcessingServiceSPI;
+	uses MovementControllerSPI;
 
 	/**
 	 * Export of elements
@@ -35,4 +35,6 @@ module Common {
 	exports dk.sdu.sesem4.common.util;
 	exports dk.sdu.sesem4.common.event;
 	exports dk.sdu.sesem4.common.event.events;
+	exports dk.sdu.sesem4.common.data.controllerParts;
+
 }

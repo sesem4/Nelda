@@ -80,9 +80,7 @@ public class Game extends ApplicationAdapter {
 
 		this.camera = new OrthographicCamera();
 		this.camera.update();
-		float w = 16 * 16;
-		float h = 11 * 16;
-		this.camera.setToOrtho(false, w, h);
+		this.camera.setToOrtho(false, gameData.getGameWorld().getMapSize().getX(), gameData.getGameWorld().getMapSize().getY());
 	}
 
 	/**

@@ -3,7 +3,6 @@ package dk.sdu.sesem4.common.SPI;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.util.Direction;
-
 public interface MovementControllerSPI {
 	/**
 	 * Get desired movement
@@ -13,5 +12,4 @@ public interface MovementControllerSPI {
 	 * @return Direction of which the entity should move. This can be Null, if the entity should not move.
 	 */
 	Direction getMovement(GameData gameData, Entity entity);
-	
 }
