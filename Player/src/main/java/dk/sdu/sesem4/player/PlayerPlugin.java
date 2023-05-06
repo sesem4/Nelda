@@ -86,10 +86,10 @@ public class PlayerPlugin implements PluginServiceSPI {
 		movingPart.setSprites(Direction.LEFT, left);
 		movingPart.setSprites(Direction.DOWN, down);
 
-		//set the speed of the player
+		// add MovingPart to the player
 		player.addEntityPart(movingPart);
 
-		//set the position of the player
+		// add PositionPart to the player
 		player.addEntityPart(
 			new PositionPart(
 				player.getStartPosition(),
@@ -98,12 +98,12 @@ public class PlayerPlugin implements PluginServiceSPI {
 			)
 		);
 
-		//set the life of player
+		// add LifePart to the player
 		player.addEntityPart(
 			new LifePart(player.getHearts())
 		);
 
-
+		// add SpritePart to the player
 		player.addEntityPart(
 			new SpritePart(
 				new SpriteData(paths.get(0), false, false, Player.class)
