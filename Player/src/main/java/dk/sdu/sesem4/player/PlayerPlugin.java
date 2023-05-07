@@ -1,21 +1,17 @@
 package dk.sdu.sesem4.player;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import dk.sdu.sesem4.common.SPI.MovementControllerSPI;
+import dk.sdu.sesem4.common.SPI.ControlSPI;
 import dk.sdu.sesem4.common.SPI.PluginServiceSPI;
 import dk.sdu.sesem4.common.data.EntityParts.LifePart;
 import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
 import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
-import dk.sdu.sesem4.common.data.entity.Entity;
+import dk.sdu.sesem4.common.data.controllerParts.ControlType;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
+import dk.sdu.sesem4.common.util.ControllerLocator;
 import dk.sdu.sesem4.common.util.Direction;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,19 +41,15 @@ public class PlayerPlugin implements PluginServiceSPI {
 
 		List<String> paths = this.loadTextures();
 
+		ControlSPI constrolSPI = ControllerLocator.locateController(ControlType.KEYBOARD);
+		if (constrolSPI == null) {
+			throw new RuntimeException("No controller found.");
+		}
+
 		MovingPart movingPart = new MovingPart(
 			player.getSpeed(),
 			player.getFrameRate(),
-			new MovementControllerSPI() {
-				@Override
-				public Direction getMovement(GameData gameData, Entity entity) {
-					if (Gdx.input.isKeyPressed(Input.Keys.W)) return Direction.UP;
-					if (Gdx.input.isKeyPressed(Input.Keys.S)) return Direction.DOWN;
-					if (Gdx.input.isKeyPressed(Input.Keys.A)) return Direction.LEFT;
-					if (Gdx.input.isKeyPressed(Input.Keys.D)) return Direction.RIGHT;
-					return null;
-				}
-			}
+			constrolSPI.getMovementController()
 		);
 
 		// Up uses same sprite but flips it.
