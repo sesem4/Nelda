@@ -1,6 +1,7 @@
 package dk.sdu.sesem4.player;
 
 import dk.sdu.sesem4.common.SPI.ControlSPI;
+import dk.sdu.sesem4.common.SPI.MovementControllerSPI;
 import dk.sdu.sesem4.common.SPI.PluginServiceSPI;
 import dk.sdu.sesem4.common.data.EntityParts.LifePart;
 import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
@@ -12,6 +13,7 @@ import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
 import dk.sdu.sesem4.common.util.ControllerLocator;
 import dk.sdu.sesem4.common.util.Direction;
+import dk.sdu.sesem4.common.util.SPILocator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,14 +53,19 @@ public class PlayerPlugin implements PluginServiceSPI {
 		List<String> paths = this.loadTextures();
 
 		ControlSPI constrolSPI = ControllerLocator.locateController(ControlType.KEYBOARD);
+		MovementControllerSPI controller;
+
+		// Check if a controller was found. If not set controller to null.
 		if (constrolSPI == null) {
-			throw new RuntimeException("No controller found.");
+			controller = null;
+		} else {
+			controller = constrolSPI.getMovementController();
 		}
 
 		MovingPart movingPart = new MovingPart(
 			this.defaultSpeed,
 			this.defaultFrameRate,
-			constrolSPI.getMovementController()
+			controller
 		);
 
 		// Up uses same sprite but flips it.
