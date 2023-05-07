@@ -10,29 +10,34 @@ import dk.sdu.sesem4.octorok.red.RedOctorokPlugin;
 
 public class EnemySpawner implements EnemySpawnerSPI {
 
-
 	@Override
-	public void spawnEnemy(GameData gameData, Vector2 coordinate) {
-		// Call the overload method with a difficulty (red Octorok)
-		spawnEnemy(gameData, coordinate, 1);
+	public void spawnEnemy(GameData gameData, float x, float y) {
+		throw new UnsupportedOperationException("Unimplemented method 'spawnEnemy' - Is to be replaced");
 	}
 
-	@Override
-	public void spawnEnemy(GameData gameData, Vector2 coordinate, int difficulty) {
-		switch (difficulty) {
-			case 1: // red
-				RedOctorokPlugin redOctorokPlugin = new RedOctorokPlugin();
-				redOctorokPlugin.spawn(gameData, coordinate, RedOctorok.class);
-				break;
-			case 2: // blue
-				BlueOctorokPlugin blueOctorokPlugin = new BlueOctorokPlugin();
-				blueOctorokPlugin.spawn(gameData, coordinate, BlueOctorok.class);
-				break;
-		}
-	}
 
-	@Override
-	public int[] getDifficulties() {
-		return new int[]{1, 2};
-	}
+	// @Override
+	// public void spawnEnemy(GameData gameData, Vector2 coordinate) {
+	// 	// Call the overload method with a difficulty (red Octorok)
+	// 	spawnEnemy(gameData, coordinate, 1);
+	// }
+
+	// @Override
+	// public void spawnEnemy(GameData gameData, Vector2 coordinate, int difficulty) {
+	// 	switch (difficulty) {
+	// 		case 1: // red
+	// 			RedOctorokPlugin redOctorokPlugin = new RedOctorokPlugin();
+	// 			redOctorokPlugin.spawn(gameData, coordinate, RedOctorok.class);
+	// 			break;
+	// 		case 2: // blue
+	// 			BlueOctorokPlugin blueOctorokPlugin = new BlueOctorokPlugin();
+	// 			blueOctorokPlugin.spawn(gameData, coordinate, BlueOctorok.class);
+	// 			break;
+	// 	}
+	// }
+
+	// @Override
+	// public int[] getDifficulties() {
+	// 	return new int[]{1, 2};
+	// }
 }
