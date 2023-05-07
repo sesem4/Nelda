@@ -34,7 +34,6 @@ module Common {
 	exports dk.sdu.sesem4.common.data.weapon;
 	exports dk.sdu.sesem4.common.util;
 	exports dk.sdu.sesem4.common.event;
-	exports dk.sdu.sesem4.common.event.events;
 	exports dk.sdu.sesem4.common.data.controllerParts;
-
+	exports dk.sdu.sesem4.common.event.events.map;
 }

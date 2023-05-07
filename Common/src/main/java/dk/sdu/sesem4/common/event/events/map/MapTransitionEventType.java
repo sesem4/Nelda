@@ -1,4 +1,4 @@
-package dk.sdu.sesem4.common.event.events;
+package dk.sdu.sesem4.common.event.events.map;
 
 import dk.sdu.sesem4.common.event.EventType;
 

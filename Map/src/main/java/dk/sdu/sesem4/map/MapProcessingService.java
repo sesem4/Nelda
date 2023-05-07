@@ -14,8 +14,8 @@ import dk.sdu.sesem4.common.data.math.Rectangle;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.process.Priority;
 import dk.sdu.sesem4.common.event.*;
-import dk.sdu.sesem4.common.event.events.MapTransitionEvent;
-import dk.sdu.sesem4.common.event.events.MapTransitionEventType;
+import dk.sdu.sesem4.common.event.events.map.MapTransitionEvent;
+import dk.sdu.sesem4.common.event.events.map.MapTransitionEventType;
 import dk.sdu.sesem4.common.util.Direction;
 
 import java.nio.file.*;
