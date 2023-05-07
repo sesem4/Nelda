@@ -57,9 +57,10 @@ public class PlayerProcessingService implements ProcessingServiceSPI {
 
 	private void checkMapTransition(GameData gameData, PositionPart positionPart) {
 		float bottomEdge = 0;
-		float topEdge = 16 * 11;
+		float topEdge = gameData.getGameWorld().getMapSize().getY();
 		float leftEdge = 0;
-		float rightEdge = 16 * 16; //TODO create a method in gameData that returns the map size
+		float rightEdge = gameData.getGameWorld().getMapSize().getX();
+
 		if (positionPart.getPosition().getY() + (positionPart.getSize().getY() / 2) < bottomEdge) {
 			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.DOWN, gameData));
 			positionPart.setPosition(new Vector2(positionPart.getPosition().getX(), topEdge - positionPart.getSize().getY() / 2));
