@@ -8,6 +8,7 @@ import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
 import dk.sdu.sesem4.common.data.controllerParts.ControlType;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
+import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
 import dk.sdu.sesem4.common.util.ControllerLocator;
 import dk.sdu.sesem4.common.util.Direction;
@@ -18,6 +19,14 @@ import java.util.List;
 public class PlayerPlugin implements PluginServiceSPI {
 
 	private Player player;
+
+	private final int defaultSpeed = 1;
+	private final int defaultHearts = 3;
+	private final int defaultFrameRate = 10;
+	private final Vector2 defaultStartPosition = new Vector2(128, 88);
+	private final Vector2 defaultSize = new Vector2(16, 16);
+	private final Direction defaultDirection = Direction.UP;
+
 
 	@Override
 	public void start(GameData gameData) {
@@ -47,8 +56,8 @@ public class PlayerPlugin implements PluginServiceSPI {
 		}
 
 		MovingPart movingPart = new MovingPart(
-			player.getSpeed(),
-			player.getFrameRate(),
+			this.defaultSpeed,
+			this.defaultFrameRate,
 			constrolSPI.getMovementController()
 		);
 
@@ -84,15 +93,15 @@ public class PlayerPlugin implements PluginServiceSPI {
 		// add PositionPart to the player
 		player.addEntityPart(
 			new PositionPart(
-				player.getStartPosition(),
-				player.getSize(),
-				player.getDirection()
+				this.defaultStartPosition,
+				this.defaultSize,
+				this.defaultDirection
 			)
 		);
 
 		// add LifePart to the player
 		player.addEntityPart(
-			new LifePart(player.getHearts())
+			new LifePart(this.defaultHearts)
 		);
 
 		// add SpritePart to the player
