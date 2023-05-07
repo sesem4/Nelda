@@ -23,6 +23,7 @@
 		<module>Common</module>
 		<module>Core</module>
 		<module>Enemy</module>
+		<module>EnemySpawner</module>
 		<module>Heart</module>
 		<module>Map</module>
 		<module>Player</module>
