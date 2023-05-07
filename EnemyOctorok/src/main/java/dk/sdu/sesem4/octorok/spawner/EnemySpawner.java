@@ -1,6 +1,6 @@
 package dk.sdu.sesem4.octorok.spawner;
 
-import dk.sdu.sesem4.common.SPI.SpawnableEnemySPI;
+import dk.sdu.sesem4.common.SPI.EnemySpawnerSPI;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.octorok.blue.BlueOctorok;
@@ -8,7 +8,7 @@ import dk.sdu.sesem4.octorok.blue.BlueOctorokPlugin;
 import dk.sdu.sesem4.octorok.red.RedOctorok;
 import dk.sdu.sesem4.octorok.red.RedOctorokPlugin;
 
-public class EnemySpawner implements SpawnableEnemySPI {
+public class EnemySpawner implements EnemySpawnerSPI {
 
 
 	@Override

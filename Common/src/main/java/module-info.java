@@ -11,7 +11,7 @@ module Common {
 	 */
 	uses CombatSPI;
 	uses ControlSPI;
-	uses SpawnableEnemySPI;
+	uses EnemySpawnerSPI;
 	uses EventServiceSPI;
 	uses PickupSPI;
 	uses PluginServiceSPI;
