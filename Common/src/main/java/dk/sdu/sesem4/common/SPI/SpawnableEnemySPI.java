@@ -1,5 +1,6 @@
 package dk.sdu.sesem4.common.SPI;
 
+import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
 
@@ -13,8 +14,10 @@ public interface SpawnableEnemySPI {
 	 *
 	 * @param gameData The game data
 	 * @param coordinate The x and y coordinate the enemy should spawn at, formatted as a Vector2
+	 *
+	 * @return Enemy entity
 	 */
-	void spawnEnemy(GameData gameData, Vector2 coordinate);
+	Entity spawnEnemy(GameData gameData, Vector2 coordinate);
 
 	/**
 	 * Spawn enemy into the map with specified difficulty.
@@ -26,8 +29,10 @@ public interface SpawnableEnemySPI {
 	 * @param gameData The game data
 	 * @param coordinate The x and y coordinate the enemy should spawn at, formatted as a Vector2
 	 * @param difficulty The difficulty of the enemy.
+	 *
+	 * @return Enemy entity
 	 */
-	void spawnEnemy(GameData gameData, Vector2 coordinate, int difficulty);
+	Entity spawnEnemy(GameData gameData, Vector2 coordinate, int difficulty);
 
 	/**
 	 * Get the difficulties that are possible by the enemy.
