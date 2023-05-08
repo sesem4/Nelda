@@ -21,8 +21,8 @@ public class GameWorldTest {
 	@Test
 	public void setAndGetMapSize() {
 		GameWorld gameWorld = new GameWorld();
-		assertEquals(0, gameWorld.getMapSize().getX(), 0.001);
-		assertEquals(0, gameWorld.getMapSize().getY(), 0.001);
+		assertEquals(GameWorld.TILE_SIZE * 16, gameWorld.getMapSize().getX(), 0.001);
+		assertEquals(GameWorld.TILE_SIZE * 11, gameWorld.getMapSize().getY(), 0.001);
 
 		gameWorld.setMapSize(1, 2);
 		assertEquals(1, gameWorld.getMapSize().getX(), 0.001);

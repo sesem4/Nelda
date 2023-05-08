@@ -6,7 +6,6 @@ module Player {
 	 * Required packages
 	 */
 	requires Common;
-	requires ShadedLibGDX;
 
 	/**
 	 * SPI's

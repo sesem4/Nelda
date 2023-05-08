@@ -49,11 +49,6 @@
 			<version>0.0.0</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>dk.sdu.sesem4</groupId>
-			<artifactId>shadedlibgdx</artifactId>
-			<version>${shadedlibgdx.version}</version>
-		</dependency>
 
 		<!-- JUNIT DEPENDENCIES -->
 		<dependency>
