@@ -27,7 +27,7 @@ def create_properties_on(file_name):
 			"value": "1",
 		}))
 
-	element_tree.write(file_name)
+	element_tree.write(file_name, encoding="UTF-8", xml_declaration=True)
 
 
 for file in os.listdir("overworld"):
