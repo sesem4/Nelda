@@ -7,14 +7,21 @@ import dk.sdu.sesem4.common.util.Direction;
 
 import java.util.Random;
 
+/**
+ * This class handles the random movement of the enemy.
+ */
 public class RandomMovementController implements MovementControllerSPI {
-    private Random random;
+    /**
+     * This is used for the random movement of the enemy.
+     */
+    protected Random random;
     public RandomMovementController(){
         this.random = new Random();
     }
     @Override
     public Direction getMovement(GameData gameData, Entity entity) {
-        int randomInt = random.nextInt(0,5);
+        int randomInt = random.nextInt(5);
+        // checks which random number is generated and returns the corresponding direction
         switch (randomInt){
             case 0:
                 return Direction.UP;
