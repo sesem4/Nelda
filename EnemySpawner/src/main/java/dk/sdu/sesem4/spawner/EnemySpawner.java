@@ -1,8 +1,10 @@
 package dk.sdu.sesem4.spawner;
 
+import dk.sdu.sesem4.common.SPI.MapSPI;
 import dk.sdu.sesem4.common.SPI.SpawnableEnemySPI;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameEntities;
+import dk.sdu.sesem4.common.data.gamedata.GameWorld;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.event.Event;
 import dk.sdu.sesem4.common.event.EventListener;
@@ -49,11 +51,21 @@ public class EnemySpawner implements EventListener {
 		}
 	}
 
+	/**
+	 * Despawn all enemies spawned through this system.
+	 *
+	 * @param eventData Event data, for the Map transition done event.
+	 */
 	private void despawn(MapTransitionDoneEvent eventData) {
 		GameEntities entities = eventData.getGameData().getGameEntities();
 		this.enemies.forEach(enemy -> entities.removeEntity(enemy));
 	}
 
+	/**
+	 * Spawn enemies based on the current world.
+	 *
+	 * @param eventData Event data, for the Map transition done event.
+	 */
 	private void spawn(MapTransitionDoneEvent eventData) {
 		int difficulty = eventData.getGameData().getGameWorld().getDifficulty();
 		int enemyCount = eventData.getGameData().getGameWorld().getEnemyCount();
@@ -67,6 +79,13 @@ public class EnemySpawner implements EventListener {
 		}
 	}
 
+	/**
+	 * Locate spawnable enemy SPI by their difficulty.
+	 *
+	 * @param difficulty The difficulty to search for.
+	 *
+	 * @return List of SPI's that allow for enemy spawning for the wanted difficulty
+	 */
 	private List<SpawnableEnemySPI> locateSpawnableEnemySPIByDifficulty(int difficulty) {
 		List<SpawnableEnemySPI> enemySpawners = new ArrayList<>();
 
@@ -82,10 +101,31 @@ public class EnemySpawner implements EventListener {
 		return enemySpawners;
 	}
 
+	/**
+	 * Locate a random position in the world, to spawn the enemy at.
+	 *
+	 * @param eventData Event data, for the Map transition done event.
+	 *
+	 * @return Vector2 position, that correlates to a spawnable world position.
+	 */
 	private Vector2 getRandomSpawnableLocation(MapTransitionDoneEvent eventData) {
-		float height = eventData.getGameData().getGameWorld().getMapSize().getX();
-		float width = eventData.getGameData().getGameWorld().getMapSize().getY();
+		List<MapSPI> mapUtilities = SPILocator.locateAll(MapSPI.class);
 
-		return new Vector2((float) (Math.random() * (width)), (float) (Math.random() * (height)));
+		Vector2 mapSize = eventData.getGameData().getGameWorld().getMapSize();
+
+		// If no map SPI is available, use just a random position inside the world.
+		if (mapUtilities.size() == 0) {
+			float x = (float) (Math.random() * (mapSize.getX()));
+			float y = (float) (Math.random() * (mapSize.getY()));
+
+			return new Vector2(x, y);
+		}
+
+		Vector2 randomTileCoordinate = mapUtilities.get(0).getRandomPassableTile();
+
+		float x = randomTileCoordinate.getX() * GameWorld.TILE_SIZE;
+		float y = randomTileCoordinate.getY() * GameWorld.TILE_SIZE;
+
+		return new Vector2(x, y);
 	}
 }
