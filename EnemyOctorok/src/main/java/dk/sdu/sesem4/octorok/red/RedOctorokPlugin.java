@@ -10,9 +10,9 @@ public class RedOctorokPlugin extends OctorokPlugin {
 		super();
 	}
 
-	@Override
-	public void start(GameData gameData) {
-		// EnemySpawner enemySpawner = new EnemySpawner();
-		// enemySpawner.spawnEnemy(gameData, new Vector2(100,100));
-	}
+//	@Override
+//	public void start(GameData gameData) {
+//		EnemySpawner enemySpawner = new EnemySpawner();
+//		enemySpawner.spawnEnemy(gameData, new Vector2(5 * 16 + 1, 6 * 16 + 1));
+//	}
 }
