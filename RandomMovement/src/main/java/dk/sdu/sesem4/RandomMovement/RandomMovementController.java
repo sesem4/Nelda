@@ -14,7 +14,7 @@ public class RandomMovementController implements MovementControllerSPI {
     }
     @Override
     public Direction getMovement(GameData gameData, Entity entity) {
-        int randomInt = random.nextInt(4);
+        int randomInt = random.nextInt(0,5);
         switch (randomInt){
             case 0:
                 return Direction.UP;
@@ -24,10 +24,9 @@ public class RandomMovementController implements MovementControllerSPI {
                 return Direction.LEFT;
             case 3:
                 return Direction.RIGHT;
+            default:
+                return null;
         }
-
-
-        return null;
 
 
     }
