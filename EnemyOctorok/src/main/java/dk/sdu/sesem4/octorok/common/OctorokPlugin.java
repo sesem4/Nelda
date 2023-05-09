@@ -25,7 +25,7 @@ abstract public class OctorokPlugin implements PluginServiceSPI {
 	private final int defaultFrameRate = 10;
 
 	private final float knockbackDuration = 0.1f;
-	private final float knockbackSpeed = 20;
+	private final float knockbackSpeed = 5;
 
 	private int hearts;
 	private int damage;
