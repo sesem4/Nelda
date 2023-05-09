@@ -1,6 +1,8 @@
 package dk.sdu.sesem4.octorok.common;
 
 import dk.sdu.sesem4.common.SPI.PluginServiceSPI;
+import dk.sdu.sesem4.common.data.CollisionParts.DamagePart;
+import dk.sdu.sesem4.common.data.CollisionParts.KnockbackPart;
 import dk.sdu.sesem4.common.data.EntityParts.LifePart;
 import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
 import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
@@ -21,6 +23,17 @@ import java.util.List;
 
 abstract public class OctorokPlugin implements PluginServiceSPI {
 	private static List<Octorok> octoroks = new LinkedList<>();
+
+	private final int defaultSpeed = 1;
+	private final int defaultHearts = 3;
+	private final int defaultFrameRate = 10;
+
+	private final float knockbackDuration = 0.1f;
+	private final float knockbackSpeed = 20;
+	private final int damage = 1;
+
+	private final Direction defaultDirection = Direction.UP;
+	private final Vector2 defaultSize = new Vector2(16, 16);
 
 	@Override
 	public void start(GameData gameData) {
@@ -51,9 +64,9 @@ abstract public class OctorokPlugin implements PluginServiceSPI {
 		List<String> textures = this.loadTextures(octorokClass);
 
 		MovingPart movingPart = new MovingPart(
-				octorok.getSpeed(),
-				octorok.getFrameRate(),
-				null
+			this.defaultSpeed,
+			this.defaultFrameRate,
+			null
 		);
 
 		// 1 og 2 ned
@@ -61,20 +74,20 @@ abstract public class OctorokPlugin implements PluginServiceSPI {
 		// 2 og 4 er næsen ind.
 		// Set the different sprites foreach direction.
 		List<SpriteData> up = List.of(
-				new SpriteData(textures.get(0), false, true, octorokClass),
-				new SpriteData(textures.get(1), false, true, octorokClass)
+			new SpriteData(textures.get(0), false, true, octorokClass),
+			new SpriteData(textures.get(1), false, true, octorokClass)
 		);
 		List<SpriteData> down = List.of(
-				new SpriteData(textures.get(0), false, false, octorokClass),
-				new SpriteData(textures.get(1), false, false, octorokClass)
+			new SpriteData(textures.get(0), false, false, octorokClass),
+			new SpriteData(textures.get(1), false, false, octorokClass)
 		);
 		List<SpriteData> left = List.of(
-				new SpriteData(textures.get(2), false, false, octorokClass),
-				new SpriteData(textures.get(3), false, false, octorokClass)
+			new SpriteData(textures.get(2), false, false, octorokClass),
+			new SpriteData(textures.get(3), false, false, octorokClass)
 		);
 		List<SpriteData> right = List.of(
-				new SpriteData(textures.get(2), true, false, octorokClass),
-				new SpriteData(textures.get(3), true, false, octorokClass)
+			new SpriteData(textures.get(2), true, false, octorokClass),
+			new SpriteData(textures.get(3), true, false, octorokClass)
 		);
 
 		movingPart.setSprites(Direction.UP, up);
@@ -87,24 +100,27 @@ abstract public class OctorokPlugin implements PluginServiceSPI {
 
 		// set the position of the Octorok
 		octorok.addEntityPart(
-				new PositionPart(
-						coordinate,
-						octorok.getSize(),
-						octorok.getDirection()
-				)
+			new PositionPart(
+				coordinate,
+				this.defaultSize,
+				this.defaultDirection
+			)
 		);
 
 		// set the life of the Octorok.
 		octorok.addEntityPart(
-				new LifePart(octorok.getHearts())
+			new LifePart(this.defaultHearts)
 		);
 
 		// Set the first sprite which is shown, when the octorok is spawned.
 		octorok.addEntityPart(
-				new SpritePart(
-						new SpriteData(textures.get(0), false, false, octorokClass)
-				)
+			new SpritePart(
+				new SpriteData(textures.get(0), false, false, octorokClass)
+			)
 		);
+
+		octorok.addCollisionPart(new KnockbackPart(this.knockbackDuration, this.knockbackSpeed));
+		octorok.addCollisionPart(new DamagePart(this.damage));
 
 		return octorok;
 	}
