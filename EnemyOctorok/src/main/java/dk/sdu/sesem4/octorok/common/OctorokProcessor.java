@@ -9,7 +9,7 @@ import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.process.Priority;
 
-abstract public class OctorokProcessor implements ProcessingServiceSPI {
+public class OctorokProcessor implements ProcessingServiceSPI {
 	@Override
 	public void process(GameData gameData, Priority priority) {
 		//process the player for each game loop, change Movement, Position, LifePart, Path to Texture,
