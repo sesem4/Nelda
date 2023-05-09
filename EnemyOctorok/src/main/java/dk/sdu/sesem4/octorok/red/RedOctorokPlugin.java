@@ -8,6 +8,10 @@ import dk.sdu.sesem4.octorok.spawner.EnemySpawner;
 public class RedOctorokPlugin extends OctorokPlugin {
 	public RedOctorokPlugin() {
 		super();
+
+		// Set the red Octorok's stats
+		super.setHearts(3);
+		super.setDamage(1);
 	}
 
 //	@Override

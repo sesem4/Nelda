@@ -10,13 +10,10 @@ import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
-import dk.sdu.sesem4.common.data.resource.Resource;
 import dk.sdu.sesem4.common.util.Direction;
 import dk.sdu.sesem4.octorok.red.RedOctorok;
 
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,12 +22,13 @@ abstract public class OctorokPlugin implements PluginServiceSPI {
 	private static List<Octorok> octoroks = new LinkedList<>();
 
 	private final int defaultSpeed = 1;
-	private final int defaultHearts = 3;
 	private final int defaultFrameRate = 10;
 
 	private final float knockbackDuration = 0.1f;
 	private final float knockbackSpeed = 20;
-	private final int damage = 1;
+
+	private int hearts;
+	private int damage;
 
 	private final Direction defaultDirection = Direction.UP;
 	private final Vector2 defaultSize = new Vector2(16, 16);
@@ -109,7 +107,7 @@ abstract public class OctorokPlugin implements PluginServiceSPI {
 
 		// set the life of the Octorok.
 		octorok.addEntityPart(
-			new LifePart(this.defaultHearts)
+			new LifePart(this.hearts)
 		);
 
 		// Set the first sprite which is shown, when the octorok is spawned.
@@ -141,5 +139,13 @@ abstract public class OctorokPlugin implements PluginServiceSPI {
 		}
 
 		return textureList;
+	}
+
+	public void setHearts(int hearts) {
+		this.hearts = hearts;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
 	}
 }
