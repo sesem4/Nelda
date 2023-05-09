@@ -55,9 +55,11 @@ public class Knockback {
 
 	/**
 	 * Decrements the duration of the Knockback by 1
+	 *
+	 * @param deltaTime the time that has passed since the last update
 	 */
-	public void decrementDuration() {
-		this.setDuration(this.getDuration() - 1f);
+	public void decrementDuration(float deltaTime) {
+		this.setDuration(this.getDuration() - deltaTime);
 	}
 
 	/**

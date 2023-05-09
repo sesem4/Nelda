@@ -183,7 +183,7 @@ public class MovingPart implements EntityPart {
 				// knockback.speed and decrement the knockback duration
 				Vector2 deltaPosition = new Vector2(this.knockback.getDirection()).times(this.knockback.getSpeed());
 				positionPart.move(deltaPosition);
-				this.knockback.decrementDuration();
+				this.knockback.decrementDuration(gameData.getDeltaTime());
 				return;
 			}
 		}
