@@ -15,7 +15,7 @@ public class Knockback {
 	/**
 	 * The duration of the Knockback
 	 */
-	private int duration;
+	private float duration;
 
 	/**
 	 * The speed with which the Knockback should push the Entity in
@@ -29,7 +29,7 @@ public class Knockback {
 	 * @param duration  for how long the Knockback should take place
 	 * @param speed     the speed with which the Knockback should push the Entity in
 	 */
-	public Knockback(Direction direction, int duration, float speed) {
+	public Knockback(Direction direction, float duration, float speed) {
 		this.direction = direction;
 		this.duration = duration;
 		this.speed = speed;
@@ -40,7 +40,7 @@ public class Knockback {
 	 * 
 	 * @param duration the amount of time the Knockback should last
 	 */
-	public void setDuration(int duration) {
+	public void setDuration(float duration) {
 		this.duration = duration;
 	}
 
@@ -49,7 +49,7 @@ public class Knockback {
 	 * 
 	 * @return duration
 	 */
-	public int getDuration() {
+	public float getDuration() {
 		return this.duration;
 	}
 
@@ -57,7 +57,7 @@ public class Knockback {
 	 * Decrements the duration of the Knockback by 1
 	 */
 	public void decrementDuration() {
-		this.setDuration(this.getDuration() - 1);
+		this.setDuration(this.getDuration() - 1f);
 	}
 
 	/**
