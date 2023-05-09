@@ -10,8 +10,8 @@ public class BlueOctorokPlugin extends OctorokPlugin {
 		super();
 
 		// Set the blue Octorok's stats
-		super.setHearts(5);
-		super.setDamage(2);
+		super.setHearts(2);
+		super.setDamage(1);
 	}
 
 //	@Override

@@ -10,7 +10,7 @@ public class RedOctorokPlugin extends OctorokPlugin {
 		super();
 
 		// Set the red Octorok's stats
-		super.setHearts(3);
+		super.setHearts(1);
 		super.setDamage(1);
 	}
 
