@@ -9,8 +9,7 @@ module Octorok {
 		dk.sdu.sesem4.octorok.red.RedOctorokPlugin,
 		dk.sdu.sesem4.octorok.blue.BlueOctorokPlugin;
 	provides ProcessingServiceSPI with
-		dk.sdu.sesem4.octorok.red.RedOctorokProcessor,
-		dk.sdu.sesem4.octorok.blue.BlueOctorokProcessor;
+		dk.sdu.sesem4.octorok.common.OctorokProcessor;
 	provides PostProcessingServiceSPI with
 		dk.sdu.sesem4.octorok.common.OctorokPostProcessor;
 
