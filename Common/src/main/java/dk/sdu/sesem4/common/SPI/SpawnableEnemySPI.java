@@ -10,7 +10,7 @@ public interface SpawnableEnemySPI {
 	 * <br>
 	 * <br>
 	 * Pre-condition: A enemy spawn is requested, and the game has started and a suitable map and region are loaded.<br>
-	 * post-condition: Enemy has been spawned at x and y with default difficulty.
+	 * post-condition: Enemy has been spawned at coordinate with default difficulty. Entity representing the enemy is returned.
 	 *
 	 * @param gameData The game data
 	 * @param coordinate The x and y coordinate the enemy should spawn at, formatted as a Vector2
@@ -24,7 +24,7 @@ public interface SpawnableEnemySPI {
 	 * <br>
 	 * <br>
 	 * Pre-condition: A enemy spawn is requested, and the game has started and a suitable map and region are loaded.<br>
-	 * post-condition: Enemy has been spawned at x and y with specified difficulty if the difficulty is possible.
+	 * post-condition: Enemy has been spawned at x and y with specified difficulty if the difficulty is possible. Entity representing the enemy is returned.
 	 *
 	 * @param gameData The game data
 	 * @param coordinate The x and y coordinate the enemy should spawn at, formatted as a Vector2
