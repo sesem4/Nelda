@@ -13,6 +13,7 @@ module Common {
 	uses ControlSPI;
 	uses SpawnableEnemySPI;
 	uses EventServiceSPI;
+	uses MapSPI;
 	uses PickupSPI;
 	uses PluginServiceSPI;
 	uses PostProcessingServiceSPI;
