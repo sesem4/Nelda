@@ -169,8 +169,9 @@ public class MovingPart implements EntityPart {
 	public void process(GameData gameData, Entity entity) {
 		// Get the current position if the Entity
 		PositionPart positionPart = entity.getEntityPart(PositionPart.class);
-		
-		previousPosition = positionPart.getPosition();
+
+		// we have to create a *new* Vector2, because otherwise we'll just copy the reference
+		previousPosition = new Vector2(positionPart.getPosition().getX(), positionPart.getPosition().getY());
 		
 		// Check if the Entity is knocked back
 		if (this.isKnockedBack()) {
