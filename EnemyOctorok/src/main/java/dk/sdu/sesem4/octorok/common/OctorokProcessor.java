@@ -25,6 +25,5 @@ abstract public class OctorokProcessor implements ProcessingServiceSPI {
 			lifePart.process(gameData, octorok);
 			spritePart.process(gameData, octorok);
 		}
-
 	}
 }
