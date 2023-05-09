@@ -72,6 +72,11 @@ public class EnemySpawner implements EventListener {
 
 		List<SpawnableEnemySPI> enemySpawners = locateSpawnableEnemySPIByDifficulty(difficulty);
 
+		System.out.println(Arrays.toString(enemySpawners.toArray()));
+		if (enemySpawners.size() == 0) {
+			return; // No enemy spawners found for the difficulty, and enemy spawning is therefore halted.
+		}
+
 		for (int i = 0; i < enemyCount; i++) {
 			SpawnableEnemySPI spawner = enemySpawners.get((int) (Math.random() * (enemySpawners.size() - 1)));
 			Entity enemy = spawner.spawnEnemy(eventData.getGameData(), getRandomSpawnableLocation(eventData), difficulty);
@@ -93,8 +98,11 @@ public class EnemySpawner implements EventListener {
 
 		for (SpawnableEnemySPI spi : spawnerSPIs) {
 			int[] difficulties = spi.getDifficulties();
-			if (List.of(difficulties).contains(difficulty)) {
-				enemySpawners.add(spi);
+			for (int i : difficulties) {
+				if (i == difficulty) {
+					enemySpawners.add(spi);
+					break;
+				}
 			}
 		}
 
