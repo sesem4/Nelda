@@ -1,5 +1,6 @@
 package dk.sdu.sesem4.spawner;
 
+import dk.sdu.sesem4.common.SPI.MapSPI;
 import dk.sdu.sesem4.common.SPI.SpawnableEnemySPI;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.entity.EntityType;
@@ -17,6 +18,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.internal.util.reflection.*;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -41,8 +44,26 @@ class EnemySpawnerTest {
 	}
 
 	@Test
-	void processNotification() {
-	}
+	@PrepareForTest(EnemySpawner.class)
+	void processNotification() throws Exception {
+		EnemySpawner mockedEnemySpawner = spy(EnemySpawner.class);
+
+		MapTransitionDoneEvent eventData = mock(MapTransitionDoneEvent.class);
+		GameData gameData = mock(GameData.class);
+		when(eventData.getGameData()).thenReturn(gameData);
+		GameWorld gameWorld = mock(GameWorld.class);
+		when(gameData.getGameWorld()).thenReturn(gameWorld);
+		when(gameWorld.getEnemyCount()).thenReturn(1);
+
+//		PowerMockito.when(mockedEnemySpawner, "despawn", eventData).thenReturn(false);
+//		PowerMockito.when(mockedEnemySpawner, "spawn", eventData).thenReturn(null);
+//		doCallRealMethod().when(mockedEnemySpawner).processNotification(MapTransitionDoneEventType.class, eventData);
+//
+//		mockedEnemySpawner.processNotification(MapTransitionDoneEventType.class, eventData);
+
+//		PowerMockito.verifyPrivate(mockedEnemySpawner).invoke("despawn");
+//		PowerMockito.verifyPrivate(mockedEnemySpawner).invoke("spawn");
+	};
 
 	@Test
 	void despawn() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
@@ -74,7 +95,7 @@ class EnemySpawnerTest {
 	}
 
 	@Test
-	void spawn() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+	void spawn() throws NoSuchMethodException {
 		// Get method
 		Method spawn = enemySpawner.getClass().getDeclaredMethod("spawn", MapTransitionDoneEvent.class);
 		spawn.setAccessible(true);
@@ -123,10 +144,91 @@ class EnemySpawnerTest {
 	}
 
 	@Test
-	void locateSpawnableEnemySPIByDifficulty() {
+	void locateSpawnableEnemySPIByDifficulty() throws NoSuchMethodException {
+		// Get method
+		Method locateSpawnableEnemySPIByDifficulty = enemySpawner.getClass().getDeclaredMethod("locateSpawnableEnemySPIByDifficulty", int.class);
+		locateSpawnableEnemySPIByDifficulty.setAccessible(true);
+
+		// Generate spawners
+		List<SpawnableEnemySPI> spawnableEnemySPIS = new ArrayList<>();
+		int[][] data = {{1,2,3}, {1,3},{-1,0},{1,8},{2,8},{10000,2,64,-5}};
+		SpawnableEnemySPI[] correct = new SpawnableEnemySPI[3];
+		for (int[] datum : data) {
+			SpawnableEnemySPI spawner = mock(SpawnableEnemySPI.class);
+			when(spawner.getDifficulties()).thenReturn(datum);
+			spawnableEnemySPIS.add(spawner);
+		}
+
+		// Overwrite SPI locator
+		try (MockedStatic<SPILocator> dummy = Mockito.mockStatic(SPILocator.class)) {
+			// Set output of SPI locator
+			dummy.when(() -> SPILocator.locateAll(SpawnableEnemySPI.class)).thenReturn(spawnableEnemySPIS);
+
+			// Run method
+			int targetDifficulty = 2;
+			List<SpawnableEnemySPI> spawnerList = (List<SpawnableEnemySPI>) locateSpawnableEnemySPIByDifficulty.invoke(enemySpawner, targetDifficulty);
+
+			// Verify that the method returned the correct data
+			assertEquals(3, spawnerList.size());
+			spawnerList.forEach(spawner -> {
+				int[] difficulties = spawner.getDifficulties();
+				for (int i : difficulties) {
+					if (i == targetDifficulty) {
+						assertTrue(true);
+						return;
+					}
+				}
+				fail();
+			});
+		} catch (Exception exception) {
+			fail();
+		}
 	}
 
 	@Test
-	void getRandomSpawnableLocation() {
+	void getRandomSpawnableLocation() throws NoSuchMethodException {
+		// Get method
+		Method getRandomSpawnableLocation = enemySpawner.getClass().getDeclaredMethod("getRandomSpawnableLocation", MapTransitionDoneEvent.class);
+		getRandomSpawnableLocation.setAccessible(true);
+
+		// Setup mocked data for eventData
+		MapTransitionDoneEvent eventData = mock(MapTransitionDoneEvent.class);
+		GameData gameData = mock(GameData.class);
+		when(eventData.getGameData()).thenReturn(gameData);
+		GameWorld gameWorld = mock(GameWorld.class);
+		when(gameData.getGameWorld()).thenReturn(gameWorld);
+		Vector2 mapSize = mock(Vector2.class);
+		when(gameWorld.getMapSize()).thenReturn(mapSize);
+		when(mapSize.getX()).thenReturn(100f);
+		when(mapSize.getY()).thenReturn(100f);
+
+		Vector2 vector2 = mock(Vector2.class);
+		when(vector2.getX()).thenReturn(25f);
+		when(vector2.getY()).thenReturn(50f);
+
+		MapSPI mapUtility = mock(MapSPI.class);
+		when(mapUtility.getRandomPassableTile()).thenReturn(vector2);
+
+		// Overwrite SPI locator
+		try (MockedStatic<SPILocator> dummy = Mockito.mockStatic(SPILocator.class)) {
+			// Set output of SPI locator
+			List<MapSPI> mapSPIS = new ArrayList<>();
+			dummy.when(() -> SPILocator.locateAll(MapSPI.class)).thenReturn(mapSPIS);
+
+			// Run method (1. type - No map utility)
+			int targetDifficulty = 2;
+			Vector2 position = (Vector2) getRandomSpawnableLocation.invoke(enemySpawner, eventData);
+			assertEquals(Vector2.class, position.getClass());
+			assertTrue(position.getX() >= 0 && position.getX() <= 100f);
+			assertTrue(position.getY() >= 0 && position.getY() <= 100f);
+
+			// Run method (2. type - Map utility present)
+			mapSPIS.add(mapUtility);
+			position = (Vector2) getRandomSpawnableLocation.invoke(enemySpawner, eventData);
+			assertEquals(vector2.getX() * GameWorld.TILE_SIZE, position.getX());
+			assertEquals(vector2.getY() * GameWorld.TILE_SIZE, position.getY());
+		} catch (Exception exception) {
+			fail();
+		}
 	}
 }
