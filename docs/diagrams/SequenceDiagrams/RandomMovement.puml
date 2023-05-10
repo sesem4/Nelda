@@ -44,17 +44,4 @@ MovingPart -> Enemy : void
 deactivate MovingPart
 Enemy -> Core : void
 deactivate Enemy
-
-
-
-
-
-
-
-
-
-
-
-
-
 @enduml
