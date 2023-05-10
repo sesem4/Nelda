@@ -19,10 +19,10 @@
 	</properties>
 	
 	<modules>
+		<module>EnemyOctorok</module>
 		<module>Collision</module>
 		<module>Common</module>
 		<module>Core</module>
-		<module>Enemy</module>
 		<module>Heart</module>
 		<module>Map</module>
 		<module>Player</module>
