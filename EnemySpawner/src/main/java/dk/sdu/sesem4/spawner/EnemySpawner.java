@@ -23,7 +23,7 @@ public class EnemySpawner implements EventListener {
 	/** Enemy spawner instance - Singleton */
 	private static EnemySpawner instance;
 	/** Spawned enemies */
-	private List<Entity> enemies;
+	protected List<Entity> enemies;
 
 	private EnemySpawner() {
 		this.enemies = new LinkedList<>();
@@ -41,11 +41,12 @@ public class EnemySpawner implements EventListener {
 		if (!(data instanceof MapTransitionDoneEvent)) {
 			return;
 		}
-		
+
 		MapTransitionDoneEvent eventData = (MapTransitionDoneEvent) data;
-		
+
 		despawn(eventData);
 
+		System.out.println(eventData.getGameData().getGameWorld().getEnemyCount());
 		if (eventData.getGameData().getGameWorld().getEnemyCount() > 0) {
 			spawn(eventData);
 		}
@@ -56,7 +57,7 @@ public class EnemySpawner implements EventListener {
 	 *
 	 * @param eventData Event data, for the Map transition done event.
 	 */
-	private void despawn(MapTransitionDoneEvent eventData) {
+	protected void despawn(MapTransitionDoneEvent eventData) {
 		GameEntities entities = eventData.getGameData().getGameEntities();
 		this.enemies.forEach(enemy -> entities.removeEntity(enemy));
 	}
@@ -66,7 +67,7 @@ public class EnemySpawner implements EventListener {
 	 *
 	 * @param eventData Event data, for the Map transition done event.
 	 */
-	private void spawn(MapTransitionDoneEvent eventData) {
+	protected void spawn(MapTransitionDoneEvent eventData) {
 		int difficulty = eventData.getGameData().getGameWorld().getDifficulty();
 		int enemyCount = eventData.getGameData().getGameWorld().getEnemyCount();
 

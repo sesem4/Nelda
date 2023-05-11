@@ -3,26 +3,19 @@ package dk.sdu.sesem4.spawner;
 import dk.sdu.sesem4.common.SPI.MapSPI;
 import dk.sdu.sesem4.common.SPI.SpawnableEnemySPI;
 import dk.sdu.sesem4.common.data.entity.Entity;
-import dk.sdu.sesem4.common.data.entity.EntityType;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.gamedata.GameEntities;
 import dk.sdu.sesem4.common.data.gamedata.GameWorld;
 import dk.sdu.sesem4.common.data.math.Vector2;
-import dk.sdu.sesem4.common.event.EventManager;
 import dk.sdu.sesem4.common.event.events.map.MapTransitionDoneEvent;
 import dk.sdu.sesem4.common.event.events.map.MapTransitionDoneEventType;
-import dk.sdu.sesem4.common.event.events.map.MapTransitionEventType;
 import dk.sdu.sesem4.common.util.SPILocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.mockito.internal.util.reflection.*;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +37,8 @@ class EnemySpawnerTest {
 	}
 
 	@Test
-	@PrepareForTest(EnemySpawner.class)
-	void processNotification() throws Exception {
-		EnemySpawner mockedEnemySpawner = spy(EnemySpawner.class);
-
+	void processNotification() {
+		// Mock
 		MapTransitionDoneEvent eventData = mock(MapTransitionDoneEvent.class);
 		GameData gameData = mock(GameData.class);
 		when(eventData.getGameData()).thenReturn(gameData);
@@ -55,22 +46,22 @@ class EnemySpawnerTest {
 		when(gameData.getGameWorld()).thenReturn(gameWorld);
 		when(gameWorld.getEnemyCount()).thenReturn(1);
 
-//		PowerMockito.when(mockedEnemySpawner, "despawn", eventData).thenReturn(false);
-//		PowerMockito.when(mockedEnemySpawner, "spawn", eventData).thenReturn(null);
-//		doCallRealMethod().when(mockedEnemySpawner).processNotification(MapTransitionDoneEventType.class, eventData);
-//
-//		mockedEnemySpawner.processNotification(MapTransitionDoneEventType.class, eventData);
+		// Setup method calls on mocked enemy
+		EnemySpawner mockedEnemySpawner = mock(EnemySpawner.class);
+		doNothing().when(mockedEnemySpawner).despawn(isA(MapTransitionDoneEvent.class));
+		doNothing().when(mockedEnemySpawner).spawn(isA(MapTransitionDoneEvent.class));
+		doCallRealMethod().when(mockedEnemySpawner).processNotification(MapTransitionDoneEventType.class, eventData);
 
-//		PowerMockito.verifyPrivate(mockedEnemySpawner).invoke("despawn");
-//		PowerMockito.verifyPrivate(mockedEnemySpawner).invoke("spawn");
-	};
+		// Call method
+		mockedEnemySpawner.processNotification(MapTransitionDoneEventType.class, eventData);
+
+		// Validate that the calls were correct
+		verify(mockedEnemySpawner).despawn(eventData);
+		verify(mockedEnemySpawner).spawn(eventData);
+	}
 
 	@Test
-	void despawn() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-		// Get method
-		Method despawn = enemySpawner.getClass().getDeclaredMethod("despawn", MapTransitionDoneEvent.class);
-		despawn.setAccessible(true);
-
+	void despawn() throws NoSuchFieldException, IllegalAccessException {
 		// Setup mocked data
 		MapTransitionDoneEvent eventData = mock(MapTransitionDoneEvent.class);
 		GameData gameData = mock(GameData.class);
@@ -88,18 +79,14 @@ class EnemySpawnerTest {
 		enemiesField.set(enemySpawner, enemies);
 
 		// Run the despawn command
-		despawn.invoke(enemySpawner, eventData);
+		enemySpawner.despawn(eventData);
 
 		// Verify, that the enemy entity was endeed set to be removed
 		verify(gameEntities).removeEntity(eq(entity));
 	}
 
 	@Test
-	void spawn() throws NoSuchMethodException {
-		// Get method
-		Method spawn = enemySpawner.getClass().getDeclaredMethod("spawn", MapTransitionDoneEvent.class);
-		spawn.setAccessible(true);
-
+	void spawn() {
 		// Setup mocked data
 		MapTransitionDoneEvent eventData = mock(MapTransitionDoneEvent.class);
 		GameData gameData = mock(GameData.class);
@@ -134,7 +121,7 @@ class EnemySpawnerTest {
 			enemiesField.setAccessible(true);
 			enemiesField.set(enemySpawner, enemies);
 
-			spawn.invoke(enemySpawner, eventData);
+			enemySpawner.spawn(eventData);
 
 			verify(spawner).spawnEnemy(eq(gameData), any(Vector2.class), eq(1));
 			verify(enemies).add(any(Entity.class));
