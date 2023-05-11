@@ -15,7 +15,7 @@ public class EnemySpawner implements SpawnableEnemySPI {
 	@Override
 	public void spawnEnemy(GameData gameData, Vector2 coordinate) {
 		// Call the overload method with a difficulty (red Moblin)
-		spawnEnemy(gameData, coordinate, 1);
+		spawnEnemy(gameData, coordinate, 3);
 	}
 
 	@Override
