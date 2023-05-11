@@ -18,7 +18,7 @@ public class RandomMovementTest {
 
     @Test
     public void testGetType() {
-        assertEquals(this.randomMovement.getType(), ControlType.AI);
+        assertEquals(this.randomMovement.getType(), ControlType.DUMBAI);
     }
 
     @Test
