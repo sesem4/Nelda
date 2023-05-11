@@ -6,7 +6,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
 import dk.sdu.sesem4.common.SPI.ProcessingServiceSPI;
-import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
 import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
@@ -155,8 +154,7 @@ public class MapProcessingService implements ProcessingServiceSPI, PostProcessin
 			Rectangle entityRectangle = positionPart.getBoundingBox();
 
 			if (!isRectangleValid(entityRectangle, currentTiledMap)) {
-				MovingPart movingPart = entity.getEntityPart(MovingPart.class);
-				movingPart.undoMovement(entity);
+				entity.collidedWithMap(gameData);
 			}
 		}
 	}

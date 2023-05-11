@@ -121,6 +121,10 @@ public abstract class Entity {
           this.entityType = entityType;
      }
 
+	public void collided(GameData gameData, Entity other) {
+		collided(other);
+	}
+	
 	/**
 	 * Emit to entity that it has collided with another entity.
 	 *
@@ -141,6 +145,11 @@ public abstract class Entity {
 		
 		doDamage(other);
 		doKnockback(other);
+	}
+	
+	public void collidedWithMap(GameData gameData) {
+		MovingPart movingPart = this.getEntityPart(MovingPart.class);
+		movingPart.undoMovement(this);
 	}
 
      /**
