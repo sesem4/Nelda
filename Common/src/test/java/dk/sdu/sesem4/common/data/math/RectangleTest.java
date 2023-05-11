@@ -4,6 +4,10 @@ package dk.sdu.sesem4.common.data.math;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class RectangleTest {
@@ -94,18 +98,36 @@ public class RectangleTest {
 	}
 	
 	/**
-	 * Test collisions between two rectangles
+	 * We need to test the following scenarios:
+	 * a.left is before b.left
+	 * a.left is after b.left, but before b.right
+	 * a.left is after b.right
+	 * the same for a.right, but it cannot be less than a.left
+	 * We also need to do all this in conjunction with Y
 	 */
 	@Test
 	public void testCollidesWith() {
-		// we need to test the following scenarios:
-		// a.left is before b.left
-		// a.left is after b.left, but before b.right
-		// a.left is after b.right
-		// the same for a.right, but it cannot be less than a.left
-		
-		// before, inside, after
-		
-		// all of this also needs to be tested in conjunction with the y-axis
+		Rectangle a = new Rectangle(new Vector2(1, 1), new Vector2(1, 1));
+		for (AbstractMap.Entry<Float, Float> xRect : getRanges()) {
+			for (AbstractMap.Entry<Float, Float> yRect : getRanges()) {
+				Rectangle b = new Rectangle(new Vector2(xRect.getKey(), yRect.getKey()), new Vector2(xRect.getValue()-xRect.getKey(), yRect.getValue()-yRect.getKey()));
+				boolean xCollision = !(b.getRightEdge() < a.getLeftEdge() || a.getRightEdge() < b.getLeftEdge());
+				boolean yCollision = !(b.getTopEdge() < a.getBottomEdge() || a.getTopEdge() < b.getBottomEdge());
+				boolean expected = xCollision && yCollision;
+				assertEquals(expected, a.collidesWith(b));
+			}
+		}
+	}
+	
+	private List<AbstractMap.Entry<Float, Float>> getRanges() {
+		List<AbstractMap.Entry<Float, Float>> positions = new ArrayList<>();
+		for (int i = 0; i < 3; i++) {
+			float startPos = i + (1f/3f);
+			for (int j = i; j < 3; j++) {
+				float endPos = j + (2f/3f);
+				positions.add(new AbstractMap.SimpleEntry<>(startPos, endPos));
+			}
+		}
+		return positions;
 	}
 }

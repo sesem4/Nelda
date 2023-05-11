@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import dk.sdu.sesem4.common.SPI.PluginServiceSPI;
 import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
@@ -18,11 +19,16 @@ import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.process.Priority;
+import dk.sdu.sesem4.common.data.rendering.SpriteData;
+import dk.sdu.sesem4.common.data.resource.Resource;
 import dk.sdu.sesem4.common.util.SPILocator;
 
+import java.io.*;
 import java.util.HashMap;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * The Game class, where all process is handled and the game is rendered.
@@ -59,7 +65,8 @@ public class Game extends ApplicationAdapter {
 	}
 
 	/**
-	 * This method is responsible for setting up the game, where the different plugins are started and the gameData is created, as well as the eventManager.
+	 * This method is responsible for setting up the game, where the different
+	 * plugins are started and the gameData is created, as well as the eventManager.
 	 */
 	@Override
 	public void create() {
@@ -71,14 +78,9 @@ public class Game extends ApplicationAdapter {
 
 		spriteBatch = new SpriteBatch();
 
-		TiledMap map = Utils.loadMap(gameData.getGameWorld().getMap());
-		this.tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-
 		this.camera = new OrthographicCamera();
 		this.camera.update();
-		float w = 16 * 16;
-		float h = 11 * 16;
-		this.camera.setToOrtho(false, w, h);
+		this.camera.setToOrtho(false, gameData.getGameWorld().getMapSize().getX(), gameData.getGameWorld().getMapSize().getY());
 	}
 
 	/**
@@ -103,17 +105,13 @@ public class Game extends ApplicationAdapter {
 		Gdx.graphics.getDeltaTime();
 
 		this.camera.update();
-		
-		// render map
-		TiledMap map = Utils.loadMap(gameData.getGameWorld().getMap());
-		this.tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-		this.tiledMapRenderer.setView(camera);
-		this.tiledMapRenderer.render();
+
+		renderMap();
 
 		// render sprites
-		this.spriteBatch.setProjectionMatrix(camera.combined);
-		this.spriteBatch.begin();
-		
+		spriteBatch.setProjectionMatrix(camera.combined);
+		spriteBatch.begin();
+
 		List<Entity> entities = gameData.getGameEntities().getEntities(Entity.class);
 
 		for (Entity entity : entities) {
@@ -125,11 +123,16 @@ public class Game extends ApplicationAdapter {
 			}
 
 			// Create sprite
-			Sprite sprite = new Sprite(getSprite(spritePart.getSprite().getTexture().toString()));
+			Texture texture = getTexture(spritePart);
+			if (texture == null) {
+				break;
+			}
+			Sprite sprite = new Sprite(texture);
 
 			// Set sprite size and position from entity parts
-			sprite.setSize(16, 16); // TODO: Size has to be set from entity, but this is included in a later update
+			sprite.setSize(positionPart.getSize().getX(), positionPart.getSize().getY());
 			sprite.setPosition(positionPart.getPosition().getX(), positionPart.getPosition().getY());
+			sprite.setFlip(spritePart.getSprite().isxFlipped(), spritePart.getSprite().isyFlipped());
 
 			// Draw sprite
 			sprite.draw(spriteBatch);
@@ -145,17 +148,62 @@ public class Game extends ApplicationAdapter {
 	/**
 	 * Get sprite with caching
 	 *
-	 * @param filePath Path for sprite
+	 * @param spritePart Sprite part to get Sprite from
 	 * @return Sprite texture
 	 */
-	private Texture getSprite(String filePath) {
-		if (this.textureCache.containsKey(filePath)) {
-			return this.textureCache.get(filePath);
+	private Texture getTexture(SpritePart spritePart) {
+		SpriteData spriteData = spritePart.getSprite();
+		String key = spriteData.getTexture().toString();
+
+		// Load cached version
+		if (this.textureCache.containsKey(key)) {
+			return this.textureCache.get(key);
 		}
 
-		Texture texture = new Texture(Gdx.files.local(filePath));
-		this.textureCache.put(filePath, texture);
+		// Ensure resource class has been set, otherwise crash
+		if (spriteData.getResourceClass() == null) {
+			System.out.println("Resource class not set on sprite");
+			return null;
+		}
+
+		// Get image data
+		File file = Resource.getInstance().getResource(spriteData.getResourceClass(), spriteData.getTexture());
+		if (file == null) {
+			return null;
+		}
+
+		// Use the absolute path from the temporary file, to load into LibGDX texture
+		Texture texture = new Texture(
+				Gdx.files.absolute(
+						file.getAbsolutePath()));
+
+		// Cache texture
+		this.textureCache.put(key, texture);
 
 		return texture;
+	}
+
+	/**
+	 * This method is responsible for rendering the map.
+	 */
+	private void renderMap() {
+		// if there is a map, load it and render it.
+		if (gameData.getGameWorld().getMap() != null) {
+			TiledMap map = loadMap(gameData.getGameWorld().getMap());
+			tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+			tiledMapRenderer.setView(camera);
+			tiledMapRenderer.render();
+		}
+	}
+
+	/**
+	 * This method is responsible for loading the map.
+	 * 
+	 * @param path The path to the map.
+	 * @return The map.
+	 */
+	TiledMap loadMap(Path path) {
+		TmxMapLoader tmxMapLoader = new TmxMapLoader();
+		return tmxMapLoader.load(path.toString());
 	}
 }

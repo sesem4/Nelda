@@ -2,6 +2,11 @@ package dk.sdu.sesem4.common.data.EntityParts;
 
 import dk.sdu.sesem4.common.SPI.MovementControllerSPI;
 import dk.sdu.sesem4.common.data.CollisionParts.Knockback;
+import dk.sdu.sesem4.common.data.entity.Entity;
+import dk.sdu.sesem4.common.data.entity.EntityType;
+import dk.sdu.sesem4.common.data.entity.classes.TestEntity;
+import dk.sdu.sesem4.common.data.gamedata.GameData;
+import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
 import dk.sdu.sesem4.common.util.Direction;
 import org.junit.Before;
@@ -32,14 +37,14 @@ public class MovingPartTest {
 
 	@Test
 	public void testGetMoveSpeed() {
-		assertEquals(10,movingPart.getMoveSpeed());
+		assertEquals(10f,movingPart.getMoveSpeed(), 0.001);
 	}
 
 	@Test
 	public void testSetMoveSpeed() {
-		assertEquals(10,movingPart.getMoveSpeed());
-		movingPart.setMoveSpeed(20);
-		assertEquals(20,movingPart.getMoveSpeed());
+		assertEquals(10f,movingPart.getMoveSpeed(), 0.001);
+		movingPart.setMoveSpeed(20f);
+		assertEquals(20f,movingPart.getMoveSpeed(), 0.001);
 	}
 
 	@Test
@@ -81,5 +86,37 @@ public class MovingPartTest {
 
 	@Test
 	public void testSetSprite() {
+	}
+	
+	@Test
+	public void testUndoMovementBeforeProcessDoesNothing() {
+		Vector2 startPosition = new Vector2(10, 10);
+		
+		Entity entity = new TestEntity(EntityType.Player);
+		PositionPart positionPart = new PositionPart(startPosition, new Vector2(16, 16), Direction.UP);
+		entity.addEntityPart(positionPart);
+		
+		movingPart.undoMovement(entity);
+		
+		Vector2 endPosition = positionPart.getPosition();
+		
+		assertEquals(startPosition, endPosition);
+	}
+	
+	@Test
+	public void testDirectionWhenNoMovementControllerShouldBeNull() {
+		Vector2 startPosition = new Vector2(10, 10);
+		
+		Entity entity = new TestEntity(EntityType.Player);
+		PositionPart positionPart = new PositionPart(startPosition, new Vector2(16, 16), Direction.UP);
+		entity.addEntityPart(positionPart);
+		
+		GameData gameData = new GameData();
+		gameData.setDeltaTime(0.016f);
+		movingPart.process(gameData, entity);
+		
+		Vector2 endPosition = positionPart.getPosition();
+		
+		assertEquals(new Vector2(10, 10), endPosition);
 	}
 }

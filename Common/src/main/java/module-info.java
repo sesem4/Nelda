@@ -6,18 +6,18 @@ module Common {
 	 */
 	requires java.desktop;
 	requires ShadedLibGDX;
-
 	/**
 	 * SPI's
 	 */
 	uses CombatSPI;
 	uses ControlSPI;
-	uses EnemySpawnerSPI;
+	uses SpawnableEnemySPI;
 	uses EventServiceSPI;
 	uses PickupSPI;
 	uses PluginServiceSPI;
 	uses PostProcessingServiceSPI;
 	uses ProcessingServiceSPI;
+	uses MovementControllerSPI;
 
 	/**
 	 * Export of elements
@@ -29,9 +29,12 @@ module Common {
 	exports dk.sdu.sesem4.common.data.gamedata;
 	exports dk.sdu.sesem4.common.data.math;
 	exports dk.sdu.sesem4.common.data.process;
-	exports dk.sdu.sesem4.common.data.weapon;
 	exports dk.sdu.sesem4.common.data.rendering;
+	exports dk.sdu.sesem4.common.data.resource;
+	exports dk.sdu.sesem4.common.data.weapon;
 	exports dk.sdu.sesem4.common.util;
 	exports dk.sdu.sesem4.common.event;
 	exports dk.sdu.sesem4.common.event.events;
+	exports dk.sdu.sesem4.common.data.controllerParts;
+
 }

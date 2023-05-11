@@ -3,7 +3,6 @@ package dk.sdu.sesem4.map;
 import dk.sdu.sesem4.common.SPI.PluginServiceSPI;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.gamedata.GameWorld;
-import dk.sdu.sesem4.common.data.process.Priority;
 
 /**
  * The MapPlugin class is the entry point for the map module.
@@ -19,36 +18,24 @@ public class MapPlugin implements PluginServiceSPI {
 	 * This method is called when the game is started.
 	 * It creates a new Map object, a new MapProcessingService object and loads the world.
 	 * It also subscribes to the MapTransitionEventType.
+	 *
 	 * @param gameData The game data.
 	 */
 	@Override
 	public void start(GameData gameData) {
-		System.out.println("Vi har nu startet map!");
-
-
 		this.mapProcessingService = new MapProcessingService();
-		this.mapProcessingService.loadWorld("overworld", 16, 8);
-		gameData.setGameWorld(new GameWorld(mapProcessingService.getCurrentMap()));
+		gameData.getGameWorld().setMap(mapProcessingService.getCurrentMap());
+		gameData.getGameWorld().setMapSize(GameWorld.TILE_SIZE * 16, GameWorld.TILE_SIZE * 11);
 	}
 
 	/**
 	 * This method is called when the game is stopped.
 	 * It sets the MapProcessingService and the Map object to null.
+	 *
 	 * @param gameData The game data.
 	 */
 	@Override
 	public void stop(GameData gameData) {
 		this.mapProcessingService = null;
-	}
-
-	/**
-	 * This method sets the current map in the game data. If there is a MapTransition event,
-	 * it changes the current map index to reflect that.
-	 *
-	 * @param gameData The game data.
-	 * @param priority The priority of the process.
-	 */
-	public void process(GameData gameData, Priority priority) {
-		this.mapProcessingService.process(gameData, priority);
 	}
 }

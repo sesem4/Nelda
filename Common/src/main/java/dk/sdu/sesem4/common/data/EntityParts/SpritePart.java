@@ -5,7 +5,9 @@ import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
 
 public class SpritePart implements EntityPart {
-	/** Current sprite for entity */
+	/**
+	 * Current sprite for entity
+	 */
 	private SpriteData sprite;
 
 	/**

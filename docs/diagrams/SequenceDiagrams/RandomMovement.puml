@@ -1,0 +1,47 @@
+@startuml Enemy Random Movement
+skinparam style strictuml
+title Enemy Random Movement
+participant Core
+participant Enemy
+participant RandomMovement
+participant ControlType
+participant RandomMovementController
+participant MovingPart
+participant SPILocater
+
+activate Core
+Core -> Enemy: start
+activate Enemy
+Enemy -> SPILocater: LocatAll(ControlSPI)
+activate SPILocater
+SPILocater -> Enemy: SPIs
+deactivate SPILocater
+Enemy -> RandomMovement: getType()
+activate RandomMovement
+RandomMovement -> ControlType: getType
+activate ControlType
+ControlType -> RandomMovement: AI
+deactivate ControlType
+RandomMovement -> Enemy: AI
+Enemy -> RandomMovement: getRandomMovementController()
+RandomMovement -> RandomMovementController: new RandomMovementController()
+activate RandomMovementController
+RandomMovementController -> RandomMovement: RandomMovementController
+deactivate RandomMovementController
+RandomMovement -> Enemy: RandomMovementController
+deactivate RandomMovement
+Enemy -> Core: void
+deactivate Enemy
+Core -> Enemy : process()
+activate Enemy
+Enemy -> MovingPart : process()
+activate MovingPart
+MovingPart -> RandomMovementController : getMovement()
+activate RandomMovementController
+RandomMovementController -> MovingPart : Direction
+deactivate RandomMovementController
+MovingPart -> Enemy : void
+deactivate MovingPart
+Enemy -> Core : void
+deactivate Enemy
+@enduml
