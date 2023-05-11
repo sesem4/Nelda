@@ -21,11 +21,11 @@ public class EnemySpawner implements SpawnableEnemySPI {
 	@Override
 	public void spawnEnemy(GameData gameData, Vector2 coordinate, int difficulty) {
 		switch (difficulty) {
-			case 1: // red
+			case 3: // red
 				RedMoblinPlugin redMoblinPlugin = new RedMoblinPlugin();
 				redMoblinPlugin.spawn(gameData, coordinate, RedMoblin.class);
 				break;
-			case 2: // blue
+			case 4: // blue
 				BlueMoblinPlugin blueMoblinPlugin = new BlueMoblinPlugin();
 				blueMoblinPlugin.spawn(gameData, coordinate, BlueMoblin.class);
 				break;
@@ -34,6 +34,6 @@ public class EnemySpawner implements SpawnableEnemySPI {
 
 	@Override
 	public int[] getDifficulties() {
-		return new int[]{1, 2};
+		return new int[]{3, 4};
 	}
 }
