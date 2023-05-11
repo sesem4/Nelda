@@ -130,7 +130,7 @@ public class EnemySpawner implements EventListener {
 			return new Vector2(x, y);
 		}
 
-		Vector2 randomTileCoordinate = mapUtilities.get(0).getRandomPassableTile();
+		Vector2 randomTileCoordinate = mapUtilities.get(0).getRandomPassableTile(eventData.getGameData());
 
 		float x = randomTileCoordinate.getX() * GameWorld.TILE_SIZE;
 		float y = randomTileCoordinate.getY() * GameWorld.TILE_SIZE;

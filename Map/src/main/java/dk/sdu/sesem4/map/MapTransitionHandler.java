@@ -1,6 +1,10 @@
 package dk.sdu.sesem4.map;
 
+import com.badlogic.gdx.maps.MapProperties;
+import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.event.*;
+import dk.sdu.sesem4.common.event.events.map.MapTransitionDoneEvent;
+import dk.sdu.sesem4.common.event.events.map.MapTransitionDoneEventType;
 import dk.sdu.sesem4.common.event.events.map.MapTransitionEvent;
 import dk.sdu.sesem4.common.util.Direction;
 
@@ -40,5 +44,26 @@ public class MapTransitionHandler implements EventListener {
 		}
 
 		eventData.getGameData().getGameWorld().setMap(map.getCurrentMap());
+
+		loadMapData(map, eventData);
+
+		EventManager.getInstance().notify(MapTransitionDoneEventType.class, new MapTransitionDoneEvent(eventData.getGameData()));
+	}
+
+	private void loadMapData(Map map, MapTransitionEvent eventData) {
+		if (map.getCurrentTiledMap() == null) {
+			return;
+		}
+		MapProperties properties = map.getCurrentTiledMap().getProperties();
+		if (properties == null) {
+			return;
+		}
+		try {
+			eventData.getGameData().getGameWorld().setEnemyCount((int) properties.get("enemyCount"));
+			eventData.getGameData().getGameWorld().setDifficulty((int) properties.get("enemyStrength"));
+		} catch (Exception exception) {
+			System.out.println("Could not parse map data");
+			System.out.println(exception);
+		}
 	}
 }

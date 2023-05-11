@@ -175,7 +175,7 @@ class EnemySpawnerTest {
 		when(vector2.getY()).thenReturn(50f);
 
 		MapSPI mapUtility = mock(MapSPI.class);
-		when(mapUtility.getRandomPassableTile()).thenReturn(vector2);
+		when(mapUtility.getRandomPassableTile(any(GameData.class))).thenReturn(vector2);
 
 		// Overwrite SPI locator
 		try (MockedStatic<SPILocator> dummy = Mockito.mockStatic(SPILocator.class)) {

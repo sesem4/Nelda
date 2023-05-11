@@ -13,15 +13,15 @@ import java.util.HashMap;
  * the starting map index, the current world name, and the current map index.
  */
 public class Map {
-	private final int STARTING_MAP_INDEX = 119;
-	private String currentWorldName = "overworld";
-	private int currentMapIndex = STARTING_MAP_INDEX;
+	protected final int STARTING_MAP_INDEX = 119;
+	protected String currentWorldName = "overworld";
+	protected int currentMapIndex = STARTING_MAP_INDEX;
 
-	private HashMap<Path, TiledMap> cachedTiledMaps;
+	protected HashMap<Path, TiledMap> cachedTiledMaps;
 
-	private static Map instance;
+	protected static Map instance;
 
-	private Map() {
+	protected Map() {
 		this.cachedTiledMaps = new HashMap<>();
 	}
 
@@ -68,7 +68,7 @@ public class Map {
 	 * @param y: an integer that represents the y-coordinate of the map.
 	 * @return the path to the map's tmx file.
 	 */
-	private Path getPathForMap(String worldName, int x, int y) {
+	protected Path getPathForMap(String worldName, int x, int y) {
 		char[] columns = new char[26];
 		for(int i = 0; i < columns.length; i++){
 			columns[i] = (char) ('A' + i);
