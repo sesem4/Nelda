@@ -28,6 +28,7 @@
 		<module>Player</module>
 		<module>Sword</module>
 		<module>KeyboardControl</module>
+		<module>RandomMovement</module>
 	</modules>
 	
 	<repositories>
