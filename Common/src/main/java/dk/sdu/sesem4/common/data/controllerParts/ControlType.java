@@ -6,5 +6,9 @@ package dk.sdu.sesem4.common.data.controllerParts;
 public enum ControlType {
     KEYBOARD,
     GAMEPAD,
-    JOYSTICK
+    JOYSTICK,
+    DUMB_AI,
+    ROUGH_AI,
+    MEDIUM_AI,
+    SMART_AI
 }
