@@ -1,5 +1,7 @@
 package dk.sdu.sesem4.octorok.common;
 
+import dk.sdu.sesem4.common.SPI.ControlSPI;
+import dk.sdu.sesem4.common.SPI.MovementControllerSPI;
 import dk.sdu.sesem4.common.SPI.PluginServiceSPI;
 import dk.sdu.sesem4.common.data.CollisionParts.DamagePart;
 import dk.sdu.sesem4.common.data.CollisionParts.KnockbackPart;
@@ -7,9 +9,11 @@ import dk.sdu.sesem4.common.data.EntityParts.LifePart;
 import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
 import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
+import dk.sdu.sesem4.common.data.controllerParts.ControlType;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
+import dk.sdu.sesem4.common.util.ControllerLocator;
 import dk.sdu.sesem4.common.util.Direction;
 import dk.sdu.sesem4.octorok.red.RedOctorok;
 
@@ -61,10 +65,20 @@ abstract public class OctorokPlugin implements PluginServiceSPI {
 
 		List<String> textures = this.loadTextures(octorokClass);
 
+		ControlSPI constrolSPI = ControllerLocator.locateController(ControlType.ROUGH_AI);
+		MovementControllerSPI controller;
+
+		// Check if a controller was found. If not set controller to null.
+		if (constrolSPI == null) {
+			controller = null;
+		} else {
+			controller = constrolSPI.getMovementController();
+		}
+
 		MovingPart movingPart = new MovingPart(
 			this.defaultSpeed,
 			this.defaultFrameRate,
-			null
+			controller
 		);
 
 		// 1 og 2 ned
