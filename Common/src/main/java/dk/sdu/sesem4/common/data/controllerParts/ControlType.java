@@ -7,8 +7,8 @@ public enum ControlType {
     KEYBOARD,
     GAMEPAD,
     JOYSTICK,
-    DUMBAI,
-    ROUGHAI,
-    MEDIUMAI,
-    SMARTAI
+    DUMB_AI,
+    ROUGH_AI,
+    MEDIUM_AI,
+    SMART_AI
 }
