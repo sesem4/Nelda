@@ -15,8 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +27,6 @@ class EnemySpawnerTest {
 	@BeforeEach
 	void setUp() {
 		enemySpawner = EnemySpawner.getInstance();
-	}
-
-	@Test
-	void getInstance() {
-
 	}
 
 	@Test
@@ -74,9 +67,7 @@ class EnemySpawnerTest {
 		enemies.add(entity);
 
 		// Set enemies
-		Field enemiesField = enemySpawner.getClass().getDeclaredField("enemies");
-		enemiesField.setAccessible(true);
-		enemiesField.set(enemySpawner, enemies);
+		enemySpawner.enemies = enemies;
 
 		// Run the despawn command
 		enemySpawner.despawn(eventData);
@@ -117,9 +108,7 @@ class EnemySpawnerTest {
 			dummy.when(() -> SPILocator.locateAll(SpawnableEnemySPI.class)).thenReturn(spawnableEnemySPIS);
 
 			// Set enemies
-			Field enemiesField = enemySpawner.getClass().getDeclaredField("enemies");
-			enemiesField.setAccessible(true);
-			enemiesField.set(enemySpawner, enemies);
+			enemySpawner.enemies = enemies;
 
 			enemySpawner.spawn(eventData);
 
@@ -132,10 +121,6 @@ class EnemySpawnerTest {
 
 	@Test
 	void locateSpawnableEnemySPIByDifficulty() throws NoSuchMethodException {
-		// Get method
-		Method locateSpawnableEnemySPIByDifficulty = enemySpawner.getClass().getDeclaredMethod("locateSpawnableEnemySPIByDifficulty", int.class);
-		locateSpawnableEnemySPIByDifficulty.setAccessible(true);
-
 		// Generate spawners
 		List<SpawnableEnemySPI> spawnableEnemySPIS = new ArrayList<>();
 		int[][] data = {{1,2,3}, {1,3},{-1,0},{1,8},{2,8},{10000,2,64,-5}};
@@ -153,7 +138,7 @@ class EnemySpawnerTest {
 
 			// Run method
 			int targetDifficulty = 2;
-			List<SpawnableEnemySPI> spawnerList = (List<SpawnableEnemySPI>) locateSpawnableEnemySPIByDifficulty.invoke(enemySpawner, targetDifficulty);
+			List<SpawnableEnemySPI> spawnerList = enemySpawner.locateSpawnableEnemySPIByDifficulty(targetDifficulty);
 
 			// Verify that the method returned the correct data
 			assertEquals(3, spawnerList.size());
@@ -174,10 +159,6 @@ class EnemySpawnerTest {
 
 	@Test
 	void getRandomSpawnableLocation() throws NoSuchMethodException {
-		// Get method
-		Method getRandomSpawnableLocation = enemySpawner.getClass().getDeclaredMethod("getRandomSpawnableLocation", MapTransitionDoneEvent.class);
-		getRandomSpawnableLocation.setAccessible(true);
-
 		// Setup mocked data for eventData
 		MapTransitionDoneEvent eventData = mock(MapTransitionDoneEvent.class);
 		GameData gameData = mock(GameData.class);
@@ -204,14 +185,14 @@ class EnemySpawnerTest {
 
 			// Run method (1. type - No map utility)
 			int targetDifficulty = 2;
-			Vector2 position = (Vector2) getRandomSpawnableLocation.invoke(enemySpawner, eventData);
+			Vector2 position = enemySpawner.getRandomSpawnableLocation(eventData);
 			assertEquals(Vector2.class, position.getClass());
 			assertTrue(position.getX() >= 0 && position.getX() <= 100f);
 			assertTrue(position.getY() >= 0 && position.getY() <= 100f);
 
 			// Run method (2. type - Map utility present)
 			mapSPIS.add(mapUtility);
-			position = (Vector2) getRandomSpawnableLocation.invoke(enemySpawner, eventData);
+			position = enemySpawner.getRandomSpawnableLocation(eventData);
 			assertEquals(vector2.getX() * GameWorld.TILE_SIZE, position.getX());
 			assertEquals(vector2.getY() * GameWorld.TILE_SIZE, position.getY());
 		} catch (Exception exception) {

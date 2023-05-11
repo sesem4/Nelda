@@ -92,7 +92,7 @@ public class EnemySpawner implements EventListener {
 	 *
 	 * @return List of SPI's that allow for enemy spawning for the wanted difficulty
 	 */
-	private List<SpawnableEnemySPI> locateSpawnableEnemySPIByDifficulty(int difficulty) {
+	protected List<SpawnableEnemySPI> locateSpawnableEnemySPIByDifficulty(int difficulty) {
 		List<SpawnableEnemySPI> enemySpawners = new ArrayList<>();
 
 		List<SpawnableEnemySPI> spawnerSPIs = SPILocator.locateAll(SpawnableEnemySPI.class);
@@ -117,7 +117,7 @@ public class EnemySpawner implements EventListener {
 	 *
 	 * @return Vector2 position, that correlates to a spawnable world position.
 	 */
-	private Vector2 getRandomSpawnableLocation(MapTransitionDoneEvent eventData) {
+	protected Vector2 getRandomSpawnableLocation(MapTransitionDoneEvent eventData) {
 		List<MapSPI> mapUtilities = SPILocator.locateAll(MapSPI.class);
 
 		Vector2 mapSize = eventData.getGameData().getGameWorld().getMapSize();
