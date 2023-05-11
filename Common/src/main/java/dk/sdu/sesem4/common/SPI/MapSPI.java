@@ -1,5 +1,6 @@
 package dk.sdu.sesem4.common.SPI;
 
+import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
 
 public interface MapSPI {
@@ -57,10 +58,12 @@ public interface MapSPI {
 	 * <br />
 	 * post-condition: A Vector2 coordinate representing a passable tile coordinate
 	 * is returned.
+	 *
+	 * @param gameData The game data
 	 * 
 	 * @return A Vector2 coordinate representing a passable tile coordinate.
 	 */
-	Vector2 getRandomPassableTile();
+	Vector2 getRandomPassableTile(GameData gameData);
 
 	/**
 	 * Get a grid of booleans representing the passable states of all tiles
@@ -73,6 +76,8 @@ public interface MapSPI {
 	 * states of all tiles currently in the world. The origin is bottom left, with
 	 * the x being represented by the first index and the y being represented by the
 	 * second index.
+	 *
+	 * @param gameData The game data
 	 * 
 	 * @return A grid of booleans representing the passable states of all tiles
 	 *         currently in the world.
@@ -82,5 +87,5 @@ public interface MapSPI {
 	 * </code>
 	 * 
 	 */
-	boolean[][] getNavGrid();
+	boolean[][] getNavGrid(GameData gameData);
 }
