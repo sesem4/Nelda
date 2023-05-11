@@ -81,25 +81,25 @@ abstract public class MoblinPlugin implements PluginServiceSPI {
 			controller
 		);
 
-		// 1 og 2 ned
-		// 3 og 4 venstre
-		// 2 og 4 er næsen ind.
+		// 0 og 1 venstre
+		// 2 ned
+		// 3 op
 		// Set the different sprites foreach direction.
 		List<SpriteData> up = List.of(
-			new SpriteData(textures.get(0), false, true, moblinClass),
-			new SpriteData(textures.get(1), false, true, moblinClass)
+			new SpriteData(textures.get(3), false, false, moblinClass),
+			new SpriteData(textures.get(3), true, false, moblinClass)
 		);
 		List<SpriteData> down = List.of(
-			new SpriteData(textures.get(0), false, false, moblinClass),
-			new SpriteData(textures.get(1), false, false, moblinClass)
+			new SpriteData(textures.get(2), false, false, moblinClass),
+			new SpriteData(textures.get(2), true, false, moblinClass)
 		);
 		List<SpriteData> left = List.of(
-			new SpriteData(textures.get(2), false, false, moblinClass),
-			new SpriteData(textures.get(3), false, false, moblinClass)
+			new SpriteData(textures.get(0), true, false, moblinClass),
+			new SpriteData(textures.get(1), true, false, moblinClass)
 		);
 		List<SpriteData> right = List.of(
-			new SpriteData(textures.get(2), true, false, moblinClass),
-			new SpriteData(textures.get(3), true, false, moblinClass)
+			new SpriteData(textures.get(0), false, false, moblinClass),
+			new SpriteData(textures.get(1), false, false, moblinClass)
 		);
 
 		movingPart.setSprites(Direction.UP, up);
