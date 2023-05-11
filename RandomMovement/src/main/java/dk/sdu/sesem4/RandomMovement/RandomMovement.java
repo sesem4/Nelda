@@ -21,7 +21,7 @@ public class RandomMovement implements ControlSPI {
      * Initializes the RandomMovementController and the ControlType in the constructor.
      */
     public RandomMovement(){
-        this.controlType = ControlType.DUMBAI;
+        this.controlType = ControlType.DUMB_AI;
         this.randomMovementController = new RandomMovementController();
     }
 
