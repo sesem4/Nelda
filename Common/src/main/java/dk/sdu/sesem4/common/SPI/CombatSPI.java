@@ -6,16 +6,22 @@ import dk.sdu.sesem4.common.data.weapon.AttackType;
 
 public interface CombatSPI {
 	/**
-	 * Spawn weapon for combat
-	 * <br>
-	 * <br>
-	 * Pre-condition: An entity has to be existing, with position and direction
-	 * data.<br>
-	 * post-condition: Weapon entity has been spawned in the world.
+	 * Get type of combat, that the SPI provides
+	 * <p>
+	 * Pre-condition: The game has been started, and the SPI has been implemented in a class.
+	 * post-condition: Combat type is returned.
 	 *
-	 * @param gameData   The game data
-	 * @param combatant  The entity that spawns the weapon
-	 * @param attackType The attack the player wants to spawn
+	 * @return the WeaponType
 	 */
-	void spawnWeapon(GameData gameData, Entity combatant, AttackType attackType);
+	WeaponType getType();
+
+	/**
+	 * Get type of CombatControllers that the SPI provides
+	 * <p>
+	 * Pre-condition: The game has been started, and the SPI has been implemented in a class.
+	 * post-condition: Combat controller is returned.
+	 *
+	 * @return the CombatController
+	 */
+	CombatControllerSPI getCombatController();
 }
