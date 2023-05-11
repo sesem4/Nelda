@@ -9,7 +9,7 @@
     <td>
 
 ```java
-CombatType getType() 
+WeaponType getType() 
 ```
 
 </td>
