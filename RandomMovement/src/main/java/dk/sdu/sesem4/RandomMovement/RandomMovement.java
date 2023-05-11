@@ -11,11 +11,11 @@ public class RandomMovement implements ControlSPI {
     /**
      * The controlType of the RandomMovement
      */
-    private ControlType controlType;
+    private final ControlType controlType;
     /**
      * The RandomMovementController of the RandomMovement
      */
-    private RandomMovementController randomMovementController;
+    private final RandomMovementController randomMovementController;
 
     /**
      * Initializes the RandomMovementController and the ControlType in the constructor.

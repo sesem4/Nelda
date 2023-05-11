@@ -7,12 +7,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class RandomMovementTest {
-    private ControlType controlType;
     private RandomMovement randomMovement;
-    private RandomMovementController randomMovementController;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         this.randomMovement = new RandomMovement();
     }
 
@@ -23,12 +21,6 @@ public class RandomMovementTest {
 
     @Test
     public void testGetMovementController() {
-        setRandomMovementController((RandomMovementController) this.randomMovement.getMovementController());
-        assertEquals(this.randomMovement.getMovementController(), this.randomMovementController);
-    }
-
-    public void setRandomMovementController(RandomMovementController randomMovementController){
-        this.randomMovementController = randomMovementController;
-
+        assertEquals(RandomMovementController.class, this.randomMovement.getMovementController().getClass());
     }
 }
