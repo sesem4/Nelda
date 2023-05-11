@@ -13,7 +13,7 @@ interface ControlSPI{
     + {abstract} move(gameData:GameData , world:World , entity:Entity ): float[]
 
 }
-interface EnemySpawnerSPI{
+interface SpawnableEnemySPI{
     + {abstract} spawnEnemy(gameData:GameData , world:World , x:float ,  y:float):void
 
 }

@@ -8,7 +8,7 @@ public class KnockbackPart implements CollisionPart {
 	/**
 	 * The duration for how long the Entity Knockback effects should be applied to another Entity upon collision
 	 */
-	private int duration;
+	private float duration;
 
 	/**
 	 * The speed that the Entity knockback should push another Entity upon collision
@@ -20,7 +20,7 @@ public class KnockbackPart implements CollisionPart {
 	 * @param duration for how long the Entity Knockback effects should be applied to another Entity upon collision
 	 * @param speed how fast the Entity Knockback should push another Entity upon collision
 	 */
-	public KnockbackPart(int duration, float speed) {
+	public KnockbackPart(float duration, float speed) {
 		this.duration = duration;
 		this.speed = speed;
 	}
@@ -29,7 +29,7 @@ public class KnockbackPart implements CollisionPart {
 	 * Gets for how long the Entity Knockback effects should be applied to another Entity upon collision
 	 * @return duration
 	 */
-	public int getDuration() {
+	public float getDuration() {
 		return this.duration;
 	}
 
