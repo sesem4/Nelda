@@ -68,31 +68,26 @@ public class SimpleAIMovementController implements MovementControllerSPI {
 
 		if (xCurrent > xGoal) {
             if (grid[xCurrent -1][yCurrent]) {
-                System.out.println("LEFT");
+	            return Direction.LEFT;
             }
-            return Direction.LEFT;
         }
         if (xCurrent < xGoal) {
             if (grid[xCurrent + 1][yCurrent]) {
-                System.out.println("RIGHT");
+	            return Direction.RIGHT;
             }
-            return Direction.RIGHT;
         }
         if (yCurrent > yGoal) {
             // Check if the tile below is walkable
             if (grid[xCurrent][yCurrent - 1]){
-                System.out.println("DOWN");
+	            return Direction.DOWN;
             }
-            return Direction.DOWN;
         }
         if ( yCurrent < yGoal) {
             if (grid[xCurrent][yCurrent + 1] ) {
-                System.out.println("UP");
+	            return Direction.UP;
             }
-            return Direction.UP;
         }
 
-        // Prepend the current position to the path
         return Direction.NONE;
     }
 
