@@ -58,7 +58,7 @@ public class MapUtil implements MapSPI {
 
 		// Brute force random passable tile
 		while (true) {
-			Vector2 position = new Vector2((float) Math.random() * xGrid, (float) Math.random() * yGrid);
+			Vector2 position = new Vector2((int) (Math.random() * xGrid), (int) (Math.random() * yGrid));
 
 			if (isTilePassable(position)) {
 				return position;

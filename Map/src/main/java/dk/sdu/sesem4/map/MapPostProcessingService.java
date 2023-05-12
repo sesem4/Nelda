@@ -39,6 +39,4 @@ public class MapPostProcessingService implements PostProcessingServiceSPI {
 			}
 		}
 	}
-
-
 }

@@ -73,7 +73,6 @@ public class EnemySpawner implements EventListener {
 
 		List<SpawnableEnemySPI> enemySpawners = locateSpawnableEnemySPIByDifficulty(difficulty);
 
-		System.out.println(Arrays.toString(enemySpawners.toArray()));
 		if (enemySpawners.size() == 0) {
 			return; // No enemy spawners found for the difficulty, and enemy spawning is therefore halted.
 		}
