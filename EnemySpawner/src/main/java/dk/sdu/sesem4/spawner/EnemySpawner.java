@@ -81,7 +81,9 @@ public class EnemySpawner implements EventListener {
 		for (int i = 0; i < enemyCount; i++) {
 			SpawnableEnemySPI spawner = enemySpawners.get((int) (Math.random() * (enemySpawners.size() - 1)));
 			Entity enemy = spawner.spawnEnemy(eventData.getGameData(), getRandomSpawnableLocation(eventData), difficulty);
-			this.enemies.add(enemy);
+			if (enemy != null) {
+				this.enemies.add(enemy);
+			}
 		}
 	}
 
