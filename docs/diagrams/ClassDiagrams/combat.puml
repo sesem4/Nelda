@@ -27,16 +27,16 @@ component "Common" {
             + ARROW
         }
 
-        class Attack {
+        class Weapon {
             - duration: float
+            - lifeTime: float
             - entity: Entity
 
             + getDuration(): float
-            + getEndTime(): float
-            + decrementDuration(deltaTime: float): void
+            + getLifeTime(): float
+            + incrementDuration(deltaTime: float): void
             + isFinished(): boolean
             + getEntity(): Entity
-            + removeEntity(): Entity
         }
     }
 
@@ -46,6 +46,9 @@ component "Common" {
         }
 
         class CombatPart implements EntityPart {
+            - type: WeaponType
+            - combatSpriteList: Map<Direction, List<SpriteData>>
+
             + CombatPart(type: WeaponType): CombatPart
             + CombatPart(type: WeaponType, sprites: Map<Direction, List<SpriteData>>): CombatPart
             + process(gameData: GameData, entity: Entity): void
