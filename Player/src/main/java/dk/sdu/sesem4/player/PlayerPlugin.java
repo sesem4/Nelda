@@ -52,7 +52,7 @@ public class PlayerPlugin implements PluginServiceSPI {
 
 		List<String> paths = this.loadTextures();
 
-		ControlSPI constrolSPI = ControllerLocator.locateController(ControlType.KEYBOARD);
+		ControlSPI constrolSPI = ControllerLocator.locateController(ControlType.ROUGH_AI);
 		MovementControllerSPI controller;
 
 		// Check if a controller was found. If not set controller to null.

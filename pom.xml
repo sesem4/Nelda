@@ -30,6 +30,7 @@
 		<module>Sword</module>
 		<module>KeyboardControl</module>
 		<module>RandomMovement</module>
+		<module>SmoothRandomMovement</module>
 	</modules>
 	
 	<repositories>
