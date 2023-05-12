@@ -1,9 +1,6 @@
 package dk.sdu.sesem4.common.SPI;
 
 import dk.sdu.sesem4.common.data.combat.WeaponType;
-import dk.sdu.sesem4.common.data.entity.Entity;
-import dk.sdu.sesem4.common.data.gamedata.GameData;
-import dk.sdu.sesem4.common.data.weapon.AttackType;
 
 public interface CombatSPI {
 	/**
