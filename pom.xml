@@ -31,6 +31,7 @@
 		<module>KeyboardControl</module>
 		<module>RandomMovement</module>
 		<module>SmoothRandomMovement</module>
+		<module>SimpleAI</module>
 	</modules>
 	
 	<repositories>
