@@ -62,20 +62,20 @@ public class PlayerProcessingService implements ProcessingServiceSPI {
 		float rightEdge = gameData.getGameWorld().getMapSize().getX();
 
 		if (positionPart.getPosition().getY() + (positionPart.getSize().getY() / 2) < bottomEdge) {
-			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.DOWN, gameData));
 			positionPart.setPosition(new Vector2(positionPart.getPosition().getX(), topEdge - positionPart.getSize().getY() / 2));
+			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.DOWN, gameData));
 		}
 		if (positionPart.getPosition().getY() + (positionPart.getSize().getY() / 2) > topEdge) {
-			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.UP, gameData));
 			positionPart.setPosition(new Vector2(positionPart.getPosition().getX(), bottomEdge - positionPart.getSize().getY() / 2));
+			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.UP, gameData));
 		}
 		if (positionPart.getPosition().getX() + (positionPart.getSize().getX() / 2) < leftEdge) {
-			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.LEFT, gameData));
 			positionPart.setPosition(new Vector2(rightEdge - positionPart.getSize().getX() / 2, positionPart.getPosition().getY()));
+			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.LEFT, gameData));
 		}
 		if (positionPart.getPosition().getX() + (positionPart.getSize().getX() / 2) > rightEdge) {
-			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.RIGHT, gameData));
 			positionPart.setPosition(new Vector2(leftEdge - positionPart.getSize().getX() / 2, positionPart.getPosition().getY()));
+			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.RIGHT, gameData));
 		}
 
 	}
