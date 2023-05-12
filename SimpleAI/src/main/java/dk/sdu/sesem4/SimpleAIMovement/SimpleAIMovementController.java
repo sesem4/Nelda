@@ -6,117 +6,94 @@ import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.util.Direction;
+import dk.sdu.sesem4.common.util.SPILocator;
 
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+/**
+ * The SimpleAIMovementController class implements the MovementControllerSPI interface
+ * and provides a simple AI movement algorithm for entities in a game.
+ */
 public class SimpleAIMovementController implements MovementControllerSPI {
-    private Vector2 goalPosition;
+	/**
+	 * The randomGoal field stores the destination coordinate for the entity.
+	 */
+	private Vector2 randomGoal;
+
+	/**
+	 * The grid field stores the navigation grid for the game.
+	 */
+	private boolean[][] grid;
 
     @Override
     public Direction getMovement(GameData gameData, Entity entity) {
-        // Get the current position of the entity
+
         PositionPart positionPart = entity.getEntityPart(PositionPart.class);
-//        Rectangle startPosition = new Rectangle(positionPart.getPosition(),positionPart.getSize());
 
         Vector2 startPosition = positionPart.getPosition();
 
+        MapSPI mapSPI = SPILocator.locateAll(MapSPI.class).get(0);
 
-//        MapSPI mapSPI = SPILocator.locateAll(MapSPI.class).get(0);
+        SPILocator locator = SPILocator.locateAll(SPILocator.class).get(0);
+        if(locator != null){
+            SPILocator.locateAll(MapSPI.class).get(0);
+            this.grid = mapSPI.getNavGrid(gameData);
+			if (randomGoal == null){
+				this.randomGoal = mapSPI.getRandomPassableTile(gameData);
+			}
+		}
 
-//        SPILocator locator = SPILocator.locateAll(SPILocator.class).get(0);
-//        if(locator != null){
-//            SPILocator.locateAll(MapSPI.class).get(0);
-//            this.grid = mapSPI.getNavGrid();
-//        }
-        // Create a 2D array to represent the grid TODO: replace with SPILocator
-        boolean[][] grid = new boolean[][]{
-                {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
-                {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
-                {false,false,true,true,true,true,true,true,true,true,true,true,true,true,false,false},
-                {false,false,true,true,true,true,true,true,true,true,true,true,true,true,false,false},
-                {false,false,true,true,true,true,true,true,true,true,true,true,true,true,false,false},
-                {true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true},
-                {false,true,true,true,true,true,true,true,true,true,true,false,false,false,false,false},
-                {false,false,true,true,true,true,true,true,true,false,false,false,false,false,false,false},
-                {false,false,false,true,true,true,true,true,true,false,false,false,false,false,false,false},
-                {false,false,false,false,false,false,true,true,true,false,false,false,false,false,false,false},
-                {false,false,false,false,false,false,false,true,true,false,false,false,false,false,false,false}
-        };
-
-
+        int xStart = (int)startPosition.getX() / 16;
+        int yStart = (int)startPosition.getY() / 16;
+		int xEnd = (int)this.randomGoal.getX() / 16;
+		int yEnd = (int)this.randomGoal.getY() / 16;
+        // Check if the goal position is reached
+	    if (xStart == xEnd && yStart == yEnd) {
+		    // Create a new goal position
+		    this.randomGoal = mapSPI.getRandomPassableTile(gameData);
+	    }
+        return simpleAI(xStart, yStart,xEnd,yEnd, grid);
         // Find the goal position
-        return smoothRandomMovement(startPosition, grid);
-    }
-
-    private Vector2 createGoalPosition(boolean[][] grid){
-        Random random = new Random();
-        List<Vector2> obstacles = removeObstacles(grid);
-        return obstacles.get(random.nextInt(obstacles.size()));
-
     }
 
 
-    private boolean isObstacle(Vector2 position, boolean[][] grid) {
-        // Check if the given position is an obstacle in the grid
-        int x = (int)position.getX() + 1;
-        int y = (int)position.getY() + 1;
-        if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length) {
-            // Out of bounds
-            return false;
-        }
-        return grid[x][y];
-    }
-    private List<Vector2> removeObstacles(boolean[][] grid) {
-        List<Vector2> obstacles = new ArrayList<>();
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                if (grid[i][j]) {
-                    obstacles.add(new Vector2((i * 16), (j * 16)));
-                }
-            }
-        }
-        return obstacles;
-    }
+	/**
+	 * The simpleAI method returns the direction that the entity should move in based on the current position and the goal position.
+	 * @param xCurrent The current x-coordinate.
+	 * @param yCurrent The current y-coordinate.
+	 * @param xGoal The goal x-coordinate.
+	 * @param yGoal The goal y-coordinate.
+	 * @param grid The navigation grid.
+	 * @return The direction to move in.
+	 */
+    private Direction simpleAI(int xCurrent, int yCurrent, int xGoal, int yGoal, boolean[][] grid) {
 
-    private Direction smoothRandomMovement(Vector2 currentPosition, boolean[][] grid) {
+		if (xCurrent > xGoal) {
+            if (grid[xCurrent -1][yCurrent]) {
+                System.out.println("LEFT");
+            }
+            return Direction.LEFT;
+        }
+        if (xCurrent < xGoal) {
+            if (grid[xCurrent + 1][yCurrent]) {
+                System.out.println("RIGHT");
+            }
+            return Direction.RIGHT;
+        }
+        if (yCurrent > yGoal) {
+            // Check if the tile below is walkable
+            if (grid[xCurrent][yCurrent - 1]){
+                System.out.println("DOWN");
+            }
+            return Direction.DOWN;
+        }
+        if ( yCurrent < yGoal) {
+            if (grid[xCurrent][yCurrent + 1] ) {
+                System.out.println("UP");
+            }
+            return Direction.UP;
+        }
 
-        Random random = new Random();
-
-        // Base case: If the current position is the goal position, return an empty path
-        if (currentPosition.equals(goalPosition) || goalPosition == null || random.nextInt(100) < 4) {
-            this.goalPosition = createGoalPosition(grid);
-        }
-
-        if (currentPosition.getX() > goalPosition.getX()) {
-            Vector2 nextPosition = new Vector2(currentPosition.getX() - 1, currentPosition.getY());
-            if (!isObstacle(nextPosition, grid)) {
-                return Direction.LEFT;
-            }
-        }
-        if (currentPosition.getX() < goalPosition.getX()) {
-            Vector2 nextPosition = new Vector2(currentPosition.getX() + 1, currentPosition.getY());
-            if (!isObstacle(nextPosition, grid)) {
-                return Direction.RIGHT;
-            }
-        }
-        if (currentPosition.getY() > goalPosition.getY()) {
-            Vector2 nextPosition = new Vector2(currentPosition.getX(), currentPosition.getY() - 1);
-            if (!isObstacle(nextPosition, grid)) {
-                return Direction.DOWN;
-            }
-        }
-        if ( currentPosition.getY() < goalPosition.getY()) {
-            Vector2 nextPosition = new Vector2(currentPosition.getX(), currentPosition.getY() + 1);
-            if (!isObstacle(nextPosition, grid)) {
-                return Direction.UP;
-            }
-        }
-        this.goalPosition = createGoalPosition(grid);
         // Prepend the current position to the path
-        return null;
+        return Direction.NONE;
     }
 
 
