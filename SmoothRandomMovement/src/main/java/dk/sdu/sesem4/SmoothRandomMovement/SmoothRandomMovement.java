@@ -9,7 +9,7 @@ public class SmoothRandomMovement implements ControlSPI {
     private SmoothRandomMovementController smoothRandomMovementController;
 
     public SmoothRandomMovement(){
-        this.controlType = ControlType.ROUGHAI;
+        this.controlType = ControlType.ROUGH_AI;
         this.smoothRandomMovementController = new SmoothRandomMovementController();
     }
 
