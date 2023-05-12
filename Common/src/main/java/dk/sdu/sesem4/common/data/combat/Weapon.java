@@ -1,9 +1,8 @@
 package dk.sdu.sesem4.common.data.combat;
 
 import dk.sdu.sesem4.common.data.entity.Entity;
-import dk.sdu.sesem4.common.data.gamedata.GameData;
 
-public class Attack {
+public class Weapon {
 
 	private float duration;
 
@@ -11,7 +10,7 @@ public class Attack {
 
 	private final Entity entity;
 
-	public Attack(float lifeTime, Entity entity) {
+	public Weapon(float lifeTime, Entity entity) {
 		this.lifeTime = lifeTime;
 		this.entity = entity;
 	}
