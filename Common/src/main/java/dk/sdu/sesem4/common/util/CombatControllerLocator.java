@@ -22,7 +22,7 @@ public class CombatControllerLocator {
 		List<CombatControllerSPI> controllers = SPILocator.locateAll(CombatControllerSPI.class);
 
 		for (CombatControllerSPI controller : controllers) {
-			if (controller.getType() == type) {
+			if (controller.getWeaponType() == type) {
 				return controller;
 			}
 		}
