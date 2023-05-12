@@ -26,5 +26,25 @@ class BlueOctorokPluginTest {
 
 	@Test
 	void spawn() {
+		GameData gameData = mock(GameData.class);
+		GameEntities gameEntities = mock(GameEntities.class);
+
+		when(gameData.getGameEntities()).thenReturn(gameEntities);
+
+
+		BlueOctorokPlugin blueOctorokPlugin = new BlueOctorokPlugin();
+		Entity blueOctorok = blueOctorokPlugin.spawn(gameData, mock(Vector2.class), BlueOctorok.class);
+
+
+		verify(gameEntities).addEntity(any(BlueOctorok.class));
+
+		LifePart lifePart = blueOctorok.getEntityPart(LifePart.class);
+
+		assertEquals(2, lifePart.getLife());
+
+		CollisionPart collisionPart = blueOctorok.getEntityPart(CollisionPart.class);
+
+		//assertEquals(1, collisionPart.
+
 	}
 }
