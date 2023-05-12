@@ -2,7 +2,9 @@ package dk.sdu.sesem4.spawner;
 
 import dk.sdu.sesem4.common.SPI.MapSPI;
 import dk.sdu.sesem4.common.SPI.SpawnableEnemySPI;
+import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.entity.Entity;
+import dk.sdu.sesem4.common.data.entity.EntityType;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.gamedata.GameEntities;
 import dk.sdu.sesem4.common.data.gamedata.GameWorld;
@@ -115,7 +117,7 @@ class EnemySpawnerTest {
 			verify(spawner).spawnEnemy(eq(gameData), any(Vector2.class), eq(1));
 			verify(enemies).add(any(Entity.class));
 		} catch (Exception exception) {
-			fail();
+			fail(exception);
 		}
 	}
 
@@ -153,7 +155,7 @@ class EnemySpawnerTest {
 				fail();
 			});
 		} catch (Exception exception) {
-			fail();
+			fail(exception);
 		}
 	}
 
@@ -163,6 +165,8 @@ class EnemySpawnerTest {
 		MapTransitionDoneEvent eventData = mock(MapTransitionDoneEvent.class);
 		GameData gameData = mock(GameData.class);
 		when(eventData.getGameData()).thenReturn(gameData);
+		GameEntities gameEntities = mock(GameEntities.class);
+		when(gameData.getGameEntities()).thenReturn(gameEntities);
 		GameWorld gameWorld = mock(GameWorld.class);
 		when(gameData.getGameWorld()).thenReturn(gameWorld);
 		Vector2 mapSize = mock(Vector2.class);
@@ -195,8 +199,35 @@ class EnemySpawnerTest {
 			position = enemySpawner.getRandomSpawnableLocation(eventData);
 			assertEquals(vector2.getX() * GameWorld.TILE_SIZE, position.getX());
 			assertEquals(vector2.getY() * GameWorld.TILE_SIZE, position.getY());
+
+			// Run method (3. type - Map utility present with player)
+			Entity playerMock = mock(Entity.class);
+			when(playerMock.getEntityType()).thenReturn(EntityType.Player);
+			PositionPart positionPartMock = mock(PositionPart.class);
+			when(playerMock.getEntityPart(PositionPart.class)).thenReturn(positionPartMock);
+			Vector2 playerVectorPosition = mock(Vector2.class);
+			when(positionPartMock.getPosition()).thenReturn(playerVectorPosition);
+			when(playerVectorPosition.getX()).thenReturn(50f);
+			when(playerVectorPosition.getY()).thenReturn(50f);
+
+			List<Entity> entities = new ArrayList<>();
+			entities.add(playerMock);
+			when(gameEntities.getEntities()).thenReturn(entities);
+			position = enemySpawner.getRandomSpawnableLocation(eventData);
+			assertEquals(vector2.getX() * GameWorld.TILE_SIZE, position.getX());
+			assertEquals(vector2.getY() * GameWorld.TILE_SIZE, position.getY());
+
+			double distanceFromPlayer = Math.sqrt(Math.pow(playerVectorPosition.getX() - position.getX(), 2) + Math.pow(playerVectorPosition.getY() - position.getY(), 2));
+			assertTrue(distanceFromPlayer >= 4);
+
+			when(vector2.getX()).thenReturn((float) ((int) (50f / GameWorld.TILE_SIZE)));
+			when(vector2.getY()).thenReturn((float) ((int) (50f / GameWorld.TILE_SIZE)));
+
+			position = enemySpawner.getRandomSpawnableLocation(eventData);
+			assertEquals(-1, position.getX());
+			assertEquals(-1, position.getY());
 		} catch (Exception exception) {
-			fail();
+			fail(exception);
 		}
 	}
 }

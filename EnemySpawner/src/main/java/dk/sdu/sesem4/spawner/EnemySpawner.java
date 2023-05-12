@@ -2,7 +2,9 @@ package dk.sdu.sesem4.spawner;
 
 import dk.sdu.sesem4.common.SPI.MapSPI;
 import dk.sdu.sesem4.common.SPI.SpawnableEnemySPI;
+import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.entity.Entity;
+import dk.sdu.sesem4.common.data.entity.EntityType;
 import dk.sdu.sesem4.common.data.gamedata.GameEntities;
 import dk.sdu.sesem4.common.data.gamedata.GameWorld;
 import dk.sdu.sesem4.common.data.math.Vector2;
@@ -46,7 +48,6 @@ public class EnemySpawner implements EventListener {
 
 		despawn(eventData);
 
-		System.out.println(eventData.getGameData().getGameWorld().getEnemyCount());
 		if (eventData.getGameData().getGameWorld().getEnemyCount() > 0) {
 			spawn(eventData);
 		}
@@ -129,11 +130,39 @@ public class EnemySpawner implements EventListener {
 			return new Vector2(x, y);
 		}
 
-		Vector2 randomTileCoordinate = mapUtilities.get(0).getRandomPassableTile(eventData.getGameData());
+		// Get Player position
+		GameEntities gameEntities = eventData.getGameData().getGameEntities();
+		Entity player = null;
+		Vector2 playerTileCoordinate = new Vector2(-10, -10);
+		for (Entity entity : gameEntities.getEntities()) {
+			if (entity.getEntityType() == EntityType.Player) {
+				player = entity;
+			}
+		};
 
-		float x = randomTileCoordinate.getX() * GameWorld.TILE_SIZE;
-		float y = randomTileCoordinate.getY() * GameWorld.TILE_SIZE;
+		if (player != null) {
+			PositionPart playerPosition = player.getEntityPart(PositionPart.class);
+			playerTileCoordinate = new Vector2((int) (playerPosition.getPosition().getX() / GameWorld.TILE_SIZE), (int) (playerPosition.getPosition().getY() / GameWorld.TILE_SIZE));
+		}
 
-		return new Vector2(x, y);
+		int i = 0;
+
+		while (true) {
+			Vector2 randomTileCoordinate = mapUtilities.get(0).getRandomPassableTile(eventData.getGameData());
+
+			if (Math.sqrt(Math.pow(playerTileCoordinate.getX() - randomTileCoordinate.getX() , 2) + Math.pow(playerTileCoordinate.getY() - randomTileCoordinate.getY(), 2)) < 4) {
+				i++;
+
+				if (i > 1000) {
+					return new Vector2(-1, -1);
+				}
+				continue;
+			}
+
+			float x = randomTileCoordinate.getX() * GameWorld.TILE_SIZE;
+			float y = randomTileCoordinate.getY() * GameWorld.TILE_SIZE;
+
+			return new Vector2(x, y);
+		}
 	}
 }
