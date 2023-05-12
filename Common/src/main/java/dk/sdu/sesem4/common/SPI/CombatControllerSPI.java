@@ -4,6 +4,9 @@ import dk.sdu.sesem4.common.data.combat.Weapon;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 
+/**
+ * This SPI is used for determing if an attack should be spawned and spawning the attack
+ */
 public interface CombatControllerSPI {
 
 	/**

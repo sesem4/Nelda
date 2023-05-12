@@ -2,6 +2,9 @@ package dk.sdu.sesem4.common.SPI;
 
 import dk.sdu.sesem4.common.data.combat.WeaponType;
 
+/**
+ * This SPI is used for getting the different types of combat and getting the combat controller from the CombatControllerSPI
+ */
 public interface CombatSPI {
 	/**
 	 * Get type of combat, that the SPI provides
