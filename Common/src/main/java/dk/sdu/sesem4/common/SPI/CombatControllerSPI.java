@@ -1,6 +1,6 @@
 package dk.sdu.sesem4.common.SPI;
 
-import dk.sdu.sesem4.common.data.combat.Attack;
+import dk.sdu.sesem4.common.data.combat.Weapon;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 
@@ -28,5 +28,5 @@ public interface CombatControllerSPI {
 	 * @param entity   The entity which is requesting combat
 	 * @return the AttackType
 	 */
-	Attack spawnAttack(GameData gameData, Entity entity);
+	Weapon spawnAttack(GameData gameData, Entity entity);
 }
