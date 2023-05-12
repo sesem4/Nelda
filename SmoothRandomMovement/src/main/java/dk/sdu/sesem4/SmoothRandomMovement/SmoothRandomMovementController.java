@@ -80,16 +80,16 @@ public class SmoothRandomMovementController implements MovementControllerSPI {
         }
 
         if (currentPosition.getX() > goalPosition.getX()) {
-                return Direction.LEFT;
+            return Direction.LEFT;
         }
         if (currentPosition.getX() < goalPosition.getX()) {
-                return Direction.RIGHT;
+            return Direction.RIGHT;
         }
         if (currentPosition.getY() > goalPosition.getY()) {
-                return Direction.DOWN;
+            return Direction.DOWN;
         }
         if ( currentPosition.getY() < goalPosition.getY()) {
-                return Direction.UP;
+            return Direction.UP;
         }
         this.goalPosition = createGoalPosition(grid);
         // Prepend the current position to the path
