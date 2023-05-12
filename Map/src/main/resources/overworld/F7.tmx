@@ -17,4 +17,4 @@
 12,12,12,12,1,15,15,12,12,12,12,12,12,12,12,12
 </data>
  </layer>
-<properties><property type="int" name="enemyCount" value="4" /><property type="int" name="enemyStrength" value="1" /></properties></map>
+<properties><property type="int" name="enemyCount" value="4" /><property type="int" name="enemyStrength" value="2" /></properties></map>
