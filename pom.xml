@@ -32,7 +32,8 @@
 		<module>RandomMovement</module>
 		<module>SmoothRandomMovement</module>
 		<module>SimpleAI</module>
-	</modules>
+        <module>SmartAI</module>
+    </modules>
 	
 	<repositories>
 		<repository>
