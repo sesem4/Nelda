@@ -12,6 +12,7 @@ component "Common" {
         interface CombatControllerSPI {
             + {abstract} shouldAttack(gameData: GameData, entity: Entity): boolean
             + {abstract} spawnAttack(gameData: GameData, entity: Entity): Weapon
+            + {abstract} getWeaponType(): WeaponType
         }
 
         interface PluginServiceSPI {
