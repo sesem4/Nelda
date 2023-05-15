@@ -39,3 +39,5 @@ package "listener" {
         + void processNotification(EventType type, Event data)
     }
 }
+
+@enduml
