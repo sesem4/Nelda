@@ -35,7 +35,7 @@ public class CombatPart implements EntityPart {
 	private CombatControllerSPI combatController;
 
 	/**
-	 * Currently spawned weapong
+	 * Currently spawned weapon
 	 */
 	private Weapon weapon;
 
@@ -70,7 +70,6 @@ public class CombatPart implements EntityPart {
 		}
 	}
 
-
 	@Override
 	public void process(GameData gameData, Entity entity) {
 		if (this.weapon != null) {
@@ -93,7 +92,8 @@ public class CombatPart implements EntityPart {
 	 * Replace the sprites for the given direction.
 	 *
 	 * @param direction The direction to replace the sprites for
-	 * @param sprites   The list of sprites to replaced with. The content should be the string path of the sprite
+	 * @param sprites   The list of sprites to replaced with. The content should be
+	 *                  the string path of the sprite
 	 */
 	public void setSprites(Direction direction, List<SpriteData> sprites) {
 		this.combatSpriteList.replace(direction, sprites);
@@ -114,7 +114,8 @@ public class CombatPart implements EntityPart {
 	 * Get the list of sprites for the provided direction
 	 *
 	 * @param direction The direction to get sprites from
-	 * @return The list of sprites. The content is a list of string path for the sprites
+	 * @return The list of sprites. The content is a list of string path for the
+	 *         sprites
 	 */
 	public List<SpriteData> getSprites(Direction direction) {
 		return this.combatSpriteList.get(direction);
