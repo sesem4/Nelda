@@ -9,7 +9,7 @@
     <td>
 
 ```java
-void spawnEnemy(GameData gameData, Vector2 coordinate)
+Entity spawnEnemy(GameData gameData, Vector2 coordinate)
 ```
 </td>
 </tr>
@@ -23,8 +23,7 @@ void spawnEnemy(GameData gameData, Vector2 coordinate)
 
 `GameData gameData` - The game data
 
-`Vector2 coordinate` - The x and y coordinate the enemy should spawn at, formatted as a Vector2.
-</td>
+`Vector2 coordinate` - The x and y coordinate the enemy should spawn at, formatted as a Vector2</td>
 </tr>
 <tr>
 <td><Strong>PreConditions</strong></td>
@@ -33,7 +32,7 @@ void spawnEnemy(GameData gameData, Vector2 coordinate)
 </tr>
 <tr>
 <td><Strong>PostConditions</strong></td>
-<td>Enemy has been spawned at x and y with default difficulty.
+<td>Enemy has been spawned at coordinate with default difficulty. Entity representing the enemy is returned.
 </td>
 </tr>
 </tbody>
@@ -50,7 +49,7 @@ void spawnEnemy(GameData gameData, Vector2 coordinate)
     <td>
 
 ```java
-void spawnEnemy(GameData gameData, Vector2 coordinate, int difficulty)
+Entity spawnEnemy(GameData gameData, Vector2 coordinate, int difficulty)
 ```
 </td>
 </tr>
@@ -64,10 +63,9 @@ void spawnEnemy(GameData gameData, Vector2 coordinate, int difficulty)
 
 `GameData gameData` - The game data
 
-`Vector2 coordinate` - The x and y coordinate the enemy should spawn at, formatted as a Vector2.
+`Vector2 coordinate` - The x and y coordinate the enemy should spawn at, formatted as a Vector2
 
-`int difficulty` - The difficulty of the enemy
-</td>
+`int difficulty` - The difficulty of the enemy.</td>
 </tr>
 <tr>
 <td><Strong>PreConditions</strong></td>
@@ -76,7 +74,7 @@ void spawnEnemy(GameData gameData, Vector2 coordinate, int difficulty)
 </tr>
 <tr>
 <td><Strong>PostConditions</strong></td>
-<td>Enemy has been spawned at x and y with specified difficulty if the difficulty is possible.
+<td>Enemy has been spawned at x and y with specified difficulty if the difficulty is possible. Entity representing the enemy is returned.
 </td>
 </tr>
 </tbody>
@@ -103,9 +101,7 @@ int[] getDifficulties()
 </tr>
 <tr>
 <td><Strong>Parameters</strong></td>
-<td>
--
-</td>
+<td>-</td>
 </tr>
 <tr>
 <td><Strong>PreConditions</strong></td>
@@ -114,8 +110,11 @@ int[] getDifficulties()
 </tr>
 <tr>
 <td><Strong>PostConditions</strong></td>
-<td>Difficulties for the enemy have been provided.
+<td> Difficulties for the enemy have been provided.
 </td>
 </tr>
 </tbody>
 </table>
+
+
+
