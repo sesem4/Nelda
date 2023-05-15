@@ -1,5 +1,6 @@
 package dk.sdu.sesem4.SimpleAIMovement;
 
+import dk.sdu.sesem4.common.SPI.MapSPI;
 import dk.sdu.sesem4.common.SPI.MovementControllerSPI;
 import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.entity.Entity;

@@ -1,5 +1,6 @@
 package dk.sdu.sesem4.smartAIMovement;
 
+import dk.sdu.sesem4.common.SPI.MapSPI;
 import dk.sdu.sesem4.common.SPI.MovementControllerSPI;
 import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.entity.Entity;
@@ -32,12 +33,7 @@ public class SmartAIMovementController implements MovementControllerSPI {
 		// Get the current region
 		MapSPI mapSPI = SPILocator.locateAll(MapSPI.class).get(0);
 
-		// Get the grid from the mapSPI
-		SPILocator locator = SPILocator.locateAll(SPILocator.class).get(0);
-		if (locator != null) {
-			SPILocator.locateAll(MapSPI.class).get(0);
-			this.grid = mapSPI.getNavGrid(gameData);
-		}
+		this.grid = mapSPI.getNavGrid(gameData);
 
 		int xStart = (int) startPosition.getX() / 16;
 		int yStart = (int) startPosition.getY() / 16;
