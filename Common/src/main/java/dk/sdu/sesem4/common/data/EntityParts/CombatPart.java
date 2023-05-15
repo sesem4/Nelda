@@ -1,9 +1,12 @@
 package dk.sdu.sesem4.common.data.EntityParts;
 
+import dk.sdu.sesem4.common.SPI.CombatControllerSPI;
+import dk.sdu.sesem4.common.data.combat.Weapon;
 import dk.sdu.sesem4.common.data.combat.WeaponType;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
+import dk.sdu.sesem4.common.util.CombatControllerLocator;
 import dk.sdu.sesem4.common.util.Direction;
 
 import java.util.ArrayList;
@@ -27,6 +30,16 @@ public class CombatPart implements EntityPart {
 	private WeaponType type;
 
 	/**
+	 * Combat controller currently used for the weapon type
+	 */
+	private CombatControllerSPI combatController;
+
+	/**
+	 * Currently spawned weapong
+	 */
+	private Weapon weapon;
+
+	/**
 	 * The constructor for the CombatPart class.
 	 *
 	 * @param type the type of weapon that the Entity should use
@@ -44,8 +57,14 @@ public class CombatPart implements EntityPart {
 	public CombatPart(WeaponType type, Map<Direction, List<SpriteData>> sprites) {
 		this.type = type;
 
+		this.combatController = CombatControllerLocator.locateController(this.type);
+
 		// Setup sprite list
 		this.combatSpriteList = new HashMap<>();
+		if (sprites == null) {
+			return;
+		}
+
 		for (Direction spriteListDirection : Direction.values()) {
 			this.combatSpriteList.put(spriteListDirection, new ArrayList<>());
 		}
@@ -54,7 +73,20 @@ public class CombatPart implements EntityPart {
 
 	@Override
 	public void process(GameData gameData, Entity entity) {
+		if (this.weapon != null) {
+			this.weapon.incrementDuration(gameData.getDeltaTime());
 
+			if (this.weapon.isFinished()) {
+				gameData.getGameEntities().removeEntity(weapon.getEntity());
+				this.weapon = null;
+			}
+
+			return;
+		}
+
+		if (this.combatController.shouldAttack(gameData, entity)) {
+			this.weapon = this.combatController.spawnAttack(gameData, entity);
+		}
 	}
 
 	/**
