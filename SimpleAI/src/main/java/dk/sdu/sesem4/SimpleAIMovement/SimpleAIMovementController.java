@@ -17,7 +17,18 @@ public class SimpleAIMovementController implements MovementControllerSPI {
 	/**
 	 * The randomGoal field stores the destination coordinate for the entity.
 	 */
-	private Vector2 randomGoal;
+	private Vector2 goalPosition;
+
+	private int goalRow;
+	private int goalCol;
+
+	private int currentRow;
+	private int currentCol;
+
+	private int lastRow;
+	private int lastCol;
+
+	private MapSPI mapSPI;
 
 	/**
 	 * The grid field stores the navigation grid for the game.
@@ -29,68 +40,84 @@ public class SimpleAIMovementController implements MovementControllerSPI {
 
         PositionPart positionPart = entity.getEntityPart(PositionPart.class);
 
-        Vector2 startPosition = positionPart.getPosition();
+	    Vector2 startPosition = positionPart.getPosition();
+	    this.currentRow = ((int) startPosition.getY() / 16);
+	    this.currentCol = ((int) startPosition.getX() / 16);
 
-        MapSPI mapSPI = SPILocator.locateAll(MapSPI.class).get(0);
 
-        SPILocator locator = SPILocator.locateAll(SPILocator.class).get(0);
-        if(locator != null){
-            SPILocator.locateAll(MapSPI.class).get(0);
-            this.grid = mapSPI.getNavGrid(gameData);
-			if (randomGoal == null){
-				this.randomGoal = mapSPI.getRandomPassableTile(gameData);
-			}
-		}
+//	    if(){
+//		    setGoalPosition(mapSPI.getRandomPassableTile(gameData));
+//		    simpleAI(this.currentRow, this.currentCol, this.goalRow, this.goalCol, this.grid, gameData);
+//	    }
 
-        int xStart = (int)startPosition.getX() / 16;
-        int yStart = (int)startPosition.getY() / 16;
-		int xEnd = (int)this.randomGoal.getX() / 16;
-		int yEnd = (int)this.randomGoal.getY() / 16;
-        // Check if the goal position is reached
-	    if (xStart == xEnd && yStart == yEnd) {
-		    // Create a new goal position
-		    this.randomGoal = mapSPI.getRandomPassableTile(gameData);
+		mapSPI = SPILocator.locateAll(MapSPI.class).get(0);
+		this.grid = mapSPI.getNavGrid(gameData);
+
+
+	    if (this.goalPosition == null||
+			    currentRow == this.goalRow && currentCol == this.goalCol
+			    ) {
+			setGoalPosition(mapSPI.getRandomPassableTile(gameData));
 	    }
-        return simpleAI(xStart, yStart,xEnd,yEnd, grid);
-        // Find the goal position
+
+		return simpleAI(currentRow, currentCol, goalRow, goalCol, grid, gameData);
+	    // Find the goal position
     }
+
+	public void setGoalPosition(Vector2 goalPosition) {
+		this.goalPosition = goalPosition;
+		this.goalRow = ((int)goalPosition.getX());
+		this.goalCol = ((int)goalPosition.getY());
+	}
+
+	public boolean isTilePassible(int row, int col) {
+
+		return mapSPI.isTilePassable(row, col);
+	}
 
 
 	/**
 	 * The simpleAI method returns the direction that the entity should move in based on the current position and the goal position.
-	 * @param xCurrent The current x-coordinate.
-	 * @param yCurrent The current y-coordinate.
-	 * @param xGoal The goal x-coordinate.
-	 * @param yGoal The goal y-coordinate.
+	 * @param currentRow The current row.
+	 * @param currentCol The current col.
+	 * @param goalRow The goal row.
+	 * @param goalCol The goal col.
 	 * @param grid The navigation grid.
 	 * @return The direction to move in.
 	 */
-    private Direction simpleAI(int xCurrent, int yCurrent, int xGoal, int yGoal, boolean[][] grid) {
+	private Direction simpleAI(int currentRow, int currentCol, int goalRow, int goalCol, boolean[][] grid, GameData gameData) {
+		Direction direction = Direction.NONE;
 
-		if (xCurrent > xGoal) {
-            if (grid[xCurrent -1][yCurrent]) {
-	            return Direction.LEFT;
-            }
-        }
-        if (xCurrent < xGoal) {
-            if (grid[xCurrent + 1][yCurrent]) {
-	            return Direction.RIGHT;
-            }
-        }
-        if (yCurrent > yGoal) {
-            // Check if the tile below is walkable
-            if (grid[xCurrent][yCurrent - 1]){
-	            return Direction.DOWN;
-            }
-        }
-        if ( yCurrent < yGoal) {
-            if (grid[xCurrent][yCurrent + 1] ) {
-	            return Direction.UP;
-            }
-        }
 
-        return Direction.NONE;
-    }
+
+			if (currentRow > goalRow && isTilePassible(currentCol,currentRow - 1)) {
+				direction = Direction.LEFT;
+				return direction;
+			}
+
+			if (currentRow < goalRow && isTilePassible(currentCol,currentRow + 1)) {
+				direction = Direction.RIGHT;
+				return direction;
+			}
+
+			if (currentCol > goalCol && isTilePassible(currentCol - 1,currentRow)) {
+				direction = Direction.DOWN;
+				return direction;
+			}
+
+			if (currentCol < goalCol && isTilePassible(currentCol - 1,currentRow)) {
+				direction = Direction.UP;
+				return direction;
+			}
+
+
+		setGoalPosition(mapSPI.getRandomPassableTile(gameData));
+//		simpleAI(this.currentRow, this.currentCol, this.goalRow, this.goalCol, this.grid, gameData);
+		//this.lastRow = currentRow;
+		//this.lastCol = currentCol;
+		return direction;
+
+	}
 
 
 }

@@ -9,7 +9,7 @@ public class SmartAIMovement implements ControlSPI {
     private SmartAIMovementController smartAIMovementController;
 
     public SmartAIMovement(){
-        this.controlType = ControlType.MEDIUM_AI;
+        this.controlType = ControlType.SMART_AI;
         this.smartAIMovementController = new SmartAIMovementController();
     }
 
