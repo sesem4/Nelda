@@ -1,0 +1,98 @@
+@startuml Class diagram
+
+title Combat system - Class diagram
+
+component "Common" {
+    package SPI {
+        interface CombatSPI {
+            + {abstract} getType(): WeaponType
+            + {abstract} getCombatController(): CombatControllerSPI
+        }
+
+        interface CombatControllerSPI {
+            + {abstract} shouldAttack(gameData: GameData, entity: Entity): boolean
+            + {abstract} spawnAttack(gameData: GameData, entity: Entity): Weapon
+            + {abstract} getWeaponType(): WeaponType
+        }
+
+        interface PluginServiceSPI {
+            +  start(gameData: GameData , world: World ): void
+            +  stop(gameData: GameData, world: World ): void
+        }
+    }
+
+    package data.combat {
+        enum WeaponType {
+            + SWORD
+            + ROCK
+            + ARROW
+        }
+
+        class Weapon {
+            - duration: float
+            - lifeTime: float
+            - entity: Entity
+
+            + getDuration(): float
+            + getLifeTime(): float
+            + incrementDuration(deltaTime: float): void
+            + isFinished(): boolean
+            + getEntity(): Entity
+        }
+    }
+
+    package data.EntityParts {
+        interface EntityPart {
+            + process(gameData: GameData, entity: Entity): void
+        }
+
+        class CombatPart implements EntityPart {
+            - type: WeaponType
+            - combatSpriteList: Map<Direction, List<SpriteData>>
+
+            + CombatPart(type: WeaponType): CombatPart
+            + CombatPart(type: WeaponType, sprites: Map<Direction, List<SpriteData>>): CombatPart
+            + process(gameData: GameData, entity: Entity): void
+            + setSprites(direction: Direction, sprites: List<SpriteData>): void
+            + addSprite(direction: Direction, sprite: SpriteData): void
+            + getSprites(direction: Direction): List<SpriteData>
+        }
+    }
+}
+
+component "Sword" {
+    package "sword" {
+        class Sword {
+            - attack: Attack
+            + collided(gameData: GameData, other: Entity): void
+            + collidedWithMap(gameData: GameData): void
+        }
+
+        class SwordPlugin implements PluginServiceSPI {
+            +  start(gameData: GameData , world: World ): void
+            +  stop(gameData: GameData, world: World ): void
+        }
+
+        class SwordCombat implements CombatSPI {
+            - weaponType: WeaponType
+            - controller: CombatControllerSPI
+            + getType(): WeaponType
+            + getCombatController(): CombatControllerSPI
+        }
+
+        class SwordCombatController implements CombatControllerSPI {
+            + shouldAttack(gameData: GameData, entity: Entity): boolean
+            + spawnAttack(gameData: GameData, entity: Entity): Attack
+        }
+    }
+}
+
+component "Rock" {
+}
+
+component "Arrow" {
+}
+
+
+
+@enduml
