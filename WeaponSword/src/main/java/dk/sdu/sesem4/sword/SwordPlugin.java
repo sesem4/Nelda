@@ -27,7 +27,7 @@ public class SwordPlugin implements PluginServiceSPI {
 	/**
 	 * Default damage of sword
 	 */
-	private final int defaultDamage = 2;
+	private final int defaultDamage = 1;
 	/**
 	 * Default size of sword
 	 */
