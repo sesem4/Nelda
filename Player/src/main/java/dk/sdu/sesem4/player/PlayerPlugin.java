@@ -3,10 +3,8 @@ package dk.sdu.sesem4.player;
 import dk.sdu.sesem4.common.SPI.ControlSPI;
 import dk.sdu.sesem4.common.SPI.MovementControllerSPI;
 import dk.sdu.sesem4.common.SPI.PluginServiceSPI;
-import dk.sdu.sesem4.common.data.EntityParts.LifePart;
-import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
-import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
-import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
+import dk.sdu.sesem4.common.data.EntityParts.*;
+import dk.sdu.sesem4.common.data.combat.WeaponType;
 import dk.sdu.sesem4.common.data.controllerParts.ControlType;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
@@ -116,6 +114,10 @@ public class PlayerPlugin implements PluginServiceSPI {
 			new SpritePart(
 				new SpriteData(paths.get(0), false, false, Player.class)
 			)
+		);
+
+		player.addEntityPart(
+			new CombatPart(WeaponType.SWORD)
 		);
 
 		return player;

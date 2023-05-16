@@ -63,7 +63,7 @@ component "Common" {
 component "Sword" {
     package "sword" {
         class Sword {
-            - attack: Attack
+            - weapon: Weapon
             + collided(gameData: GameData, other: Entity): void
             + collidedWithMap(gameData: GameData): void
         }
@@ -83,6 +83,7 @@ component "Sword" {
         class SwordCombatController implements CombatControllerSPI {
             + shouldAttack(gameData: GameData, entity: Entity): boolean
             + spawnAttack(gameData: GameData, entity: Entity): Attack
+            + getWeaponType(): WeaponType
         }
     }
 }
