@@ -8,9 +8,11 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import dk.sdu.sesem4.common.data.math.Rectangle;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(GdxTestRunner.class)
 public class MapUtilTest {
 	// How many maps the world is wide
 	int worldWidth = 16;
@@ -60,7 +62,7 @@ public class MapUtilTest {
 	 * and the `solid` property of the second cell is `true`.
 	 */
 	@Test
-	public void testTilesCanBeSolid(){
+	public void testTilesCanBeSolid() {
 		this.map.setCurrentMapIndex(0);
 		TiledMap map = new TmxMapLoader().load(this.map.getCurrentMap().toString());
 		//save the map as a TiledMapTileLayer
