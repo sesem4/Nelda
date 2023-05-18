@@ -26,7 +26,7 @@ import java.util.List;
 abstract public class OctorokPlugin implements PluginServiceSPI {
 	private static List<Octorok> octoroks = new LinkedList<>();
 
-	private final int defaultSpeed = 1;
+	private final int defaultSpeed = 32;
 	private final int defaultFrameRate = 10;
 
 	private final float knockbackDuration = 0.1f;
@@ -68,7 +68,7 @@ abstract public class OctorokPlugin implements PluginServiceSPI {
 
 		List<String> textures = this.loadTextures(octorokClass);
 
-		ControlSPI constrolSPI = ControllerLocator.locateController(ControlType.ROUGH_AI);
+		ControlSPI constrolSPI = ControllerLocator.locateController(ControlType.DUMB_AI);
 		MovementControllerSPI controller;
 
 		// Check if a controller was found. If not set controller to null.

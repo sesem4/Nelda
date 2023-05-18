@@ -11,7 +11,6 @@ import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
 import dk.sdu.sesem4.common.util.ControllerLocator;
 import dk.sdu.sesem4.common.util.Direction;
-import dk.sdu.sesem4.common.util.SPILocator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ public class PlayerPlugin implements PluginServiceSPI {
 
 	private Player player;
 
-	private final int defaultSpeed = 1;
+	private final int defaultSpeed = 64;
 	private final int defaultHearts = 3;
 	private final int defaultFrameRate = 10;
 	private final Vector2 defaultStartPosition = new Vector2(128, 88);
