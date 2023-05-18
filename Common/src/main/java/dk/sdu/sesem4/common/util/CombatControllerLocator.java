@@ -1,6 +1,7 @@
 package dk.sdu.sesem4.common.util;
 
 import dk.sdu.sesem4.common.SPI.CombatControllerSPI;
+import dk.sdu.sesem4.common.SPI.CombatSPI;
 import dk.sdu.sesem4.common.data.combat.WeaponType;
 
 import java.util.List;
@@ -19,11 +20,11 @@ public class CombatControllerLocator {
 	 * @return CombatControllerSPI that is of the provided type.
 	 */
 	public static CombatControllerSPI locateController(WeaponType type) {
-		List<CombatControllerSPI> controllers = SPILocator.locateAll(CombatControllerSPI.class);
+		List<CombatSPI> controllers = SPILocator.locateAll(CombatSPI.class);
 
-		for (CombatControllerSPI controller : controllers) {
-			if (controller.getWeaponType() == type) {
-				return controller;
+		for (CombatSPI combatHandlers : controllers) {
+			if (combatHandlers.getType() == type) {
+				return combatHandlers.getCombatController();
 			}
 		}
 

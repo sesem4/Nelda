@@ -18,15 +18,14 @@ public class MapPostProcessingService implements PostProcessingServiceSPI {
 	 */
 	@Override
 	public void postProcess(GameData gameData, Priority priority) {
-		checkMapCollisions(gameData);
+		checkMapCollisions(gameData, Map.getInstance());
 	}
 
 	/**
 	 * Determines if a given entity can move on the map.
 	 * @param gameData The game data.
 	 */
-	protected void checkMapCollisions(GameData gameData) {
-		Map map = Map.getInstance();
+	protected void checkMapCollisions(GameData gameData, Map map) {
 		MapUtil mapUtil = new MapUtil();
 		TiledMap currentTiledMap = map.getCurrentTiledMap();
 		for (Entity entity : gameData.getGameEntities().getEntities()) {
@@ -34,8 +33,7 @@ public class MapPostProcessingService implements PostProcessingServiceSPI {
 			Rectangle entityRectangle = positionPart.getBoundingBox();
 
 			if (!mapUtil.isRectangleValid(entityRectangle, currentTiledMap)) {
-				MovingPart movingPart = entity.getEntityPart(MovingPart.class);
-				movingPart.undoMovement(entity);
+				entity.collidedWithMap(gameData);
 			}
 		}
 	}
