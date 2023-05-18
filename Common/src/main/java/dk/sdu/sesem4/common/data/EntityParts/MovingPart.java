@@ -204,16 +204,16 @@ public class MovingPart implements EntityPart {
 		float y = positionPart.getPosition().getY();
 		switch (direction) {
 			case UP:
-				y += this.getMoveSpeed();
+				y += this.getMoveSpeed() * gameData.getDeltaTime();
 				break;
 			case DOWN:
-				y -= this.getMoveSpeed();
+				y -= this.getMoveSpeed() * gameData.getDeltaTime();
 				break;
 			case LEFT:
-				x -= this.getMoveSpeed();
+				x -= this.getMoveSpeed() * gameData.getDeltaTime();
 				break;
 			case RIGHT:
-				x += this.getMoveSpeed();
+				x += this.getMoveSpeed() * gameData.getDeltaTime();
 				break;
 		}
 		positionPart.getPosition().setX(x);
