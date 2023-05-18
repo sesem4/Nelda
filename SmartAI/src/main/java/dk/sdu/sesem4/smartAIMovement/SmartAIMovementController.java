@@ -48,15 +48,16 @@ public class SmartAIMovementController implements MovementControllerSPI {
 		
 		int xStart = (int) startPosition.getX() / 16;
 		int yStart = (int) startPosition.getY() / 16;
-
-		// Get the goal position
-		if (goal == null) {
-			goal = mapSPI.getRandomPassableTile(gameData);
+		
+		int xGoal = (int) randomGoal.getX();
+		int yGoal = (int) randomGoal.getY();
+		
+		
+		if (xStart == xGoal && yStart == yGoal) {
+			this.randomGoal = null;
+			return null;
 		}
-
-		int xGoal = (int) goal.getX() / 16;
-		int yGoal = (int) goal.getY() / 16;
-
+		
 		return weightedAStar(xStart, yStart, xGoal, yGoal);
 	}
 	
