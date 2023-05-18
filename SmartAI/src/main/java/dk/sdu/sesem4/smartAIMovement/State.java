@@ -25,9 +25,7 @@ public class State {
 		if (x >= 16 || y >= 11) {
 			return false;
 		}
-		boolean result = navGrid[x][y];
-//		System.out.printf("(%d, %d): %b\n", x, y, result);
-		return result;
+		return navGrid[x][y];
 	}
 	
 	public int heuristic() {

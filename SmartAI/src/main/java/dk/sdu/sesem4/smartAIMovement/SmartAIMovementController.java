@@ -117,7 +117,6 @@ public class SmartAIMovementController implements MovementControllerSPI {
 		if (newTarget != null) {
 			tileMover.target = newTarget.times(16);
 		} else {
-			System.out.println("Goal reached!");
 			try {
 				goal = getGoal(gameData);
 			} catch (PlayerException | SpiNotFoundException e) {
@@ -156,10 +155,6 @@ public class SmartAIMovementController implements MovementControllerSPI {
 		while (fringe.size() != 0) {
 			Node node = fringe.poll();
 			if (node.state.isGoal()) {
-//				System.out.println("Completed with the following path:");
-//				for (Node pathNode : node.path) {
-//					System.out.printf("x: %d y: %d\n", pathNode.state.x, pathNode.state.y);
-//				}
 				return node.path;
 			}
 			List<Node> children = node.expand();
