@@ -24,10 +24,11 @@
 		<module>Collision</module>
 		<module>Common</module>
 		<module>Core</module>
+		<module>EnemySpawner</module>
 		<module>Heart</module>
 		<module>Map</module>
 		<module>Player</module>
-		<module>Sword</module>
+		<module>WeaponSword</module>
 		<module>KeyboardControl</module>
 		<module>RandomMovement</module>
 		<module>SmoothRandomMovement</module>

@@ -9,39 +9,68 @@
     <td>
 
 ```java
-void spawnAttack(GameData gameData, Entity combatant, AttackType attackType) 
+WeaponType getType() 
 ```
+
 </td>
 </tr>
 <tr>
 <td><Strong>Description</strong></td>
-<td>spawn weapon for combat</td>
+<td>Get type of combat, that the SPI provides</td>
 </tr>
 <tr>
 <td><Strong>Parameters</strong></td>
-<td class="tg-0pky">
-
-`GameData gameData` - The game data
-
-`Entity combatant` - The entity that spawns the weapon
-
-`AttackType attackType` - The attackType the player wants to spawn
-
-</td>
+<td class="tg-0pky">-</td>
 </tr>
 <tr>
 <td><Strong>PreConditions</strong></td>
-<td>An entity has to be existing, with position and direction data
+<td>The game has been started, and the SPI has been implemented in a class.
 </td>
 </tr>
 <tr>
 <td><Strong>PostConditions</strong></td>
-<td>Weapon entity has been spawned in the world
+<td>Combat type is returned.
 </td>
 </tr>
 </tbody>
 </table>
 
+<table>
+<tbody>
+<tr>
+<td><strong>SPI</strong></td>
+<td><h2>CombatSPI</h2></td>
+</tr>
+<tr>
+<td><Strong>Operation</strong></td>
+    <td>
+
+```java
+CombatControllerSPI getCombatController() 
+```
+
+</td>
+</tr>
+<tr>
+<td><Strong>Description</strong></td>
+<td>Get type of CombatControllers that the SPI provides</td>
+</tr>
+<tr>
+<td><Strong>Parameters</strong></td>
+<td class="tg-0pky">-</td>
+</tr>
+<tr>
+<td><Strong>PreConditions</strong></td>
+<td>The game has been started, and the SPI has been implemented in a class.
+</td>
+</tr>
+<tr>
+<td><Strong>PostConditions</strong></td>
+<td>Combat controller  is returned.
+</td>
+</tr>
+</tbody>
+</table>
 
 
 

@@ -183,7 +183,7 @@
  </tile>
  <tile id="36">
   <properties>
-   <property name="solid" type="bool" value="true"/>
+   <property name="solid" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="37">
