@@ -56,23 +56,20 @@ public class SimpleAIMovementController implements MovementControllerSPI {
 		mapSPI = SPILocator.locateAll(MapSPI.class).get(0);
 		this.grid = mapSPI.getNavGrid(gameData);
 
-//		if (this.goalPosition == null) {
-//			setGoalPosition(mapSPI.getRandomPassableTile(gameData));
-//		}
-//		if (isStuck(currentRow, currentCol)) {
-//			System.out.println("Stuck");
-//			setGoalPosition(mapSPI.getRandomPassableTile(gameData));
-//		}
-		// Update the last position
-		this.lastRow = this.currentRow;
-		this.lastCol = this.currentCol;
+		if (this.goalPosition == null) {
+			setGoalPosition(mapSPI.getRandomPassableTile(gameData));
+		}
+		if (isAtGoalPosition(currentRow, currentCol)) {
+			setGoalPosition(mapSPI.getRandomPassableTile(gameData));
+			System.out.println("goal reached");
 
-		// within 5 seconds if the entity is not at the goal position, it will find a new goal position
-
-
-
-
-		return depth_first_search(currentRow, currentCol, goalRow, goalCol, gameData);
+		}
+		while (depth_first_search(currentRow, currentCol, goalRow, goalCol, gameData) == Direction.NONE){
+			System.out.println("no path found");
+			setGoalPosition(mapSPI.getRandomPassableTile(gameData));
+		}
+			return depth_first_search(currentRow, currentCol, goalRow, goalCol, gameData);
+//		return ;
 		// Find the goal position
 	}
 
@@ -109,7 +106,7 @@ public class SimpleAIMovementController implements MovementControllerSPI {
 		// Get the possible paths from the current position
 		HashMap<Vector2, List<Vector2>> path = createPossiblePaths(currentCol, currentRow);
 		List<Vector2> possiblePaths = getPossiblePath(path.values());
-		this.startPosition = new Vector2(currentRow, currentCol);
+//		this.startPosition = new Vector2(currentRow, currentCol);
 //		if (possiblePaths.size() == 4){
 //			if (rowDiff < 0) {
 //				return Direction.LEFT;
@@ -132,39 +129,57 @@ public class SimpleAIMovementController implements MovementControllerSPI {
 //		if (previousPosition.equals(startPosition)) {
 //			setGoalPosition(mapSPI.getRandomPassableTile(gameData));
 //		}
+		Direction direction = Direction.NONE;
 
 			if (!possiblePaths.isEmpty()) {
 //
 				for (Vector2 possiblePath : possiblePaths) {
-					if (possiblePath.getX() == currentRow + 1 && rowDiff > 0) {
+					if (possiblePath.getX() == currentRow - 1 && goalRow < currentRow) {
 //						this.startPosition = new Vector2(currentRow + 1, currentCol);
 //
-						return Direction.RIGHT;
-					} if (possiblePath.getX() == currentRow - 1 && rowDiff < 0) {
+						return Direction.LEFT;
+//						direction = Direction.LEFT;
+					} else if (possiblePath.getX() == currentRow + 1 && goalRow > currentRow) {
 //						this.startPosition = new Vector2(currentRow - 1, currentCol);
 //
-						return Direction.LEFT;
+						return Direction.RIGHT;
+//						direction = Direction.RIGHT;
 
 
-
-					} if ( possiblePath.getY() == currentCol + 1 && colDiff < 0) {
+					} if ( possiblePath.getY() == currentCol + 1 && goalCol > currentCol) {
 //
 //						this.startPosition = new Vector2(currentRow, currentCol + 1);
 //
 						return Direction.UP;
-					} if (possiblePath.getY() == currentCol - 1 && colDiff > 0) {
+//						direction = Direction.UP;
+					} else if (possiblePath.getY() == currentCol - 1 && goalCol < currentCol) {
 						return Direction.DOWN;
+//						direction = Direction.DOWN;
 					}
 				}
-			}
-		if (isAtGoalPosition(currentRow, currentCol)) {
-			setGoalPosition(mapSPI.getRandomPassableTile(gameData));
-			System.out.println("goal reached");
 
-		}
+			}
+//			if (direction == Direction.NONE){
+//				setGoalPosition(mapSPI.getRandomPassableTile(gameData));
+//			}
+
+
+//		if (isStuck(currentRow, currentCol) && !isAtGoalPosition(currentRow, currentCol)){
+//			System.out.println("Stuck");
+//			setGoalPosition(mapSPI.getRandomPassableTile(gameData));
+//		}
+//		if (direction == Direction.NONE){
+//			setGoalPosition(mapSPI.getRandomPassableTile(gameData));
+//		}
+//		setGoalPosition(mapSPI.getRandomPassableTile(gameData));
 //		else{
 //			setGoalPosition(mapSPI.getRandomPassableTile(gameData));
 //		}
+//		setGoalPosition(mapSPI.getRandomPassableTile(gameData));
+//		this.lastRow = this.currentRow;
+//		this.lastCol = this.currentCol;
+//		System.out.println("current position: " + currentRow + " " + currentCol);
+//		System.out.println(lastRow + " " + lastCol);
 		return Direction.NONE;
 
 

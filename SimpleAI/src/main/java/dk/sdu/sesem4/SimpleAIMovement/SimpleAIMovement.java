@@ -9,8 +9,7 @@ public class SimpleAIMovement implements ControlSPI {
     private SimpleAIMovementController simpleAIMovementController;
 
     public SimpleAIMovement(){
-        this.controlType = ControlType.MEDIUM_AI;
-        this.simpleAIMovementController = new SimpleAIMovementController();
+        this.controlType = ControlType.MEDIUM_AI;;
     }
 
     @Override
@@ -20,6 +19,6 @@ public class SimpleAIMovement implements ControlSPI {
 
     @Override
     public MovementControllerSPI getMovementController() {
-        return this.simpleAIMovementController;
+        return new SimpleAIMovementController();
     }
 }
