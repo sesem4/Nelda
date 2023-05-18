@@ -33,4 +33,13 @@ public class State {
 	public int heuristic() {
 		return Math.abs(x-goalX) + Math.abs(y-goalY);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof State)) {
+			return false;
+		}
+		State other = (State)obj;
+		return x == other.x && y == other.y && goalX == other.goalX && goalY == other.goalY;
+	}
 }
