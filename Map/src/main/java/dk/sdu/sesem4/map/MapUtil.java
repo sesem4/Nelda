@@ -99,11 +99,12 @@ public class MapUtil implements MapSPI {
 	 * @return Whether the entity can pass through the position.
 	 */
 	protected boolean isRectangleValid(Rectangle entityRectangle, TiledMap map) {
-		float epsilon = 0.0001f;
+		float epsilon = 1f;
+		float topEpsilon = 4f;
 		boolean bottomLeftPassible = isPositionPassable(entityRectangle.getBottomLeftCorner().plus(new Vector2(epsilon, epsilon)));
 		boolean bottomRightPassible = isPositionPassable(entityRectangle.getBottomRightCorner().plus(new Vector2(-epsilon, epsilon)));
-		boolean topLeftPassible = isPositionPassable(entityRectangle.getTopLeftCorner().plus(new Vector2(epsilon, -epsilon)));
-		boolean topRightPassible = isPositionPassable(entityRectangle.getTopRightCorner().plus(new Vector2(-epsilon, -epsilon)));
+		boolean topLeftPassible = isPositionPassable(entityRectangle.getTopLeftCorner().plus(new Vector2(epsilon, -epsilon)).plus(new Vector2(0, -topEpsilon)));
+		boolean topRightPassible = isPositionPassable(entityRectangle.getTopRightCorner().plus(new Vector2(-epsilon, -epsilon)).plus(new Vector2(0, -topEpsilon)));
 		return bottomLeftPassible && bottomRightPassible && topLeftPassible && topRightPassible;
 	}
 }
