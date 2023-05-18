@@ -8,30 +8,14 @@ import dk.sdu.sesem4.common.data.controllerParts.ControlType;
  * This class is responsible for creating a RandomMovement for the Enemey.
  */
 public class RandomMovement implements ControlSPI {
-    /**
-     * The controlType of the RandomMovement
-     */
-    private final ControlType controlType;
-    /**
-     * The RandomMovementController of the RandomMovement
-     */
-    private final RandomMovementController randomMovementController;
-
-    /**
-     * Initializes the RandomMovementController and the ControlType in the constructor.
-     */
-    public RandomMovement(){
-        this.controlType = ControlType.DUMB_AI;
-        this.randomMovementController = new RandomMovementController();
-    }
 
     @Override
     public ControlType getType() {
-        return this.controlType;
+		return ControlType.ROUGH_AI;
     }
 
     @Override
     public MovementControllerSPI getMovementController() {
-        return this.randomMovementController;
+        return new RandomMovementController();
     }
 }
