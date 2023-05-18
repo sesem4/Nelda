@@ -93,7 +93,7 @@ public class SmoothRandomMovementController implements MovementControllerSPI {
         }
         this.goalPosition = createGoalPosition(grid);
         // Prepend the current position to the path
-        return Direction.NONE;
+        return null;
     }
 
 

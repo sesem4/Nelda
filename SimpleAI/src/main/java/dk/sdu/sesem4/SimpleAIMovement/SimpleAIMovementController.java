@@ -1,5 +1,6 @@
 package dk.sdu.sesem4.SimpleAIMovement;
 
+import dk.sdu.sesem4.common.SPI.MapSPI;
 import dk.sdu.sesem4.common.SPI.MovementControllerSPI;
 import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.entity.Entity;
@@ -32,9 +33,7 @@ public class SimpleAIMovementController implements MovementControllerSPI {
 
         MapSPI mapSPI = SPILocator.locateAll(MapSPI.class).get(0);
 
-        SPILocator locator = SPILocator.locateAll(SPILocator.class).get(0);
-        if(locator != null){
-            SPILocator.locateAll(MapSPI.class).get(0);
+        if(mapSPI != null){
             this.grid = mapSPI.getNavGrid(gameData);
 			if (randomGoal == null){
 				this.randomGoal = mapSPI.getRandomPassableTile(gameData);
@@ -43,8 +42,8 @@ public class SimpleAIMovementController implements MovementControllerSPI {
 
         int xStart = (int)startPosition.getX() / 16;
         int yStart = (int)startPosition.getY() / 16;
-		int xEnd = (int)this.randomGoal.getX() / 16;
-		int yEnd = (int)this.randomGoal.getY() / 16;
+		int xEnd = (int)this.randomGoal.getX();
+		int yEnd = (int)this.randomGoal.getY();
         // Check if the goal position is reached
 	    if (xStart == xEnd && yStart == yEnd) {
 		    // Create a new goal position
@@ -88,7 +87,7 @@ public class SimpleAIMovementController implements MovementControllerSPI {
             }
         }
 
-        return Direction.NONE;
+        return null;
     }
 
 
