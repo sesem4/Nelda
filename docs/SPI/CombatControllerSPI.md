@@ -2,25 +2,31 @@
 <tbody>
 <tr>
 <td><strong>SPI</strong></td>
-<td><h2>CombatSPI</h2></td>
+<td><h2>CombatControllerSPI</h2></td>
 </tr>
 <tr>
 <td><Strong>Operation</strong></td>
     <td>
 
 ```java
-WeaponType getType() 
+boolean shouldAttack(GameData gameData,Entity entity)
 ```
 
 </td>
 </tr>
 <tr>
 <td><Strong>Description</strong></td>
-<td>Get type of combat, that the SPI provides</td>
+<td>Checks if the entity should attack</td>
 </tr>
 <tr>
 <td><Strong>Parameters</strong></td>
-<td class="tg-0pky">-</td>
+<td class="tg-0pky">
+
+`GameData gameData` - The game data of the current game
+
+`Entity entity` - The entity which is requesting combat
+
+</td>
 </tr>
 <tr>
 <td><Strong>PreConditions</strong></td>
@@ -29,7 +35,7 @@ WeaponType getType()
 </tr>
 <tr>
 <td><Strong>PostConditions</strong></td>
-<td>Combat type is returned.
+<td>Returns if a combat should be initiated
 </td>
 </tr>
 </tbody>
@@ -39,25 +45,31 @@ WeaponType getType()
 <tbody>
 <tr>
 <td><strong>SPI</strong></td>
-<td><h2>CombatSPI</h2></td>
+<td><h2>CombatControllerSPI</h2></td>
 </tr>
 <tr>
 <td><Strong>Operation</strong></td>
     <td>
 
 ```java
-CombatControllerSPI getCombatController() 
+Attack spawnAttack(GameData gameData,Entity entity)
 ```
 
 </td>
 </tr>
 <tr>
 <td><Strong>Description</strong></td>
-<td>Get type of CombatControllers that the SPI provides</td>
+<td>Spawn an attack from the provided entity</td>
 </tr>
 <tr>
 <td><Strong>Parameters</strong></td>
-<td class="tg-0pky">-</td>
+<td class="tg-0pky">
+
+`GameData gamedata` - The game data of the current game
+
+`Entity entity` - The entity which is requesting combat
+
+</td>
 </tr>
 <tr>
 <td><Strong>PreConditions</strong></td>
@@ -66,11 +78,8 @@ CombatControllerSPI getCombatController()
 </tr>
 <tr>
 <td><Strong>PostConditions</strong></td>
-<td>Combat controller  is returned.
+<td>Returns an Attack and spawns an attack in the world.
 </td>
 </tr>
 </tbody>
 </table>
-
-
-

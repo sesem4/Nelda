@@ -1,10 +1,7 @@
 package dk.sdu.sesem4.player;
 
 import dk.sdu.sesem4.common.SPI.ProcessingServiceSPI;
-import dk.sdu.sesem4.common.data.EntityParts.LifePart;
-import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
-import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
-import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
+import dk.sdu.sesem4.common.data.EntityParts.*;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
@@ -35,6 +32,7 @@ public class PlayerProcessingService implements ProcessingServiceSPI {
 			PositionPart positionPart = player.getEntityPart(PositionPart.class);
 			MovingPart movingPart = player.getEntityPart(MovingPart.class);
 			LifePart lifePart = player.getEntityPart(LifePart.class);
+			CombatPart combatPart = player.getEntityPart(CombatPart.class);
 			SpritePart spritePart = player.getEntityPart(SpritePart.class);
 
 			//change map based on movement
@@ -44,6 +42,7 @@ public class PlayerProcessingService implements ProcessingServiceSPI {
 			positionPart.process(gameData, player);
 			movingPart.process(gameData, player);
 			lifePart.process(gameData, player);
+			combatPart.process(gameData, player);
 			spritePart.process(gameData, player);
 		}
 	}

@@ -27,6 +27,7 @@ module Common {
 	exports dk.sdu.sesem4.common.data.entity;
 	exports dk.sdu.sesem4.common.data.EntityParts;
 	exports dk.sdu.sesem4.common.data.CollisionParts;
+	exports dk.sdu.sesem4.common.data.combat;
 	exports dk.sdu.sesem4.common.data.gamedata;
 	exports dk.sdu.sesem4.common.data.math;
 	exports dk.sdu.sesem4.common.data.process;
