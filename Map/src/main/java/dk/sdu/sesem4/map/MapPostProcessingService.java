@@ -33,8 +33,7 @@ public class MapPostProcessingService implements PostProcessingServiceSPI {
 			Rectangle entityRectangle = positionPart.getBoundingBox();
 
 			if (!mapUtil.isRectangleValid(entityRectangle, currentTiledMap)) {
-				MovingPart movingPart = entity.getEntityPart(MovingPart.class);
-				movingPart.undoMovement(entity);
+				entity.collidedWithMap(gameData);
 			}
 		}
 	}
