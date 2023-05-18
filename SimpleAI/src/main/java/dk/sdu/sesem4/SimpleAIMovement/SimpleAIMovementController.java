@@ -139,11 +139,11 @@ public class SimpleAIMovementController implements MovementControllerSPI {
 					if (possiblePath.getX() == currentRow + 1 && rowDiff > 0) {
 //						this.startPosition = new Vector2(currentRow + 1, currentCol);
 //
-						return Direction.LEFT;
+						return Direction.RIGHT;
 					} if (possiblePath.getX() == currentRow - 1 && rowDiff < 0) {
 //						this.startPosition = new Vector2(currentRow - 1, currentCol);
 //
-						return Direction.RIGHT;
+						return Direction.LEFT;
 
 
 
