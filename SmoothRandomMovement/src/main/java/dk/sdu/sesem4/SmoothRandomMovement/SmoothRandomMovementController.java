@@ -37,7 +37,6 @@ public class SmoothRandomMovementController implements MovementControllerSPI {
 
         MapSPI mapSPI = SPILocator.locateAll(MapSPI.class).get(0);
         if (goalPosition == null || xStart == xGoal && yStart == yGoal || counter >= 600) {
-            System.out.println(counter);
             this.goalPosition = mapSPI.getRandomPassableTile(gameData);
             this.xGoal = (int) goalPosition.getX();
             this.yGoal = (int) goalPosition.getY();
