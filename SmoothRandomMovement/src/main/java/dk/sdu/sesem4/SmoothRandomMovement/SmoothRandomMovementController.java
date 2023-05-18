@@ -9,11 +9,6 @@ import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.util.Direction;
 import dk.sdu.sesem4.common.util.SPILocator;
 
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 public class SmoothRandomMovementController implements MovementControllerSPI {
     private Vector2 goalPosition;
 

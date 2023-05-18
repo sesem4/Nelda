@@ -11,7 +11,6 @@ import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
 import dk.sdu.sesem4.common.util.ControllerLocator;
 import dk.sdu.sesem4.common.util.Direction;
-import dk.sdu.sesem4.common.util.SPILocator;
 
 import java.util.ArrayList;
 import java.util.List;
