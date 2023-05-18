@@ -1,5 +1,7 @@
 package dk.sdu.sesem4.common.data.rendering;
 
+import java.util.UUID;
+
 public class SpriteData {
 	/** Path for the texture of the sprite */
 	private String texture;
@@ -9,6 +11,8 @@ public class SpriteData {
 	private boolean yFlipped;
 	/** Resource location, of the sprite texture */
 	private Class<?> resourceClass;
+	/** ID to uniquely identify this sprite combination */
+	private UUID uuid;
 
 	/**
 	 * Construct a SpriteData based on texture, if flipped x and if flipped y.
@@ -34,6 +38,7 @@ public class SpriteData {
 		this.xFlipped = xFlipped;
 		this.yFlipped = yFlipped;
 		this.resourceClass = resourceClass;
+		this.uuid = UUID.randomUUID();
 	}
 
 	/**
@@ -74,4 +79,7 @@ public class SpriteData {
 		return this.resourceClass;
 	}
 
+	public UUID getUuid() {
+		return uuid;
+	}
 }
