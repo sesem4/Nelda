@@ -58,7 +58,7 @@ public class Game extends ApplicationAdapter {
 	/**
 	 * Cache for sprites based on file path.
 	 */
-	private Map<String, Texture> textureCache;
+	private Map<UUID, Texture> textureCache;
 
 	public Game() {
 		this.textureCache = new HashMap<>();
@@ -153,7 +153,7 @@ public class Game extends ApplicationAdapter {
 	 */
 	private Texture getTexture(SpritePart spritePart) {
 		SpriteData spriteData = spritePart.getSprite();
-		String key = spriteData.getTexture().toString();
+		UUID key = spriteData.getUuid();
 
 		// Load cached version
 		if (this.textureCache.containsKey(key)) {
