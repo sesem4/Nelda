@@ -80,6 +80,32 @@ public class MapUtilTest {
 	}
 	
 	/**
+	 * Tests that the `checkIfOnSolidTile` method works correctly.
+	 * The method first saves the map as a `TiledMapTileLayer` object and gets the properties of the
+	 * cells at `(0, 0)` and `(7, 0)`. It then asserts that the `solid` property of the first cell is `false`
+	 * and the `solid` property of the second cell is `true`.
+	 */
+	@Test
+	public void testOtherTilesCanBeSolid() {
+		this.map.setCurrentMapIndex(6*16+7);
+		String path = this.map.getCurrentMap().toString();
+		System.out.println("Path: " + path);
+		TiledMap map = new TmxMapLoader().load(path);
+		//save the map as a TiledMapTileLayer
+		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
+		
+		//get the properties of the map and the cells
+		TiledMapTileLayer.Cell cell1 = layer.getCell(5, 5);
+		TiledMapTileLayer.Cell cell2 = layer.getCell(7, 5);
+		MapProperties cellProperties = cell1.getTile().getProperties();
+		MapProperties cellProperties2 = cell2.getTile().getProperties();
+		
+		//assert that the cells are solid and not solid
+		assertEquals(cellProperties.get("solid"), false);
+		assertEquals(cellProperties2.get("solid"), true);
+	}
+	
+	/**
 	 * Tests that the correct world indices are loaded into the Map object.
 	 * We do this by checking each corner of the world
 	 */
@@ -163,5 +189,26 @@ public class MapUtilTest {
 		assertEquals(id, 12);
 		assertEquals(id2, 34);
 		assertEquals(id3, 3);
+	}
+	
+	@Test
+	public void testIsPassable() {
+		Map.getInstance().setCurrentMapIndex(6*16+7);
+		
+		MapUtil mapUtil = new MapUtil();
+		
+		TiledMap map = new TmxMapLoader().load(Map.getInstance().getCurrentMap().toString());
+		//save the map as a TiledMapTileLayer
+		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
+		
+		//get the properties of the map and the cells
+		TiledMapTileLayer.Cell cell1 = layer.getCell(0, 0);
+		TiledMapTileLayer.Cell cell2 = layer.getCell(7, 0);
+		MapProperties cellProperties = cell1.getTile().getProperties();
+		MapProperties cellProperties2 = cell2.getTile().getProperties();
+		
+		//assert that the cells are solid and not solid
+		assertEquals(cellProperties.get("solid"), mapUtil.isTilePassable(0, 0));
+		assertEquals(cellProperties2.get("solid"), mapUtil.isTilePassable(7, 0));
 	}
 }
