@@ -5,20 +5,13 @@ import dk.sdu.sesem4.common.SPI.MovementControllerSPI;
 import dk.sdu.sesem4.common.data.controllerParts.ControlType;
 
 public class SimpleAIMovement implements ControlSPI {
-    private ControlType controlType;
-    private SimpleAIMovementController simpleAIMovementController;
-
-    public SimpleAIMovement(){
-        this.controlType = ControlType.MEDIUM_AI;;
-    }
-
     @Override
     public ControlType getType() {
-        return this.controlType;
+        return ControlType.MEDIUM_AI;
     }
 
     @Override
     public MovementControllerSPI getMovementController() {
-        return new SimpleAIMovementController();
+        return new SimpleAiMovementController();
     }
 }
