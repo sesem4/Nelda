@@ -9,18 +9,21 @@ public class Node implements Comparable<Node> {
 	int cost;
 	ArrayList<Node> path;
 	int depth;
+	int maxDepth;
 	
-	public Node(State state, int cost) {
+	public Node(State state, int cost, int maxDepth) {
 		this.state = state;
 		this.cost = cost;
+		this.maxDepth = maxDepth;
 		path = new ArrayList<>();
 		path.add(this);
 		depth = 0;
 	}
 	
-	public Node(State state, int cost, ArrayList<Node> path, int depth) {
+	public Node(State state, int cost, int maxDepth, ArrayList<Node> path, int depth) {
 		this.state = state;
 		this.cost = cost;
+		this.maxDepth = maxDepth;
 		this.path = path;
 		path.add(this);
 		this.depth = depth;
@@ -28,10 +31,13 @@ public class Node implements Comparable<Node> {
 	
 	public List<Node> expand() {
 		List<Node> newNodes = new ArrayList<>();
+		if (depth > maxDepth) {
+			return newNodes;
+		}
 		
 		List<State> successorStates = successorFunction(this.state);
 		for (State successorState : successorStates) {
-			newNodes.add(new Node(successorState, this.cost + 1, (ArrayList<Node>) path.clone(), depth + 1));
+			newNodes.add(new Node(successorState, this.cost + 1, maxDepth, (ArrayList<Node>) path.clone(), depth + 1));
 		}
 		
 		return newNodes;
