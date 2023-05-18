@@ -11,7 +11,7 @@ public class RandomMovement implements ControlSPI {
 
     @Override
     public ControlType getType() {
-		return ControlType.ROUGH_AI;
+		return ControlType.DUMB_AI;
     }
 
     @Override
