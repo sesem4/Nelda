@@ -3,6 +3,7 @@ package dk.sdu.sesem4.moblin.spawner;
 //import dk.sdu.sesem4.common.SPI.EnemySpawnerSPI;
 
 import dk.sdu.sesem4.common.SPI.SpawnableEnemySPI;
+import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.moblin.blue.BlueMoblin;
@@ -13,23 +14,23 @@ import dk.sdu.sesem4.moblin.red.RedMoblinPlugin;
 public class EnemySpawner implements SpawnableEnemySPI {
 
 	@Override
-	public void spawnEnemy(GameData gameData, Vector2 coordinate) {
+	public Entity spawnEnemy(GameData gameData, Vector2 coordinate) {
 		// Call the overload method with a difficulty (red Moblin)
-		spawnEnemy(gameData, coordinate, 3);
+		return spawnEnemy(gameData, coordinate, 3);
 	}
 
 	@Override
-	public void spawnEnemy(GameData gameData, Vector2 coordinate, int difficulty) {
+	public Entity spawnEnemy(GameData gameData, Vector2 coordinate, int difficulty) {
 		switch (difficulty) {
 			case 3: // red
 				RedMoblinPlugin redMoblinPlugin = new RedMoblinPlugin();
-				redMoblinPlugin.spawn(gameData, coordinate, RedMoblin.class);
-				break;
+				return redMoblinPlugin.spawn(gameData, coordinate, RedMoblin.class);
 			case 4: // blue
 				BlueMoblinPlugin blueMoblinPlugin = new BlueMoblinPlugin();
-				blueMoblinPlugin.spawn(gameData, coordinate, BlueMoblin.class);
-				break;
+				return blueMoblinPlugin.spawn(gameData, coordinate, BlueMoblin.class);
 		}
+
+		return null;
 	}
 
 	@Override
