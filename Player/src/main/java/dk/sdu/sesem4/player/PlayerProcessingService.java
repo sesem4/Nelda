@@ -44,6 +44,10 @@ public class PlayerProcessingService implements ProcessingServiceSPI {
 			lifePart.process(gameData, player);
 			combatPart.process(gameData, player);
 			spritePart.process(gameData, player);
+			
+			if (lifePart.isDead()) {
+				gameData.getGameEntities().removeEntity(player);
+			}
 		}
 	}
 
