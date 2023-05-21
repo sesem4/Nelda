@@ -52,7 +52,6 @@ public class SimpleAiMovementController implements MovementControllerSPI {
     private void generateRandomGoal(GameData gameData) {
         Vector2 goal = mapSPI.getRandomPassableTile(gameData);
         this.goal = new Vector2((int) goal.getX(), (int) goal.getY());
-        this.path.add(goal);
     }
 
     /**
@@ -212,7 +211,7 @@ public class SimpleAiMovementController implements MovementControllerSPI {
 
         // Ensure the current node is inside nav grid
         if (x >= navGrid.length || y >= navGrid[x].length) {
-            return null;
+            return new LinkedList<>();
         }
 
         LinkedList<Vector2> neighbors = new LinkedList<>();
