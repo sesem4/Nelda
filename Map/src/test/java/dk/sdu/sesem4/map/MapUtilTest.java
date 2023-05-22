@@ -47,7 +47,7 @@ public class MapUtilTest {
 		
 		for (java.util.Map.Entry<Vector2, Boolean> entrySet : positions.entrySet()) {
 			Rectangle rectangle = new Rectangle(entrySet.getKey(), new Vector2(16, 16));
-			boolean actual = mapUtil.isRectangleValid(rectangle, tiledMap);
+			boolean actual = mapUtil.isRectangleValid(rectangle);
 			
 			boolean expected = entrySet.getValue();
 			
