@@ -23,10 +23,12 @@ class SimpleAIMovementTest {
 	void getMovementController() {
 		Class<SimpleAiMovementController> classType = SimpleAiMovementController.class;
 		try (MockedStatic<SPILocator> dummy = Mockito.mockStatic(SPILocator.class)) {
+			// Setup SPI for use in controller constructor
 			ArrayList<MapSPI> mapSPIS = new ArrayList<>();
 			mapSPIS.add(mock(MapSPI.class));
 			dummy.when(() -> SPILocator.locateAll(MapSPI.class)).thenReturn(mapSPIS);
 
+			// Test that the controller returned is of the correct type
 			assertEquals(classType, (new SimpleAIMovement()).getMovementController().getClass());
 		}
 	}
