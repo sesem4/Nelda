@@ -1,7 +1,6 @@
 package dk.sdu.sesem4.map;
 
 import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import dk.sdu.sesem4.common.SPI.MapSPI;
 import dk.sdu.sesem4.common.data.gamedata.GameData;

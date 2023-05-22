@@ -41,8 +41,7 @@ public class MapUtilTest {
 		);
 		
 		map.setCurrentMapIndex(0);
-		TiledMap tiledMap = this.map.getCurrentTiledMap();
-		
+
 		MapUtil mapUtil = new MapUtil();
 		
 		for (java.util.Map.Entry<Vector2, Boolean> entrySet : positions.entrySet()) {

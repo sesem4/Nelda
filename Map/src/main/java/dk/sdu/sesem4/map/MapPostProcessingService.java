@@ -1,8 +1,6 @@
 package dk.sdu.sesem4.map;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import dk.sdu.sesem4.common.SPI.PostProcessingServiceSPI;
-import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
 import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
