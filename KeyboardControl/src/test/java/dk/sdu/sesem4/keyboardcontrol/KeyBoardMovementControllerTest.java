@@ -13,7 +13,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 class KeyBoardMovementControllerTest {
 	@Test
-	void getMovement() {
+	void getMovementVerifyKeyCheck() {
 		Input inputMock = mock(Input.class);
 		Gdx.input = inputMock;
 
@@ -32,6 +32,17 @@ class KeyBoardMovementControllerTest {
 		verify(inputMock).isKeyPressed(Input.Keys.DOWN);
 		verify(inputMock).isKeyPressed(Input.Keys.LEFT);
 		verify(inputMock).isKeyPressed(Input.Keys.RIGHT);
+	}
+
+	@Test
+	void getMovementCheckDirectionForKeypress() {
+		Input inputMock = mock(Input.class);
+		Gdx.input = inputMock;
+
+		GameData gameData = mock(GameData.class);
+		Entity entity = mock(Entity.class);
+
+		KeyBoardMovementController keyBoardMovementController = new KeyBoardMovementController();
 
 		HashMap<Integer, Direction> inputMap = new HashMap<>();
 
