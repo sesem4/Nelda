@@ -30,7 +30,7 @@ public class MapPostProcessingServiceTest extends MapPostProcessingService {
 		
 		entity.process(gameData, gameData.getGameEntities());
 		
-		checkMapCollisions(gameData, TestMap.getInstance());
+		checkMapCollisions(gameData);
 		
 		PositionPart positionPart = entity.getEntityPart(PositionPart.class);
 		
@@ -51,12 +51,12 @@ public class MapPostProcessingServiceTest extends MapPostProcessingService {
 		entity.addEntityPart(movingPart);
 		gameData.getGameEntities().addEntity(entity);
 		
-		checkMapCollisions(gameData, TestMap.getInstance());
+		checkMapCollisions(gameData);
 		
 		gameData.setDeltaTime(0.01f);
 		movingPart.process(gameData, entity);
 		
-		checkMapCollisions(gameData, TestMap.getInstance());
+		checkMapCollisions(gameData);
 		
 		PositionPart positionPart = entity.getEntityPart(PositionPart.class);
 		

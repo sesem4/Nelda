@@ -1,7 +1,6 @@
 package dk.sdu.sesem4.map;
 
 import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import dk.sdu.sesem4.common.SPI.MapSPI;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
@@ -99,12 +98,19 @@ public class MapUtil implements MapSPI {
 	 * @param entityRectangle The entity's bounding box.
 	 * @return Whether the entity can pass through the position.
 	 */
-	protected boolean isRectangleValid(Rectangle entityRectangle, TiledMap map) {
-		float epsilon = 1.0f;
+	protected boolean isRectangleValid(Rectangle entityRectangle) {
+		float epsilon = 2.0f;
+		float topEpsilon = 4.0f;
+
+		// Check the bottom Left
 		boolean bottomLeftPassible = isPositionPassable(entityRectangle.getBottomLeftCorner().plus(new Vector2(epsilon, epsilon)));
+		// Check the bottom Right
 		boolean bottomRightPassible = isPositionPassable(entityRectangle.getBottomRightCorner().plus(new Vector2(-epsilon, epsilon)));
-		boolean topLeftPassible = isPositionPassable(entityRectangle.getTopLeftCorner().plus(new Vector2(epsilon, -epsilon)));
-		boolean topRightPassible = isPositionPassable(entityRectangle.getTopRightCorner().plus(new Vector2(-epsilon, -epsilon)));
+		// Check the top left
+		boolean topLeftPassible = isPositionPassable(entityRectangle.getTopLeftCorner().plus(new Vector2(epsilon + topEpsilon, -(epsilon + topEpsilon))));
+		// Check the top right
+		boolean topRightPassible = isPositionPassable(entityRectangle.getTopRightCorner().plus(new Vector2(-(epsilon+ topEpsilon), -(epsilon + topEpsilon))));
+		// Return whether the entity can pass through the position
 		return bottomLeftPassible && bottomRightPassible && topLeftPassible && topRightPassible;
 	}
 }
