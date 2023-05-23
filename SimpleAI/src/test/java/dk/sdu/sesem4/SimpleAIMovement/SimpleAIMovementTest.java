@@ -16,7 +16,7 @@ class SimpleAIMovementTest {
 
 	@Test
 	void getType() {
-		assertEquals(ControlType.MEDIUM_AI, (new SimpleAIMovement()).getType());
+		assertEquals(ControlType.AI, (new SimpleAIMovement()).getType());
 	}
 
 	@Test

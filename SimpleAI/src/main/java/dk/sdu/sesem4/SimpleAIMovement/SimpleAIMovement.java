@@ -7,7 +7,7 @@ import dk.sdu.sesem4.common.data.controllerParts.ControlType;
 public class SimpleAIMovement implements ControlSPI {
     @Override
     public ControlType getType() {
-        return ControlType.MEDIUM_AI;
+        return ControlType.AI;
     }
 
     @Override

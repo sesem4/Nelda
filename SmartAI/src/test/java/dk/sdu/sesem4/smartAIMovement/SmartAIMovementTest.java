@@ -16,7 +16,7 @@ public class SmartAIMovementTest extends TestCase {
 
 	@Test
 	public void testGetType() {
-		assertEquals(ControlType.SMART_AI, new SmartAIMovement().getType());
+		assertEquals(ControlType.AI, new SmartAIMovement().getType());
 	}
 
 	@Test

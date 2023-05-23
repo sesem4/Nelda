@@ -8,7 +8,7 @@ public class SmartAIMovement implements ControlSPI {
 
     @Override
     public ControlType getType() {
-        return ControlType.SMART_AI;
+        return ControlType.AI;
     }
 
     @Override
