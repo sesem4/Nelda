@@ -1,0 +1,56 @@
+@startuml
+participant Core
+participant MapPlugin
+participant EventManger
+participant Map
+participant GameWorld
+participant GameData
+participant GameWorld
+
+activate Core
+Core -> MapPlugin: start()
+deactivate Core
+activate MapPlugin
+MapPlugin -> EventManger: getInstance()
+activate EventManger
+EventManger -> MapPlugin
+deactivate EventManger
+MapPlugin -> EventManger: subscribe()
+activate EventManger
+EventManger -> MapPlugin
+deactivate EventManger
+
+MapPlugin -> Map:getInstance()
+activate Map
+Map -> MapPlugin
+deactivate Map
+
+MapPlugin -> GameData:getGameWorld()
+activate GameData
+GameData --> MapPlugin
+deactivate GameData
+
+MapPlugin -> Map:getCurrentMap()
+activate Map
+Map -> Map:getCurrentWorldName()
+Map -> Map:getPathForMap()
+activate Map
+Map -> Map:getResourceDirectory()
+deactivate Map
+Map --> MapPlugin
+deactivate Map
+
+MapPlugin -> GameWorld:setMap()
+activate GameWorld
+GameWorld --> MapPlugin
+deactivate GameWorld
+MapPlugin -> GameData:getGameWorld()
+activate GameData
+GameData --> MapPlugin
+deactivate GameData
+MapPlugin -> GameWorld:setMapSize()
+activate GameWorld
+GameWorld --> MapPlugin
+deactivate GameWorld
+
+@enduml
