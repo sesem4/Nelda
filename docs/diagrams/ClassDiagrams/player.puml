@@ -1,0 +1,83 @@
+@startuml Class diagram
+
+title Player - Class diagram
+
+
+
+component "Common" {
+    package SPI {
+       interface ProcessingServiceSPI {
+            +  start(gameData: GameData , world: World ): void
+            +  stop(gameData: GameData, world: World ): void
+        }
+
+        interface PluginServiceSPI {
+            + process(gameData: GameData, priority Priority ): void
+
+        }
+    }
+
+    package data.EntityParts {
+        interface EntityPart {
+            + process(gameData: GameData, entity: Entity): void
+        }
+
+    }
+    package data.entity {
+    abstract class Entity {
+    	- ENTITYPARTS Map<Class, EntityPart> ;
+	    - COLLISIONPARTS Map<Class, CollisionPart>;
+        - EntityType entityType;
+        + Entity(EntityType entityType);
+        + void process(GameData gameData, GameEntities gameEntities);
+        + void addEntityPart(EntityPart entityPart);
+        + void addCollisionPart(CollisionPart collisionPart);
+        + void removeEntityPart(EntityPart entityPart);
+        + void removeCollisionPart(CollisionPart collisionPart);
+        + void setEntityType(EntityType entityType);
+        + EntityType getEntityType();
+        + void setEntityType(EntityType entityType);
+        + void collided(GameData gameData, Entity other);
+        + void collided(Entity other);
+        + void collidedWithMap(GameData gameData);
+        - void doDamage(Entity other);
+        - void doKnockback(Entity other);
+
+
+
+
+
+        }
+    }
+}
+
+component Player {
+    package sesem4.player{
+    class Player {
+    }
+    class PlayerPlugin{
+     - Player player;
+     - int DEFAULTSPEED;
+     - int DEFUALTHEARTS;
+     - int DEFAULTFRAMERATE;
+     - Vector2 DEFAULTSTRATPOSITION;
+     - Vector2 DEFAULTSIZE;
+     - Direction DEFAULTDIRECTION;
+     + start(gameData: GameData, world: World): void
+    + stop(gameData: GameData, world: World): void
+    + createPlayer(): Player
+    + loadTextures(): List<String>
+    }
+    class PlayerProcessingService{
+    + process(gameData: GameData, priority: Priority): void
+    + maptransitions(gameData: GameData, positionPart: PositionPart): void
+    }
+
+}
+PlayerPlugin ..|> PluginServiceSPI
+PlayerProcessingService ..|> ProcessingServiceSPI
+Entity <|--  Player
+
+
+
+@enduml
