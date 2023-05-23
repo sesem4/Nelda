@@ -1,0 +1,51 @@
+@startuml Class diagram
+title Map component
+component "Map"{
+
+top to bottom direction
+skinparam linetype ortho
+
+class Map {
+  # Map():
+  # currentWorldName: String
+  # instance: Map
+  # currentMapIndex: int
+  # getPathForMap(String, int, int): Path
+   currentMapIndex: int
+   currentWorldName: String
+   instance: Map
+   currentMap: Path
+   resourcesDirectory: String
+   currentTiledMap: TiledMap
+}
+class MapPlugin {
+  + MapPlugin():
+  + start(GameData): void
+  + stop(GameData): void
+}
+class MapPostProcessingService {
+  + MapPostProcessingService():
+  + postProcess(GameData, Priority): void
+  # checkMapCollisions(GameData): void
+}
+class MapTransitionHandler {
+  + MapTransitionHandler():
+  - loadMapData(Map, MapTransitionEvent): void
+  + processNotification(Class<EventType>, Event): void
+}
+class MapUtil {
+  + MapUtil():
+  + isTilePassable(int, int): boolean
+  + isTilePassable(Vector2): boolean
+  # isRectangleValid(Rectangle): boolean
+  + isPositionPassable(Vector2): boolean
+  + getRandomPassableTile(GameData): Vector2
+  + getNavGrid(GameData): boolean[][]
+}
+}
+
+MapPlugin                 -[#595959,dashed]->  MapTransitionHandler     : "«create»"
+MapPlugin                "1" *-[#595959,plain]-> "mapTransitionHandler\n1" MapTransitionHandler
+MapPostProcessingService  -[#595959,dashed]->  MapUtil                  : "«create»"
+
+@enduml
