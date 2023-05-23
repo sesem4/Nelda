@@ -75,4 +75,12 @@ public class SpriteDataTest {
 		spriteData.setYFlipped(false);
 		assertFalse(spriteData.isyFlipped());
 	}
+
+	@Test
+	public void testGetUUID() {
+		SpriteData spriteData1 = new SpriteData("1");
+		SpriteData spriteData2 = new SpriteData("1");
+
+		assertNotEquals(spriteData1, spriteData2);
+	}
 }

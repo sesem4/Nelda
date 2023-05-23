@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>dk.sdu.sesem4</groupId>
 	<artifactId>Nelda</artifactId>
 	<version>0.0.0</version>
 	<packaging>pom</packaging>
 	<name>Nelda</name>
-	
+
 	<properties>
 		<java>java</java> <!-- This was missing, and is required for ${java} to work in executable -->
 		<maven.compiler.source>18</maven.compiler.source>
@@ -17,21 +17,23 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<shadedlibgdx.version>1.0.7</shadedlibgdx.version>
 	</properties>
-	
+
 	<modules>
 		<module>EnemyOctorok</module>
 		<module>EnemyMoblin</module>
 		<module>Collision</module>
 		<module>Common</module>
 		<module>Core</module>
+		<module>EnemySpawner</module>
 		<module>Heart</module>
 		<module>Map</module>
 		<module>Player</module>
-		<module>Sword</module>
+		<module>WeaponSword</module>
 		<module>KeyboardControl</module>
 		<module>RandomMovement</module>
+		<module>SimpleAI</module>
 	</modules>
-	
+
 	<repositories>
 		<repository>
 			<id>github</id>
@@ -39,7 +41,7 @@
 			<url>https://maven.pkg.github.com/sesem4/ShadedLibGDX</url>
 		</repository>
 	</repositories>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -49,7 +51,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<build>
 		<plugins>
 			<!-- Clean -->
@@ -100,7 +102,7 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<profiles>
 		<profile>
 			<!-- parent project should delete 'mods-mvn' -->

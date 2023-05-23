@@ -1,0 +1,902 @@
+{
+    "maps": [
+        {
+            "fileName": "overworld/A1.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 0,
+            "y": 0
+        },
+        {
+            "fileName": "overworld/B1.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 256,
+            "y": 0
+        },
+        {
+            "fileName": "overworld/C1.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 512,
+            "y": 0
+        },
+        {
+            "fileName": "overworld/D1.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 768,
+            "y": 0
+        },
+        {
+            "fileName": "overworld/E1.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1024,
+            "y": 0
+        },
+        {
+            "fileName": "overworld/F1.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1280,
+            "y": 0
+        },
+        {
+            "fileName": "overworld/G1.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1536,
+            "y": 0
+        },
+        {
+            "fileName": "overworld/H1.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1792,
+            "y": 0
+        },
+        {
+            "fileName": "overworld/I1.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2048,
+            "y": 0
+        },
+        {
+            "fileName": "overworld/J1.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2304,
+            "y": 0
+        },
+        {
+            "fileName": "overworld/K1.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2560,
+            "y": 0
+        },
+        {
+            "fileName": "overworld/L1.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2816,
+            "y": 0
+        },
+        {
+            "fileName": "overworld/M1.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3072,
+            "y": 0
+        },
+        {
+            "fileName": "overworld/N1.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3328,
+            "y": 0
+        },
+        {
+            "fileName": "overworld/O1.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3584,
+            "y": 0
+        },
+        {
+            "fileName": "overworld/P1.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3840,
+            "y": 0
+        },
+        {
+            "fileName": "overworld/A2.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 0,
+            "y": 176
+        },
+        {
+            "fileName": "overworld/B2.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 256,
+            "y": 176
+        },
+        {
+            "fileName": "overworld/C2.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 512,
+            "y": 176
+        },
+        {
+            "fileName": "overworld/D2.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 768,
+            "y": 176
+        },
+        {
+            "fileName": "overworld/E2.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1024,
+            "y": 176
+        },
+        {
+            "fileName": "overworld/F2.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1280,
+            "y": 176
+        },
+        {
+            "fileName": "overworld/G2.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1536,
+            "y": 176
+        },
+        {
+            "fileName": "overworld/H2.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1792,
+            "y": 176
+        },
+        {
+            "fileName": "overworld/I2.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2048,
+            "y": 176
+        },
+        {
+            "fileName": "overworld/J2.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2304,
+            "y": 176
+        },
+        {
+            "fileName": "overworld/K2.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2560,
+            "y": 176
+        },
+        {
+            "fileName": "overworld/L2.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2816,
+            "y": 176
+        },
+        {
+            "fileName": "overworld/M2.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3072,
+            "y": 176
+        },
+        {
+            "fileName": "overworld/N2.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3328,
+            "y": 176
+        },
+        {
+            "fileName": "overworld/O2.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3584,
+            "y": 176
+        },
+        {
+            "fileName": "overworld/P2.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3840,
+            "y": 176
+        },
+        {
+            "fileName": "overworld/A3.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 0,
+            "y": 352
+        },
+        {
+            "fileName": "overworld/B3.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 256,
+            "y": 352
+        },
+        {
+            "fileName": "overworld/C3.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 512,
+            "y": 352
+        },
+        {
+            "fileName": "overworld/D3.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 768,
+            "y": 352
+        },
+        {
+            "fileName": "overworld/E3.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1024,
+            "y": 352
+        },
+        {
+            "fileName": "overworld/F3.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1280,
+            "y": 352
+        },
+        {
+            "fileName": "overworld/G3.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1536,
+            "y": 352
+        },
+        {
+            "fileName": "overworld/H3.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1792,
+            "y": 352
+        },
+        {
+            "fileName": "overworld/I3.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2048,
+            "y": 352
+        },
+        {
+            "fileName": "overworld/J3.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2304,
+            "y": 352
+        },
+        {
+            "fileName": "overworld/K3.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2560,
+            "y": 352
+        },
+        {
+            "fileName": "overworld/L3.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2816,
+            "y": 352
+        },
+        {
+            "fileName": "overworld/M3.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3072,
+            "y": 352
+        },
+        {
+            "fileName": "overworld/N3.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3328,
+            "y": 352
+        },
+        {
+            "fileName": "overworld/O3.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3584,
+            "y": 352
+        },
+        {
+            "fileName": "overworld/P3.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3840,
+            "y": 352
+        },
+        {
+            "fileName": "overworld/A4.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 0,
+            "y": 528
+        },
+        {
+            "fileName": "overworld/B4.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 256,
+            "y": 528
+        },
+        {
+            "fileName": "overworld/C4.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 512,
+            "y": 528
+        },
+        {
+            "fileName": "overworld/D4.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 768,
+            "y": 528
+        },
+        {
+            "fileName": "overworld/E4.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1024,
+            "y": 528
+        },
+        {
+            "fileName": "overworld/F4.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1280,
+            "y": 528
+        },
+        {
+            "fileName": "overworld/G4.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1536,
+            "y": 528
+        },
+        {
+            "fileName": "overworld/H4.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1792,
+            "y": 528
+        },
+        {
+            "fileName": "overworld/I4.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2048,
+            "y": 528
+        },
+        {
+            "fileName": "overworld/J4.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2304,
+            "y": 528
+        },
+        {
+            "fileName": "overworld/K4.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2560,
+            "y": 528
+        },
+        {
+            "fileName": "overworld/L4.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2816,
+            "y": 528
+        },
+        {
+            "fileName": "overworld/M4.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3072,
+            "y": 528
+        },
+        {
+            "fileName": "overworld/N4.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3328,
+            "y": 528
+        },
+        {
+            "fileName": "overworld/O4.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3584,
+            "y": 528
+        },
+        {
+            "fileName": "overworld/P4.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3840,
+            "y": 528
+        },
+        {
+            "fileName": "overworld/A5.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 0,
+            "y": 704
+        },
+        {
+            "fileName": "overworld/B5.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 256,
+            "y": 704
+        },
+        {
+            "fileName": "overworld/C5.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 512,
+            "y": 704
+        },
+        {
+            "fileName": "overworld/D5.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 768,
+            "y": 704
+        },
+        {
+            "fileName": "overworld/E5.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1024,
+            "y": 704
+        },
+        {
+            "fileName": "overworld/F5.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1280,
+            "y": 704
+        },
+        {
+            "fileName": "overworld/G5.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1536,
+            "y": 704
+        },
+        {
+            "fileName": "overworld/H5.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1792,
+            "y": 704
+        },
+        {
+            "fileName": "overworld/I5.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2048,
+            "y": 704
+        },
+        {
+            "fileName": "overworld/J5.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2304,
+            "y": 704
+        },
+        {
+            "fileName": "overworld/K5.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2560,
+            "y": 704
+        },
+        {
+            "fileName": "overworld/L5.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2816,
+            "y": 704
+        },
+        {
+            "fileName": "overworld/M5.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3072,
+            "y": 704
+        },
+        {
+            "fileName": "overworld/N5.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3328,
+            "y": 704
+        },
+        {
+            "fileName": "overworld/O5.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3584,
+            "y": 704
+        },
+        {
+            "fileName": "overworld/P5.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3840,
+            "y": 704
+        },
+        {
+            "fileName": "overworld/A6.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 0,
+            "y": 880
+        },
+        {
+            "fileName": "overworld/B6.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 256,
+            "y": 880
+        },
+        {
+            "fileName": "overworld/C6.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 512,
+            "y": 880
+        },
+        {
+            "fileName": "overworld/D6.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 768,
+            "y": 880
+        },
+        {
+            "fileName": "overworld/E6.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1024,
+            "y": 880
+        },
+        {
+            "fileName": "overworld/F6.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1280,
+            "y": 880
+        },
+        {
+            "fileName": "overworld/G6.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1536,
+            "y": 880
+        },
+        {
+            "fileName": "overworld/H6.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1792,
+            "y": 880
+        },
+        {
+            "fileName": "overworld/I6.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2048,
+            "y": 880
+        },
+        {
+            "fileName": "overworld/J6.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2304,
+            "y": 880
+        },
+        {
+            "fileName": "overworld/K6.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2560,
+            "y": 880
+        },
+        {
+            "fileName": "overworld/L6.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2816,
+            "y": 880
+        },
+        {
+            "fileName": "overworld/M6.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3072,
+            "y": 880
+        },
+        {
+            "fileName": "overworld/N6.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3328,
+            "y": 880
+        },
+        {
+            "fileName": "overworld/O6.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3584,
+            "y": 880
+        },
+        {
+            "fileName": "overworld/P6.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3840,
+            "y": 880
+        },
+        {
+            "fileName": "overworld/A7.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 0,
+            "y": 1056
+        },
+        {
+            "fileName": "overworld/B7.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 256,
+            "y": 1056
+        },
+        {
+            "fileName": "overworld/C7.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 512,
+            "y": 1056
+        },
+        {
+            "fileName": "overworld/D7.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 768,
+            "y": 1056
+        },
+        {
+            "fileName": "overworld/E7.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1024,
+            "y": 1056
+        },
+        {
+            "fileName": "overworld/F7.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1280,
+            "y": 1056
+        },
+        {
+            "fileName": "overworld/G7.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1536,
+            "y": 1056
+        },
+        {
+            "fileName": "overworld/H7.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1792,
+            "y": 1056
+        },
+        {
+            "fileName": "overworld/I7.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2048,
+            "y": 1056
+        },
+        {
+            "fileName": "overworld/J7.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2304,
+            "y": 1056
+        },
+        {
+            "fileName": "overworld/K7.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2560,
+            "y": 1056
+        },
+        {
+            "fileName": "overworld/L7.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2816,
+            "y": 1056
+        },
+        {
+            "fileName": "overworld/M7.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3072,
+            "y": 1056
+        },
+        {
+            "fileName": "overworld/N7.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3328,
+            "y": 1056
+        },
+        {
+            "fileName": "overworld/O7.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3584,
+            "y": 1056
+        },
+        {
+            "fileName": "overworld/P7.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3840,
+            "y": 1056
+        },
+        {
+            "fileName": "overworld/A8.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 0,
+            "y": 1232
+        },
+        {
+            "fileName": "overworld/B8.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 256,
+            "y": 1232
+        },
+        {
+            "fileName": "overworld/C8.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 512,
+            "y": 1232
+        },
+        {
+            "fileName": "overworld/D8.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 768,
+            "y": 1232
+        },
+        {
+            "fileName": "overworld/E8.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1024,
+            "y": 1232
+        },
+        {
+            "fileName": "overworld/F8.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1280,
+            "y": 1232
+        },
+        {
+            "fileName": "overworld/G8.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1536,
+            "y": 1232
+        },
+        {
+            "fileName": "overworld/H8.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 1792,
+            "y": 1232
+        },
+        {
+            "fileName": "overworld/I8.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2048,
+            "y": 1232
+        },
+        {
+            "fileName": "overworld/J8.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2304,
+            "y": 1232
+        },
+        {
+            "fileName": "overworld/K8.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2560,
+            "y": 1232
+        },
+        {
+            "fileName": "overworld/L8.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 2816,
+            "y": 1232
+        },
+        {
+            "fileName": "overworld/M8.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3072,
+            "y": 1232
+        },
+        {
+            "fileName": "overworld/N8.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3328,
+            "y": 1232
+        },
+        {
+            "fileName": "overworld/O8.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3584,
+            "y": 1232
+        },
+        {
+            "fileName": "overworld/P8.tmx",
+            "height": 176,
+            "width": 256,
+            "x": 3840,
+            "y": 1232
+        }
+    ],
+    "onlyShowAdjacentMaps": false,
+    "type": "world"
+}
