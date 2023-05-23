@@ -1,6 +1,6 @@
 package dk.sdu.sesem4.octorok.blue;
 
-import dk.sdu.sesem4.common.data.CollisionParts.CollisionPart;
+import dk.sdu.sesem4.common.data.CollisionParts.DamagePart;
 import dk.sdu.sesem4.common.data.EntityParts.LifePart;
 import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
@@ -17,7 +17,6 @@ class BlueOctorokPluginTest {
 
 	@BeforeEach
 	void setUp() {
-
 	}
 
 	@AfterEach
@@ -31,10 +30,8 @@ class BlueOctorokPluginTest {
 
 		when(gameData.getGameEntities()).thenReturn(gameEntities);
 
-
 		BlueOctorokPlugin blueOctorokPlugin = new BlueOctorokPlugin();
 		Entity blueOctorok = blueOctorokPlugin.spawn(gameData, mock(Vector2.class), BlueOctorok.class);
-
 
 		verify(gameEntities).addEntity(any(BlueOctorok.class));
 
@@ -42,9 +39,8 @@ class BlueOctorokPluginTest {
 
 		assertEquals(2, lifePart.getLife());
 
-		CollisionPart collisionPart = blueOctorok.getEntityPart(CollisionPart.class);
+		DamagePart damagePart = blueOctorok.getCollisionPart(DamagePart.class);
 
-		//assertEquals(1, collisionPart.
-
+		assertEquals(1, damagePart.getDamage());
 	}
 }
