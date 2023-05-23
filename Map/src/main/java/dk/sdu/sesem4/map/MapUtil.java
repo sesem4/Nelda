@@ -59,6 +59,7 @@ public class MapUtil implements MapSPI {
 		while (true) {
 			Vector2 position = new Vector2((int) (Math.random() * xGrid), (int) (Math.random() * yGrid));
 
+
 			if (isTilePassable(position)) {
 				return position;
 			}

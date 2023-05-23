@@ -36,7 +36,7 @@ public class PlayerProcessingService implements ProcessingServiceSPI {
 			SpritePart spritePart = player.getEntityPart(SpritePart.class);
 
 			//change map based on movement
-			checkMapTransition(gameData, positionPart);
+			mapTransition(gameData, positionPart);
 
 			//process all the parts
 			positionPart.process(gameData, player);
@@ -48,13 +48,12 @@ public class PlayerProcessingService implements ProcessingServiceSPI {
 	}
 
 	/**
-	 * Transistion the map based on the player's position
+	 * Transition the map based on the player's position
 	 *
 	 * @param gameData     The {@link GameData} object for the game.
 	 * @param positionPart The {@link PositionPart} of the player.
 	 */
-
-	private void checkMapTransition(GameData gameData, PositionPart positionPart) {
+	private void mapTransition(GameData gameData, PositionPart positionPart) {
 		float bottomEdge = 0;
 		float topEdge = gameData.getGameWorld().getMapSize().getY();
 		float leftEdge = 0;
@@ -63,16 +62,13 @@ public class PlayerProcessingService implements ProcessingServiceSPI {
 		if (positionPart.getPosition().getY() + (positionPart.getSize().getY() / 2) < bottomEdge) {
 			positionPart.setPosition(new Vector2(positionPart.getPosition().getX(), topEdge - positionPart.getSize().getY() / 2));
 			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.DOWN, gameData));
-		}
-		if (positionPart.getPosition().getY() + (positionPart.getSize().getY() / 2) > topEdge) {
+		} else if (positionPart.getPosition().getY() + (positionPart.getSize().getY() / 2) > topEdge) {
 			positionPart.setPosition(new Vector2(positionPart.getPosition().getX(), bottomEdge - positionPart.getSize().getY() / 2));
 			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.UP, gameData));
-		}
-		if (positionPart.getPosition().getX() + (positionPart.getSize().getX() / 2) < leftEdge) {
+		} else if (positionPart.getPosition().getX() + (positionPart.getSize().getX() / 2) < leftEdge) {
 			positionPart.setPosition(new Vector2(rightEdge - positionPart.getSize().getX() / 2, positionPart.getPosition().getY()));
 			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.LEFT, gameData));
-		}
-		if (positionPart.getPosition().getX() + (positionPart.getSize().getX() / 2) > rightEdge) {
+		} else if (positionPart.getPosition().getX() + (positionPart.getSize().getX() / 2) > rightEdge) {
 			positionPart.setPosition(new Vector2(leftEdge - positionPart.getSize().getX() / 2, positionPart.getPosition().getY()));
 			EventManager.getInstance().notify(MapTransitionEventType.class, new MapTransitionEvent(Direction.RIGHT, gameData));
 		}
