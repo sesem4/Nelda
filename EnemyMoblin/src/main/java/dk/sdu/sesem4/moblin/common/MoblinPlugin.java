@@ -69,7 +69,7 @@ abstract public class MoblinPlugin implements PluginServiceSPI {
 
 		List<String> textures = this.loadTextures(moblinClass);
 
-		ControlSPI constrolSPI = ControllerLocator.locateController(ControlType.MEDIUM_AI);
+		ControlSPI constrolSPI = ControllerLocator.locateController(ControlType.SMART_AI);
 		MovementControllerSPI controller;
 
 		// Check if a controller was found. If not set controller to null.
