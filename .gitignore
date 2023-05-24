@@ -17,3 +17,4 @@ libs/*
 mods/*
 test.report
 *.tiled-session
+!target/site
