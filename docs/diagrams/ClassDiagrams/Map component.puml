@@ -6,46 +6,85 @@ top to bottom direction
 skinparam linetype ortho
 
 class Map {
-  # Map():
+  # STARTING_MAP_INDEX: int
   # currentWorldName: String
-  # instance: Map
   # currentMapIndex: int
-  # getPathForMap(String, int, int): Path
-   currentMapIndex: int
-   currentWorldName: String
-   instance: Map
-   currentMap: Path
-   resourcesDirectory: String
-   currentTiledMap: TiledMap
+ # cachedTiledMaps: HashMap<Path, TiledMap>
+   #{static}instance: Map
+  + {static} getInstance(): Map
+  + getCurrentWorldName(): String
+  + setCurrentWorldName(currentWorldName: String): void
+  + getCurrentMapIndex(): int
+  + setCurrentMapIndex(currentMapIndex: int): void
+  # getResourcesDirectory(): String
+  # getPathForMap(worldName: String, x:int,y:int): Path
+  + getCurrentMap(): Path
+  + getCurrentTiledMap(): TiledMap
+
 }
 class MapPlugin {
-  + MapPlugin():
-  + start(GameData): void
-  + stop(GameData): void
+   - mapTransitionHandler: MapTransitionHandler
+  + start(gameData: GameData): void
+  + stop(gameData: GameData): void
 }
 class MapPostProcessingService {
-  + MapPostProcessingService():
-  + postProcess(GameData, Priority): void
-  # checkMapCollisions(GameData): void
+  + postProcess(gameData:GameData, priority: Priority): void
+  # checkMapCollisions(gameData: GameData): void
 }
 class MapTransitionHandler {
-  + MapTransitionHandler():
-  - loadMapData(Map, MapTransitionEvent): void
-  + processNotification(Class<EventType>, Event): void
+    + processNotification(Class<EventType>, EventType, data:Event): void
+  - loadMapData(map: Map, eventData: MapTransitionEvent): void
 }
 class MapUtil {
-  + MapUtil():
-  + isTilePassable(int, int): boolean
-  + isTilePassable(Vector2): boolean
-  # isRectangleValid(Rectangle): boolean
-  + isPositionPassable(Vector2): boolean
-  + getRandomPassableTile(GameData): Vector2
-  + getNavGrid(GameData): boolean[][]
+  # isRectangleValid(entityRectangle: Rectangle): boolean
 }
 }
 
-MapPlugin                 -[#595959,dashed]->  MapTransitionHandler     : "«create»"
-MapPlugin                "1" *-[#595959,plain]-> "mapTransitionHandler\n1" MapTransitionHandler
-MapPostProcessingService  -[#595959,dashed]->  MapUtil                  : "«create»"
+component "Common" {
+    package src\main\java\dk\sdu\sessem4\common\SPI {
+
+
+        interface PluginServiceSPI {
+            +  start(gameData: GameData , world: World ): void
+            +  stop(gameData: GameData, world: World ): void
+        }
+        interface PostProcessingServiceSPI {
+            + postProcess(gameData: GameData, priority: Priority): void
+        }
+        interface MapSPI{
+            + isPositionPassable(wordPosition: Vector2): boolean
+            + isTilePassable(tileCoordinate: Vector2): boolean
+            + isTilePassable(x:int, y:int): boolean
+            + getRandomPassableTile(gameData: GameData): Vector2
+            + getNavGrid(gameData: GameData): boolean[][]
+        }
+    }
+    package src\main\java\dk\sdu\sesem4\common\event{
+    interface EventListener{
+    + processNotification(Class<EventType>, EventType, data:Event): void
+    }
+
+    package src\main\java\dk\sdu\sessem4\common\data\EntityParts  {
+        interface EntityPart {
+            + process(gameData: GameData, entity: Entity): void
+        }
+
+        class CombatPart implements EntityPart {
+            - type: WeaponType
+            - combatSpriteList: Map<Direction, List<SpriteData>>
+
+            + CombatPart(type: WeaponType): CombatPart
+            + CombatPart(type: WeaponType, sprites: Map<Direction, List<SpriteData>>): CombatPart
+            + process(gameData: GameData, entity: Entity): void
+            + setSprites(direction: Direction, sprites: List<SpriteData>): void
+            + addSprite(direction: Direction, sprite: SpriteData): void
+            + getSprites(direction: Direction): List<SpriteData>
+        }
+    }
+}
+MapPlugin ..|> PluginServiceSPI
+MapPostProcessingService ..|> PostProcessingServiceSPI
+MapTransitionHandler ..|> EventListener
+MapUtil ..|> MapSPI
 
 @enduml

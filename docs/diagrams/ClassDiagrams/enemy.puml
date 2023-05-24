@@ -1,6 +1,6 @@
 @startuml Class diagram
 
-title Player - Class diagram
+title Enemy - Class diagram
 
 
 
@@ -46,32 +46,24 @@ component "Common" {
     }
 }
 
-component Player {
-    package sesem4.player{
+component Enemy {
+    package src\main\java\dk\sdu\sesem4\enemy{
     class Player {
     }
-    class PlayerPlugin{
-     - player: Player;
-     - defaultSpeed: int;
-     - defaultHearts: int;
-     - defaultFrameRate: int;
-     - defaultStratPosition: Vector2;
-     - defaultSize: Vector2;
-     - defaultDirection: Direction;
+    class EnemyPlugin{
      + start(gameData: GameData, world: World): void
     + stop(gameData: GameData, world: World): void
-    + createPlayer(): Player
-    + loadTextures(): List<String>
+    + createEnemy(GameData gameData): void
     }
-    class PlayerProcessingService{
+    class EnemyProcessing{
     + process(gameData: GameData, priority: Priority): void
-    + maptransitions(gameData: GameData, positionPart: PositionPart): void
+    + updateShape(Entity entity): void
     }
 
 }
-PlayerPlugin ..|> PluginServiceSPI
-PlayerProcessingService ..|> ProcessingServiceSPI
-Entity <|--  Player
+EnemyPlugin ..|> PluginServiceSPI
+EnemyProcessing ..|> ProcessingServiceSPI
+Entity <|--  Enemy
 
 
 
