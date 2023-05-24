@@ -1,9 +1,9 @@
 @startuml Class diagram
 title Map component
+skinparam linetype ortho
 component "Map"{
 
-top to bottom direction
-skinparam linetype ortho
+
 
 class Map {
   # STARTING_MAP_INDEX: int
@@ -82,9 +82,9 @@ component "Common" {
         }
     }
 }
-MapPlugin ..|> PluginServiceSPI
-MapPostProcessingService ..|> PostProcessingServiceSPI
-MapTransitionHandler ..|> EventListener
+MapPlugin ..down|> PluginServiceSPI
+MapPostProcessingService ..down|> PostProcessingServiceSPI
+MapTransitionHandler ..left|> EventListener
 MapUtil ..|> MapSPI
 
 @enduml
