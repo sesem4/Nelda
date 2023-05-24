@@ -6,7 +6,7 @@
 
 	<groupId>dk.sdu.sesem4</groupId>
 	<artifactId>Nelda</artifactId>
-	<version>0.0.0</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<name>Nelda</name>
 
@@ -28,10 +28,11 @@
 		<module>Heart</module>
 		<module>Map</module>
 		<module>Player</module>
-		<module>WeaponSword</module>
+		<module>Sword</module>
 		<module>KeyboardControl</module>
-		<module>RandomMovement</module>
-		<module>SimpleAI</module>
+		<module>AI-Random</module>
+		<module>AI-Simple</module>
+		<module>AI-Smart</module>
 	</modules>
 
 	<repositories>
