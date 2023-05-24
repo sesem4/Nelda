@@ -44,7 +44,7 @@ class OctorokPluginTest {
             assertNotNull(entity.getCollisionPart(KnockbackPart.class));
             assertNotNull(entity.getCollisionPart(DamagePart.class));
 
-            controllerLocator.verify(() -> ControllerLocator.locateController(ControlType.MEDIUM_AI));
+            controllerLocator.verify(() -> ControllerLocator.locateController(ControlType.AI));
         }
     }
 }
