@@ -3,15 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>dk.sdu.sesem4</groupId>
         <artifactId>Nelda</artifactId>
         <version>1.0.0</version>
     </parent>
-    <artifactId>KeyboardControl</artifactId>
+    <artifactId>AI-Simple</artifactId>
     <packaging>jar</packaging>
-    <name>KeyboardControl</name>
+    <name>AI-Simple</name>
     <version>1.0.0</version>
 
     <properties>
@@ -22,16 +21,22 @@
         <surefire.version>3.0.0</surefire.version>
         <junit.jupiter.version>5.9.1</junit.jupiter.version>
         <junit.platform.version>1.9.1</junit.platform.version>
-        <mockito.inline.version>5.2.0</mockito.inline.version>
         <mockito.core.version>5.3.1</mockito.core.version>
     </properties>
 
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${surefire.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
     <dependencies>
-        <dependency>
-            <groupId>dk.sdu.sesem4</groupId>
-            <artifactId>shadedlibgdx</artifactId>
-            <version>${shadedlibgdx.version}</version>
-        </dependency>
         <dependency>
             <groupId>dk.sdu.sesem4</groupId>
             <artifactId>Common</artifactId>
@@ -70,7 +75,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-
 
 </project>
