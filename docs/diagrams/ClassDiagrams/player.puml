@@ -1,0 +1,80 @@
+@startuml Class diagram
+
+title Player - Class diagram
+
+
+
+component "Common" {
+    package src\main\java\dk\sdu\sesem4\common\SPI {
+       interface ProcessingServiceSPI {
+            +  start(gameData: GameData , world: World ): void
+            +  stop(gameData: GameData, world: World ): void
+        }
+
+        interface PluginServiceSPI {
+            + process(gameData: GameData, priority Priority ): void
+
+        }
+    }
+
+    package src\main\java\dk\sdu\sesem4\common\data\entityParts {
+        interface EntityPart {
+            + process(gameData: GameData, entity: Entity): void
+        }
+
+    }
+    package src\main\java\dk\sdu\sesem4\common\data\entity {
+    abstract class Entity {
+        - entityParts: Map<Class, EntityPart>
+	    - collisionParts: Map<Class, CollisionPart>
+        - entityType: EntityType
+        + process(gameData: GameData, gameEntities: GameEntities): void
+        + addEntityPart(part: EntityPart): void
+        + removeEntityPart(partClass: Class): void
+        + getEntityPart(partClass: Class): E
+        + addCollisionPart(part: CollisionPart): void
+        + removeCollisionPart(partClass: Class): void
+        + getCollisionPart(partClass: Class): E
+        + getEntityType(): EntityType
+        + setEntityType(entityType: EntityType): void
+        + collided(gameData: GameData, other: Entity): void
+        + collided(other: Entity): void
+        + collidedWithMap(gameData: GameData): void
+        - doDamage(other: Entity): void
+         - doKnockback(other: Entity): void
+        }
+    }
+}
+
+component Player {
+    package sesem4.player{
+
+    class PlayerPlugin{
+     - player: Player;
+     - defaultSpeed: int;
+     - defaultHearts: int;
+     - defaultFrameRate: int;
+     - defaultStratPosition: Vector2;
+     - defaultSize: Vector2;
+     - defaultDirection: Direction;
+     + start(gameData: GameData, world: World): void
+    + stop(gameData: GameData, world: World): void
+    + createPlayer(): Player
+    + loadTextures(): List<String>
+    }
+    class PlayerProcessingService{
+    + process(gameData: GameData, priority: Priority): void
+    + maptransitions(gameData: GameData, positionPart: PositionPart): void
+    }
+    class Player{
+    }
+   Entity <|--  Player
+
+}
+PlayerPlugin ..|> PluginServiceSPI
+PlayerProcessingService ..|> ProcessingServiceSPI
+
+
+
+
+@enduml
