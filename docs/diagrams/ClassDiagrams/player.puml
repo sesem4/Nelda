@@ -48,8 +48,7 @@ component "Common" {
 
 component Player {
     package sesem4.player{
-    class Player {
-    }
+
     class PlayerPlugin{
      - player: Player;
      - defaultSpeed: int;
@@ -67,11 +66,14 @@ component Player {
     + process(gameData: GameData, priority: Priority): void
     + maptransitions(gameData: GameData, positionPart: PositionPart): void
     }
+    class Player{
+    }
+   Entity <|--  Player
 
 }
 PlayerPlugin ..|> PluginServiceSPI
 PlayerProcessingService ..|> ProcessingServiceSPI
-Entity <|--  Player
+
 
 
 
