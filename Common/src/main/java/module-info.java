@@ -5,7 +5,6 @@ module Common {
 	 * Required packages
 	 */
 	requires java.desktop;
-	requires ShadedLibGDX;
 	/**
 	 * SPI's
 	 */
