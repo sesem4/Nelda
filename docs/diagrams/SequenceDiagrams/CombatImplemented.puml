@@ -1,0 +1,52 @@
+@startuml
+activate Core
+Core -> Player: process()
+activate Player
+
+Player -> CombatPart: process()
+activate CombatPart
+
+
+    alt weapon != null
+        CombatPart -> Weapon: incrementDuration(float deltaTime)
+        activate Weapon
+        CombatPart <-- Weapon: void
+        deactivate
+
+        CombatPart -> Weapon: isFinished()
+        activate Weapon
+        CombatPart <-- Weapon: boolean
+        deactivate Weapon
+
+        alt true
+            CombatPart -> GameEntities: removeEntity(weapon)
+            activate GameEntities
+            CombatPart <-- GameEntities: boolean
+            deactivate GameEntities
+        end alt
+
+
+    end alt
+
+    CombatPart -> CombatControllerSPI: shouldAttack(gameData, entity)
+    activate CombatControllerSPI
+    CombatPart <-- CombatControllerSPI: boolean
+    deactivate CombatControllerSPI
+
+    alt shouldAttack() == true
+        CombatPart -> CombatControllerSPI: spawnAttack(gameData, entity)
+        activate CombatControllerSPI
+        CombatPart <-- CombatControllerSPI: Weapon
+        deactivate CombatControllerSPI
+
+    end alt
+
+
+
+
+Player <-- CombatPart: void
+deactivate CombatPart
+
+Core <-- Player: void
+deactivate Player
+@enduml
