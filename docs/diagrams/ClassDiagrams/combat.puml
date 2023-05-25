@@ -5,7 +5,7 @@ title Combat system - Class diagram
 
 
 component "Common" {
-    package SPI {
+    package src\main\java\dk\sdu\sessem4\common\SPI {
         interface CombatSPI {
             + {abstract} getType(): WeaponType
             + {abstract} getCombatController(): CombatControllerSPI
@@ -23,7 +23,7 @@ component "Common" {
         }
     }
 
-    package data.combat {
+    package src\main\java\dk\sdu\sessem4\common\combat {
         enum WeaponType {
             + SWORD
             + ROCK
@@ -43,7 +43,7 @@ component "Common" {
         }
     }
 
-    package data.EntityParts {
+    package src\main\java\dk\sdu\sessem4\common\data\EntityParts  {
         interface EntityPart {
             + process(gameData: GameData, entity: Entity): void
         }
