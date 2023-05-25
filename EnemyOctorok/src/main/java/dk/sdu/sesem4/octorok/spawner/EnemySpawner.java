@@ -3,6 +3,7 @@ package dk.sdu.sesem4.octorok.spawner;
 //import dk.sdu.sesem4.common.SPI.EnemySpawnerSPI;
 
 import dk.sdu.sesem4.common.SPI.SpawnableEnemySPI;
+import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.octorok.blue.BlueOctorok;
@@ -13,23 +14,23 @@ import dk.sdu.sesem4.octorok.red.RedOctorokPlugin;
 public class EnemySpawner implements SpawnableEnemySPI {
 
 	@Override
-	public void spawnEnemy(GameData gameData, Vector2 coordinate) {
+	public Entity spawnEnemy(GameData gameData, Vector2 coordinate) {
 		// Call the overload method with a difficulty (red Octorok)
-		spawnEnemy(gameData, coordinate, 1);
+		return spawnEnemy(gameData, coordinate, 1);
 	}
 
 	@Override
-	public void spawnEnemy(GameData gameData, Vector2 coordinate, int difficulty) {
+	public Entity spawnEnemy(GameData gameData, Vector2 coordinate, int difficulty) {
 		switch (difficulty) {
 			case 1: // red
 				RedOctorokPlugin redOctorokPlugin = new RedOctorokPlugin();
-				redOctorokPlugin.spawn(gameData, coordinate, RedOctorok.class);
-				break;
+				return redOctorokPlugin.spawn(gameData, coordinate, RedOctorok.class);
 			case 2: // blue
 				BlueOctorokPlugin blueOctorokPlugin = new BlueOctorokPlugin();
-				blueOctorokPlugin.spawn(gameData, coordinate, BlueOctorok.class);
-				break;
+				return blueOctorokPlugin.spawn(gameData, coordinate, BlueOctorok.class);
 		}
+
+		return null;
 	}
 
 	@Override

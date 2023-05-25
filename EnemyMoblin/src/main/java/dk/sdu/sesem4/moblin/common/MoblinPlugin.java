@@ -10,6 +10,7 @@ import dk.sdu.sesem4.common.data.EntityParts.MovingPart;
 import dk.sdu.sesem4.common.data.EntityParts.PositionPart;
 import dk.sdu.sesem4.common.data.EntityParts.SpritePart;
 import dk.sdu.sesem4.common.data.controllerParts.ControlType;
+import dk.sdu.sesem4.common.data.entity.Entity;
 import dk.sdu.sesem4.common.data.gamedata.GameData;
 import dk.sdu.sesem4.common.data.math.Vector2;
 import dk.sdu.sesem4.common.data.rendering.SpriteData;
@@ -49,15 +50,18 @@ abstract public class MoblinPlugin implements PluginServiceSPI {
 		});
 	}
 
-	public void spawn(GameData gameData, Vector2 coordinate, Class<? extends Moblin> moblinClass) {
+	public Entity spawn(GameData gameData, Vector2 coordinate, Class<? extends Moblin> moblinClass) {
 		try {
 			Moblin moblin = this.createMoblin(coordinate, moblinClass);
 			moblins.add(moblin);
 			gameData.getGameEntities().addEntity(moblin);
+			return moblin;
 		} catch (Exception exception) {
 			System.out.println("Could not spawn enemy - Moblin");
 			System.out.println(exception.toString());
 		}
+
+		return null;
 	}
 
 	private Moblin createMoblin(Vector2 coordinate, Class<? extends Moblin> moblinClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
@@ -65,7 +69,7 @@ abstract public class MoblinPlugin implements PluginServiceSPI {
 
 		List<String> textures = this.loadTextures(moblinClass);
 
-		ControlSPI constrolSPI = ControllerLocator.locateController(ControlType.ROUGH_AI);
+		ControlSPI constrolSPI = ControllerLocator.locateController(ControlType.AI);
 		MovementControllerSPI controller;
 
 		// Check if a controller was found. If not set controller to null.

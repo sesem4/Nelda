@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class MovingPartTest {
 	private MovingPart movingPart;
@@ -118,5 +119,48 @@ public class MovingPartTest {
 		Vector2 endPosition = positionPart.getPosition();
 		
 		assertEquals(new Vector2(10, 10), endPosition);
+	}
+
+	@Test
+	public void process() {
+		// Setup mocked elements
+		GameData gameData = mock(GameData.class);
+		Entity entity = mock(Entity.class);
+		PositionPart positionPart = mock(PositionPart.class);
+		MovementControllerSPI movementControllerSPI = mock(MovementControllerSPI.class);
+		Vector2 position = mock(Vector2.class);
+
+		// Set mocked
+		MovingPart mockedMovingPart = new MovingPart(1, 1, movementControllerSPI);
+
+		// Setup return values
+		when(positionPart.getPosition()).thenReturn(position);
+		when(entity.getEntityPart(PositionPart.class)).thenReturn(positionPart);
+
+		// Setup position
+		when(position.getX()).thenReturn(1f);
+		when(position.getY()).thenReturn(1f);
+
+		// Run through all directions to go
+		for (Direction direction : Direction.values()) {
+			when(movementControllerSPI.getMovement(gameData, entity)).thenReturn(direction);
+
+			mockedMovingPart.process(gameData, entity);
+
+			verify(positionPart).setDirection(direction);
+		}
+
+		// Verify if no direction is ot be returned from movement controller
+		when(movementControllerSPI.getMovement(gameData, entity)).thenReturn(null);
+
+		// Verify positions
+		// X
+		verify(position, times(2)).setX(1);
+		verify(position, times(1)).setX(0);
+		verify(position, times(1)).setX(2);
+		// Y
+		verify(position, times(2)).setY(1);
+		verify(position, times(1)).setY(0);
+		verify(position, times(1)).setY(2);
 	}
 }

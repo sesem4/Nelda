@@ -20,9 +20,10 @@ Enemy -> RandomMovement: getType()
 activate RandomMovement
 RandomMovement -> ControlType: getType
 activate ControlType
-ControlType -> RandomMovement: AI
+ControlType -> RandomMovement: ControlType
 deactivate ControlType
-RandomMovement -> Enemy: AI
+RandomMovement -> Enemy: ControlType
+alt ControlType == AI
 Enemy -> RandomMovement: getRandomMovementController()
 RandomMovement -> RandomMovementController: new RandomMovementController()
 activate RandomMovementController
@@ -30,6 +31,8 @@ RandomMovementController -> RandomMovement: RandomMovementController
 deactivate RandomMovementController
 RandomMovement -> Enemy: RandomMovementController
 deactivate RandomMovement
+end
+
 Enemy -> Core: void
 deactivate Enemy
 Core -> Enemy : process()

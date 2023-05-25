@@ -72,3 +72,5 @@ EventManager -> Notifier : void
 deactivate EventManager
 Notifier -> Core : void
 deactivate Notifier
+
+@enduml

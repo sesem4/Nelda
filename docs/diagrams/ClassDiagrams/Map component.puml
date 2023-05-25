@@ -1,0 +1,90 @@
+@startuml Class diagram
+title Map component
+skinparam linetype ortho
+component "Map"{
+
+
+
+class Map {
+  # STARTING_MAP_INDEX: int
+  # currentWorldName: String
+  # currentMapIndex: int
+ # cachedTiledMaps: HashMap<Path, TiledMap>
+   #{static}instance: Map
+  + {static} getInstance(): Map
+  + getCurrentWorldName(): String
+  + setCurrentWorldName(currentWorldName: String): void
+  + getCurrentMapIndex(): int
+  + setCurrentMapIndex(currentMapIndex: int): void
+  # getResourcesDirectory(): String
+  # getPathForMap(worldName: String, x:int,y:int): Path
+  + getCurrentMap(): Path
+  + getCurrentTiledMap(): TiledMap
+
+}
+class MapPlugin {
+   - mapTransitionHandler: MapTransitionHandler
+  + start(gameData: GameData): void
+  + stop(gameData: GameData): void
+}
+class MapPostProcessingService {
+  + postProcess(gameData:GameData, priority: Priority): void
+  # checkMapCollisions(gameData: GameData): void
+}
+class MapTransitionHandler {
+    + processNotification(Class<EventType>, EventType, data:Event): void
+  - loadMapData(map: Map, eventData: MapTransitionEvent): void
+}
+class MapUtil {
+  # isRectangleValid(entityRectangle: Rectangle): boolean
+}
+}
+
+component "Common" {
+    package src\main\java\dk\sdu\sessem4\common\SPI {
+
+
+        interface PluginServiceSPI {
+            +  start(gameData: GameData , world: World ): void
+            +  stop(gameData: GameData, world: World ): void
+        }
+        interface PostProcessingServiceSPI {
+            + postProcess(gameData: GameData, priority: Priority): void
+        }
+        interface MapSPI{
+            + isPositionPassable(wordPosition: Vector2): boolean
+            + isTilePassable(tileCoordinate: Vector2): boolean
+            + isTilePassable(x:int, y:int): boolean
+            + getRandomPassableTile(gameData: GameData): Vector2
+            + getNavGrid(gameData: GameData): boolean[][]
+        }
+    }
+    package src\main\java\dk\sdu\sesem4\common\event{
+    interface EventListener{
+    + processNotification(Class<EventType>, EventType, data:Event): void
+    }
+
+    package src\main\java\dk\sdu\sessem4\common\data\EntityParts  {
+        interface EntityPart {
+            + process(gameData: GameData, entity: Entity): void
+        }
+
+        class CombatPart implements EntityPart {
+            - type: WeaponType
+            - combatSpriteList: Map<Direction, List<SpriteData>>
+
+            + CombatPart(type: WeaponType): CombatPart
+            + CombatPart(type: WeaponType, sprites: Map<Direction, List<SpriteData>>): CombatPart
+            + process(gameData: GameData, entity: Entity): void
+            + setSprites(direction: Direction, sprites: List<SpriteData>): void
+            + addSprite(direction: Direction, sprite: SpriteData): void
+            + getSprites(direction: Direction): List<SpriteData>
+        }
+    }
+}
+MapPlugin ..down|> PluginServiceSPI
+MapPostProcessingService ..down|> PostProcessingServiceSPI
+MapTransitionHandler ..left|> EventListener
+MapUtil ..|> MapSPI
+
+@enduml
